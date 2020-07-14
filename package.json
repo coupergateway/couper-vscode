@@ -1,0 +1,29 @@
+{
+  "name": "couper",
+  "displayName": "Couper Configuration",
+  "version": "0.0.1",
+  "publisher": "couper.io",
+  "engines": {
+    "vscode": "^1.32.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "couper",
+        "aliases": ["Couper Configuration Language"],
+        "extensions": ["hcl","couper"]
+      }
+    ]
+  },
+  "activationEvents": [
+    "*"
+  ],
+  "main": "src/extension.js",
+  "scripts": {
+    "watch": "true"
+  },
+  "devDependencies": {}
+}
