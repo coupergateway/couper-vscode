@@ -1,0 +1,86 @@
+{
+  "name": "couper",
+  "scopeName": "source.couper",
+  "patterns": [
+    { "include": "#comment" },
+    { "include": "#constant" },
+    { "include": "#string" },
+    { "include": "#block" }
+  ],
+  "repository": {
+    "comment": {
+      "patterns": [
+        {
+          "comment": "Single line comments with number-sign",
+          "match": "(#)+(.*)",
+          "captures": {
+              "0": {"name": "comment.line.number-sign.couper" }
+          }
+        },
+        {
+          "comment": "Single line comments with double-slash",
+          "match": "(//)+(.*)",
+          "captures": {
+              "0": { "name": "comment.line.double-slash.couper" }
+            }
+        },
+        {
+          "comment": "Multiple line comment block",
+          "begin": "/\\*",
+          "beginCaptures": {
+              "0" : { "name": "comment.block.documentation.couper" }
+          },
+          "end": "\\*/",
+          "endCaptures": {
+              "0" : { "name": "comment.block.documentation.couper" }
+          },
+          "contentName" : "comment.block.documentation.couper"
+        }
+      ]
+    },
+    "constant": {
+      "patterns": [
+        {
+           "match": "\\b(true|false|null\\b)",
+            "captures": {
+              "0": {"name": "constant.language.couper" }
+          }
+        }
+      ]
+    },
+    "string": {
+      "name": "string.quoted.double.couper",
+      "begin": "\"",
+      "end": "\""
+    },
+    "block": {
+      "patterns" : [
+        {
+          "begin": "([\\w-]+)\\s*\\{",
+          "beginCaptures": {
+            "0": { "name": "meta.function.couper" },
+            "1": { "name": "storage.type.couper" }
+          },
+          "end": "\\}",
+          "patterns" : [
+            { "include": "$self" },
+            { "include": "#comment" }
+          ]
+        },
+        {
+          "begin": "([\\w-]+)((?:\\s*\"[^\"]*\")*)\\s*\\{",
+          "beginCaptures": {
+            "0": { "name": "meta.function.couper" },
+            "1": { "name": "storage.type.couper" },
+            "2": { "name": "string.quoted.double.couper" }
+          },
+          "end": "\\}",
+          "patterns" : [
+            { "include": "$self" },
+            { "include": "#comment" }
+          ]
+        }
+      ]
+    }
+  }
+}
