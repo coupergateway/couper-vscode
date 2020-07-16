@@ -3,8 +3,8 @@
   "scopeName": "source.couper",
   "patterns": [
     { "include": "#comment" },
-    { "include": "#constant" },
     { "include": "#string" },
+    { "include": "#attribute" },
     { "include": "#block" }
   ],
   "repository": {
@@ -12,27 +12,27 @@
       "patterns": [
         {
           "comment": "Single line comments with number-sign",
-          "match": "(#)+(.*)",
+          "match": "#+.*",
           "captures": {
-              "0": {"name": "comment.line.number-sign.couper" }
+            "0": {"name": "comment.line.number-sign.couper" }
           }
         },
         {
           "comment": "Single line comments with double-slash",
-          "match": "(//)+(.*)",
+          "match": "//+.*",
           "captures": {
-              "0": { "name": "comment.line.double-slash.couper" }
-            }
+            "0": { "name": "comment.line.double-slash.couper" }
+          }
         },
         {
           "comment": "Multiple line comment block",
           "begin": "/\\*",
           "beginCaptures": {
-              "0" : { "name": "comment.block.documentation.couper" }
+            "0" : { "name": "comment.block.documentation.couper" }
           },
           "end": "\\*/",
           "endCaptures": {
-              "0" : { "name": "comment.block.documentation.couper" }
+            "0" : { "name": "comment.block.documentation.couper" }
           },
           "contentName" : "comment.block.documentation.couper"
         }
@@ -41,9 +41,19 @@
     "constant": {
       "patterns": [
         {
-           "match": "\\b(true|false|null\\b)",
-            "captures": {
-              "0": {"name": "constant.language.couper" }
+          "match": "\\b(true|false|null)\\b",
+          "captures": {
+            "0": {"name": "constant.language.couper" }
+          }
+        }
+      ]
+    },
+    "variable": {
+        "patterns": [
+        {
+          "match": "\\b(env|req|beresp)\\b",
+          "captures": {
+            "0": {"name": "variable.language.couper" }
           }
         }
       ]
@@ -53,20 +63,23 @@
       "begin": "\"",
       "end": "\""
     },
-    "block": {
+    "heredoc" : {
       "patterns" : [
         {
-          "begin": "([\\w-]+)\\s*\\{",
+          "begin": "<<(\\w+)",
           "beginCaptures": {
-            "0": { "name": "meta.function.couper" },
-            "1": { "name": "storage.type.couper" }
+            "0": { "name": "entity.name.section" }
           },
-          "end": "\\}",
-          "patterns" : [
-            { "include": "$self" },
-            { "include": "#comment" }
-          ]
-        },
+          "end": "^\\s*\\1$",
+          "endCaptures": {
+            "0": { "name": "entity.name.section" }
+          },
+          "contentName": "string.unquoted.couper"
+        }
+      ]
+    },
+    "block": {
+      "patterns" : [
         {
           "begin": "([\\w-]+)((?:\\s*\"[^\"]*\")*)\\s*\\{",
           "beginCaptures": {
@@ -77,7 +90,29 @@
           "end": "\\}",
           "patterns" : [
             { "include": "$self" },
-            { "include": "#comment" }
+            { "include": "#comment" },
+            { "include": "#attribute" }
+          ]
+        }
+      ]
+    },
+    "attribute" : {
+      "patterns" : [
+        {
+          "begin": "([\\w\\.-]+)\\s*(=)\\s*",
+          "beginCaptures": {
+            "1": { "name": "variable.parameter.couper" },
+            "2": { "name": "keyword.operator.couper" }
+          },
+          "end": "(?<!\\2)$",
+          "endCaptures" : {
+            "0": { "name": "keyword.operator.couper" }
+          },
+          "patterns": [
+            { "include": "#constant" },
+            { "include": "#string" },
+            { "include": "#variable" },
+            { "include": "#heredoc" }
           ]
         }
       ]
