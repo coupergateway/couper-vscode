@@ -33,16 +33,62 @@ const provider1 = vscode.languages.registerCompletionItemProvider(selector, {
 		]
 		}
 
-		const attributes = [
-			"domains",
-			"document_root",
-			"error_file",
-			"bootstrap_file",
-			"paths",
-			"base_path",
-			"origin",
-			"path"
-		]
+		const attributes = {
+			"domains": {
+				parents: ["server"],
+				type: "array"
+			},
+			"document_root": {
+				parents: ["files"]
+			},
+			"error_file": {
+				parents: ["files"]
+			},
+			"bootstrap_file": {
+				parents: ["spa"]
+			},
+			"paths": {
+				parents: ["spa"],
+				type: "array"
+			},
+			"base_path": {
+				parents: ["server","api"]
+			},
+			"origin": {
+				parents: ["backend"]
+			},
+			"origin_address": {
+				parents: ["backend"]
+			},
+			"origin_host": {
+				parents: ["backend"]
+			},
+			"backend": {
+				parents: ["endpoint"]
+			},
+			"path": {
+				parents: ["endpoint"]
+			},
+			"access_control": {
+				parents: ["server","files","spa","endpoint"],
+				type: "array"
+			},
+			"cookie": {
+				parents: ["jwt"]
+			},
+			"header": {
+				parents: ["jwt"]
+			},
+			"key": {
+				parents: ["jwt"]
+			},
+			"key_file": {
+				parents: ["jwt"]
+			},
+			"signature_algorithm": {
+				parents: ["jwt"]
+			},
+		}
 
 		const parentBlock = getParentBlock(document, position)
 		if (parentBlock == "endpoint") {
@@ -56,7 +102,7 @@ const provider1 = vscode.languages.registerCompletionItemProvider(selector, {
 			let item = new vscode.CompletionItem(keyword + "{…}")
 			item.detail = "Block"
 			item.kind = vscode.CompletionItemKind.Struct
-			let snippet = keyword + ' {\u000a\t$0\u000a}\u000a'
+			const snippet = keyword + ' {\u000a\t$0\u000a}\u000a'
 			item.insertText = new vscode.SnippetString(snippet)
 			completions.push(item)
 		})
@@ -65,18 +111,26 @@ const provider1 = vscode.languages.registerCompletionItemProvider(selector, {
 			let item = new vscode.CompletionItem(keyword + "{…}")
 			item.detail = "Block"
 			item.kind = vscode.CompletionItemKind.Struct
-			let snippet = keyword + ' "${1:label}" {\u000a\t$0\u000a}\u000a'
+			const snippet = keyword + ' "${1:label}" {\u000a\t$0\u000a}\u000a'
 			item.insertText = new vscode.SnippetString(snippet)
 			completions.push(item)
 		})
 
-		attributes.forEach((keyword) => {
-			let item = new vscode.CompletionItem(keyword + " = …")
+		for (let key in attributes) {
+			let attribute = attributes[key]
+			if ((attribute.parents || []).indexOf(parentBlock) == -1) {
+				continue
+			}
+			let item = new vscode.CompletionItem(key + " = …")
 			item.detail = "Attribute"
 			item.kind = vscode.CompletionItemKind.Property
-			item.insertText = keyword + " = "
+			if (attribute.type == "array") {
+				item.insertText = new vscode.SnippetString(key + " = [$0]")
+			} else {
+				item.insertText = key + " ="
+			}
 			completions.push(item)
-		})
+		}
 
 		return completions
 	}
