@@ -3,6 +3,14 @@
 const vscode = require("vscode")
 
 const selector = "*"
+const regex = /\b([\w-]+)([ \t]*|[ \t]+\"[^"]+\"[ \t]*)?\{[^{]*$/s
+
+function getParentBlock(document, position) {
+	const range = new vscode.Range(document.positionAt(0), position)
+	const matches = document.getText(range).match(regex)
+	// FIXME comments and strings!
+	return matches ? matches[1] : ""
+}
 
 const provider1 = vscode.languages.registerCompletionItemProvider(selector, {
 	provideCompletionItems(document, position, token, context) {
@@ -11,16 +19,19 @@ const provider1 = vscode.languages.registerCompletionItemProvider(selector, {
 			// FIXME return undefined
 		}
 
-		const blocks = [
+		let blocks = {
+			labelled: [
 			"server",
+			"endpoint"
+			],
+			unlabelled: [
 			"files",
 			"spa",
 			"api",
-			"endpoint",
-			"backend",
 			"defaults",
 			"definitions"
 		]
+		}
 
 		const attributes = [
 			"domains",
@@ -33,12 +44,28 @@ const provider1 = vscode.languages.registerCompletionItemProvider(selector, {
 			"path"
 		]
 
+		const parentBlock = getParentBlock(document, position)
+		if (parentBlock == "endpoint") {
+			blocks.unlabelled.push("backend")
+		} else {
+			blocks.labelled.push("backend")
+		}
+
 		let completions = []
-		blocks.forEach((keyword) => {
+		blocks.unlabelled.forEach((keyword) => {
 			let item = new vscode.CompletionItem(keyword + "{…}")
 			item.detail = "Block"
 			item.kind = vscode.CompletionItemKind.Struct
-			let snippet = keyword + ' ${1:"label" }{\u000a\t$0\u000a}\u000a'
+			let snippet = keyword + ' {\u000a\t$0\u000a}\u000a'
+			item.insertText = new vscode.SnippetString(snippet)
+			completions.push(item)
+		})
+
+		blocks.labelled.forEach((keyword) => {
+			let item = new vscode.CompletionItem(keyword + "{…}")
+			item.detail = "Block"
+			item.kind = vscode.CompletionItemKind.Struct
+			let snippet = keyword + ' "${1:label}" {\u000a\t$0\u000a}\u000a'
 			item.insertText = new vscode.SnippetString(snippet)
 			completions.push(item)
 		})
@@ -62,7 +89,7 @@ const provider2 = vscode.languages.registerCompletionItemProvider(selector, {
 			return undefined
 		}
 
-		let prefix = linePrefix.endsWith(' ') ? "" : " "
+		const prefix = linePrefix.endsWith(' ') ? "" : " "
 
 		const constants = [ "true", "false", "null" ]
 		const variables = [ "env", "req", "beresp" ]
