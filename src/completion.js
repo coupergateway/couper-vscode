@@ -19,18 +19,41 @@ const provider1 = vscode.languages.registerCompletionItemProvider(selector, {
 			// FIXME return undefined
 		}
 
+		const parentBlock = getParentBlock(document, position)
+
 		let blocks = {
-			labelled: [
-			"server",
-			"endpoint"
-			],
-			unlabelled: [
-			"files",
-			"spa",
-			"api",
-			"defaults",
-			"definitions"
-		]
+			"server": {
+				labelled: true
+			},
+			"endpoint": {
+				labelled: true,
+				parents: ["api"]
+			},
+			"files": {
+				parents: ["server"]
+			},
+			"spa": {
+				parents: ["server"]
+			},
+			"api": {
+				parents: ["server"]
+			},
+			"backend": {
+				parents: ["endpoint","definitions"],
+				labelled: parentBlock != "endpoint"
+			},
+			"jwt": {
+				parents: ["definitions"],
+				labelled: true
+			},
+			"basic_auth": {
+				parents: ["definitions"],
+				labelled: true
+			},
+			"defaults": {
+				parents: ["server"]
+			},
+			"definitions": {}
 		}
 
 		const attributes = {
@@ -90,31 +113,22 @@ const provider1 = vscode.languages.registerCompletionItemProvider(selector, {
 			},
 		}
 
-		const parentBlock = getParentBlock(document, position)
-		if (parentBlock == "endpoint") {
-			blocks.unlabelled.push("backend")
-		} else {
-			blocks.labelled.push("backend")
-		}
-
 		let completions = []
-		blocks.unlabelled.forEach((keyword) => {
-			let item = new vscode.CompletionItem(keyword + "{…}")
-			item.detail = "Block"
-			item.kind = vscode.CompletionItemKind.Struct
-			const snippet = keyword + ' {\u000a\t$0\u000a}\u000a'
-			item.insertText = new vscode.SnippetString(snippet)
-			completions.push(item)
-		})
 
-		blocks.labelled.forEach((keyword) => {
-			let item = new vscode.CompletionItem(keyword + "{…}")
+		for (let key in blocks) {
+			let block = blocks[key]
+			if ((block.parents || [""]).indexOf(parentBlock) == -1) {
+				continue
+			}
+
+			let item = new vscode.CompletionItem(key + " {…}")
 			item.detail = "Block"
 			item.kind = vscode.CompletionItemKind.Struct
-			const snippet = keyword + ' "${1:label}" {\u000a\t$0\u000a}\u000a'
+			const label = block.labelled ? '"${1:label}" ' : ""
+			const snippet = key + ' ' + label + '{\u000a\t$0\u000a}\u000a'
 			item.insertText = new vscode.SnippetString(snippet)
 			completions.push(item)
-		})
+		}
 
 		for (let key in attributes) {
 			let attribute = attributes[key]
