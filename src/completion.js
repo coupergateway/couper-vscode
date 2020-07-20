@@ -22,8 +22,8 @@ function getParentBlock(document, position) {
 const provider1 = vscode.languages.registerCompletionItemProvider(selector, {
 	provideCompletionItems(document, position, token, context) {
 		const linePrefix = document.lineAt(position).text.substr(0, position.character)
-		if (linePrefix.trim() != "") {
-			// FIXME return undefined
+		if (!/^\s*([\w-]+)?$/.test(linePrefix)) {
+			return null
 		}
 
 		const parentBlock = getParentBlock(document, position)
