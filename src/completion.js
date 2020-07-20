@@ -3,11 +3,18 @@
 const vscode = require("vscode")
 
 const selector = "*"
-const regex = /\b([\w-]+)([ \t]*|[ \t]+\"[^"]+\"[ \t]*)?\{[^{]*$/s
+const parentBlockRegex = /\b([\w-]+)(?:[ \t]+\"[^"]+\")?[ \t]*\{[^{}]*$/s
+const blockRegex = /\{[^{}]*\}/sg
 
 function getParentBlock(document, position) {
 	const range = new vscode.Range(document.positionAt(0), position)
-	const matches = document.getText(range).match(regex)
+	let text = document.getText(range)
+
+	while (blockRegex.test(text)) {
+		text = text.replace(blockRegex, "")
+	}
+
+	const matches = text.match(parentBlockRegex)
 	// FIXME comments and strings!
 	return matches ? matches[1] : ""
 }
@@ -39,7 +46,7 @@ const provider1 = vscode.languages.registerCompletionItemProvider(selector, {
 				parents: ["server"]
 			},
 			"backend": {
-				parents: ["endpoint","definitions"],
+				parents: ["endpoint", "definitions"],
 				labelled: parentBlock != "endpoint"
 			},
 			"jwt": {
@@ -75,7 +82,7 @@ const provider1 = vscode.languages.registerCompletionItemProvider(selector, {
 				type: "array"
 			},
 			"base_path": {
-				parents: ["server","api"]
+				parents: ["server", "api"]
 			},
 			"origin": {
 				parents: ["backend"]
@@ -93,7 +100,7 @@ const provider1 = vscode.languages.registerCompletionItemProvider(selector, {
 				parents: ["endpoint"]
 			},
 			"access_control": {
-				parents: ["server","files","spa","endpoint"],
+				parents: ["server", "files", "spa", "endpoint"],
 				type: "array"
 			},
 			"cookie": {
