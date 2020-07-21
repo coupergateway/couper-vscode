@@ -5,11 +5,14 @@ const vscode = require("vscode")
 const selector = "*"
 const parentBlockRegex = /\b([\w-]+)(?:[ \t]+\"[^"]+\")?[ \t]*\{[^{}]*$/s
 const blockRegex = /\{[^{}]*\}/sg
+// see http://regex.info/listing.cgi?ed=2&p=281
+const filterRegex = /\/\*[^*]*\*+(?:[^/*][^*]*\*+)*\/|(?:\/\/|\#)[^\n]*/g
 
 function getParentBlock(document, position) {
 	const range = new vscode.Range(document.positionAt(0), position)
 	let text = document.getText(range)
 
+	text = text.replace(filterRegex, "")
 	while (blockRegex.test(text)) {
 		text = text.replace(blockRegex, "")
 	}
