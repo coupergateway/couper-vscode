@@ -145,6 +145,7 @@ const provider1 = vscode.languages.registerCompletionItemProvider(selector, {
 			const label = block.labelled ? '"${1:label}" ' : ""
 			const snippet = key + ' ' + label + '{\u000a\t$0\u000a}\u000a'
 			item.insertText = new vscode.SnippetString(snippet)
+			item.sortText = "0" + key
 			completions.push(item)
 		}
 
@@ -156,6 +157,7 @@ const provider1 = vscode.languages.registerCompletionItemProvider(selector, {
 			let item = new vscode.CompletionItem(key + " = …")
 			item.detail = "Attribute"
 			item.kind = vscode.CompletionItemKind.Property
+			item.sortText = "1" + key
 			if (attribute.type == "array") {
 				item.insertText = new vscode.SnippetString(key + " = [$0]")
 			} else {
