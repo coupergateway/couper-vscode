@@ -5,6 +5,7 @@ const vscode = require("vscode")
 const selector = "*"
 const parentBlockRegex = /\b([\w-]+)(?:[ \t]+\"[^"]+\")?[ \t]*\{[^{}]*$/s
 const blockRegex = /\{[^{}]*\}/sg
+const attributeRegex = /^\s*[\w-]+\s*=/m
 // see http://regex.info/listing.cgi?ed=2&p=281
 const filterRegex = /([^"/\#]+|"(?:\\.|[^"\\])*")|\/\*[^*]*\*+(?:[^/*][^*]*\*+)*\/|(?:\/\/|\#)[^\n]*/g
 
@@ -173,8 +174,9 @@ const provider1 = vscode.languages.registerCompletionItemProvider(selector, {
 const provider2 = vscode.languages.registerCompletionItemProvider(selector, {
 	provideCompletionItems(document, position, token, context) {
 		const linePrefix = document.lineAt(position).text.substr(0, position.character)
-		if (!linePrefix.trim().endsWith('=')) {
-			return undefined
+
+		if (!attributeRegex.test(linePrefix)) {
+			return null
 		}
 
 		const prefix = linePrefix.endsWith(' ') ? "" : " "
@@ -188,6 +190,7 @@ const provider2 = vscode.languages.registerCompletionItemProvider(selector, {
 			item.detail = "Constant"
 			item.kind = vscode.CompletionItemKind.Value
 			item.insertText = prefix + keyword
+			item.sortText = "0" + keyword
 			completions.push(item)
 		})
 
@@ -196,6 +199,7 @@ const provider2 = vscode.languages.registerCompletionItemProvider(selector, {
 			item.detail = "Variable"
 			item.kind = vscode.CompletionItemKind.Variable
 			item.insertText = prefix + keyword
+			item.sortText = "2" + keyword
 			completions.push(item)
 		})
 
@@ -203,12 +207,13 @@ const provider2 = vscode.languages.registerCompletionItemProvider(selector, {
 		item.detail = "String"
 		item.kind = vscode.CompletionItemKind.Value
 		item.insertText = new vscode.SnippetString(prefix + '"${1}"$0')
+		item.sortText = "1"
 		completions.push(item)
 
 		return completions
 
 	}
-}, "=", " ")
+})
 
 Object.defineProperty(exports, "__esModule", { value: true })
 exports.providers = [provider1, provider2]
