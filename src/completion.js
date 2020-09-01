@@ -58,7 +58,7 @@ const provider1 = vscode.languages.registerCompletionItemProvider(selector, {
 				parents: ["server"]
 			},
 			"backend": {
-				parents: ["endpoint", "definitions"],
+				parents: ["endpoint", "definitions", "api"],
 				labelled: parentBlock != "endpoint"
 			},
 			"jwt": {
