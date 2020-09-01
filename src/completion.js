@@ -65,10 +65,6 @@ const provider1 = vscode.languages.registerCompletionItemProvider(selector, {
 				parents: ["definitions"],
 				labelled: true
 			},
-			"basic_auth": {
-				parents: ["definitions"],
-				labelled: true
-			},
 			"defaults": {
 				parents: ["server"]
 			},
@@ -97,12 +93,6 @@ const provider1 = vscode.languages.registerCompletionItemProvider(selector, {
 				parents: ["server", "api"]
 			},
 			"origin": {
-				parents: ["backend"]
-			},
-			"origin_address": {
-				parents: ["backend"]
-			},
-			"origin_host": {
 				parents: ["backend"]
 			},
 			"backend": {
