@@ -72,7 +72,7 @@ const provider1 = vscode.languages.registerCompletionItemProvider(selector, {
 		}
 
 		const attributes = {
-			"domains": {
+			"hosts": {
 				parents: ["server"],
 				type: "array"
 			},
