@@ -102,7 +102,7 @@ const provider1 = vscode.languages.registerCompletionItemProvider(selector, {
 				parents: ["endpoint"]
 			},
 			"access_control": {
-				parents: ["server", "files", "spa", "endpoint"],
+				parents: ["server", "files", "spa", "endpoint", "api"],
 				type: "array"
 			},
 			"cookie": {
