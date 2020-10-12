@@ -65,6 +65,10 @@ const provider1 = vscode.languages.registerCompletionItemProvider(selector, {
 				parents: ["definitions"],
 				labelled: true
 			},
+			"basic_auth": {
+				parents: ["definitions"],
+				labelled: true
+			},
 			"defaults": {
 				parents: ["server"]
 			},
@@ -105,6 +109,7 @@ const provider1 = vscode.languages.registerCompletionItemProvider(selector, {
 				parents: ["server", "files", "spa", "endpoint", "api"],
 				type: "array"
 			},
+			// JWT
 			"cookie": {
 				parents: ["jwt"]
 			},
@@ -119,6 +124,19 @@ const provider1 = vscode.languages.registerCompletionItemProvider(selector, {
 			},
 			"signature_algorithm": {
 				parents: ["jwt"]
+			},
+			// basic_auth
+			"user": {
+				parents: ["basic_auth"]
+			},
+			"password": {
+				parents: ["basic_auth"]
+			},
+			"realm": {
+				parents: ["basic_auth"]
+			},
+			"htpasswd_file": {
+				parents: ["basic_auth"]
 			},
 		}
 
