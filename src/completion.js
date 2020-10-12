@@ -96,15 +96,28 @@ const provider1 = vscode.languages.registerCompletionItemProvider(selector, {
 			"base_path": {
 				parents: ["server", "api"]
 			},
-			"origin": {
-				parents: ["backend"]
-			},
 			"backend": {
 				parents: ["endpoint"]
 			},
 			"path": {
-				parents: ["endpoint"]
+				parents: ["endpoint", "backend"]
 			},
+			// backend
+			"origin": {
+				parents: ["backend"]
+			},
+			"request_headers": {
+				parents: ["backend"],
+				type: "block"
+			},
+			"response_headers": {
+				parents: ["backend"],
+				type: "block"
+			},
+			"hostname": {
+				parents: ["backend"]
+			},
+
 			"access_control": {
 				parents: ["server", "files", "spa", "endpoint", "api"],
 				type: "array"
