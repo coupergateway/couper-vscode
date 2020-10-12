@@ -151,6 +151,8 @@ const provider1 = vscode.languages.registerCompletionItemProvider(selector, {
 			item.sortText = "1" + key
 			if (attribute.type == "array") {
 				item.insertText = new vscode.SnippetString(key + " = [$0]")
+			} else if (attribute.type == "block") {
+				item.insertText = new vscode.SnippetString(key + " = {\u000a\t$0\u000a}\u000a")
 			} else {
 				item.insertText = key + " ="
 			}
