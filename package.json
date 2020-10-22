@@ -1,15 +1,25 @@
 {
   "name": "couper",
-  "displayName": "Couper Configuration",
+  "displayName": "Couper Configurator",
   "version": "0.0.1",
-  "publisher": "couper.io",
-  "engines": {
-    "vscode": "^1.32.0"
+  // wichtig für den marketplace
+  "publisher": "AvengaGermanyGmbH",
+  "description": "Provides autocompletion, syntax/semantic validation and syntax highlighting for Couper's HCL based configuration file ",
+  "keywords":["couper.hcl", "couper", "couper.io"],
+  "categories": ["Other"],
+  "icon": "images/couper_logo.png",
+  "galleryBanner": {
+    "color": "#C80000",
+    "theme": "dark"
   },
-  "categories": [
-    "Other"
-  ],
-  "contributes": {
+  "engines": {
+    "vscode": "^1.0.0"
+  },
+  "main": "src/extension.js",
+  "scripts": {
+    "watch": "true"
+  },
+    "contributes": {
     "languages": [
       {
         "id": "couper",
@@ -28,9 +38,11 @@
   "activationEvents": [
     "*"
   ],
-  "main": "src/extension.js",
-  "scripts": {
-    "watch": "true"
+  "devDependencies": {},
+  "bugs": "https://github.com/avenga/couper-vscode/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/avenga/couper-vscode"
   },
-  "devDependencies": {}
+  "homepage": "https://github.com/avenga/couper"
 }
