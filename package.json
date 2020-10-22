@@ -2,15 +2,14 @@
   "name": "couper",
   "displayName": "Couper Configurator",
   "version": "0.0.1",
-  // wichtig für den marketplace
   "publisher": "AvengaGermanyGmbH",
-  "description": "Provides autocompletion, syntax/semantic validation and syntax highlighting for Couper's HCL based configuration file ",
+  "description": "Provides autocompletion, syntax/semantic validation and syntax highlighting for Couper's HCL based configuration file couper.hcl",
   "keywords":["couper.hcl", "couper", "couper.io"],
   "categories": ["Other"],
   "icon": "images/couper_logo.png",
   "galleryBanner": {
     "color": "#C80000",
-    "theme": "dark"
+    "theme": "light"
   },
   "engines": {
     "vscode": "^1.0.0"
