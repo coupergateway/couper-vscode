@@ -3,21 +3,21 @@
 const vscode = require("vscode")
 
 const selector = "*"
-const parentBlockRegex = /\b([\w-]+)(?:[ \t]+\"[^"]+\")?[ \t]*\{[^{}]*$/s
-const blockRegex = /\{[^{}]*\}/sg
+const parentBlockRegex = /\b([\w-]+)(?:[ \t]+"[^"]+")?[ \t]*{[^{}]*$/s
+const blockRegex = /{[^{}]*}/sg
 const attributeRegex = /^\s*[\w-]+\s*=/m
 // see http://regex.info/listing.cgi?ed=2&p=281
-const filterRegex = /([^"/\#]+|"(?:\\.|[^"\\])*")|\/\*[^*]*\*+(?:[^/*][^*]*\*+)*\/|(?:\/\/|\#)[^\n]*/g
+const filterRegex = /([^"/#]+|"(?:\\.|[^"\\])*")|\/\*[^*]*\*+(?:[^/*][^*]*\*+)*\/|(?:\/\/|#)[^\n]*/g
 
 function getParentBlock(document, position) {
 	const range = new vscode.Range(document.positionAt(0), position)
 	let text = document.getText(range)
 
 	text = text.replace(filterRegex, (match, match1) => {
-		if (match1 == undefined) {
+		if (match1 === undefined) {
 			return "" // Comment
 		}
-		if (match1[0] == '"') {
+		if (match1[0] === '"') {
 			return '"..."'
 		}
 		return match1
@@ -59,7 +59,7 @@ const provider1 = vscode.languages.registerCompletionItemProvider(selector, {
 			},
 			"backend": {
 				parents: ["endpoint", "definitions", "api"],
-				labelled: parentBlock != "endpoint"
+				labelled: parentBlock !== "endpoint"
 			},
 			"jwt": {
 				parents: ["definitions"],
@@ -69,9 +69,7 @@ const provider1 = vscode.languages.registerCompletionItemProvider(selector, {
 				parents: ["definitions"],
 				labelled: true
 			},
-			"defaults": {
-				parents: ["server"]
-			},
+			"defaults": {},
 			"definitions": {}
 		}
 
@@ -157,7 +155,7 @@ const provider1 = vscode.languages.registerCompletionItemProvider(selector, {
 
 		for (let key in blocks) {
 			let block = blocks[key]
-			if ((block.parents || [""]).indexOf(parentBlock) == -1) {
+			if ((block.parents || [""]).indexOf(parentBlock) === -1) {
 				continue
 			}
 
@@ -173,16 +171,16 @@ const provider1 = vscode.languages.registerCompletionItemProvider(selector, {
 
 		for (let key in attributes) {
 			let attribute = attributes[key]
-			if ((attribute.parents || []).indexOf(parentBlock) == -1) {
+			if ((attribute.parents || []).indexOf(parentBlock) === -1) {
 				continue
 			}
 			let item = new vscode.CompletionItem(key + " = …")
 			item.detail = "Attribute"
 			item.kind = vscode.CompletionItemKind.Property
 			item.sortText = "1" + key
-			if (attribute.type == "array") {
+			if (attribute.type === "array") {
 				item.insertText = new vscode.SnippetString(key + " = [$0]")
-			} else if (attribute.type == "block") {
+			} else if (attribute.type === "block") {
 				item.insertText = new vscode.SnippetString(key + " = {\u000a\t$0\u000a}\u000a")
 			} else {
 				item.insertText = key + " ="
