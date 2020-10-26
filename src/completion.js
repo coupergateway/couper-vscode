@@ -70,7 +70,8 @@ const provider1 = vscode.languages.registerCompletionItemProvider(selector, {
 				labelled: true
 			},
 			"defaults": {},
-			"definitions": {}
+			"definitions": {},
+			"settings": {}
 		}
 
 		const attributes = {
@@ -149,6 +150,23 @@ const provider1 = vscode.languages.registerCompletionItemProvider(selector, {
 			"htpasswd_file": {
 				parents: ["basic_auth"]
 			},
+
+			// settings
+			"default_port": {
+				parents: ["settings"]
+			},
+			"health_path": {
+				parents: ["settings"]
+			},
+			"log_format": {
+				parents: ["settings"]
+			},
+			"xfh": {
+				parents: ["settings"]
+			},
+			"request_id_format": {
+				parents: ["settings"]
+			},
 		}
 
 		let completions = []
@@ -203,7 +221,7 @@ const provider2 = vscode.languages.registerCompletionItemProvider(selector, {
 		const prefix = linePrefix.endsWith(' ') ? "" : " "
 
 		const constants = [ "true", "false", "null" ]
-		const variables = [ "env", "req", "beresp" ]
+		const variables = [ "env", "req", "bereq", "beresp" ]
 
 		let completions = []
 		constants.forEach((keyword) => {
