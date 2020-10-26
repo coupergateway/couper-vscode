@@ -116,6 +116,18 @@ const provider1 = vscode.languages.registerCompletionItemProvider(selector, {
 			"hostname": {
 				parents: ["backend"]
 			},
+			"connect_timeout": {
+				parents: ["backend"]
+			},
+			"request_body_limit": {
+				parents: ["backend"]
+			},
+			"ttfb_timeout": {
+				parents: ["backend"]
+			},
+			"timeout": {
+				parents: ["backend"]
+			},
 
 			"access_control": {
 				parents: ["server", "files", "spa", "endpoint", "api"],
