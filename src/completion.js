@@ -192,8 +192,9 @@ const provider1 = vscode.languages.registerCompletionItemProvider(selector, {
 			let item = new vscode.CompletionItem(key + " {…}")
 			item.detail = "Block"
 			item.kind = vscode.CompletionItemKind.Struct
-			const label = block.labelled ? '"${1:label}" ' : ""
-			const snippet = key + ' ' + label + '{\u000a\t$0\u000a}\u000a'
+			const label = key === "endpoint" ? "/" : "label"
+			const labelValue = block.labelled ? `"\${1:${label}}" ` : ""
+			const snippet = key + ' ' + labelValue + '{\u000a\t$0\u000a}\u000a'
 			item.insertText = new vscode.SnippetString(snippet)
 			item.sortText = "0" + key
 			completions.push(item)
