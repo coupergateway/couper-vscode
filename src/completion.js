@@ -267,5 +267,48 @@ const provider2 = vscode.languages.registerCompletionItemProvider(selector, {
 	}
 })
 
+const providerVariables = vscode.languages.registerCompletionItemProvider(selector,
+	{
+		provideCompletionItems(document, position) {
+			const linePrefix = document.lineAt(position).text.substr(0, position.character)
+
+			const variableAttributes = {
+				req: ["id", "method", "path", "query", "post", "url", "json_body"],
+				bereq: ["method", "path", "query", "post", "url"],
+				beresp: ["status", "json_body"],
+			}
+
+			let completions = []
+
+			let isVariableProperty = false
+			let parent, attrValues
+			for (const [attr, values] of Object.entries(variableAttributes)) {
+				if (linePrefix.endsWith(attr) || linePrefix.endsWith(attr+'.')) {
+					isVariableProperty = true
+					parent = attr
+					attrValues = values
+					break
+				}
+			}
+
+			if (!isVariableProperty) {
+				return undefined
+			}
+
+			attrValues.forEach((value) => {
+				let attr = new vscode.CompletionItem(value)
+				attr.detail = "Value"
+				attr.kind = vscode.CompletionItemKind.Value
+				attr.insertText = value
+				attr.commitCharacters = [value[0]]
+				completions.push(attr)
+			})
+
+			return completions
+		}
+	},
+	'.' // triggered whenever a '.' is being typed
+)
+
 Object.defineProperty(exports, "__esModule", { value: true })
-exports.providers = [provider1, provider2]
+exports.providers = [provider1, provider2, providerVariables]
