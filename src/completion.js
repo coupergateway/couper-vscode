@@ -2,7 +2,7 @@
 
 const vscode = require("vscode")
 
-const selector = "*"
+const selector = { scheme: 'file', language: 'hcl' }
 const parentBlockRegex = /\b([\w-]+)(?:[ \t]+"[^"]+")?[ \t]*{[^{}]*$/s
 const blockRegex = /{[^{}]*}/sg
 const attributeRegex = /^\s*[\w-]+\s*=/m
