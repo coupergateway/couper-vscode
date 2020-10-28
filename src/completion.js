@@ -49,7 +49,7 @@ for (const [name, block] of Object.entries(blocks)) {
 				const item = new vscode.CompletionItem(`${name} {…}`, vscode.CompletionItemKind.Struct)
 				item.detail = 'Block'
 				const label = name === 'endpoint' ? '/' : 'label'
-				const labelled = block.labelled === undefined ? parentBlock !== 'endpoint' : block.labelled
+				const labelled = block.labelled === undefined ? parentBlock !== 'endpoint' && parentBlock !== 'server' : block.labelled
 				const labelValue = labelled ? `"\${1:${label}}" ` : ''
 				const snippet = name + ' ' + labelValue + '{\u000a\t$0\u000a}\u000a'
 				item.insertText = new vscode.SnippetString(snippet)

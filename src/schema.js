@@ -28,9 +28,15 @@ const blocks = {
         parents: ['definitions'],
         labelled: true
     },
-    defaults: {},
-    definitions: {},
-    settings: {}
+    defaults: {
+        labelled: false,
+    },
+    definitions: {
+        labelled: false,
+    },
+    settings: {
+        labelled: false,
+    }
 }
 
 const attributes = {
