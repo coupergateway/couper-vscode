@@ -89,12 +89,41 @@ for (const [name, attribute] of Object.entries(attributes)) {
 	providers.push(provider)
 }
 
+function getScopePosition(document, position) {
+	let lineNumber = position.line
+	while (lineNumber > 0) {
+		const line = document.lineAt(lineNumber).text
+		const match = line.match(/^\s?.+{\s?/)
+		if (match !== null) {
+			return new vscode.Position(lineNumber,  line.length)
+		}
+		lineNumber--
+	}
+	return undefined
+}
+
+function isValidScope(document, position, regex) {
+	const scopePos = getScopePosition(document, position)
+	if (scopePos === undefined) {
+		return false
+	}
+	const line = document.lineAt(scopePos).text
+	const match = line.match(regex)
+	if (match === null && scopePos.line > 0) {
+		return isValidScope(document, new vscode.Position(scopePos.line - 1, scopePos.character), regex)
+	}
+	return match !== null
+}
+
+const variableScopeRegex = /^\s+(backend).+{\s?/
+
 variables.forEach((v) => {
 	const provider = vscode.languages.registerCompletionItemProvider(selector,
 		{
-			provideCompletionItems(document, position, token, context) {
+			provideCompletionItems(document, position) {
 				const linePrefix = document.lineAt(position).text.substr(0, position.character)
-				if (!attributeRegex.test(linePrefix) || linePrefix.endsWith('.')) {
+				const validScope = isValidScope(document, position, variableScopeRegex)
+				if (!validScope || !attributeRegex.test(linePrefix) || linePrefix.endsWith('.')) {
 					return undefined
 				}
 
@@ -117,7 +146,15 @@ variables.forEach((v) => {
 const providerVariables = vscode.languages.registerCompletionItemProvider(selector,
 	{
 		provideCompletionItems(document, position) {
+			const validScope = isValidScope(document, position, variableScopeRegex)
+			if (!validScope) {
+				return undefined
+			}
+
 			const linePrefix = document.lineAt(position).text.substr(0, position.character)
+			if (!attributeRegex.test(linePrefix)) {
+				return undefined
+			}
 
 			const variableAttributes = {
 				req: ['id', 'method', 'path', 'query', 'post', 'url', 'json_body'],
