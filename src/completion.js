@@ -75,11 +75,11 @@ for (const [name, attribute] of Object.entries(attributes)) {
 				const item = new vscode.CompletionItem( `${name} = …`, vscode.CompletionItemKind.Property)
 				item.detail = 'Attribute'
 				if (attribute.type === 'array') {
-					item.insertText = new vscode.SnippetString(`${name} = [$0]`)
+					item.insertText = new vscode.SnippetString(`${name} = ["$0"]`)
 				} else if (attribute.type === 'block') {
 					item.insertText = new vscode.SnippetString(name + ' = {\u000a\t$0\u000a}\u000a')
 				} else {
-					item.insertText = `${name} = `
+					item.insertText = new vscode.SnippetString(`${name} = "$0"`)
 				}
 				return [item]
 			}
