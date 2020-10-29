@@ -53,6 +53,7 @@ for (const [name, block] of Object.entries(blocks)) {
 				const labelValue = labelled ? `"\${1:${label}}" ` : ''
 				const snippet = name + ' ' + labelValue + '{\u000a\t$0\u000a}\u000a'
 				item.insertText = new vscode.SnippetString(snippet)
+				item.sortText = `0${name}`
 				return [item]
 			},
 		},
@@ -74,6 +75,7 @@ for (const [name, attribute] of Object.entries(attributes)) {
 
 				const item = new vscode.CompletionItem( `${name} = …`, vscode.CompletionItemKind.Property)
 				item.detail = 'Attribute'
+				item.sortText = `1${name}`
 				if (attribute.type === 'array') {
 					item.insertText = new vscode.SnippetString(`${name} = ["$0"]`)
 				} else if (attribute.type === 'block') {
