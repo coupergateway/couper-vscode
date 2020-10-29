@@ -4,8 +4,14 @@
   "version": "0.0.1",
   "publisher": "AvengaGermanyGmbH",
   "description": "Provides autocompletion, syntax/semantic validation and syntax highlighting for Couper's HCL based configuration file couper.hcl",
-  "keywords":["couper.hcl", "couper", "couper.io"],
-  "categories": ["Other"],
+  "keywords": [
+    "couper.hcl",
+    "couper",
+    "couper.io"
+  ],
+  "categories": [
+    "Other"
+  ],
   "icon": "images/couper_logo.png",
   "galleryBanner": {
     "color": "#ffffff",
@@ -18,11 +24,14 @@
   "scripts": {
     "watch": "true"
   },
-    "contributes": {
+  "contributes": {
     "languages": [
       {
         "id": "couper",
-        "extensions": ["hcl", "couper"],
+        "extensions": [
+          "hcl",
+          "couper"
+        ],
         "configuration": "./language-configuration.json"
       }
     ],
@@ -43,5 +52,6 @@
     "type": "git",
     "url": "https://github.com/avenga/couper-vscode"
   },
-  "homepage": "https://github.com/avenga/couper"
+  "homepage": "https://github.com/avenga/couper",
+  "license": "MIT"
 }
