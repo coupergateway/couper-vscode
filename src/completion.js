@@ -1,23 +1,27 @@
 "use strict"
 
-const vscode = require("vscode")
+const vscode = require('vscode')
+const { attributes, blocks, variables } = require('./schema')
 
-const selector = "*"
-const parentBlockRegex = /\b([\w-]+)(?:[ \t]+\"[^"]+\")?[ \t]*\{[^{}]*$/s
-const blockRegex = /\{[^{}]*\}/sg
+const selector = { scheme: 'file', language: 'hcl' }
+
+const parentBlockRegex = /\b([\w-]+)(?:[ \t]+"[^"]+")?[ \t]*{[^{}]*$/s
+const blockRegex = /{[^{}]*}/sg
 const attributeRegex = /^\s*[\w-]+\s*=/m
 // see http://regex.info/listing.cgi?ed=2&p=281
-const filterRegex = /([^"/\#]+|"(?:\\.|[^"\\])*")|\/\*[^*]*\*+(?:[^/*][^*]*\*+)*\/|(?:\/\/|\#)[^\n]*/g
+const filterRegex = /([^"/#]+|"(?:\\.|[^"\\])*")|\/\*[^*]*\*+(?:[^/*][^*]*\*+)*\/|(?:\/\/|#)[^\n]*/g
+
+const providers = []
 
 function getParentBlock(document, position) {
 	const range = new vscode.Range(document.positionAt(0), position)
 	let text = document.getText(range)
 
 	text = text.replace(filterRegex, (match, match1) => {
-		if (match1 == undefined) {
+		if (match1 === undefined) {
 			return "" // Comment
 		}
-		if (match1[0] == '"') {
+		if (match1[0] === '"') {
 			return '"..."'
 		}
 		return match1
@@ -31,212 +35,166 @@ function getParentBlock(document, position) {
 	return matches ? matches[1] : ""
 }
 
-const provider1 = vscode.languages.registerCompletionItemProvider(selector, {
-	provideCompletionItems(document, position, token, context) {
-		const linePrefix = document.lineAt(position).text.substr(0, position.character)
-		if (!/^\s*([\w-]+)?$/.test(linePrefix)) {
-			return null
-		}
 
-		const parentBlock = getParentBlock(document, position)
+for (const [name, block] of Object.entries(blocks)) {
+	const provider = vscode.languages.registerCompletionItemProvider(selector,
+		{
+			provideCompletionItems(document, position, token, context) {
+				const linePrefix = document.lineAt(position).text.substr(0, position.character)
+				const parentBlock = getParentBlock(document, position)
+				if (!/^\s*([\w-]+)?$/.test(linePrefix) || (block.parents || ['']).indexOf(parentBlock) === -1) {
+					return undefined
+				}
 
-		let blocks = {
-			"server": {
-				labelled: true
+				const item = new vscode.CompletionItem(`${name} {…}`, vscode.CompletionItemKind.Struct)
+				item.detail = 'Block'
+				const label = name === 'endpoint' ? '/' : 'label'
+				const labelled = block.labelled === undefined ? parentBlock !== 'endpoint' && parentBlock !== 'server' : block.labelled
+				const labelValue = labelled ? `"\${1:${label}}" ` : ''
+				const snippet = name + ' ' + labelValue + '{\u000a\t$0\u000a}\u000a'
+				item.insertText = new vscode.SnippetString(snippet)
+				item.sortText = `0${name}`
+				return [item]
 			},
-			"endpoint": {
-				labelled: true,
-				parents: ["api"]
-			},
-			"files": {
-				parents: ["server"]
-			},
-			"spa": {
-				parents: ["server"]
-			},
-			"api": {
-				parents: ["server"]
-			},
-			"backend": {
-				parents: ["endpoint", "definitions", "api"],
-				labelled: parentBlock != "endpoint"
-			},
-			"jwt": {
-				parents: ["definitions"],
-				labelled: true
-			},
-			"basic_auth": {
-				parents: ["definitions"],
-				labelled: true
-			},
-			"defaults": {
-				parents: ["server"]
-			},
-			"definitions": {}
-		}
+		},
+		name[0]
+	)
+	providers.push(provider)
+}
 
-		const attributes = {
-			"hosts": {
-				parents: ["server"],
-				type: "array"
-			},
-			"document_root": {
-				parents: ["files"]
-			},
-			"error_file": {
-				parents: ["files"]
-			},
-			"bootstrap_file": {
-				parents: ["spa"]
-			},
-			"paths": {
-				parents: ["spa"],
-				type: "array"
-			},
-			"base_path": {
-				parents: ["server", "api"]
-			},
-			"backend": {
-				parents: ["endpoint"]
-			},
-			"path": {
-				parents: ["endpoint", "backend"]
-			},
-			// backend
-			"origin": {
-				parents: ["backend"]
-			},
-			"request_headers": {
-				parents: ["backend"],
-				type: "block"
-			},
-			"response_headers": {
-				parents: ["backend"],
-				type: "block"
-			},
-			"hostname": {
-				parents: ["backend"]
-			},
+for (const [name, attribute] of Object.entries(attributes)) {
+	const provider = vscode.languages.registerCompletionItemProvider(selector,
+		{
+			provideCompletionItems(document, position, token, context) {
+				const linePrefix = document.lineAt(position).text.substr(0, position.character)
+				const parentBlock = getParentBlock(document, position)
+				const writeAttrRegex = /^\s*([\w-]+)?$/
+				if (!writeAttrRegex.test(linePrefix) || (attribute.parents || []).indexOf(parentBlock) === -1) {
+					return undefined
+				}
 
-			"access_control": {
-				parents: ["server", "files", "spa", "endpoint", "api"],
-				type: "array"
-			},
-			// JWT
-			"cookie": {
-				parents: ["jwt"]
-			},
-			"header": {
-				parents: ["jwt"]
-			},
-			"key": {
-				parents: ["jwt"]
-			},
-			"key_file": {
-				parents: ["jwt"]
-			},
-			"signature_algorithm": {
-				parents: ["jwt"]
-			},
-			// basic_auth
-			"user": {
-				parents: ["basic_auth"]
-			},
-			"password": {
-				parents: ["basic_auth"]
-			},
-			"realm": {
-				parents: ["basic_auth"]
-			},
-			"htpasswd_file": {
-				parents: ["basic_auth"]
-			},
-		}
-
-		let completions = []
-
-		for (let key in blocks) {
-			let block = blocks[key]
-			if ((block.parents || [""]).indexOf(parentBlock) == -1) {
-				continue
+				const item = new vscode.CompletionItem( `${name} = …`, vscode.CompletionItemKind.Property)
+				item.detail = 'Attribute'
+				item.sortText = `1${name}`
+				if (attribute.type === 'array') {
+					item.insertText = new vscode.SnippetString(`${name} = ["$0"]`)
+				} else if (attribute.type === 'block') {
+					item.insertText = new vscode.SnippetString(name + ' = {\u000a\t$0\u000a}\u000a')
+				} else {
+					item.insertText = new vscode.SnippetString(`${name} = "$0"`)
+				}
+				return [item]
 			}
+		},
+		name[0],
+	)
+	providers.push(provider)
+}
 
-			let item = new vscode.CompletionItem(key + " {…}")
-			item.detail = "Block"
-			item.kind = vscode.CompletionItemKind.Struct
-			const label = block.labelled ? '"${1:label}" ' : ""
-			const snippet = key + ' ' + label + '{\u000a\t$0\u000a}\u000a'
-			item.insertText = new vscode.SnippetString(snippet)
-			item.sortText = "0" + key
-			completions.push(item)
+function getScopePosition(document, position) {
+	let lineNumber = position.line
+	while (lineNumber > 0) {
+		const line = document.lineAt(lineNumber).text
+		const match = line.match(/^\s?.+{\s?/)
+		if (match !== null) {
+			return new vscode.Position(lineNumber,  line.length)
 		}
-
-		for (let key in attributes) {
-			let attribute = attributes[key]
-			if ((attribute.parents || []).indexOf(parentBlock) == -1) {
-				continue
-			}
-			let item = new vscode.CompletionItem(key + " = …")
-			item.detail = "Attribute"
-			item.kind = vscode.CompletionItemKind.Property
-			item.sortText = "1" + key
-			if (attribute.type == "array") {
-				item.insertText = new vscode.SnippetString(key + " = [$0]")
-			} else if (attribute.type == "block") {
-				item.insertText = new vscode.SnippetString(key + " = {\u000a\t$0\u000a}\u000a")
-			} else {
-				item.insertText = key + " ="
-			}
-			completions.push(item)
-		}
-
-		return completions
+		lineNumber--
 	}
+	return undefined
+}
+
+function isValidScope(document, position, regex) {
+	const scopePos = getScopePosition(document, position)
+	if (scopePos === undefined) {
+		return false
+	}
+	const line = document.lineAt(scopePos).text
+	const match = line.match(regex)
+	if (match === null && scopePos.line > 0) {
+		return isValidScope(document, new vscode.Position(scopePos.line - 1, scopePos.character), regex)
+	}
+	return match !== null
+}
+
+const variableScopeRegex = /^\s+(backend).+{\s?/
+
+variables.forEach((v) => {
+	const provider = vscode.languages.registerCompletionItemProvider(selector,
+		{
+			provideCompletionItems(document, position) {
+				const linePrefix = document.lineAt(position).text.substr(0, position.character)
+				const validScope = isValidScope(document, position, variableScopeRegex)
+				if (!validScope || !attributeRegex.test(linePrefix) || linePrefix.endsWith('.')) {
+					return undefined
+				}
+
+				// TODO: linePrefix changes as you type, handle already typed parts of 'v'
+				const spacePrefix = !linePrefix.endsWith(' ') ? ' ' : ''
+
+				let item = new vscode.CompletionItem(v, vscode.CompletionItemKind.Variable)
+				item.detail = "Variable"
+				item.insertText = `${spacePrefix}${v}.`
+				// register suggest command to trigger variables completion on tab
+				item.command = { command: 'editor.action.triggerSuggest', title: 'Re-trigger completions...' };
+				return [item]
+			},
+		},
+		v[0], // triggered whenever a variable start character is being typed
+	)
+	providers.push(provider)
 })
 
-const provider2 = vscode.languages.registerCompletionItemProvider(selector, {
-	provideCompletionItems(document, position, token, context) {
-		const linePrefix = document.lineAt(position).text.substr(0, position.character)
+const providerVariables = vscode.languages.registerCompletionItemProvider(selector,
+	{
+		provideCompletionItems(document, position) {
+			const validScope = isValidScope(document, position, variableScopeRegex)
+			if (!validScope) {
+				return undefined
+			}
 
-		if (!attributeRegex.test(linePrefix)) {
-			return null
+			const linePrefix = document.lineAt(position).text.substr(0, position.character)
+			if (!attributeRegex.test(linePrefix)) {
+				return undefined
+			}
+
+			const variableAttributes = {
+				req: ['id', 'method', 'path', 'query', 'post', 'url', 'json_body'],
+				bereq: ['method', 'path', 'query', 'post', 'url'],
+				beresp: ['status', 'json_body'],
+			}
+
+			let completions = []
+
+			let isVariableProperty = false
+			let parent, attrValues
+			for (const [attr, values] of Object.entries(variableAttributes)) {
+				if (linePrefix.endsWith(attr) || linePrefix.endsWith(attr+'.')) {
+					isVariableProperty = true
+					parent = attr
+					attrValues = values
+					break
+				}
+			}
+
+			if (!isVariableProperty) {
+				return undefined
+			}
+
+			attrValues.forEach((value) => {
+				let attr = new vscode.CompletionItem(value, vscode.CompletionItemKind.Value)
+				attr.detail = 'Value'
+				attr.insertText = value
+				attr.commitCharacters = [value[0]]
+				completions.push(attr)
+			})
+
+			return completions
 		}
+	},
+	'.' // triggered whenever a '.' is being typed
+)
 
-		const prefix = linePrefix.endsWith(' ') ? "" : " "
+providers.push(providerVariables)
 
-		const constants = [ "true", "false", "null" ]
-		const variables = [ "env", "req", "beresp" ]
-
-		let completions = []
-		constants.forEach((keyword) => {
-			let item = new vscode.CompletionItem(keyword)
-			item.detail = "Constant"
-			item.kind = vscode.CompletionItemKind.Value
-			item.insertText = prefix + keyword
-			item.sortText = "0" + keyword
-			completions.push(item)
-		})
-
-		variables.forEach((keyword) => {
-			let item = new vscode.CompletionItem(keyword)
-			item.detail = "Variable"
-			item.kind = vscode.CompletionItemKind.Variable
-			item.insertText = prefix + keyword
-			item.sortText = "2" + keyword
-			completions.push(item)
-		})
-
-		let item = new vscode.CompletionItem('"…"')
-		item.detail = "String"
-		item.kind = vscode.CompletionItemKind.Value
-		item.insertText = new vscode.SnippetString(prefix + '"${1}"$0')
-		item.sortText = "1"
-		completions.push(item)
-
-		return completions
-
-	}
-})
-
-Object.defineProperty(exports, "__esModule", { value: true })
-exports.providers = [provider1, provider2]
+exports.providers = providers

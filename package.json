@@ -46,7 +46,9 @@
   "activationEvents": [
     "*"
   ],
-  "devDependencies": {},
+  "devDependencies": {
+    "vscode": "^1.1.37"
+  },
   "bugs": "https://github.com/avenga/couper-vscode/issues",
   "repository": {
     "type": "git",
