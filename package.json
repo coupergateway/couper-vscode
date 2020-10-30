@@ -7,9 +7,11 @@
   "keywords": [
     "couper.hcl",
     "couper",
-    "couper.io"
+    "couper.io",
+    "hcl"
   ],
   "categories": [
+    "Programming Languages",
     "Other"
   ],
   "icon": "images/couper_logo.png",
@@ -28,9 +30,14 @@
     "languages": [
       {
         "id": "couper",
+        "aliases": [
+          "Couper",
+          "couper",
+          "hcl"
+        ],
         "extensions": [
-          "hcl",
-          "couper"
+          ".hcl",
+          ".couper"
         ],
         "configuration": "./language-configuration.json"
       }
@@ -44,7 +51,9 @@
     ]
   },
   "activationEvents": [
-    "*"
+    "onLanguage:hcl",
+    "onLanguage:couper",
+    "workspaceContains:**/*.hcl"
   ],
   "devDependencies": {
     "vscode": "^1.1.37"
