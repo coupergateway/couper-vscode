@@ -3,7 +3,7 @@
 const vscode = require('vscode')
 const { attributes, blocks, variables } = require('./schema')
 
-const selector = { scheme: 'file', language: 'hcl' }
+const selector = { language: 'couper' }
 
 const parentBlockRegex = /\b([\w-]+)(?:[ \t]+"[^"]+")?[ \t]*{[^{}]*$/s
 const blockRegex = /{[^{}]*}/sg
