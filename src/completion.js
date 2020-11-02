@@ -158,6 +158,7 @@ const providerVariables = vscode.languages.registerCompletionItemProvider(select
 				return undefined
 			}
 
+			// TODO: move to schema.js
 			const variableAttributes = {
 				req: ['id', 'method', 'path', 'query', 'post', 'url', 'json_body'],
 				bereq: ['method', 'path', 'query', 'post', 'url'],
