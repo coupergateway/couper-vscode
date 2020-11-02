@@ -31,9 +31,7 @@
       {
         "id": "couper",
         "aliases": [
-          "Couper",
-          "couper",
-          "hcl"
+          "Couper"
         ],
         "extensions": [
           ".hcl",
@@ -51,7 +49,6 @@
     ]
   },
   "activationEvents": [
-    "onLanguage:hcl",
     "onLanguage:couper",
     "workspaceContains:**/*.hcl"
   ],
