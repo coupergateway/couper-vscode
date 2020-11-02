@@ -1,4 +1,19 @@
 
+<a name="v0.0.3"></a>
+## [v0.0.3](https://github.com/avenga/couper-vscode/compare/v0.0.2...v0.0.3)
+
+> 2020-11-02
+
+### Add
+
+* Add api/cors and disable_access_control attributes
+
+### Fix
+
+* Fix lacking support for hcl in general (variable types) ([#5](https://github.com/avenga/couper-vscode/issues/5))
+* Fix language activation events and alias for couper / hcl
+
+
 <a name="v0.0.2"></a>
 ## [v0.0.2](https://github.com/avenga/couper-vscode/compare/v0.0.1...v0.0.2)
 
