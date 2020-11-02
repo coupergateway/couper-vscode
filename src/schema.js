@@ -17,6 +17,10 @@ const blocks = {
     api: {
         parents: ['server']
     },
+    cors: {
+        parents: ['api'],
+        labelled: false,
+    },
     backend: {
         parents: ['endpoint', 'defaults', 'definitions', 'api'],
     },
@@ -40,6 +44,19 @@ const blocks = {
 }
 
 const attributes = {
+    // cors
+    allowed_origins: {
+        parents: ['cors'],
+        type: 'array'
+    },
+    allow_credentials: {
+        parents: ['cors'],
+    },
+    max_age: {
+        parents: ['cors'],
+    },
+
+    // server
     hosts: {
         parents: ['server'],
         type: 'array'
@@ -48,7 +65,7 @@ const attributes = {
         parents: ['files']
     },
     error_file: {
-        parents: ['files']
+        parents: ['api', 'files']
     },
     bootstrap_file: {
         parents: ['spa']
@@ -98,6 +115,12 @@ const attributes = {
         parents: ['server', 'files', 'spa', 'endpoint', 'api'],
         type: 'array'
     },
+
+    disable_access_control: {
+        parents: ['server', 'files', 'spa', 'endpoint', 'api'],
+        type: 'array'
+    },
+
     // JWT
     cookie: {
         parents: ['jwt']
