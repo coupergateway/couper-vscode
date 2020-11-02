@@ -3,7 +3,7 @@
   "displayName": "Couper Configuration",
   "version": "0.0.2",
   "publisher": "AvengaGermanyGmbH",
-  "description": "Provides autocompletion, syntax/semantic validation and syntax highlighting for Couper's HCL based configuration file couper.hcl",
+  "description": "Provides autocompletion, syntax/semantic validation and syntax highlighting for Couper's HCL based configuration file.",
   "keywords": [
     "couper.hcl",
     "couper",
@@ -43,8 +43,8 @@
     "grammars": [
       {
         "language": "couper",
-        "scopeName": "source.couper",
-        "path": "./syntax/couper.json"
+        "scopeName": "source.hcl",
+        "path": "./syntaxes/hcl.json"
       }
     ]
   },
