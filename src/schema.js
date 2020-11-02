@@ -146,6 +146,11 @@ const attributes = {
     },
 }
 
-const variables = ['env', 'req', 'bereq', 'beresp']
+const variables = {
+    'env': null,
+    'req': ['ctx', 'cookies', 'headers', 'id', 'method', 'path', 'query', 'post', 'url', 'json_body'],
+    'bereq': ['ctx', 'cookies', 'headers', 'method', 'path', 'query', 'post', 'url'],
+    'beresp': ['ctx', 'cookies', 'headers', 'status', 'json_body'],
+}
 
 module.exports = { attributes, blocks, variables }

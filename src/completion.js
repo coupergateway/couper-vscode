@@ -119,7 +119,7 @@ function isValidScope(document, position, regex) {
 
 const variableScopeRegex = /^\s+(backend).+{\s?/
 
-variables.forEach((v) => {
+Object.entries(variables).forEach(([v]) => {
 	const provider = vscode.languages.registerCompletionItemProvider(selector,
 		{
 			provideCompletionItems(document, position) {
@@ -158,18 +158,11 @@ const providerVariables = vscode.languages.registerCompletionItemProvider(select
 				return undefined
 			}
 
-			// TODO: move to schema.js
-			const variableAttributes = {
-				req: ['id', 'method', 'path', 'query', 'post', 'url', 'json_body'],
-				bereq: ['method', 'path', 'query', 'post', 'url'],
-				beresp: ['status', 'json_body'],
-			}
-
 			let completions = []
 
 			let isVariableProperty = false
 			let parent, attrValues
-			for (const [attr, values] of Object.entries(variableAttributes)) {
+			for (const [attr, values] of Object.entries(variables)) {
 				if (linePrefix.endsWith(attr) || linePrefix.endsWith(attr+'.')) {
 					isVariableProperty = true
 					parent = attr
