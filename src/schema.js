@@ -151,6 +151,20 @@ const attributes = {
         parents: ['basic_auth']
     },
 
+    // query_params
+    remove_query_params: {
+        parents: ['backend', 'endpoint'],
+        type: 'array'
+    },
+    add_query_params: {
+        parents: ['backend', 'endpoint'],
+        type: 'block'
+    },
+    set_query_params: {
+        parents: ['backend', 'endpoint'],
+        type: 'block'
+    },
+
     // settings
     default_port: {
         parents: ['settings']
