@@ -95,6 +95,14 @@ const attributes = {
         parents: ['backend'],
         type: 'block'
     },
+    set_request_headers: {
+        parents: ['backend'],
+        type: 'block'
+    },
+    set_response_headers: {
+        parents: ['backend'],
+        type: 'block'
+    },
     hostname: {
         parents: ['backend']
     },
