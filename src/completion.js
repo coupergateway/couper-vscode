@@ -179,7 +179,6 @@ const providerVariables = vscode.languages.registerCompletionItemProvider(select
 				let attr = new vscode.CompletionItem(value, vscode.CompletionItemKind.Value)
 				attr.detail = 'Value'
 				attr.insertText = value
-				attr.commitCharacters = [value[0]]
 				completions.push(attr)
 			})
 
