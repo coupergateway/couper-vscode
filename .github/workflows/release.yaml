@@ -1,6 +1,6 @@
 on:
   release:
-    types: [edited,prereleased,released]
+    types: [edited,released]
 name: Release Extension
 jobs:
   deploy:
