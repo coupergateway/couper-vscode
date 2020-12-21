@@ -7,7 +7,7 @@ const selector = { language: 'couper' }
 
 const parentBlockRegex = /\b([\w-]+)(?:[ \t]+"[^"]+")?[ \t]*{[^{}]*$/s
 const blockRegex = /{[^{}]*}/sg
-const attributeRegex = /^\s*"?\(?[\w-]+\)?"?\s*=/
+const attributeRegex = /^\s*"?\(?([\w-]+)\)?"?\s*=/
 // see http://regex.info/listing.cgi?ed=2&p=281
 const filterRegex = /([^"/#]+|"(?:\\.|[^"\\])*")|\/\*[^*]*\*+(?:[^/*][^*]*\*+)*\/|(?:\/\/|#)[^\n]*/g
 
@@ -85,6 +85,10 @@ for (const [name, attribute] of Object.entries(attributes)) {
 						item.label = `${name} = {…}`
 						item.insertText = new vscode.SnippetString(name + ' = {\u000a\t$0\u000a}\u000a');
 					} break;
+					case 'boolean': {
+						item.label = `${name} = …`
+						item.insertText = new vscode.SnippetString(name + ' = $0');
+					} break;
 					case 'inline-block': {
 						item.label = `${name} {…}`
 						item.insertText = new vscode.SnippetString(name + ' {\u000a\t$0\u000a}\u000a');
@@ -152,6 +156,37 @@ for (const [v] of Object.entries(variables)) {
 	)
 	providers.push(provider)
 }
+
+['true', 'false'].forEach(label => {
+	const provider = vscode.languages.registerCompletionItemProvider(selector,
+		{
+			provideCompletionItems(document, position, _, context) {
+				const linePrefix = document.lineAt(position).text.substr(0, position.character)
+				if (!attributeRegex.test(linePrefix)) {
+					return undefined
+				}
+
+				const match = attributeRegex.exec(linePrefix)
+				if (match === null) {
+					return undefined
+				}
+
+				const attrName = match[1]
+				if (attributes[attrName] === undefined) {
+					return undefined
+				}
+				switch (attributes[attrName].type) {
+					case 'boolean': {
+						return [ vscode.CompletionItem(label, vscode.CompletionItemKind.Constant) ]
+					}
+				}
+				return undefined
+			}
+		},
+		label[0], // triggered whenever a variable start character is being typed
+	)
+	providers.push(provider)
+})
 
 const providerVariables = vscode.languages.registerCompletionItemProvider(selector,
 	{

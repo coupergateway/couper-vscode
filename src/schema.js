@@ -51,6 +51,7 @@ const attributes = {
     },
     allow_credentials: {
         parents: ['cors'],
+        type: 'boolean'
     },
     max_age: {
         parents: ['cors'],
@@ -182,10 +183,12 @@ const attributes = {
         parents: ['openapi'],
     },
     ignore_request_violations: {
-        parents: ['openapi']
+        parents: ['openapi'],
+        type: 'boolean'
     },
     ignore_response_violations: {
-        parents: ['openapi']
+        parents: ['openapi'],
+        type: 'boolean'
     },
 
     // settings
@@ -199,7 +202,8 @@ const attributes = {
         parents: ['settings']
     },
     xfh: {
-        parents: ['settings']
+        parents: ['settings'],
+        type: 'boolean'
     },
     request_id_format: {
         parents: ['settings']
