@@ -1,5 +1,14 @@
 # Changelog
 
+<a name="v0.1.1"></a>
+## [v0.1.1](https://github.com/avenga/couper-vscode/compare/v0.1.0...v0.1.1)
+
+> 2020-12-21
+
+### Add
+
+* Add boolean attribute type; prevent string auto-completion
+
 <a name="v0.1.0"></a>
 ## [v0.1.0](https://github.com/avenga/couper-vscode/compare/v0.0.3...v0.1.0)
 
