@@ -58,6 +58,21 @@
           ]
         },
         {
+          "begin": "([\\w-]+)\\s*=\\s*\\{",
+          "comment": "map assignment with equal sign",
+          "beginCaptures": {
+            "0": { "name": "meta.function.hcl" },
+            "1": { "name": "storage.type.hcl" }
+          },
+          "end": "\\}",
+          "patterns" : [
+            { "include": "$self" },
+            { "include": "#comments" },
+            { "include": "#variable" },
+            { "include": "#variable-interpolation-map-reference" }
+          ]
+        },
+        {
           "begin": "([\\w-]+)((?:\\s*\"[^\"]*\")*)\\s*\\{",
           "beginCaptures": {
             "0": { "name": "meta.function.hcl" },
@@ -137,11 +152,37 @@
     "variable-interpolation-reference" : {
       "patterns" : [
         {
-          "match": "\\b([\\w-]+)((\\.[\\w-]+)*)\\b",
+          "match": "\\b([\\w-]+)\\.([\\w-]+)\\.?([\\w-]+)*\\b",
           "captures": {
             "1": { "name": "storage.modifier.hcl" },
-            "2": { "name": "entity.name.type.hcl" }
+            "2": { "name": "entity.name.type.hcl" },
+            "3": { "name": "variable.other.member" }
           }
+        }
+      ]
+    },
+    "variable-interpolation-map-reference" : {
+      "patterns" : [
+        {
+          "begin": "(\"?[\\w\\s\\.-]+\"?)\\s*(=)\\s*",
+          "beginCaptures": {
+            "1": { "name": "variable.other" },
+            "2": { "name": "keyword.operator.hcl" }
+          },
+          "end": "(?<!\\2)\\s*($|(?=\\}))",
+          "endCaptures" : {
+            "0": { "name": "keyword.operator.hcl" }
+          },
+          "patterns": [
+            { "include": "#variable-interpolation-reference"},
+            { "include": "#variable-type-decimal" },
+            { "include": "#variable-type-hexadecimal" },
+            { "include": "#variable-type-constant" },
+            { "include": "#variable-type-string" },
+            {
+              "match": "\\s*,\\s*"
+            }
+          ]
         }
       ]
     },
