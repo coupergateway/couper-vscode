@@ -173,6 +173,21 @@ const attributes = {
         type: 'block'
     },
 
+    // openapi block and attributes
+    openapi: {
+        parents: ['backend'],
+        type: 'inline-block'
+    },
+    file: {
+        parents: ['openapi'],
+    },
+    ignore_request_violations: {
+        parents: ['openapi']
+    },
+    ignore_response_violations: {
+        parents: ['openapi']
+    },
+
     // settings
     default_port: {
         parents: ['settings']
