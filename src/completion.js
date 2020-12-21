@@ -7,7 +7,7 @@ const selector = { language: 'couper' }
 
 const parentBlockRegex = /\b([\w-]+)(?:[ \t]+"[^"]+")?[ \t]*{[^{}]*$/s
 const blockRegex = /{[^{}]*}/sg
-const attributeRegex = /^\s*[\w-]+\s*=/m
+const attributeRegex = /^\s*"?\(?[\w-]+\)?"?\s*=/
 // see http://regex.info/listing.cgi?ed=2&p=281
 const filterRegex = /([^"/#]+|"(?:\\.|[^"\\])*")|\/\*[^*]*\*+(?:[^/*][^*]*\*+)*\/|(?:\/\/|#)[^\n]*/g
 
