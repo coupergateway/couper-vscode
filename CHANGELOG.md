@@ -1,3 +1,33 @@
+# Changelog
+
+<a name="v0.1"></a>
+## [v0.1](https://github.com/avenga/couper-vscode/compare/v0.0.3...v0.1)
+
+> 2020-12-21
+
+### Add
+
+* autocompletion for missing variable properties: `path_params` and common ones: `ctx`, `cookies`, `headers`
+* autocompletion for `query_params` and `openapi`
+
+### Change
+
+* `set_request_headers` and `set_response_headers` as replacement for `request/response_headers`
+
+### Fix
+
+* map assignment to hcl syntax highlighting
+* variable completion for attributes with string quote or function usage on left side
+* wrong autocomplete behaviour while typing a specific character
+
+### Pull Requests
+
+* Merge pull request [#14](https://github.com/avenga/couper-vscode/issues/14) from avenga/fix-var-map-highlighting
+* Merge pull request [#10](https://github.com/avenga/couper-vscode/issues/10) from avenga/add-missing-variables
+* Merge pull request [#11](https://github.com/avenga/couper-vscode/issues/11) from avenga/add-openapi
+* Merge pull request [#12](https://github.com/avenga/couper-vscode/issues/12) from avenga/vscode-ignore
+* Merge pull request [#8](https://github.com/avenga/couper-vscode/issues/8) from avenga/query-params
+* Merge pull request [#9](https://github.com/avenga/couper-vscode/issues/9) from avenga/set-headers
 
 <a name="v0.0.3"></a>
 ## [v0.0.3](https://github.com/avenga/couper-vscode/compare/v0.0.2...v0.0.3)
