@@ -206,6 +206,12 @@ const attributes = {
     },
 }
 
-const variables = ['env', 'req', 'bereq', 'beresp']
+const commonProperties = ['ctx', 'cookies', 'headers']
+const variables = {
+    env: [],
+    req: commonProperties.concat(...['id', 'method', 'path', 'path_params', 'query', 'post', 'url', 'json_body']),
+    bereq: commonProperties.concat(...['method', 'path', 'query', 'post', 'url']),
+    beresp: commonProperties.concat(...['status', 'json_body']),
+}
 
 module.exports = { attributes, blocks, variables }

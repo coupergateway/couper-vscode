@@ -127,7 +127,7 @@ function isValidScope(document, position, regex) {
 
 const variableScopeRegex = /^\s+(backend).+{\s?/
 
-variables.forEach((v) => {
+for (const [v] of Object.entries(variables)) {
 	const provider = vscode.languages.registerCompletionItemProvider(selector,
 		{
 			provideCompletionItems(document, position) {
@@ -151,7 +151,7 @@ variables.forEach((v) => {
 		v[0], // triggered whenever a variable start character is being typed
 	)
 	providers.push(provider)
-})
+}
 
 const providerVariables = vscode.languages.registerCompletionItemProvider(selector,
 	{
@@ -166,22 +166,15 @@ const providerVariables = vscode.languages.registerCompletionItemProvider(select
 				return undefined
 			}
 
-			// TODO: move to schema.js
-			const variableAttributes = {
-				req: ['id', 'method', 'path', 'query', 'post', 'url', 'json_body'],
-				bereq: ['method', 'path', 'query', 'post', 'url'],
-				beresp: ['status', 'json_body'],
-			}
-
 			let completions = []
 
 			let isVariableProperty = false
-			let parent, attrValues
-			for (const [attr, values] of Object.entries(variableAttributes)) {
-				if (linePrefix.endsWith(attr) || linePrefix.endsWith(attr+'.')) {
+			let parent, values
+			for (const [name, properties] of Object.entries(variables)) {
+				if (linePrefix.endsWith(name) || linePrefix.endsWith(name+'.')) {
 					isVariableProperty = true
-					parent = attr
-					attrValues = values
+					parent = name
+					values = properties
 					break
 				}
 			}
@@ -190,11 +183,10 @@ const providerVariables = vscode.languages.registerCompletionItemProvider(select
 				return undefined
 			}
 
-			attrValues.forEach((value) => {
+			values.forEach((value) => {
 				let attr = new vscode.CompletionItem(value, vscode.CompletionItemKind.Value)
 				attr.detail = 'Value'
 				attr.insertText = value
-				attr.commitCharacters = [value[0]]
 				completions.push(attr)
 			})
 
