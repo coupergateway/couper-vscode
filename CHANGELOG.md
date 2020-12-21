@@ -1,7 +1,7 @@
 # Changelog
 
-<a name="v0.1"></a>
-## [v0.1](https://github.com/avenga/couper-vscode/compare/v0.0.3...v0.1)
+<a name="v0.1.0"></a>
+## [v0.1.0](https://github.com/avenga/couper-vscode/compare/v0.0.3...v0.1.0)
 
 > 2020-12-21
 
