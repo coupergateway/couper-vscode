@@ -1,7 +1,7 @@
 "use strict"
 
 const vscode = require('vscode')
-const { attributes, blocks, variables } = require('./schema')
+const { attributes, blocks, functions, variables } = require('./schema')
 
 const selector = { language: 'couper' }
 
@@ -129,7 +129,7 @@ function isValidScope(document, position, regex) {
 	return match !== null
 }
 
-const variableScopeRegex = /^\s+(backend).+{\s?/
+const variableScopeRegex = /^\s+(backend|endpoint|request|response|proxy).+{\s?/
 
 for (const [v] of Object.entries(variables)) {
 	const provider = vscode.languages.registerCompletionItemProvider(selector,
@@ -152,7 +152,34 @@ for (const [v] of Object.entries(variables)) {
 				return [item]
 			},
 		},
-		v[0], // triggered whenever a variable start character is being typed
+		// v[0], // triggered whenever a variable start character is being typed
+	)
+	providers.push(provider)
+}
+
+for (const [f, details] of Object.entries(functions)) {
+	const provider = vscode.languages.registerCompletionItemProvider(selector,
+		{
+			provideCompletionItems(document, position) {
+				const linePrefix = document.lineAt(position).text.substr(0, position.character)
+				const validScope = isValidScope(document, position, variableScopeRegex)
+				if (!validScope || !attributeRegex.test(linePrefix) || linePrefix.endsWith('.')) {
+					return undefined
+				}
+
+				// TODO: linePrefix changes as you type, handle already typed parts of 'v'
+				const spacePrefix = !linePrefix.endsWith(' ') ? ' ' : ''
+
+				let item = new vscode.CompletionItem(f, vscode.CompletionItemKind.Function)
+				item.detail = 'Function'
+				item.documentation = details.description
+				item.insertText = new vscode.SnippetString(`${spacePrefix}${f}($0)`)
+				// register suggest command to trigger variables completion on tab
+				item.command = { command: 'editor.action.triggerSuggest', title: 'Re-trigger completions...' };
+				return [item]
+			},
+		},
+		f[0], // triggered whenever a variable start character is being typed
 	)
 	providers.push(provider)
 }
