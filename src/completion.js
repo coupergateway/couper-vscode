@@ -8,6 +8,7 @@ const selector = { language: 'couper' }
 const parentBlockRegex = /\b([\w-]+)(?:[ \t]+"[^"]+")?[ \t]*{[^{}]*$/s
 const blockRegex = /{[^{}]*}/sg
 const attributeRegex = /^\s*"?\(?([\w-]+)\)?"?\s*=/
+const attributeMustRegex = /^\s*"?\(?([\w-]+)\)?"?\s*=$/
 // see http://regex.info/listing.cgi?ed=2&p=281
 const filterRegex = /([^"/#]+|"(?:\\.|[^"\\])*")|\/\*[^*]*\*+(?:[^/*][^*]*\*+)*\/|(?:\/\/|#)[^\n]*/g
 
@@ -142,7 +143,7 @@ for (const [v] of Object.entries(variables)) {
 				}
 
 				// TODO: linePrefix changes as you type, handle already typed parts of 'v'
-				const spacePrefix = !linePrefix.endsWith(' ') ? ' ' : ''
+				const spacePrefix = attributeMustRegex.test(linePrefix) ? ' ' : ''
 
 				let item = new vscode.CompletionItem(v, vscode.CompletionItemKind.Variable)
 				item.detail = "Variable"
@@ -168,7 +169,7 @@ for (const [f, details] of Object.entries(functions)) {
 				}
 
 				// TODO: linePrefix changes as you type, handle already typed parts of 'v'
-				const spacePrefix = !linePrefix.endsWith(' ') ? ' ' : ''
+				const spacePrefix = attributeMustRegex.test(linePrefix) ? ' ' : ''
 
 				let item = new vscode.CompletionItem(f, vscode.CompletionItemKind.Function)
 				item.detail = 'Function'
