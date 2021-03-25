@@ -1,5 +1,22 @@
 # Changelog
 
+<a name="v0.2.0"></a>
+## [v0.2.0](https://github.com/avenga/couper-vscode/compare/v0.1.1...v0.2.0)
+
+> 2021-03-25
+
+### Bug Fixes
+
+* Fix auto-space in assignment snippet
+
+### Changes
+
+* Schema update to reflect Couper 0.7 features  [#15](https://github.com/avenga/couper-vscode/issues/15)
+
+### Features
+
+* Added `functions` with documentation
+
 <a name="v0.1.1"></a>
 ## [v0.1.1](https://github.com/avenga/couper-vscode/compare/v0.1.0...v0.1.1)
 

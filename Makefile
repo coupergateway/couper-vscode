@@ -8,3 +8,7 @@ install:
 
 run:
 	code --extensionDevelopmentPath=$(__DIR__)
+
+# TAG=v0.3 make changelog
+changelog:
+	git-chglog --next-tag $(TAG) $(TAG)
