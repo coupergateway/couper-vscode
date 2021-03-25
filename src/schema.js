@@ -31,7 +31,10 @@ const blocks = {
         parents: ['endpoint']
     },
     backend: {
-        parents: ['definitions', 'proxy', 'request'],
+        parents: ['definitions', 'proxy', 'request', 'oauth2'],
+    },
+    oauth2: {
+        parents: ['backend'],
     },
     jwt: {
         parents: ['definitions'],
@@ -42,6 +45,10 @@ const blocks = {
         labelled: true
     },
     basic_auth: {
+        parents: ['definitions'],
+        labelled: true
+    },
+    saml: {
         parents: ['definitions'],
         labelled: true
     },
@@ -128,6 +135,21 @@ const attributes = {
         parents: ['backend']
     },
 
+    // backend oauth2
+    grant_type: {
+        parents: ['oauth2'],
+    },
+    token_endpoint: {
+        parents: ['oauth2'],
+    },
+    client_id: {
+        parents: ['oauth2'],
+    },
+    client_secret: {
+        parents: ['oauth2'],
+    },
+
+
     // endpoint
     request_body_limit: {
         parents: ['endpoint']
@@ -145,7 +167,7 @@ const attributes = {
 
     // request / proxy / response
     backend: { // label reference
-        parents: ['request', 'proxy']
+        parents: ['request', 'proxy', 'oauth2']
     },
     body: {
         parents: ['request', 'response']
@@ -172,7 +194,8 @@ const attributes = {
         parents: ['jwt']
     },
     claims: {
-        parents: ['jwt', 'jwt_signing_profile']
+        parents: ['jwt', 'jwt_signing_profile'],
+        type: 'block'
     },
     required_claims: {
         parents: ['jwt'],
@@ -206,14 +229,29 @@ const attributes = {
         parents: ['basic_auth']
     },
 
+    // saml
+    idp_metadata_file: {
+        parents: ['saml']
+    },
+    sp_acs_url: {
+        parents: ['saml']
+    },
+    sp_entity_id: {
+        parents: ['saml']
+    },
+    array_attributes: {
+        parents: ['saml'],
+        type: 'array'
+    },
+
     // meta-attributes
     remove_request_headers: {
         parents: ['backend', 'endpoint', 'proxy'],
-        type: 'block'
+        type: 'array'
     },
     remove_response_headers: {
         parents: ['backend', 'endpoint', 'proxy'],
-        type: 'block'
+        type: 'array'
     },
     add_request_headers: {
         parents: ['backend', 'endpoint', 'proxy'],
@@ -287,16 +325,18 @@ const attributes = {
 }
 
 const functions = {
-    base64_decode: { description: '	Decodes Base64 data, as specified in RFC 4648.' },
-    base64_encode: { description: '	Encodes Base64 data, as specified in RFC 4648.' },
-    coalesce: { description: '	Returns the first of the given arguments that is not null.' },
-    json_decode: { description: '	Parses the given JSON string and, if it is valid, returns the value it represents.' },
-    json_encode: { description: '	Returns a JSON serialization of the given value.' },
-    jwt_sign: { description: '	jwt_sign creates and signs a JSON Web Token (JWT) from information from a referenced jwt_signing_profile block and additional claims provided as a function parameter.' },
-    to_lower: { description: '	Converts a given string to lowercase.' },
-    to_upper: { description: '	Converts a given string to uppercase.' },
-    unixtime: { description: '	Retrieves the current UNIX timestamp in seconds.' },
-    url_encode: { description: '	URL-encodes a given string according to RFC 3986.' },
+    base64_decode: { description: 'Decodes Base64 data, as specified in RFC 4648.' },
+    base64_encode: { description: 'Encodes Base64 data, as specified in RFC 4648.' },
+    coalesce: { description: 'Returns the first of the given arguments that is not null.' },
+    json_decode: { description: 'Parses the given JSON string and, if it is valid, returns the value it represents.' },
+    json_encode: { description: 'Returns a JSON serialization of the given value.' },
+    jwt_sign: { description: 'jwt_sign creates and signs a JSON Web Token (JWT) from information from a referenced jwt_signing_profile block and additional claims provided as a function parameter.' },
+    merge: { description: 'Deep-merges two or more of either objects or tuples. `null` arguments are ignored. A `null` attribute value in an object removes the previous attribute value. An attribute value with a different type than the current value is set as the new value. `merge()` with no parameters returns `null`.' },
+    saml_sso_url: { description: 'Creates a SAML SingleSignOn URL (including the `SAMLRequest` parameter) from a referenced `saml` block.' },
+    to_lower: { description: 'Converts a given string to lowercase.' },
+    to_upper: { description: 'Converts a given string to uppercase.' },
+    unixtime: { description: 'Retrieves the current UNIX timestamp in seconds.' },
+    url_encode: { description: 'URL-encodes a given string according to RFC 3986.' },
 }
 
 const commonProperties = ['ctx', 'cookies', 'headers']
