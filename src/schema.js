@@ -172,6 +172,12 @@ const attributes = {
     body: {
         parents: ['request', 'response']
     },
+    json_body: {
+        parents: ['request', 'response']
+    },
+    form_body: {
+        parents: ['request']
+    },
     headers: {
         parents: ['request', 'response'],
         type: 'block'
