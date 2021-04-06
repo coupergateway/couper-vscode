@@ -345,12 +345,18 @@ const functions = {
     url_encode: { description: 'URL-encodes a given string according to RFC 3986.' },
 }
 
-const commonProperties = ['ctx', 'cookies', 'headers']
+const commonProperties = ['context', 'cookies', 'headers']
 const variables = {
-    env: [],
-    req: commonProperties.concat(...['id', 'method', 'path', 'path_params', 'query', 'form_body', 'url', 'json_body']),
-    bereq: commonProperties.concat(...['method', 'path', 'query', 'form_body', 'url']),
-    beresp: commonProperties.concat(...['status', 'json_body']),
+    env: { values: [] },
+    request: { values: commonProperties.concat(...['id', 'method', 'path', 'path_params', 'query', 'form_body', 'url', 'json_body']) },
+    backend_requests: {
+        child: 'default',
+        values: commonProperties.concat(...['method', 'path', 'query', 'form_body', 'url']),
+    },
+    backend_responses: {
+        child: 'default',
+        values: commonProperties.concat(...['status', 'json_body']),
+    },
 }
 
 module.exports = { attributes, blocks, functions, variables }
