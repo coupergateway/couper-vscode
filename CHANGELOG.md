@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+### Add
+
+* `json_body` and `form_body` attributes
+
+
 <a name="v0.2.0"></a>
 ## [v0.2.0](https://github.com/avenga/couper-vscode/compare/v0.1.1...v0.2.0)
 

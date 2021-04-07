@@ -172,6 +172,12 @@ const attributes = {
     body: {
         parents: ['request', 'response']
     },
+    json_body: {
+        parents: ['request', 'response']
+    },
+    form_body: {
+        parents: ['request']
+    },
     headers: {
         parents: ['request', 'response'],
         type: 'block'
@@ -342,8 +348,8 @@ const functions = {
 const commonProperties = ['ctx', 'cookies', 'headers']
 const variables = {
     env: [],
-    req: commonProperties.concat(...['id', 'method', 'path', 'path_params', 'query', 'post', 'url', 'json_body']),
-    bereq: commonProperties.concat(...['method', 'path', 'query', 'post', 'url']),
+    req: commonProperties.concat(...['id', 'method', 'path', 'path_params', 'query', 'form_body', 'url', 'json_body']),
+    bereq: commonProperties.concat(...['method', 'path', 'query', 'form_body', 'url']),
     beresp: commonProperties.concat(...['status', 'json_body']),
 }
 
