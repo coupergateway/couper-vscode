@@ -1,11 +1,25 @@
 # Changelog
 
-## Unreleased
+<a name="v0.3.0"></a>
+## [v0.3.0](https://github.com/avenga/couper-vscode/compare/v0.2.0...v0.3.0)
 
-### Add
+> 2021-04-08
 
-* `json_body` and `form_body` attributes
+### Bug Fixes
 
+* Remove obsolete new line for block snippets
+* No string text snippets for attribute number types ([#19](https://github.com/avenga/couper-vscode/pull/19))
+
+### Changes
+
+* Variable names related to couper specification changes ([#18](https://github.com/avenga/couper-vscode/pull/18))
+
+### Features
+
+* `json_body` and `form_body` attributes [#16](https://github.com/avenga/couper-vscode/issues/16)
+* Suggestion for known const values ([#19](https://github.com/avenga/couper-vscode/pull/19))
+    * `grant_type` (oauth2)
+    * `signature_algorithm` (jwt)
 
 <a name="v0.2.0"></a>
 ## [v0.2.0](https://github.com/avenga/couper-vscode/compare/v0.1.1...v0.2.0)
