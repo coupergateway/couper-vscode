@@ -140,6 +140,7 @@ const attributes = {
     // backend oauth2
     grant_type: {
         parents: ['oauth2'],
+        options: ['client_credentials'],
     },
     token_endpoint: {
         parents: ['oauth2'],
@@ -217,7 +218,8 @@ const attributes = {
         parents: ['jwt', 'jwt_signing_profile']
     },
     signature_algorithm: {
-        parents: ['jwt', 'jwt_signing_profile']
+        parents: ['jwt', 'jwt_signing_profile'],
+        options: ['RS256', 'RS384', 'RS512', 'HS256', 'HS384', 'HS512'],
     },
     ttl : {
         parents: ['jwt_signing_profile']
