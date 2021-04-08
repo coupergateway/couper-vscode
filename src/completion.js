@@ -91,12 +91,17 @@ for (const [name, attribute] of Object.entries(attributes)) {
 						item.label = `${name} = …`
 						item.insertText = new vscode.SnippetString(name + ' = $0')
 					} break;
+					case 'number': {
+						item.label = `${name} = …`
+						item.insertText = new vscode.SnippetString(name + ' = $0')
+					} break;
 					case 'inline-block': {
 						item.label = `${name} {…}`
 						item.insertText = new vscode.SnippetString(name + ' {\u000a\t$0\u000a}\u000a')
 					} break;
 					default: item.insertText = new vscode.SnippetString(`${name} = "$0"`)
 				}
+				item.command = { command: 'editor.action.triggerSuggest', title: 'Re-trigger completions...' }
 				return [item]
 			}
 		},
@@ -215,6 +220,7 @@ for (const [f, details] of Object.entries(functions)) {
 				if (attributes[attrName] === undefined) {
 					return undefined
 				}
+
 				switch (attributes[attrName].type) {
 					case 'boolean': {
 						return [ vscode.CompletionItem(label, vscode.CompletionItemKind.Constant) ]
