@@ -53,7 +53,7 @@ for (const [name, block] of Object.entries(blocks)) {
 				const label = name === 'endpoint' ? '/' : 'label'
 				const labelled = block.labelled === undefined ? parentBlock !== 'endpoint' && parentBlock !== 'server' : block.labelled
 				const labelValue = labelled ? `"\${1:${label}}" ` : ''
-				const snippet = name + ' ' + labelValue + '{\u000a\t$0\u000a}\u000a'
+				const snippet = name + ' ' + labelValue + '{\u000a\t$0\u000a}'
 				item.insertText = new vscode.SnippetString(snippet)
 				item.sortText = `0${name}`
 				return [item]
@@ -85,7 +85,7 @@ for (const [name, attribute] of Object.entries(attributes)) {
 					} break;
 					case 'block': {
 						item.label = `${name} = {…}`
-						item.insertText = new vscode.SnippetString(name + ' = {\u000a\t$0\u000a}\u000a')
+						item.insertText = new vscode.SnippetString(name + ' = {\u000a\t$0\u000a}')
 					} break;
 					case 'boolean': {
 						item.label = `${name} = …`
@@ -97,7 +97,7 @@ for (const [name, attribute] of Object.entries(attributes)) {
 					} break;
 					case 'inline-block': {
 						item.label = `${name} {…}`
-						item.insertText = new vscode.SnippetString(name + ' {\u000a\t$0\u000a}\u000a')
+						item.insertText = new vscode.SnippetString(name + ' {\u000a\t$0\u000a}')
 					} break;
 					default: item.insertText = new vscode.SnippetString(`${name} = "$0"`)
 				}
