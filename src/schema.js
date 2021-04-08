@@ -117,10 +117,12 @@ const attributes = {
         parents: ['backend']
     },
     http2: {
-        parents: ['backend']
+        parents: ['backend'],
+        type: 'boolean'
     },
     max_connections: {
-        parents: ['backend']
+        parents: ['backend'],
+        type: 'number'
     },
     proxy: {
         parents: ['backend']
@@ -138,6 +140,7 @@ const attributes = {
     // backend oauth2
     grant_type: {
         parents: ['oauth2'],
+        options: ['client_credentials'],
     },
     token_endpoint: {
         parents: ['oauth2'],
@@ -189,7 +192,8 @@ const attributes = {
         parents: ['request', 'proxy']
     },
     status: {
-        parents: ['response']
+        parents: ['response'],
+        type: 'number'
     },
 
     // JWT / signing profile
@@ -214,7 +218,8 @@ const attributes = {
         parents: ['jwt', 'jwt_signing_profile']
     },
     signature_algorithm: {
-        parents: ['jwt', 'jwt_signing_profile']
+        parents: ['jwt', 'jwt_signing_profile'],
+        options: ['RS256', 'RS384', 'RS512', 'HS256', 'HS384', 'HS512'],
     },
     ttl : {
         parents: ['jwt_signing_profile']
@@ -310,7 +315,8 @@ const attributes = {
 
     // settings
     default_port: {
-        parents: ['settings']
+        parents: ['settings'],
+        type: 'number'
     },
     health_path: {
         parents: ['settings']
@@ -319,7 +325,8 @@ const attributes = {
         parents: ['settings']
     },
     no_proxy_from_env: {
-        parents: ['settings']
+        parents: ['settings'],
+        type: 'boolean',
     },
     xfh: {
         parents: ['settings'],

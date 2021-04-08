@@ -91,18 +91,47 @@ for (const [name, attribute] of Object.entries(attributes)) {
 						item.label = `${name} = …`
 						item.insertText = new vscode.SnippetString(name + ' = $0')
 					} break;
+					case 'number': {
+						item.label = `${name} = …`
+						item.insertText = new vscode.SnippetString(name + ' = $0')
+					} break;
 					case 'inline-block': {
 						item.label = `${name} {…}`
 						item.insertText = new vscode.SnippetString(name + ' {\u000a\t$0\u000a}\u000a')
 					} break;
 					default: item.insertText = new vscode.SnippetString(`${name} = "$0"`)
 				}
+				item.command = { command: 'editor.action.triggerSuggest', title: 'Re-trigger completions...' }
+
 				return [item]
 			}
 		},
 		name[0],
 	)
 	providers.push(provider)
+
+	if (attribute.options !== undefined) {
+		const optionsProvider = vscode.languages.registerCompletionItemProvider(selector, {
+			provideCompletionItems(document, position) {
+				let lp = document.lineAt(position).text.substr(0, position.character)
+
+				const attrMatch = attributeRegex.exec(lp)
+				if (attrMatch === null || attrMatch[1] !== name) {
+					return undefined
+				}
+				let completions = []
+				for (const option of attribute.options) {
+					let item = new vscode.CompletionItem(option, vscode.CompletionItemKind.Constant)
+					item.sortText = "0" + option
+					completions.push(item)
+				}
+				if (completions.length > 0) {
+					return completions
+				}
+			}
+		})
+		providers.push(optionsProvider)
+	}
 }
 
 function getScopePosition(document, position) {
@@ -215,6 +244,7 @@ for (const [f, details] of Object.entries(functions)) {
 				if (attributes[attrName] === undefined) {
 					return undefined
 				}
+
 				switch (attributes[attrName].type) {
 					case 'boolean': {
 						return [ vscode.CompletionItem(label, vscode.CompletionItemKind.Constant) ]
