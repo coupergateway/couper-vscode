@@ -176,7 +176,8 @@ const attributes = {
         parents: ['request', 'response']
     },
     json_body: {
-        parents: ['request', 'response']
+        parents: ['request', 'response'],
+        type: 'block'
     },
     form_body: {
         parents: ['request']
