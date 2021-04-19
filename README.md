@@ -13,7 +13,7 @@ Jump directly to the necessary label or value spots.
 To test or improve this extension you can start with `make run` within your working directory.
 
 ### About Couper
-[Couper](https://github.com/avenga/couper) is a frontend gateway especially designed to support building and running API-driven Web projects. Acting as a proxy component it connects clients with (micro) services and adds access control and observability to the project.
+[Couper](https://github.com/avenga/couper) is a lightweight API gateway designed to support developers in building and operating API-driven Web projects. Acting as a proxy component it connects clients with (micro) services and adds access control and observability to the project.
 
 ### [License](LICENSE)
 
