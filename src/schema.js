@@ -145,10 +145,17 @@ const attributes = {
     token_endpoint: {
         parents: ['oauth2'],
     },
+    token_endpoint_auth_method: {
+        parents: ['oauth2'],
+        options: ['client_secret_basic', 'client_secret_post'],
+    },
     client_id: {
         parents: ['oauth2'],
     },
     client_secret: {
+        parents: ['oauth2'],
+    },
+    scope: {
         parents: ['oauth2'],
     },
 
