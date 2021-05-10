@@ -8,6 +8,10 @@ const blocks = {
         parents: ['api', 'server'],
         labelled: true
     },
+    error_handler: {
+        parents: ['basic_auth', 'jwt', 'saml'],
+        labelled: true
+    },
     files: {
         parents: ['server']
     },
@@ -22,13 +26,13 @@ const blocks = {
         labelled: false,
     },
     proxy: {
-        parents: ['endpoint']
+        parents: ['endpoint', 'error_handler']
     },
     request: {
-        parents: ['endpoint']
+        parents: ['endpoint', 'error_handler']
     },
     response: {
-        parents: ['endpoint']
+        parents: ['endpoint', 'error_handler']
     },
     backend: {
         parents: ['definitions', 'proxy', 'request', 'oauth2'],
@@ -87,7 +91,7 @@ const attributes = {
         parents: ['files']
     },
     error_file: {
-        parents: ['api', 'files', 'server']
+        parents: ['api', 'files', 'server', 'endpoint', 'error_handler']
     },
     bootstrap_file: {
         parents: ['spa']
@@ -158,7 +162,6 @@ const attributes = {
     scope: {
         parents: ['oauth2'],
     },
-
 
     // endpoint
     request_body_limit: {
@@ -234,7 +237,6 @@ const attributes = {
         parents: ['jwt_signing_profile']
     },
 
-
     // basic_auth
     user: {
         parents: ['basic_auth']
@@ -266,43 +268,43 @@ const attributes = {
 
     // meta-attributes
     remove_request_headers: {
-        parents: ['backend', 'endpoint', 'proxy'],
+        parents: ['backend', 'endpoint', 'proxy', 'error_handler'],
         type: 'array'
     },
     remove_response_headers: {
-        parents: ['backend', 'endpoint', 'proxy'],
+        parents: ['backend', 'endpoint', 'proxy', 'error_handler'],
         type: 'array'
     },
     add_request_headers: {
-        parents: ['backend', 'endpoint', 'proxy'],
+        parents: ['backend', 'endpoint', 'proxy', 'error_handler'],
         type: 'block'
     },
     add_response_headers: {
-        parents: ['backend', 'endpoint', 'proxy'],
+        parents: ['backend', 'endpoint', 'proxy', 'error_handler'],
         type: 'block'
     },
     set_request_headers: {
-        parents: ['backend', 'endpoint', 'proxy'],
+        parents: ['backend', 'endpoint', 'proxy', 'error_handler'],
         type: 'block'
     },
     set_response_headers: {
-        parents: ['backend', 'endpoint', 'proxy'],
+        parents: ['backend', 'endpoint', 'proxy', 'error_handler'],
         type: 'block'
     },
     remove_query_params: {
-        parents: ['backend', 'endpoint', 'proxy'],
+        parents: ['backend', 'endpoint', 'proxy', 'error_handler'],
         type: 'array'
     },
     add_query_params: {
-        parents: ['backend', 'endpoint', 'proxy'],
+        parents: ['backend', 'endpoint', 'proxy', 'error_handler'],
         type: 'block'
     },
     set_query_params: {
-        parents: ['backend', 'endpoint', 'proxy'],
+        parents: ['backend', 'endpoint', 'proxy', 'error_handler'],
         type: 'block'
     },
     path: {
-        parents: ['backend', 'endpoint', 'proxy']
+        parents: ['backend', 'endpoint', 'proxy', 'error_handler']
     },
 
     // openapi block and attributes
