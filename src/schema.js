@@ -180,7 +180,8 @@ const attributes = {
         type: 'block'
     },
     form_body: {
-        parents: ['request']
+        parents: ['request'],
+        type: 'block'
     },
     headers: {
         parents: ['request', 'response'],
