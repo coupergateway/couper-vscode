@@ -10,7 +10,12 @@ const blocks = {
     },
     error_handler: {
         parents: ['basic_auth', 'jwt', 'saml'],
-        labelled: true
+        labelled: true,
+        labels: {
+            'basic_auth': ['*', 'basic_auth', 'basic_auth_credentials_missing'],
+            'jwt':        ['*', 'jwt', 'jwt_token_missing', 'jwt_token_expired', 'jwt_token_invalid'],
+            'saml':       ['*', 'saml2']
+        }
     },
     files: {
         parents: ['server']
