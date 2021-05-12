@@ -50,7 +50,7 @@ for (const [name, block] of Object.entries(blocks)) {
 
 				const item = new vscode.CompletionItem(`${name} {…}`, vscode.CompletionItemKind.Struct)
 				item.detail = 'Block'
-				const label = name === 'endpoint' ? '/' : name === 'error_handler' ? '*' : 'label'
+				const label = name === 'endpoint' ? '/' : name === 'error_handler' ? '' : 'label'
 				const labelled = block.labelled === undefined ? parentBlock !== 'endpoint' && parentBlock !== 'server' : block.labelled
 				const labelValue = labelled ? `"\${1:${label}}" ` : ''
 				if (name === 'error_handler' && block.labels !== undefined && block.labels[parentBlock] !== undefined) {
