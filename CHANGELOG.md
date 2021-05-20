@@ -1,6 +1,20 @@
 # Changelog
 
-<a name="v0.3.0"></a>
+## [v0.4.0](https://github.com/avenga/couper-vscode/compare/v0.3.0...v0.4.0)
+
+> 2021-05-20
+
+### Added
+
+- Add autocompletion for error-handling ([#24](https://github.com/avenga/couper-vscode/issues/24))
+- Add more OAuth2 options: `token_endpoint_auth_method` and `scope` ([#22](https://github.com/avenga/couper-vscode/issues/22))
+
+### Fixed
+
+- Fix function description type: rendered as markdown now
+- Fix `form_body` autocompletion type to object `{}` ([#20](https://github.com/avenga/couper-vscode/issues/20))
+- Fix `json_body` autocompletion type to object `{}` ([#20](https://github.com/avenga/couper-vscode/issues/20))
+
 ## [v0.3.0](https://github.com/avenga/couper-vscode/compare/v0.2.0...v0.3.0)
 
 > 2021-04-08
@@ -21,7 +35,6 @@
     * `grant_type` (oauth2)
     * `signature_algorithm` (jwt)
 
-<a name="v0.2.0"></a>
 ## [v0.2.0](https://github.com/avenga/couper-vscode/compare/v0.1.1...v0.2.0)
 
 > 2021-03-25
@@ -38,7 +51,6 @@
 
 * Added `functions` with documentation
 
-<a name="v0.1.1"></a>
 ## [v0.1.1](https://github.com/avenga/couper-vscode/compare/v0.1.0...v0.1.1)
 
 > 2020-12-21
@@ -47,7 +59,6 @@
 
 * Add boolean attribute type; prevent string auto-completion
 
-<a name="v0.1.0"></a>
 ## [v0.1.0](https://github.com/avenga/couper-vscode/compare/v0.0.3...v0.1.0)
 
 > 2020-12-21
@@ -76,7 +87,6 @@
 * Merge pull request [#8](https://github.com/avenga/couper-vscode/issues/8) from avenga/query-params
 * Merge pull request [#9](https://github.com/avenga/couper-vscode/issues/9) from avenga/set-headers
 
-<a name="v0.0.3"></a>
 ## [v0.0.3](https://github.com/avenga/couper-vscode/compare/v0.0.2...v0.0.3)
 
 > 2020-11-02
@@ -90,8 +100,6 @@
 * Fix lacking support for hcl in general (variable types) ([#5](https://github.com/avenga/couper-vscode/issues/5))
 * Fix language activation events and alias for couper / hcl
 
-
-<a name="v0.0.2"></a>
 ## [v0.0.2](https://github.com/avenga/couper-vscode/compare/v0.0.1...v0.0.2)
 
 > 2020-10-29
@@ -122,7 +130,6 @@
 * Merge pull request [#3](https://github.com/avenga/couper-vscode/issues/3) from avenga/release-action
 * Merge pull request [#2](https://github.com/avenga/couper-vscode/issues/2) from avenga/readme-update
 
-<a name="v0.0.1"></a>
 ## v0.0.1
 
 > 2020-10-26
