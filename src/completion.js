@@ -231,7 +231,7 @@ for (const [f, details] of Object.entries(functions)) {
 
 				let item = new vscode.CompletionItem(f, vscode.CompletionItemKind.Function)
 				item.detail = 'Function'
-				item.documentation = details.description
+				item.documentation = new vscode.MarkdownString(details.description)
 				item.insertText = new vscode.SnippetString(`${spacePrefix}${f}($0)`)
 				// register suggest command to trigger variables completion on tab
 				item.command = { command: 'editor.action.triggerSuggest', title: 'Re-trigger completions...' };
