@@ -277,7 +277,7 @@ const attributes = {
         type: 'array'
     },
     remove_response_headers: {
-        parents: ['backend', 'endpoint', 'proxy', 'error_handler'],
+        parents: ['server', 'files', 'spa', 'api', 'backend', 'endpoint', 'proxy', 'error_handler'],
         type: 'array'
     },
     add_request_headers: {
@@ -285,7 +285,7 @@ const attributes = {
         type: 'block'
     },
     add_response_headers: {
-        parents: ['backend', 'endpoint', 'proxy', 'error_handler'],
+        parents: ['server', 'files', 'spa', 'api', 'backend', 'endpoint', 'proxy', 'error_handler'],
         type: 'block'
     },
     set_request_headers: {
@@ -293,7 +293,7 @@ const attributes = {
         type: 'block'
     },
     set_response_headers: {
-        parents: ['backend', 'endpoint', 'proxy', 'error_handler'],
+        parents: ['server', 'files', 'spa', 'api', 'backend', 'endpoint', 'proxy', 'error_handler'],
         type: 'block'
     },
     remove_query_params: {
