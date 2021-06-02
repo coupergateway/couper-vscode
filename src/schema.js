@@ -312,6 +312,11 @@ const attributes = {
         parents: ['backend', 'endpoint', 'proxy', 'error_handler']
     },
 
+    set_response_status: {
+        parents: ['backend', 'endpoint', 'error_handler'],
+        type: 'number'
+    },
+
     // openapi block and attributes
     openapi: {
         parents: ['backend'],
