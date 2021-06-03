@@ -308,6 +308,18 @@ const attributes = {
         parents: ['backend', 'endpoint', 'proxy', 'error_handler'],
         type: 'block'
     },
+    remove_form_params: {
+        parents: ['backend', 'endpoint', 'proxy'],
+        type: 'array'
+    },
+    add_form_params: {
+        parents: ['backend', 'endpoint', 'proxy'],
+        type: 'block'
+    },
+    set_form_params: {
+        parents: ['backend', 'endpoint', 'proxy'],
+        type: 'block'
+    },
     path: {
         parents: ['backend', 'endpoint', 'proxy', 'error_handler']
     },
