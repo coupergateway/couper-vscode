@@ -1,5 +1,20 @@
 # Changelog
 
+<a name="v0.5.0"></a>
+## [v0.5.0](https://github.com/avenga/couper-vscode/compare/v0.4.0...v0.5.0)
+
+> 2021-06-21
+
+### Added
+
+* completion for `set_response_status` within `backend`, `endpoint` and `error_handler` blocks [#27](https://github.com/avenga/couper-vscode/issues/27)
+* support for form parameter: `set_form_params`, `add_form_params`, `remove_form_params` [#23](https://github.com/avenga/couper-vscode/issues/23)
+
+### Changed
+
+* response-headers modifier are available for: `server`, `files`, `spa`, `api` blocks [#26](https://github.com/avenga/couper-vscode/issues/26)
+
+
 ## [v0.4.0](https://github.com/avenga/couper-vscode/compare/v0.3.0...v0.4.0)
 
 > 2021-05-20
