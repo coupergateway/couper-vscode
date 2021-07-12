@@ -68,8 +68,7 @@
           "patterns" : [
             { "include": "$self" },
             { "include": "#comments" },
-            { "include": "#variable" },
-            { "include": "#variable-interpolation-map-reference" }
+            { "include": "#variable" }
           ]
         },
         {
