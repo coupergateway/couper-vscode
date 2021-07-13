@@ -294,13 +294,13 @@
       "patterns" : [
         {
           "comment" : "Heredoc string",
-          "begin": "<<(\\w+)",
+          "begin": "<<-?(\\w+)",
           "beginCaptures": {
-            "0": { "name": "entity.name.section" }
+            "0": { "name": "entity.name.tag.hcl" }
           },
           "end": "^\\s*\\1$",
           "endCaptures": {
-            "0": { "name": "entity.name.section" }
+            "0": { "name": "entity.name.tag.hcl" }
           },
           "contentName": "string.unquoted.here-doc.hcl"
         }
