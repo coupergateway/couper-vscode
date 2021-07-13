@@ -281,7 +281,13 @@
           "patterns" : [
             { "include" : "#variable-interpolation" },
             {
-              "match" : "[^\"]",
+              "match" : "\\\\[nrt\\\\\"]|\\\\u([a-fA-F0-9]{8}|[a-fA-F0-9]{4})",
+              "captures": {
+                "0": { "name": "constant.character.escape.hcl" }
+              }
+            },
+            {
+              "match" : ".",
               "captures": {
                 "0": { "name": "string.quoted.double.hcl" }
               }
