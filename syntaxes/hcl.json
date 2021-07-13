@@ -68,7 +68,8 @@
           "patterns" : [
             { "include": "$self" },
             { "include": "#comments" },
-            { "include": "#variable" }
+            { "include": "#variable" },
+            { "include": "#quoted-key-assignment" }
           ]
         },
         {
@@ -87,10 +88,35 @@
         }
       ]
     },
-    "variable" : {
+    "variable": {
       "patterns" : [
         {
           "begin": "([\\w\\.-]+)\\s*(=)\\s*",
+          "beginCaptures": {
+            "1": { "name": "variable.parameter.hcl" },
+            "2": { "name": "keyword.operator.hcl" }
+          },
+          "end": "(?<!\\2)$",
+          "endCaptures" : {
+            "0": { "name": "keyword.operator.hcl" }
+          },
+          "patterns": [
+            { "include": "#comments" },
+            { "include": "#variable-type-string" },
+            { "include": "#variable-type-heredoc" },
+            { "include": "#variable-type-hexadecimal" },
+            { "include": "#variable-type-decimal" },
+            { "include": "#variable-type-constant" },
+            { "include": "#variable-type-array" },
+            { "include": "#variable-type-map" }
+          ]
+        }
+      ]
+    },
+    "quoted-key-assignment": {
+      "patterns" : [
+        {
+          "begin": "(\"[^\"]+\")\\s*(=)\\s*",
           "beginCaptures": {
             "1": { "name": "variable.parameter.hcl" },
             "2": { "name": "keyword.operator.hcl" }
