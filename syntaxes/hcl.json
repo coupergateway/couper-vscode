@@ -62,7 +62,7 @@
           "comment": "map assignment with equal sign",
           "beginCaptures": {
             "0": { "name": "meta.function.hcl" },
-            "1": { "name": "storage.type.hcl" }
+            "1": { "name": "variable.parameter.hcl" }
           },
           "end": "\\}",
           "patterns" : [
