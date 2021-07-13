@@ -100,6 +100,7 @@
             "0": { "name": "keyword.operator.hcl" }
           },
           "patterns": [
+            { "include": "#comments" },
             { "include": "#variable-type-string" },
             { "include": "#variable-type-heredoc" },
             { "include": "#variable-type-hexadecimal" },
@@ -185,12 +186,13 @@
         }
       ]
     },
-    "variable-type-array" : {
+    "variable-type-array": {
       "patterns": [
         {
           "begin": "\\[",
           "end": "\\]",
           "patterns": [
+            { "include": "#comments" },
             { "include": "#variable-type-decimal" },
             { "include": "#variable-type-hexadecimal" },
             { "include": "#variable-type-constant" },
