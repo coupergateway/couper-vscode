@@ -5,8 +5,8 @@ const { attributes, blocks, functions, variables } = require('./schema')
 
 const selector = { language: 'couper' }
 
-const parentBlockRegex = /\b([\w-]+)(?:[ \t]+"[^"]+")?[ \t]*{[^{}]*$/s
-const blockRegex = /{[^{}]*}/sg
+const parentBlockRegex = /\b([\w-]+)(?:[ \t]+"[^"]+")?[ \t]*=?[ \t]*{[^{}]*$/
+const blockRegex = /{[^{}]*}/g
 const attributeRegex = /^\s*"?\(?([\w-]+)\)?"?\s*=/
 const attributeMustRegex = /^\s*"?\(?([\w-]+)\)?"?\s*=$/
 // see http://regex.info/listing.cgi?ed=2&p=281
