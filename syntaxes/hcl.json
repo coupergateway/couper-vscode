@@ -254,10 +254,10 @@
         }
       ]
     },
-    "variable-type-constant" : {
+    "variable-type-constant": {
       "patterns" : [
         {
-          "match": "\\b(true|false|yes|no|on|off)\\b",
+          "match": "\\b(true|false|null)\\b",
           "captures": {
             "0": { "name": "constant.numeric.hcl" }
           }
