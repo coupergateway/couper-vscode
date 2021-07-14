@@ -368,6 +368,9 @@ const attributes = {
     request_id_format: {
         parents: ['settings']
     },
+    accept_forwarded_url: {
+        parents: ['settings']
+    },
 }
 
 const functions = {
