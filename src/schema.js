@@ -61,10 +61,9 @@ const blocks = {
         parents: ['definitions'],
         labelled: true
     },
-    // TODO: missing spec
-    // defaults: {
-    //     labelled: false,
-    // },
+    defaults: {
+        labelled: false,
+    },
     definitions: {
         labelled: false,
     },
@@ -367,6 +366,12 @@ const attributes = {
     },
     request_id_format: {
         parents: ['settings']
+    },
+
+    // defaults
+    environment_variables: {
+        parents: ['defaults'],
+        type: 'block'
     },
 }
 
