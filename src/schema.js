@@ -396,6 +396,7 @@ const functions = {
 const commonProperties = ['context', 'cookies', 'headers']
 const variables = {
     env: { values: [] },
+    couper: { values: ['version'] },
     request: { values: commonProperties.concat(...['id', 'method', 'path', 'path_params', 'query', 'body', 'form_body', 'json_body', 'url', 'origin', 'protocol', 'host', 'port']) },
     backend_requests: {
         child: 'default',
