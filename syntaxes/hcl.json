@@ -62,14 +62,14 @@
           "comment": "map assignment with equal sign",
           "beginCaptures": {
             "0": { "name": "meta.function.hcl" },
-            "1": { "name": "storage.type.hcl" }
+            "1": { "name": "variable.parameter.hcl" }
           },
           "end": "\\}",
           "patterns" : [
             { "include": "$self" },
             { "include": "#comments" },
             { "include": "#variable" },
-            { "include": "#variable-interpolation-map-reference" }
+            { "include": "#quoted-key-assignment" }
           ]
         },
         {
@@ -88,7 +88,7 @@
         }
       ]
     },
-    "variable" : {
+    "variable": {
       "patterns" : [
         {
           "begin": "([\\w\\.-]+)\\s*(=)\\s*",
@@ -101,6 +101,32 @@
             "0": { "name": "keyword.operator.hcl" }
           },
           "patterns": [
+            { "include": "#comments" },
+            { "include": "#variable-type-string" },
+            { "include": "#variable-type-heredoc" },
+            { "include": "#variable-type-hexadecimal" },
+            { "include": "#variable-type-decimal" },
+            { "include": "#variable-type-constant" },
+            { "include": "#variable-type-array" },
+            { "include": "#variable-type-map" }
+          ]
+        }
+      ]
+    },
+    "quoted-key-assignment": {
+      "patterns" : [
+        {
+          "begin": "(\"[^\"]+\")\\s*(=)\\s*",
+          "beginCaptures": {
+            "1": { "name": "variable.parameter.hcl" },
+            "2": { "name": "keyword.operator.hcl" }
+          },
+          "end": "(?<!\\2)$",
+          "endCaptures" : {
+            "0": { "name": "keyword.operator.hcl" }
+          },
+          "patterns": [
+            { "include": "#comments" },
             { "include": "#variable-type-string" },
             { "include": "#variable-type-heredoc" },
             { "include": "#variable-type-hexadecimal" },
@@ -186,12 +212,13 @@
         }
       ]
     },
-    "variable-type-array" : {
+    "variable-type-array": {
       "patterns": [
         {
           "begin": "\\[",
           "end": "\\]",
           "patterns": [
+            { "include": "#comments" },
             { "include": "#variable-type-decimal" },
             { "include": "#variable-type-hexadecimal" },
             { "include": "#variable-type-constant" },
@@ -255,10 +282,10 @@
         }
       ]
     },
-    "variable-type-constant" : {
+    "variable-type-constant": {
       "patterns" : [
         {
-          "match": "\\b(true|false|yes|no|on|off)\\b",
+          "match": "\\b(true|false|null)\\b",
           "captures": {
             "0": { "name": "constant.numeric.hcl" }
           }
@@ -280,7 +307,13 @@
           "patterns" : [
             { "include" : "#variable-interpolation" },
             {
-              "match" : "[^\"]",
+              "match" : "\\\\[nrt\\\\\"]|\\\\u([a-fA-F0-9]{8}|[a-fA-F0-9]{4})",
+              "captures": {
+                "0": { "name": "constant.character.escape.hcl" }
+              }
+            },
+            {
+              "match" : ".",
               "captures": {
                 "0": { "name": "string.quoted.double.hcl" }
               }
@@ -293,13 +326,13 @@
       "patterns" : [
         {
           "comment" : "Heredoc string",
-          "begin": "<<(\\w+)",
+          "begin": "<<-?(\\w+)",
           "beginCaptures": {
-            "0": { "name": "entity.name.section" }
+            "0": { "name": "entity.name.tag.hcl" }
           },
           "end": "^\\s*\\1$",
           "endCaptures": {
-            "0": { "name": "entity.name.section" }
+            "0": { "name": "entity.name.tag.hcl" }
           },
           "contentName": "string.unquoted.here-doc.hcl"
         }
