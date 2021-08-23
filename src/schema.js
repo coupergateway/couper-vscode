@@ -9,12 +9,14 @@ const blocks = {
         labelled: true
     },
     error_handler: {
-        parents: ['basic_auth', 'jwt', 'saml'],
+        parents: ['basic_auth', 'jwt', 'saml', 'beta_oauth2', 'beta_oidc'],
         labelled: false,
         labels: {
             'basic_auth': ['basic_auth', 'basic_auth_credentials_missing'],
             'jwt':        ['jwt', 'jwt_token_expired', 'jwt_token_invalid', 'jwt_token_missing'],
-            'saml':       ['saml2']
+            'saml':       ['saml2'],
+            'beta_oauth2': ['oauth2'],
+            'beta_oidc':   ['oauth2'],
         }
     },
     files: {
