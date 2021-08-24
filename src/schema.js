@@ -9,12 +9,14 @@ const blocks = {
         labelled: true
     },
     error_handler: {
-        parents: ['basic_auth', 'jwt', 'saml'],
+        parents: ['basic_auth', 'jwt', 'saml', 'beta_oauth2', 'beta_oidc'],
         labelled: false,
         labels: {
             'basic_auth': ['basic_auth', 'basic_auth_credentials_missing'],
             'jwt':        ['jwt', 'jwt_token_expired', 'jwt_token_invalid', 'jwt_token_missing'],
-            'saml':       ['saml2']
+            'saml':       ['saml2'],
+            'beta_oauth2': ['oauth2'],
+            'beta_oidc':   ['oauth2'],
         }
     },
     files: {
@@ -40,7 +42,7 @@ const blocks = {
         parents: ['endpoint', 'error_handler']
     },
     backend: {
-        parents: ['definitions', 'proxy', 'request', 'oauth2'],
+        parents: ['definitions', 'proxy', 'request', 'oauth2', 'beta_oauth2', 'beta_oidc'],
     },
     oauth2: {
         parents: ['backend'],
@@ -58,6 +60,14 @@ const blocks = {
         labelled: true
     },
     saml: {
+        parents: ['definitions'],
+        labelled: true
+    },
+    beta_oauth2: {
+        parents: ['definitions'],
+        labelled: true
+    },
+    beta_oidc: {
         parents: ['definitions'],
         labelled: true
     },
@@ -145,26 +155,26 @@ const attributes = {
         parents: ['backend']
     },
 
-    // backend oauth2
+    // backend oauth2, beta_oauth2, beta_oidc
     grant_type: {
-        parents: ['oauth2'],
-        options: ['client_credentials'],
+        parents: ['oauth2', 'beta_oauth2'],
+        options: ['client_credentials', 'authorization_code'],
     },
     token_endpoint: {
-        parents: ['oauth2'],
+        parents: ['oauth2', 'beta_oauth2'],
     },
     token_endpoint_auth_method: {
-        parents: ['oauth2'],
+        parents: ['oauth2', 'beta_oauth2', 'beta_oidc'],
         options: ['client_secret_basic', 'client_secret_post'],
     },
     client_id: {
-        parents: ['oauth2'],
+        parents: ['oauth2', 'beta_oauth2', 'beta_oidc'],
     },
     client_secret: {
-        parents: ['oauth2'],
+        parents: ['oauth2', 'beta_oauth2', 'beta_oidc'],
     },
     scope: {
-        parents: ['oauth2'],
+        parents: ['oauth2', 'beta_oauth2', 'beta_oidc'],
     },
 
     // endpoint
@@ -182,10 +192,12 @@ const attributes = {
         type: 'array'
     },
 
-    // request / proxy / response
+	// various
     backend: { // label reference
-        parents: ['request', 'proxy', 'oauth2']
+        parents: ['request', 'proxy', 'oauth2', 'beta_oauth2', 'beta_oidc']
     },
+
+    // request / proxy / response
     body: {
         parents: ['request', 'response']
     },
@@ -269,6 +281,31 @@ const attributes = {
         parents: ['saml'],
         type: 'array'
     },
+
+	// beta_oauth2, beta_oidc
+	redirect_uri: {
+		parents: ['beta_oauth2', 'beta_oidc']
+	},
+	verifier_method: {
+		parents: ['beta_oauth2', 'beta_oidc'],
+		options: ['ccm_s256', 'state', 'nonce'],
+	},
+	verifier_value: {
+		parents: ['beta_oauth2', 'beta_oidc']
+	},
+
+	// beta_oauth2
+	authorization_endpoint: {
+		parents: ['beta_oauth2']
+	},
+
+	// beta_oidc
+	configuration_url: {
+		parents: ['beta_oidc']
+	},
+	configuration_ttl: {
+		parents: ['beta_oidc']
+	},
 
     // meta-attributes
     remove_request_headers: {
@@ -381,6 +418,8 @@ const attributes = {
 const functions = {
     base64_decode: { description: 'Decodes Base64 data, as specified in RFC 4648.' },
     base64_encode: { description: 'Encodes Base64 data, as specified in RFC 4648.' },
+    beta_oauth_authorization_url: { description: 'Creates an OAuth2 authorization URL from a referenced OAuth2 AC Block or OIDC Block.' },
+    beta_oauth_verifier: { description: 'Creates a cryptographically random key as specified in RFC 7636, applicable for all verifier methods; e.g. to be set as a cookie and read into verifier_value. Multiple calls of this function in the same client request context return the same value.' },
     coalesce: { description: 'Returns the first of the given arguments that is not null.' },
     json_decode: { description: 'Parses the given JSON string and, if it is valid, returns the value it represents.' },
     json_encode: { description: 'Returns a JSON serialization of the given value.' },
