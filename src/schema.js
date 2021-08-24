@@ -418,6 +418,8 @@ const attributes = {
 const functions = {
     base64_decode: { description: 'Decodes Base64 data, as specified in RFC 4648.' },
     base64_encode: { description: 'Encodes Base64 data, as specified in RFC 4648.' },
+    beta_oauth_authorization_url: { description: 'Creates an OAuth2 authorization URL from a referenced OAuth2 AC Block or OIDC Block.' },
+    beta_oauth_verifier: { description: 'Creates a cryptographically random key as specified in RFC 7636, applicable for all verifier methods; e.g. to be set as a cookie and read into verifier_value. Multiple calls of this function in the same client request context return the same value.' },
     coalesce: { description: 'Returns the first of the given arguments that is not null.' },
     json_decode: { description: 'Parses the given JSON string and, if it is valid, returns the value it represents.' },
     json_encode: { description: 'Returns a JSON serialization of the given value.' },
