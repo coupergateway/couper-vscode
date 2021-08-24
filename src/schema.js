@@ -383,6 +383,10 @@ const attributes = {
     },
 
     // settings
+    accept_forwarded_url: {
+        parents: ['settings'],
+        type: 'array'
+    },
     default_port: {
         parents: ['settings'],
         type: 'number'
@@ -390,22 +394,40 @@ const attributes = {
     health_path: {
         parents: ['settings']
     },
+    https_dev_proxy: {
+        parents: ['settings'],
+        type: 'array'
+    },
     log_format: {
         parents: ['settings']
     },
-    no_proxy_from_env: {
+    log_pretty: {
         parents: ['settings'],
-        type: 'boolean',
+        type: 'boolean'
+
     },
-    xfh: {
+    no_proxy_from_env: {
         parents: ['settings'],
         type: 'boolean'
     },
     request_id_format: {
         parents: ['settings']
     },
-    accept_forwarded_url: {
+    request_id_accept_from_header: {
         parents: ['settings']
+    },
+    request_id_backend_header: {
+        parents: ['settings']
+    },
+    request_id_client_header: {
+        parents: ['settings']
+    },
+    secure_cookies: {
+        parents: ['settings']
+    },
+    xfh: {
+        parents: ['settings'],
+        type: 'boolean'
     },
 
     // defaults
