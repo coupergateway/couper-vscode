@@ -400,7 +400,7 @@ const variables = {
     request: { values: commonProperties.concat(...['id', 'method', 'path', 'path_params', 'query', 'body', 'form_body', 'json_body', 'url', 'origin', 'protocol', 'host', 'port']) },
     backend_requests: {
         child: 'default',
-        values: commonProperties.concat(...['method', 'path', 'query', 'form_body', 'url']),
+        values: commonProperties.concat(...['method', 'path', 'query', 'body', 'form_body', 'json_body', 'url', 'origin', 'protocol', 'host', 'port']),
     },
     backend_responses: {
         child: 'default',
