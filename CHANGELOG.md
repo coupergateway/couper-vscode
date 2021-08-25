@@ -22,6 +22,7 @@
   - `secure_cookies`
 - `defaults` block:
   - `environment_variables` [#28](https://github.com/avenga/couper-vscode/issues/28)
+- `websockets` block and attribute [#35](https://github.com/avenga/couper-vscode/issues/35)
 - Variables:
   - `couper.version` [#31](https://github.com/avenga/couper-vscode/issues/31)
   - `backend_requests.*.{body,json_body,origin,protocol,host,port}` [#32](https://github.com/avenga/couper-vscode/issues/32)
