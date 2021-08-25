@@ -79,6 +79,10 @@ const blocks = {
     },
     settings: {
         labelled: false,
+    },
+    websockets: {
+        parents: ['proxy'],
+        labelled: false
     }
 }
 
@@ -152,7 +156,7 @@ const attributes = {
         parents: ['backend']
     },
     timeout: {
-        parents: ['backend']
+        parents: ['backend', 'websockets']
     },
 
     // backend oauth2, beta_oauth2, beta_oidc
@@ -222,6 +226,10 @@ const attributes = {
     status: {
         parents: ['response'],
         type: 'number'
+    },
+    websockets: {
+        parents: ['proxy'],
+        type: 'boolean'
     },
 
     // JWT / signing profile
@@ -309,27 +317,27 @@ const attributes = {
 
     // meta-attributes
     remove_request_headers: {
-        parents: ['backend', 'endpoint', 'proxy', 'error_handler'],
+        parents: ['backend', 'endpoint', 'proxy', 'error_handler', 'websockets'],
         type: 'array'
     },
     remove_response_headers: {
-        parents: ['server', 'files', 'spa', 'api', 'backend', 'endpoint', 'proxy', 'error_handler'],
+        parents: ['server', 'files', 'spa', 'api', 'backend', 'endpoint', 'proxy', 'error_handler', 'websockets'],
         type: 'array'
     },
     add_request_headers: {
-        parents: ['backend', 'endpoint', 'proxy', 'error_handler'],
+        parents: ['backend', 'endpoint', 'proxy', 'error_handler', 'websockets'],
         type: 'block'
     },
     add_response_headers: {
-        parents: ['server', 'files', 'spa', 'api', 'backend', 'endpoint', 'proxy', 'error_handler'],
+        parents: ['server', 'files', 'spa', 'api', 'backend', 'endpoint', 'proxy', 'error_handler', 'websockets'],
         type: 'block'
     },
     set_request_headers: {
-        parents: ['backend', 'endpoint', 'proxy', 'error_handler'],
+        parents: ['backend', 'endpoint', 'proxy', 'error_handler', 'websockets'],
         type: 'block'
     },
     set_response_headers: {
-        parents: ['server', 'files', 'spa', 'api', 'backend', 'endpoint', 'proxy', 'error_handler'],
+        parents: ['server', 'files', 'spa', 'api', 'backend', 'endpoint', 'proxy', 'error_handler', 'websockets'],
         type: 'block'
     },
     remove_query_params: {
