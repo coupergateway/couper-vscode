@@ -1,8 +1,27 @@
 // TODO: generate from golang:hcl :)
 
 const blocks = {
-    server: {
+    api: {
+        parents: ['server'],
+        labelled: false
+    },
+    backend: {
+        parents: ['beta_oauth2', 'beta_oidc', 'definitions', 'oauth2', 'proxy', 'request'],
         labelled: true
+    },
+    basic_auth: {
+        parents: ['definitions'],
+        labelled: true
+    },
+    cors: {
+        parents: ['api', 'files', 'server', 'spa'],
+        labelled: false
+    },
+    defaults: {
+        labelled: false
+    },
+    definitions: {
+        labelled: false
     },
     endpoint: {
         parents: ['api', 'server'],
@@ -20,32 +39,8 @@ const blocks = {
         }
     },
     files: {
-        parents: ['server']
-    },
-    spa: {
-        parents: ['server']
-    },
-    api: {
-        parents: ['server']
-    },
-    cors: {
-        parents: ['api', 'files', 'server', 'spa'],
-        labelled: false,
-    },
-    proxy: {
-        parents: ['endpoint', 'error_handler']
-    },
-    request: {
-        parents: ['endpoint', 'error_handler']
-    },
-    response: {
-        parents: ['endpoint', 'error_handler']
-    },
-    backend: {
-        parents: ['definitions', 'proxy', 'request', 'oauth2', 'beta_oauth2', 'beta_oidc'],
-    },
-    oauth2: {
-        parents: ['backend'],
+        parents: ['server'],
+        labelled: false
     },
     jwt: {
         parents: ['definitions'],
@@ -55,30 +50,47 @@ const blocks = {
         parents: ['definitions'],
         labelled: true
     },
-    basic_auth: {
-        parents: ['definitions'],
-        labelled: true
-    },
-    saml: {
-        parents: ['definitions'],
-        labelled: true
-    },
     beta_oauth2: {
         parents: ['definitions'],
         labelled: true
+    },
+    oauth2: {
+        parents: ['backend'],
+        labelled: false
     },
     beta_oidc: {
         parents: ['definitions'],
         labelled: true
     },
-    defaults: {
-        labelled: false,
+    openapi: {
+        parents: ['backend'],
+        labelled: false
     },
-    definitions: {
-        labelled: false,
+    proxy: {
+        parents: ['endpoint', 'error_handler'],
+        labelled: false
+    },
+    request: {
+        parents: ['endpoint', 'error_handler'],
+        labelled: true
+    },
+    response: {
+        parents: ['endpoint', 'error_handler'],
+        labelled: false
+    },
+    saml: {
+        parents: ['definitions'],
+        labelled: true
+    },
+    server: {
+        labelled: true
     },
     settings: {
         labelled: false,
+    },
+    spa: {
+        parents: ['server'],
+        labelled: false
     },
     websockets: {
         parents: ['proxy'],
@@ -462,18 +474,58 @@ const functions = {
     url_encode: { description: 'URL-encodes a given string according to RFC 3986.' },
 }
 
-const commonProperties = ['context', 'cookies', 'headers']
+const commonProperties = ['cookies', 'headers']
+
 const variables = {
-    env: { values: [] },
-    couper: { values: ['version'] },
-    request: { values: commonProperties.concat(...['id', 'method', 'path', 'path_params', 'query', 'body', 'form_body', 'json_body', 'url', 'origin', 'protocol', 'host', 'port']) },
     backend_requests: {
         child: 'default',
-        values: commonProperties.concat(...['method', 'path', 'query', 'body', 'form_body', 'json_body', 'url', 'origin', 'protocol', 'host', 'port']),
+        values: commonProperties.concat(...[
+            'body',
+            'context',
+            'form_body',
+            'host',
+            'id',
+            'json_body',
+            'method',
+            'origin',
+            'path',
+            'port',
+            'protocol',
+            'query',
+            'url'
+        ])
     },
     backend_responses: {
         child: 'default',
-        values: commonProperties.concat(...['status', 'json_body']),
+        values: commonProperties.concat(...[
+            'body',
+            'json_body',
+            'status'
+        ])
+    },
+    couper: {
+        values: ['version']
+    },
+    env: {
+        values: []
+    },
+    request: {
+        values: commonProperties.concat(...[
+            'body',
+            'context',
+            'form_body',
+            'host',
+            'id',
+            'json_body',
+            'method',
+            'origin',
+            'path',
+            'path_params',
+            'port',
+            'protocol',
+            'query',
+            'url'
+        ])
     },
 }
 
