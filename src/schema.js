@@ -213,7 +213,7 @@ const attributes = {
         type: 'block'
     },
     grant_type: {
-        parents: ['oauth2', 'beta_oauth2'],
+        parents: ['beta_oauth2', 'oauth2'],
         options: ['authorization_code', 'client_credentials']
     },
     header: {
@@ -398,7 +398,7 @@ const attributes = {
         parents: ['backend', 'websockets']
     },
     token_endpoint: {
-        parents: ['oauth2', 'beta_oauth2'],
+        parents: ['beta_oauth2', 'oauth2'],
     },
     token_endpoint_auth_method: {
         parents: ['beta_oauth2', 'beta_oidc', 'oauth2'],
@@ -407,7 +407,7 @@ const attributes = {
     ttfb_timeout: {
         parents: ['backend']
     },
-    ttl : {
+    ttl: {
         parents: ['jwt_signing_profile']
     },
     url: {
