@@ -450,17 +450,15 @@ const functions = {
     url_encode: { description: 'URL-encodes a given string according to RFC 3986.' },
 }
 
-const commonProperties = ['context', 'cookies', 'headers']
+const commonProperties = ['body', 'context', 'cookies', 'headers', 'json_body']
 
 const variables = {
     backend_requests: {
         child: 'default',
         values: commonProperties.concat(...[
-            'body',
             'form_body',
             'host',
             'id',
-            'json_body',
             'method',
             'origin',
             'path',
@@ -473,8 +471,6 @@ const variables = {
     backend_responses: {
         child: 'default',
         values: commonProperties.concat(...[
-            'body',
-            'json_body',
             'status'
         ])
     },
@@ -486,11 +482,9 @@ const variables = {
     },
     request: {
         values: commonProperties.concat(...[
-            'body',
             'form_body',
             'host',
             'id',
-            'json_body',
             'method',
             'origin',
             'path',
