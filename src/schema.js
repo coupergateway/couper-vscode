@@ -58,6 +58,9 @@ const blocks = {
     oauth2: {
         parents: ['backend'],
     },
+    openapi: {
+        parents: ['backend']
+    },
     proxy: {
         parents: ['endpoint', 'error_handler']
     },
@@ -401,51 +404,7 @@ const attributes = {
     xfh: {
         parents: ['settings'],
         type: 'boolean'
-    },
-
-
-
-
-
-    // cors
-
-    // server
-
-    // backend
-
-    // backend oauth2, beta_oauth2, beta_oidc
-
-    // endpoint
-
-
-
-	// various
-
-    // request / proxy / response
-
-    // JWT / signing profile
-
-    // basic_auth
-
-    // saml
-
-	// beta_oauth2, beta_oidc
-
-	// beta_oauth2
-
-	// beta_oidc
-
-    // meta-attributes
-
-    // openapi block and attributes
-    openapi: {
-        parents: ['backend'],
-        type: 'inline-block'
-    },
-
-    // settings
-
-    // defaults
+    }
 }
 
 const functions = {
