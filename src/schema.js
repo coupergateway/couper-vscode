@@ -2,10 +2,12 @@
 
 const blocks = {
     api: {
-        parents: ['server']
+        parents: ['server'],
+        labelled: false
     },
     backend: {
         parents: ['definitions', 'proxy', 'request', 'oauth2', 'beta_oauth2', 'beta_oidc'],
+        labelled: true
     },
     basic_auth: {
         parents: ['definitions'],
@@ -21,13 +23,13 @@ const blocks = {
     },
     cors: {
         parents: ['api', 'files', 'server', 'spa'],
-        labelled: false,
+        labelled: false
     },
     defaults: {
-        labelled: false,
+        labelled: false
     },
     definitions: {
-        labelled: false,
+        labelled: false
     },
     endpoint: {
         parents: ['api', 'server'],
@@ -45,7 +47,8 @@ const blocks = {
         }
     },
     files: {
-        parents: ['server']
+        parents: ['server'],
+        labelled: false
     },
     jwt: {
         parents: ['definitions'],
@@ -57,18 +60,23 @@ const blocks = {
     },
     oauth2: {
         parents: ['backend'],
+        labelled: false
     },
     openapi: {
-        parents: ['backend']
+        parents: ['backend'],
+        labelled: false
     },
     proxy: {
-        parents: ['endpoint', 'error_handler']
+        parents: ['endpoint', 'error_handler'],
+        labelled: false
     },
     request: {
-        parents: ['endpoint', 'error_handler']
+        parents: ['endpoint', 'error_handler'],
+        labelled: true
     },
     response: {
-        parents: ['endpoint', 'error_handler']
+        parents: ['endpoint', 'error_handler'],
+        labelled: false
     },
     saml: {
         parents: ['definitions'],
@@ -81,7 +89,8 @@ const blocks = {
         labelled: false,
     },
     spa: {
-        parents: ['server']
+        parents: ['server'],
+        labelled: false
     },
     websockets: {
         parents: ['proxy'],
