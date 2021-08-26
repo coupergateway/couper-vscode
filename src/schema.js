@@ -433,11 +433,11 @@ const functions = {
     url_encode: { description: 'URL-encodes a given string according to RFC 3986.' },
 }
 
-const commonProperties = ['context', 'cookies', 'headers']
+const commonProperties = ['cookies', 'headers']
 const variables = {
     backend_requests: {
         child: 'default',
-        values: commonProperties.concat(...['method', 'path', 'query', 'body', 'form_body', 'json_body', 'url', 'origin', 'protocol', 'host', 'port']),
+        values: commonProperties.concat(...['context', 'method', 'path', 'query', 'body', 'form_body', 'json_body', 'url', 'origin', 'protocol', 'host', 'port']),
     },
     backend_responses: {
         child: 'default',
@@ -445,7 +445,7 @@ const variables = {
     },
     couper: { values: ['version'] },
     env: { values: [] },
-    request: { values: commonProperties.concat(...['id', 'method', 'path', 'path_params', 'query', 'body', 'form_body', 'json_body', 'url', 'origin', 'protocol', 'host', 'port']) },
+    request: { values: commonProperties.concat(...['context', 'id', 'method', 'path', 'path_params', 'query', 'body', 'form_body', 'json_body', 'url', 'origin', 'protocol', 'host', 'port']) },
 }
 
 module.exports = { attributes, blocks, functions, variables }
