@@ -434,18 +434,58 @@ const functions = {
 }
 
 const commonProperties = ['cookies', 'headers']
+
 const variables = {
     backend_requests: {
         child: 'default',
-        values: commonProperties.concat(...['context', 'method', 'path', 'query', 'body', 'form_body', 'json_body', 'url', 'origin', 'protocol', 'host', 'port']),
+        values: commonProperties.concat(...[
+            'body',
+            'context',
+            'form_body',
+            'host',
+            'id',
+            'json_body',
+            'method',
+            'origin',
+            'path',
+            'port',
+            'protocol',
+            'query',
+            'url'
+        ])
     },
     backend_responses: {
         child: 'default',
-        values: commonProperties.concat(...['status', 'json_body']),
+        values: commonProperties.concat(...[
+            'body',
+            'json_body',
+            'status'
+        ])
     },
-    couper: { values: ['version'] },
-    env: { values: [] },
-    request: { values: commonProperties.concat(...['context', 'id', 'method', 'path', 'path_params', 'query', 'body', 'form_body', 'json_body', 'url', 'origin', 'protocol', 'host', 'port']) },
+    couper: {
+        values: ['version']
+    },
+    env: {
+        values: []
+    },
+    request: {
+        values: commonProperties.concat(...[
+            'body',
+            'context',
+            'form_body',
+            'host',
+            'id',
+            'json_body',
+            'method',
+            'origin',
+            'path',
+            'path_params',
+            'port',
+            'protocol',
+            'query',
+            'url'
+        ])
+    }
 }
 
 module.exports = { attributes, blocks, functions, variables }
