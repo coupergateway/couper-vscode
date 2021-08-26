@@ -100,7 +100,7 @@ const blocks = {
 
 const attributes = {
     access_control: {
-        parents: ['server', 'files', 'spa', 'endpoint', 'api'],
+        parents: ['api', 'endpoint', 'files', 'server', 'spa'],
         type: 'array'
     },
     accept_forwarded_url: {
@@ -112,15 +112,15 @@ const attributes = {
         type: 'block'
     },
     add_query_params: {
-        parents: ['backend', 'endpoint', 'proxy', 'error_handler'],
+        parents: ['backend', 'endpoint', 'error_handler', 'proxy'],
         type: 'block'
     },
     add_request_headers: {
-        parents: ['backend', 'endpoint', 'proxy', 'error_handler', 'websockets'],
+        parents: ['backend', 'endpoint', 'error_handler', 'proxy', 'websockets'],
         type: 'block'
     },
     add_response_headers: {
-        parents: ['server', 'files', 'spa', 'api', 'backend', 'endpoint', 'proxy', 'error_handler', 'websockets'],
+        parents: ['api', 'backend', 'endpoint', 'error_handler', 'files', 'proxy', 'server', 'spa', 'websockets'],
         type: 'block'
     },
     allow_credentials: {
@@ -139,10 +139,10 @@ const attributes = {
 		parents: ['beta_oauth2']
 	},
     backend: { // label reference
-        parents: ['request', 'proxy', 'oauth2', 'beta_oauth2', 'beta_oidc']
+        parents: ['beta_oauth2', 'beta_oidc', 'oauth2', 'proxy', 'request']
     },
     base_path: {
-        parents: ['server', 'api']
+        parents: ['api', 'server']
     },
     basic_auth: {
         parents: ['backend']
@@ -158,10 +158,10 @@ const attributes = {
         type: 'block'
     },
     client_id: {
-        parents: ['oauth2', 'beta_oauth2', 'beta_oidc'],
+        parents: ['beta_oauth2', 'beta_oidc', 'oauth2']
     },
     client_secret: {
-        parents: ['oauth2', 'beta_oauth2', 'beta_oidc'],
+        parents: ['beta_oauth2', 'beta_oidc', 'oauth2']
     },
 	configuration_url: {
 		parents: ['beta_oidc']
@@ -180,7 +180,7 @@ const attributes = {
         type: 'number'
     },
     disable_access_control: {
-        parents: ['server', 'files', 'spa', 'endpoint', 'api'],
+        parents: ['api', 'endpoint', 'files', 'server', 'spa'],
         type: 'array'
     },
     disable_certificate_validation: {
@@ -197,7 +197,7 @@ const attributes = {
         type: 'block'
     },
     error_file: {
-        parents: ['api', 'files', 'server', 'endpoint', 'error_handler']
+        parents: ['api', 'endpoint', 'error_handler', 'files', 'server']
     },
     file: {
         parents: ['openapi'],
@@ -208,7 +208,7 @@ const attributes = {
     },
     grant_type: {
         parents: ['oauth2', 'beta_oauth2'],
-        options: ['client_credentials', 'authorization_code'],
+        options: ['authorization_code', 'client_credentials']
     },
     header: {
         parents: ['jwt']
@@ -287,7 +287,7 @@ const attributes = {
         parents: ['basic_auth']
     },
     path: {
-        parents: ['backend', 'endpoint', 'proxy', 'error_handler']
+        parents: ['backend', 'endpoint', 'error_handler', 'proxy']
     },
     paths: {
         parents: ['spa'],
@@ -307,15 +307,15 @@ const attributes = {
         type: 'array'
     },
     remove_query_params: {
-        parents: ['backend', 'endpoint', 'proxy', 'error_handler'],
+        parents: ['backend', 'endpoint', 'error_handler', 'proxy'],
         type: 'array'
     },
     remove_request_headers: {
-        parents: ['backend', 'endpoint', 'proxy', 'error_handler', 'websockets'],
+        parents: ['backend', 'endpoint', 'error_handler', 'proxy', 'websockets'],
         type: 'array'
     },
     remove_response_headers: {
-        parents: ['server', 'files', 'spa', 'api', 'backend', 'endpoint', 'proxy', 'error_handler', 'websockets'],
+        parents: ['api', 'backend', 'endpoint', 'error_handler', 'files', 'proxy', 'server', 'spa', 'websockets'],
         type: 'array'
     },
     request_body_limit: {
@@ -338,7 +338,7 @@ const attributes = {
         type: 'array'
     },
     scope: {
-        parents: ['oauth2', 'beta_oauth2', 'beta_oidc'],
+        parents: ['beta_oauth2', 'beta_oidc', 'oauth2']
     },
     secure_cookies: {
         parents: ['settings']
@@ -348,15 +348,15 @@ const attributes = {
         type: 'block'
     },
     set_query_params: {
-        parents: ['backend', 'endpoint', 'proxy', 'error_handler'],
+        parents: ['backend', 'endpoint', 'error_handler', 'proxy'],
         type: 'block'
     },
     set_request_headers: {
-        parents: ['backend', 'endpoint', 'proxy', 'error_handler', 'websockets'],
+        parents: ['backend', 'endpoint', 'error_handler', 'proxy', 'websockets'],
         type: 'block'
     },
     set_response_headers: {
-        parents: ['server', 'files', 'spa', 'api', 'backend', 'endpoint', 'proxy', 'error_handler', 'websockets'],
+        parents: ['api', 'backend', 'endpoint', 'error_handler', 'files', 'proxy', 'server', 'spa', 'websockets'],
         type: 'block'
     },
     set_response_status: {
@@ -365,7 +365,7 @@ const attributes = {
     },
     signature_algorithm: {
         parents: ['jwt', 'jwt_signing_profile'],
-        options: ['RS256', 'RS384', 'RS512', 'HS256', 'HS384', 'HS512'],
+        options: ['HS256', 'HS384', 'HS512', 'RS256', 'RS384', 'RS512']
     },
     sp_acs_url: {
         parents: ['saml']
@@ -384,8 +384,8 @@ const attributes = {
         parents: ['oauth2', 'beta_oauth2'],
     },
     token_endpoint_auth_method: {
-        parents: ['oauth2', 'beta_oauth2', 'beta_oidc'],
-        options: ['client_secret_basic', 'client_secret_post'],
+        parents: ['beta_oauth2', 'beta_oidc', 'oauth2'],
+        options: ['client_secret_basic', 'client_secret_post']
     },
     ttfb_timeout: {
         parents: ['backend']
@@ -401,7 +401,7 @@ const attributes = {
     },
 	verifier_method: {
 		parents: ['beta_oauth2', 'beta_oidc'],
-		options: ['ccm_s256', 'state', 'nonce'],
+		options: ['ccm_s256', 'nonce', 'state']
 	},
 	verifier_value: {
 		parents: ['beta_oauth2', 'beta_oidc']
