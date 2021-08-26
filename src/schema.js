@@ -206,7 +206,7 @@ const attributes = {
         parents: ['api', 'endpoint', 'error_handler', 'files', 'server']
     },
     file: {
-        parents: ['openapi'],
+        parents: ['openapi']
     },
     form_body: {
         parents: ['request'],
@@ -273,7 +273,7 @@ const attributes = {
         type: 'boolean'
     },
     max_age: {
-        parents: ['cors'],
+        parents: ['cors']
     },
     max_connections: {
         parents: ['backend'],
@@ -398,7 +398,7 @@ const attributes = {
         parents: ['backend', 'websockets']
     },
     token_endpoint: {
-        parents: ['beta_oauth2', 'oauth2'],
+        parents: ['beta_oauth2', 'oauth2']
     },
     token_endpoint_auth_method: {
         parents: ['beta_oauth2', 'beta_oidc', 'oauth2'],
