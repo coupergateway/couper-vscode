@@ -27,6 +27,12 @@
   - `couper.version` [#31](https://github.com/avenga/couper-vscode/issues/31)
   - `backend_requests.*.{body,json_body,origin,protocol,host,port}` [#32](https://github.com/avenga/couper-vscode/issues/32)
   - `request.{origin,protocol,host,port}`
+- Missing blocks and attributes:
+  - `openapi` block
+  - `disable` attribute
+  - `path_prefix` attribute
+  - `query_params` attribute
+  - `retries` attribute
 
 ### Fixes
 

@@ -1,65 +1,15 @@
 // TODO: generate from golang:hcl :)
 
 const blocks = {
-    server: {
-        labelled: true
-    },
-    endpoint: {
-        parents: ['api', 'server'],
-        labelled: true
-    },
-    error_handler: {
-        parents: ['basic_auth', 'jwt', 'saml', 'beta_oauth2', 'beta_oidc'],
-        labelled: false,
-        labels: {
-            'basic_auth': ['basic_auth', 'basic_auth_credentials_missing'],
-            'jwt':        ['jwt', 'jwt_token_expired', 'jwt_token_invalid', 'jwt_token_missing'],
-            'saml':       ['saml2'],
-            'beta_oauth2': ['oauth2'],
-            'beta_oidc':   ['oauth2'],
-        }
-    },
-    files: {
-        parents: ['server']
-    },
-    spa: {
-        parents: ['server']
-    },
     api: {
-        parents: ['server']
-    },
-    cors: {
-        parents: ['api', 'files', 'server', 'spa'],
-        labelled: false,
-    },
-    proxy: {
-        parents: ['endpoint', 'error_handler']
-    },
-    request: {
-        parents: ['endpoint', 'error_handler']
-    },
-    response: {
-        parents: ['endpoint', 'error_handler']
+        parents: ['server'],
+        labelled: false
     },
     backend: {
-        parents: ['definitions', 'proxy', 'request', 'oauth2', 'beta_oauth2', 'beta_oidc'],
-    },
-    oauth2: {
-        parents: ['backend'],
-    },
-    jwt: {
-        parents: ['definitions'],
-        labelled: true
-    },
-    jwt_signing_profile: {
-        parents: ['definitions'],
+        parents: ['beta_oauth2', 'beta_oidc', 'definitions', 'oauth2', 'proxy', 'request'],
         labelled: true
     },
     basic_auth: {
-        parents: ['definitions'],
-        labelled: true
-    },
-    saml: {
         parents: ['definitions'],
         labelled: true
     },
@@ -71,14 +21,76 @@ const blocks = {
         parents: ['definitions'],
         labelled: true
     },
+    cors: {
+        parents: ['api', 'files', 'server', 'spa'],
+        labelled: false
+    },
     defaults: {
-        labelled: false,
+        labelled: false
     },
     definitions: {
+        labelled: false
+    },
+    endpoint: {
+        parents: ['api', 'server'],
+        labelled: true
+    },
+    error_handler: {
+        parents: ['basic_auth', 'beta_oauth2', 'beta_oidc', 'jwt', 'saml'],
         labelled: false,
+        labels: {
+            'basic_auth':  ['basic_auth', 'basic_auth_credentials_missing'],
+            'jwt':         ['jwt', 'jwt_token_expired', 'jwt_token_invalid', 'jwt_token_missing'],
+            'saml':        ['saml2'],
+            'beta_oauth2': ['oauth2'],
+            'beta_oidc':   ['oauth2']
+        }
+    },
+    files: {
+        parents: ['server'],
+        labelled: false
+    },
+    jwt: {
+        parents: ['definitions'],
+        labelled: true
+    },
+    jwt_signing_profile: {
+        parents: ['definitions'],
+        labelled: true
+    },
+    oauth2: {
+        parents: ['backend'],
+        labelled: false
+    },
+    openapi: {
+        parents: ['backend'],
+        labelled: false
+    },
+    proxy: {
+        parents: ['endpoint', 'error_handler'],
+        labelled: false
+    },
+    request: {
+        parents: ['endpoint', 'error_handler'],
+        labelled: true
+    },
+    response: {
+        parents: ['endpoint', 'error_handler'],
+        labelled: false
+    },
+    saml: {
+        parents: ['definitions'],
+        labelled: true
+    },
+    server: {
+        labelled: true
     },
     settings: {
-        labelled: false,
+        labelled: false
+    },
+    spa: {
+        parents: ['server'],
+        labelled: false
     },
     websockets: {
         parents: ['proxy'],
@@ -87,299 +99,153 @@ const blocks = {
 }
 
 const attributes = {
-    // cors
-    allowed_origins: {
-        parents: ['cors'],
+    access_control: {
+        parents: ['api', 'endpoint', 'files', 'server', 'spa'],
         type: 'array'
+    },
+    accept_forwarded_url: {
+        parents: ['settings'],
+        type: 'array'
+    },
+    add_form_params: {
+        parents: ['backend', 'endpoint', 'error_handler', 'proxy'],
+        type: 'block'
+    },
+    add_query_params: {
+        parents: ['backend', 'endpoint', 'error_handler', 'proxy'],
+        type: 'block'
+    },
+    add_request_headers: {
+        parents: ['backend', 'endpoint', 'error_handler', 'proxy', 'websockets'],
+        type: 'block'
+    },
+    add_response_headers: {
+        parents: ['api', 'backend', 'endpoint', 'error_handler', 'files', 'proxy', 'server', 'spa', 'websockets'],
+        type: 'block'
     },
     allow_credentials: {
         parents: ['cors'],
         type: 'boolean'
     },
-    max_age: {
+    allowed_origins: {
         parents: ['cors'],
-    },
-
-    // server
-    hosts: {
-        parents: ['server'],
         type: 'array'
-    },
-    document_root: {
-        parents: ['files']
-    },
-    error_file: {
-        parents: ['api', 'files', 'server', 'endpoint', 'error_handler']
-    },
-    bootstrap_file: {
-        parents: ['spa']
-    },
-    paths: {
-        parents: ['spa'],
-        type: 'array'
-    },
-    base_path: {
-        parents: ['server', 'api']
-    },
-
-    // backend
-    origin: {
-        parents: ['backend']
-    },
-    hostname: {
-        parents: ['backend']
-    },
-    basic_auth: {
-        parents: ['backend']
-    },
-    disable_certificate_validation: {
-        parents: ['backend']
-    },
-    disable_connection_reuse: {
-        parents: ['backend']
-    },
-    http2: {
-        parents: ['backend'],
-        type: 'boolean'
-    },
-    max_connections: {
-        parents: ['backend'],
-        type: 'number'
-    },
-    proxy: {
-        parents: ['backend']
-    },
-    connect_timeout: {
-        parents: ['backend']
-    },
-    ttfb_timeout: {
-        parents: ['backend']
-    },
-    timeout: {
-        parents: ['backend', 'websockets']
-    },
-
-    // backend oauth2, beta_oauth2, beta_oidc
-    grant_type: {
-        parents: ['oauth2', 'beta_oauth2'],
-        options: ['client_credentials', 'authorization_code'],
-    },
-    token_endpoint: {
-        parents: ['oauth2', 'beta_oauth2'],
-    },
-    token_endpoint_auth_method: {
-        parents: ['oauth2', 'beta_oauth2', 'beta_oidc'],
-        options: ['client_secret_basic', 'client_secret_post'],
-    },
-    client_id: {
-        parents: ['oauth2', 'beta_oauth2', 'beta_oidc'],
-    },
-    client_secret: {
-        parents: ['oauth2', 'beta_oauth2', 'beta_oidc'],
-    },
-    scope: {
-        parents: ['oauth2', 'beta_oauth2', 'beta_oidc'],
-    },
-
-    // endpoint
-    request_body_limit: {
-        parents: ['endpoint']
-    },
-
-    access_control: {
-        parents: ['server', 'files', 'spa', 'endpoint', 'api'],
-        type: 'array'
-    },
-
-    disable_access_control: {
-        parents: ['server', 'files', 'spa', 'endpoint', 'api'],
-        type: 'array'
-    },
-
-	// various
-    backend: { // label reference
-        parents: ['request', 'proxy', 'oauth2', 'beta_oauth2', 'beta_oidc']
-    },
-
-    // request / proxy / response
-    body: {
-        parents: ['request', 'response']
-    },
-    json_body: {
-        parents: ['request', 'response'],
-        type: 'block'
-    },
-    form_body: {
-        parents: ['request'],
-        type: 'block'
-    },
-    headers: {
-        parents: ['request', 'response'],
-        type: 'block'
-    },
-    method: {
-        parents: ['request']
-    },
-    url: {
-        parents: ['request', 'proxy']
-    },
-    status: {
-        parents: ['response'],
-        type: 'number'
-    },
-    websockets: {
-        parents: ['proxy'],
-        type: 'boolean'
-    },
-
-    // JWT / signing profile
-    cookie: {
-        parents: ['jwt']
-    },
-    header: {
-        parents: ['jwt']
-    },
-    claims: {
-        parents: ['jwt', 'jwt_signing_profile'],
-        type: 'block'
-    },
-    required_claims: {
-        parents: ['jwt'],
-        type: 'array'
-    },
-    key: {
-        parents: ['jwt', 'jwt_signing_profile']
-    },
-    key_file: {
-        parents: ['jwt', 'jwt_signing_profile']
-    },
-    signature_algorithm: {
-        parents: ['jwt', 'jwt_signing_profile'],
-        options: ['RS256', 'RS384', 'RS512', 'HS256', 'HS384', 'HS512'],
-    },
-    ttl : {
-        parents: ['jwt_signing_profile']
-    },
-
-    // basic_auth
-    user: {
-        parents: ['basic_auth']
-    },
-    password: {
-        parents: ['basic_auth']
-    },
-    realm: {
-        parents: ['basic_auth']
-    },
-    htpasswd_file: {
-        parents: ['basic_auth']
-    },
-
-    // saml
-    idp_metadata_file: {
-        parents: ['saml']
-    },
-    sp_acs_url: {
-        parents: ['saml']
-    },
-    sp_entity_id: {
-        parents: ['saml']
     },
     array_attributes: {
         parents: ['saml'],
         type: 'array'
     },
-
-	// beta_oauth2, beta_oidc
-	redirect_uri: {
-		parents: ['beta_oauth2', 'beta_oidc']
-	},
-	verifier_method: {
-		parents: ['beta_oauth2', 'beta_oidc'],
-		options: ['ccm_s256', 'state', 'nonce'],
-	},
-	verifier_value: {
-		parents: ['beta_oauth2', 'beta_oidc']
-	},
-
-	// beta_oauth2
 	authorization_endpoint: {
 		parents: ['beta_oauth2']
 	},
-
-	// beta_oidc
+    backend: { // label reference
+        parents: ['beta_oauth2', 'beta_oidc', 'oauth2', 'proxy', 'request']
+    },
+    base_path: {
+        parents: ['api', 'files', 'server', 'spa']
+    },
+    basic_auth: {
+        parents: ['backend']
+    },
+    body: {
+        parents: ['request', 'response']
+    },
+    bootstrap_file: {
+        parents: ['spa']
+    },
+    claims: {
+        parents: ['jwt', 'jwt_signing_profile'],
+        type: 'block'
+    },
+    client_id: {
+        parents: ['beta_oauth2', 'beta_oidc', 'oauth2']
+    },
+    client_secret: {
+        parents: ['beta_oauth2', 'beta_oidc', 'oauth2']
+    },
 	configuration_url: {
 		parents: ['beta_oidc']
 	},
 	configuration_ttl: {
 		parents: ['beta_oidc']
 	},
-
-    // meta-attributes
-    remove_request_headers: {
-        parents: ['backend', 'endpoint', 'proxy', 'error_handler', 'websockets'],
-        type: 'array'
+    cookie: {
+        parents: ['jwt']
     },
-    remove_response_headers: {
-        parents: ['server', 'files', 'spa', 'api', 'backend', 'endpoint', 'proxy', 'error_handler', 'websockets'],
-        type: 'array'
+    connect_timeout: {
+        parents: ['backend']
     },
-    add_request_headers: {
-        parents: ['backend', 'endpoint', 'proxy', 'error_handler', 'websockets'],
-        type: 'block'
-    },
-    add_response_headers: {
-        parents: ['server', 'files', 'spa', 'api', 'backend', 'endpoint', 'proxy', 'error_handler', 'websockets'],
-        type: 'block'
-    },
-    set_request_headers: {
-        parents: ['backend', 'endpoint', 'proxy', 'error_handler', 'websockets'],
-        type: 'block'
-    },
-    set_response_headers: {
-        parents: ['server', 'files', 'spa', 'api', 'backend', 'endpoint', 'proxy', 'error_handler', 'websockets'],
-        type: 'block'
-    },
-    remove_query_params: {
-        parents: ['backend', 'endpoint', 'proxy', 'error_handler'],
-        type: 'array'
-    },
-    add_query_params: {
-        parents: ['backend', 'endpoint', 'proxy', 'error_handler'],
-        type: 'block'
-    },
-    set_query_params: {
-        parents: ['backend', 'endpoint', 'proxy', 'error_handler'],
-        type: 'block'
-    },
-    remove_form_params: {
-        parents: ['backend', 'endpoint', 'proxy'],
-        type: 'array'
-    },
-    add_form_params: {
-        parents: ['backend', 'endpoint', 'proxy'],
-        type: 'block'
-    },
-    set_form_params: {
-        parents: ['backend', 'endpoint', 'proxy'],
-        type: 'block'
-    },
-    path: {
-        parents: ['backend', 'endpoint', 'proxy', 'error_handler']
-    },
-
-    set_response_status: {
-        parents: ['backend', 'endpoint', 'error_handler'],
+    default_port: {
+        parents: ['settings'],
         type: 'number'
     },
-
-    // openapi block and attributes
-    openapi: {
+    disable: {
+        parents: ['cors'],
+        type: 'boolean'
+    },
+    disable_access_control: {
+        parents: ['api', 'endpoint', 'files', 'server', 'spa'],
+        type: 'array'
+    },
+    disable_certificate_validation: {
         parents: ['backend'],
-        type: 'inline-block'
+        type: 'boolean'
+    },
+    disable_connection_reuse: {
+        parents: ['backend'],
+        type: 'boolean'
+    },
+    document_root: {
+        parents: ['files']
+    },
+    environment_variables: {
+        parents: ['defaults'],
+        type: 'block'
+    },
+    error_file: {
+        parents: ['api', 'endpoint', 'error_handler', 'files', 'server']
     },
     file: {
-        parents: ['openapi'],
+        parents: ['openapi']
+    },
+    form_body: {
+        parents: ['request'],
+        type: 'block'
+    },
+    grant_type: {
+        parents: ['beta_oauth2', 'oauth2'],
+        options: ['authorization_code', 'client_credentials']
+    },
+    header: {
+        parents: ['jwt']
+    },
+    headers: {
+        parents: ['request', 'response'],
+        type: 'block'
+    },
+    health_path: {
+        parents: ['settings']
+    },
+    hostname: {
+        parents: ['backend']
+    },
+    hosts: {
+        parents: ['server'],
+        type: 'array'
+    },
+    htpasswd_file: {
+        parents: ['basic_auth']
+    },
+    http2: {
+        parents: ['backend'],
+        type: 'boolean'
+    },
+    https_dev_proxy: {
+        parents: ['settings'],
+        type: 'array'
+    },
+    idp_metadata_file: {
+        parents: ['saml']
     },
     ignore_request_violations: {
         parents: ['openapi'],
@@ -389,22 +255,15 @@ const attributes = {
         parents: ['openapi'],
         type: 'boolean'
     },
-
-    // settings
-    accept_forwarded_url: {
-        parents: ['settings'],
-        type: 'array'
+    json_body: {
+        parents: ['request', 'response'],
+        type: 'block'
     },
-    default_port: {
-        parents: ['settings'],
-        type: 'number'
+    key: {
+        parents: ['jwt', 'jwt_signing_profile']
     },
-    health_path: {
-        parents: ['settings']
-    },
-    https_dev_proxy: {
-        parents: ['settings'],
-        type: 'array'
+    key_file: {
+        parents: ['jwt', 'jwt_signing_profile']
     },
     log_format: {
         parents: ['settings']
@@ -412,14 +271,68 @@ const attributes = {
     log_pretty: {
         parents: ['settings'],
         type: 'boolean'
-
+    },
+    max_age: {
+        parents: ['cors']
+    },
+    max_connections: {
+        parents: ['backend'],
+        type: 'number'
+    },
+    method: {
+        parents: ['request']
     },
     no_proxy_from_env: {
         parents: ['settings'],
         type: 'boolean'
     },
-    request_id_format: {
-        parents: ['settings']
+    origin: {
+        parents: ['backend']
+    },
+    password: {
+        parents: ['basic_auth']
+    },
+    path: {
+        parents: ['backend', 'endpoint', 'error_handler', 'proxy']
+    },
+    path_prefix: {
+        parents: ['backend']
+    },
+    paths: {
+        parents: ['spa'],
+        type: 'array'
+    },
+    proxy: {
+        parents: ['backend']
+    },
+    query_params: {
+        parents: ['request'],
+        type: 'block'
+    },
+    realm: {
+        parents: ['basic_auth']
+    },
+	redirect_uri: {
+		parents: ['beta_oauth2', 'beta_oidc']
+	},
+    remove_form_params: {
+        parents: ['backend', 'endpoint', 'error_handler', 'proxy'],
+        type: 'array'
+    },
+    remove_query_params: {
+        parents: ['backend', 'endpoint', 'error_handler', 'proxy'],
+        type: 'array'
+    },
+    remove_request_headers: {
+        parents: ['backend', 'endpoint', 'error_handler', 'proxy', 'websockets'],
+        type: 'array'
+    },
+    remove_response_headers: {
+        parents: ['api', 'backend', 'endpoint', 'error_handler', 'files', 'proxy', 'server', 'spa', 'websockets'],
+        type: 'array'
+    },
+    request_body_limit: {
+        parents: ['endpoint']
     },
     request_id_accept_from_header: {
         parents: ['settings']
@@ -430,19 +343,94 @@ const attributes = {
     request_id_client_header: {
         parents: ['settings']
     },
+    request_id_format: {
+        parents: ['settings']
+    },
+    required_claims: {
+        parents: ['jwt'],
+        type: 'array'
+    },
+    retries: {
+        parents: ['oauth2'],
+        type: 'number'
+    },
+    scope: {
+        parents: ['beta_oauth2', 'beta_oidc', 'oauth2']
+    },
     secure_cookies: {
         parents: ['settings']
+    },
+    set_form_params: {
+        parents: ['backend', 'endpoint', 'error_handler', 'proxy'],
+        type: 'block'
+    },
+    set_query_params: {
+        parents: ['backend', 'endpoint', 'error_handler', 'proxy'],
+        type: 'block'
+    },
+    set_request_headers: {
+        parents: ['backend', 'endpoint', 'error_handler', 'proxy', 'websockets'],
+        type: 'block'
+    },
+    set_response_headers: {
+        parents: ['api', 'backend', 'endpoint', 'error_handler', 'files', 'proxy', 'server', 'spa', 'websockets'],
+        type: 'block'
+    },
+    set_response_status: {
+        parents: ['backend', 'endpoint', 'error_handler'],
+        type: 'number'
+    },
+    signature_algorithm: {
+        parents: ['jwt', 'jwt_signing_profile'],
+        options: ['HS256', 'HS384', 'HS512', 'RS256', 'RS384', 'RS512']
+    },
+    sp_acs_url: {
+        parents: ['saml']
+    },
+    sp_entity_id: {
+        parents: ['saml']
+    },
+    status: {
+        parents: ['response'],
+        type: 'number'
+    },
+    timeout: {
+        parents: ['backend', 'websockets']
+    },
+    token_endpoint: {
+        parents: ['beta_oauth2', 'oauth2']
+    },
+    token_endpoint_auth_method: {
+        parents: ['beta_oauth2', 'beta_oidc', 'oauth2'],
+        options: ['client_secret_basic', 'client_secret_post']
+    },
+    ttfb_timeout: {
+        parents: ['backend']
+    },
+    ttl: {
+        parents: ['jwt_signing_profile']
+    },
+    url: {
+        parents: ['request', 'proxy']
+    },
+    user: {
+        parents: ['basic_auth']
+    },
+	verifier_method: {
+		parents: ['beta_oauth2', 'beta_oidc'],
+		options: ['ccm_s256', 'nonce', 'state']
+	},
+	verifier_value: {
+		parents: ['beta_oauth2', 'beta_oidc']
+	},
+    websockets: {
+        parents: ['proxy'],
+        type: 'boolean'
     },
     xfh: {
         parents: ['settings'],
         type: 'boolean'
-    },
-
-    // defaults
-    environment_variables: {
-        parents: ['defaults'],
-        type: 'block'
-    },
+    }
 }
 
 const functions = {
@@ -462,19 +450,51 @@ const functions = {
     url_encode: { description: 'URL-encodes a given string according to RFC 3986.' },
 }
 
-const commonProperties = ['context', 'cookies', 'headers']
+const commonProperties = ['body', 'context', 'cookies', 'headers', 'json_body']
+
 const variables = {
-    env: { values: [] },
-    couper: { values: ['version'] },
-    request: { values: commonProperties.concat(...['id', 'method', 'path', 'path_params', 'query', 'body', 'form_body', 'json_body', 'url', 'origin', 'protocol', 'host', 'port']) },
     backend_requests: {
         child: 'default',
-        values: commonProperties.concat(...['method', 'path', 'query', 'body', 'form_body', 'json_body', 'url', 'origin', 'protocol', 'host', 'port']),
+        values: commonProperties.concat(...[
+            'form_body',
+            'host',
+            'id',
+            'method',
+            'origin',
+            'path',
+            'port',
+            'protocol',
+            'query',
+            'url'
+        ])
     },
     backend_responses: {
         child: 'default',
-        values: commonProperties.concat(...['status', 'json_body']),
+        values: commonProperties.concat(...[
+            'status'
+        ])
     },
+    couper: {
+        values: ['version']
+    },
+    env: {
+        values: []
+    },
+    request: {
+        values: commonProperties.concat(...[
+            'form_body',
+            'host',
+            'id',
+            'method',
+            'origin',
+            'path',
+            'path_params',
+            'port',
+            'protocol',
+            'query',
+            'url'
+        ])
+    }
 }
 
 module.exports = { attributes, blocks, functions, variables }
