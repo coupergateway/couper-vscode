@@ -108,7 +108,7 @@ const attributes = {
         type: 'array'
     },
     add_form_params: {
-        parents: ['backend', 'endpoint', 'proxy'],
+        parents: ['backend', 'endpoint', 'error_handler', 'proxy'],
         type: 'block'
     },
     add_query_params: {
@@ -142,7 +142,7 @@ const attributes = {
         parents: ['beta_oauth2', 'beta_oidc', 'oauth2', 'proxy', 'request']
     },
     base_path: {
-        parents: ['api', 'server']
+        parents: ['api', 'files', 'server', 'spa']
     },
     basic_auth: {
         parents: ['backend']
@@ -179,15 +179,21 @@ const attributes = {
         parents: ['settings'],
         type: 'number'
     },
+    disable: {
+        parents: ['cors'],
+        type: 'boolean'
+    },
     disable_access_control: {
         parents: ['api', 'endpoint', 'files', 'server', 'spa'],
         type: 'array'
     },
     disable_certificate_validation: {
-        parents: ['backend']
+        parents: ['backend'],
+        type: 'boolean'
     },
     disable_connection_reuse: {
-        parents: ['backend']
+        parents: ['backend'],
+        type: 'boolean'
     },
     document_root: {
         parents: ['files']
@@ -289,12 +295,19 @@ const attributes = {
     path: {
         parents: ['backend', 'endpoint', 'error_handler', 'proxy']
     },
+    path_prefix: {
+        parents: ['backend']
+    },
     paths: {
         parents: ['spa'],
         type: 'array'
     },
     proxy: {
         parents: ['backend']
+    },
+    query_params: {
+        parents: ['request'],
+        type: 'block'
     },
     realm: {
         parents: ['basic_auth']
@@ -303,7 +316,7 @@ const attributes = {
 		parents: ['beta_oauth2', 'beta_oidc']
 	},
     remove_form_params: {
-        parents: ['backend', 'endpoint', 'proxy'],
+        parents: ['backend', 'endpoint', 'error_handler', 'proxy'],
         type: 'array'
     },
     remove_query_params: {
@@ -337,6 +350,10 @@ const attributes = {
         parents: ['jwt'],
         type: 'array'
     },
+    retries: {
+        parents: ['oauth2'],
+        type: 'number'
+    },
     scope: {
         parents: ['beta_oauth2', 'beta_oidc', 'oauth2']
     },
@@ -344,7 +361,7 @@ const attributes = {
         parents: ['settings']
     },
     set_form_params: {
-        parents: ['backend', 'endpoint', 'proxy'],
+        parents: ['backend', 'endpoint', 'error_handler', 'proxy'],
         type: 'block'
     },
     set_query_params: {
