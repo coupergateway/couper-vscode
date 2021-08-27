@@ -1,5 +1,5 @@
 # Couper Configuration for Visual Studio Code
-This extension adds Couper-specific highlighting and autocompletion to [Couper's configuartion file](https://github.com/avenga/couper/tree/master/docs#conf_file) `couper.hcl` in Visual Studio Code.
+This extension adds Couper-specific highlighting and autocompletion to [Couper's configuartion file](https://github.com/avenga/couper/tree/master/docs#configuration-file) `couper.hcl` in Visual Studio Code.
 
 ### Features
 
