@@ -1,5 +1,12 @@
 # Changelog
 
+## [Unreleased](https://github.com/avenga/couper/compare-vscode/v0.6.0...master)
+
+### Added
+
+- `jwt` block:
+  - `signing_key`, `signing_key_file`, `signing_ttl`
+
 <a name="v0.6.0"></a>
 
 ## [v0.6.0](https://github.com/avenga/couper-vscode/compare/v0.5.0...v0.6.0)
