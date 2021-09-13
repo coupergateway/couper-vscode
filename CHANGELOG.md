@@ -5,7 +5,7 @@
 ### Added
 
 - `jwt` block:
-  - `signing_key`, `signing_key_file`, `signing_ttl`
+  - `signing_key`, `signing_key_file`, `signing_ttl` [#39](https://github.com/avenga/couper-vscode/pull/39)
 
 <a name="v0.6.0"></a>
 
