@@ -384,6 +384,15 @@ const attributes = {
         parents: ['jwt', 'jwt_signing_profile'],
         options: ['HS256', 'HS384', 'HS512', 'RS256', 'RS384', 'RS512']
     },
+    signing_key: {
+        parents: ['jwt']
+    },
+    signing_key_file: {
+        parents: ['jwt']
+    },
+    signing_ttl: {
+        parents: ['jwt']
+    },
     sp_acs_url: {
         parents: ['saml']
     },
