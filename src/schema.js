@@ -6,8 +6,10 @@ const blocks = {
         labelled: false
     },
     backend: {
-        parents: ['beta_oauth2', 'beta_oidc', 'definitions', 'oauth2', 'proxy', 'request'],
-        labelled: true
+        parents: ['beta_oauth2', 'beta_oidc', 'definitions', 'jwt', 'oauth2', 'proxy', 'request'],
+        labelled: (parentBlockName) => {
+            return parentBlockName === "definitions"
+        }
     },
     basic_auth: {
         parents: ['definitions'],
@@ -135,11 +137,11 @@ const attributes = {
         parents: ['saml'],
         type: 'array'
     },
-	authorization_endpoint: {
-		parents: ['beta_oauth2']
-	},
+    authorization_endpoint: {
+        parents: ['beta_oauth2']
+    },
     backend: { // label reference
-        parents: ['beta_oauth2', 'beta_oidc', 'oauth2', 'proxy', 'request']
+        parents: ['beta_oauth2', 'beta_oidc', 'jwt', 'oauth2', 'proxy', 'request']
     },
     base_path: {
         parents: ['api', 'files', 'server', 'spa']
@@ -163,12 +165,12 @@ const attributes = {
     client_secret: {
         parents: ['beta_oauth2', 'beta_oidc', 'oauth2']
     },
-	configuration_url: {
-		parents: ['beta_oidc']
-	},
-	configuration_ttl: {
-		parents: ['beta_oidc']
-	},
+    configuration_url: {
+        parents: ['beta_oidc']
+    },
+    configuration_ttl: {
+        parents: ['beta_oidc']
+    },
     cookie: {
         parents: ['jwt']
     },
@@ -258,6 +260,12 @@ const attributes = {
     json_body: {
         parents: ['request', 'response'],
         type: 'block'
+    },
+    jwks_ttl: {
+        parents: ['jwt']
+    },
+    jwks_uri: {
+        parents: ['jwt']
     },
     key: {
         parents: ['jwt', 'jwt_signing_profile']
