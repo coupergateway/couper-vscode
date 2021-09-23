@@ -264,7 +264,7 @@ const attributes = {
     jwks_ttl: {
         parents: ['jwt']
     },
-    jwks_uri: {
+    jwks_url: {
         parents: ['jwt']
     },
     key: {
