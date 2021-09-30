@@ -37,7 +37,6 @@ function getParentBlock(document, position) {
 	return matches ? matches[1] : ""
 }
 
-
 for (const [name, block] of Object.entries(blocks)) {
 	const provider = vscode.languages.registerCompletionItemProvider(selector,
 		{
@@ -53,7 +52,7 @@ for (const [name, block] of Object.entries(blocks)) {
 				const item = new vscode.CompletionItem(`${name} {…}`, vscode.CompletionItemKind.Struct)
 				item.detail = 'Block'
 				const label = name === 'endpoint' ? '/' : 'label'
-				const labelled = block.labelled === undefined ? parentBlock !== 'endpoint' && parentBlock !== 'server' : block.labelled
+				const labelled = !!((typeof block.labelled === 'function') ? block.labelled(parentBlock) : block.labelled)
 				const labelValue = labelled ? `"\${1:${label}}" ` : ''
 				const snippet = name + ' ' + labelValue + '{\u000a\t$0\u000a}'
 				item.insertText = new vscode.SnippetString(snippet)
