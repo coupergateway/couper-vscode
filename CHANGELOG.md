@@ -9,7 +9,8 @@
 - `endpoint` block:
   - `beta_scope` [#41](https://github.com/avenga/couper-vscode/pull/41)
 - `jwt` block:
-  - `signing_key`, `signing_key_file`, `signing_ttl` [#39](https://github.com/avenga/couper-vscode/pull/39)
+  - `signing_key`, `signing_key_file`, `signing_ttl` attributes [#39](https://github.com/avenga/couper-vscode/pull/39)
+  - `jwks_url`, `jwks_ttl` attributes, `backend` block or reference [#40](https://github.com/avenga/couper-vscode/pull/40)
   - `beta_scope_claim` [#41](https://github.com/avenga/couper-vscode/pull/41)
 
 <a name="v0.6.0"></a>
