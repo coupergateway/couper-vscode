@@ -149,6 +149,13 @@ const attributes = {
     basic_auth: {
         parents: ['backend']
     },
+    beta_role_claim: {
+        parents: ['jwt']
+    },
+    beta_role_map: {
+        parents: ['jwt'],
+        type: 'block'
+    },
     beta_scope: {
         parents: ['api', 'endpoint']
     },
