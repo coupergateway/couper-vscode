@@ -235,7 +235,7 @@ const attributes = {
         parents: ['jwt']
     },
     headers: {
-        parents: ['request', 'response'],
+        parents: ['jwt_signing_profile', 'request', 'response'],
         type: 'block'
     },
     health_path: {
@@ -333,9 +333,9 @@ const attributes = {
     realm: {
         parents: ['basic_auth']
     },
-	redirect_uri: {
-		parents: ['beta_oauth2', 'beta_oidc']
-	},
+    redirect_uri: {
+        parents: ['beta_oauth2', 'beta_oidc']
+    },
     remove_form_params: {
         parents: ['backend', 'endpoint', 'error_handler', 'proxy'],
         type: 'array'
