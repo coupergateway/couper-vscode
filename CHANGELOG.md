@@ -6,6 +6,9 @@
 
 - `functions`:
   - `relative_url()` [#48](https://github.com/avenga/couper-vscode/pull/48)
+- _Go to definition_ for `access_control`, `disable_access_control` and `backend` references [#44](https://github.com/avenga/couper-vscode/pull/44)
+
+---
 
 <a name="v0.7.0"></a>
 
