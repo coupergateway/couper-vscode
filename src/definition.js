@@ -1,6 +1,7 @@
 "use strict"
 
 const vscode = require('vscode')
+const common = require('./common')
 
 const selector = { language: 'couper' }
 
@@ -68,6 +69,10 @@ const definitionProvider = vscode.languages.registerDefinitionProvider(selector,
             return null
         }
         const blockPosition = document.positionAt(offset)
+        const parentBlock = common.getParentBlock(document, blockPosition)
+        if (parentBlock !== "definitions") {
+            return null
+        }
 
         return [new vscode.Location(document.uri, blockPosition)]
     }
