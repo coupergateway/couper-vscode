@@ -434,6 +434,10 @@ const attributes = {
         parents: ['beta_oauth2', 'beta_oidc', 'oauth2'],
         options: ['client_secret_basic', 'client_secret_post']
     },
+    token_value: {
+        parents: ['jwt'],
+        type: 'number' // rather a string but prevents "" completion
+    },
     ttfb_timeout: {
         parents: ['backend']
     },
