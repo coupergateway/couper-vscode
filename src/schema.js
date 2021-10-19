@@ -111,19 +111,19 @@ const attributes = {
     },
     add_form_params: {
         parents: ['backend', 'endpoint', 'error_handler', 'proxy'],
-        type: 'block'
+        type: 'map'
     },
     add_query_params: {
         parents: ['backend', 'endpoint', 'error_handler', 'proxy'],
-        type: 'block'
+        type: 'map'
     },
     add_request_headers: {
         parents: ['backend', 'endpoint', 'error_handler', 'proxy', 'websockets'],
-        type: 'block'
+        type: 'map'
     },
     add_response_headers: {
         parents: ['api', 'backend', 'endpoint', 'error_handler', 'files', 'proxy', 'server', 'spa', 'websockets'],
-        type: 'block'
+        type: 'map'
     },
     allow_credentials: {
         parents: ['cors'],
@@ -154,7 +154,7 @@ const attributes = {
     },
     beta_role_map: {
         parents: ['jwt'],
-        type: 'block'
+        type: 'map'
     },
     beta_scope: {
         parents: ['api', 'endpoint']
@@ -170,7 +170,7 @@ const attributes = {
     },
     claims: {
         parents: ['jwt', 'jwt_signing_profile'],
-        type: 'block'
+        type: 'map'
     },
     client_id: {
         parents: ['beta_oauth2', 'beta_oidc', 'oauth2']
@@ -215,7 +215,7 @@ const attributes = {
     },
     environment_variables: {
         parents: ['defaults'],
-        type: 'block'
+        type: 'map'
     },
     error_file: {
         parents: ['api', 'endpoint', 'error_handler', 'files', 'server']
@@ -225,7 +225,7 @@ const attributes = {
     },
     form_body: {
         parents: ['request'],
-        type: 'block'
+        type: 'map'
     },
     grant_type: {
         parents: ['beta_oauth2', 'oauth2'],
@@ -236,7 +236,7 @@ const attributes = {
     },
     headers: {
         parents: ['jwt_signing_profile', 'request', 'response'],
-        type: 'block'
+        type: 'map'
     },
     health_path: {
         parents: ['settings']
@@ -272,7 +272,7 @@ const attributes = {
     },
     json_body: {
         parents: ['request', 'response'],
-        type: 'block'
+        type: 'map'
     },
     jwks_ttl: {
         parents: ['jwt']
@@ -328,7 +328,7 @@ const attributes = {
     },
     query_params: {
         parents: ['request'],
-        type: 'block'
+        type: 'map'
     },
     realm: {
         parents: ['basic_auth']
@@ -383,19 +383,19 @@ const attributes = {
     },
     set_form_params: {
         parents: ['backend', 'endpoint', 'error_handler', 'proxy'],
-        type: 'block'
+        type: 'map'
     },
     set_query_params: {
         parents: ['backend', 'endpoint', 'error_handler', 'proxy'],
-        type: 'block'
+        type: 'map'
     },
     set_request_headers: {
         parents: ['backend', 'endpoint', 'error_handler', 'proxy', 'websockets'],
-        type: 'block'
+        type: 'map'
     },
     set_response_headers: {
         parents: ['api', 'backend', 'endpoint', 'error_handler', 'files', 'proxy', 'server', 'spa', 'websockets'],
-        type: 'block'
+        type: 'map'
     },
     set_response_status: {
         parents: ['backend', 'endpoint', 'error_handler'],
@@ -433,6 +433,10 @@ const attributes = {
     token_endpoint_auth_method: {
         parents: ['beta_oauth2', 'beta_oidc', 'oauth2'],
         options: ['client_secret_basic', 'client_secret_post']
+    },
+    token_value: {
+        parents: ['jwt'],
+        type: 'any'
     },
     ttfb_timeout: {
         parents: ['backend']

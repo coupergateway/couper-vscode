@@ -99,7 +99,7 @@ for (const [name, attribute] of Object.entries(attributes)) {
 						item.label = `${name} = […]`
 						item.insertText = new vscode.SnippetString(`${name} = ["$0"]`)
 					} break;
-					case 'block': {
+					case 'map': {
 						item.label = `${name} = {…}`
 						item.insertText = new vscode.SnippetString(name + ' = {\u000a\t$0\u000a}')
 					} break;
@@ -107,13 +107,10 @@ for (const [name, attribute] of Object.entries(attributes)) {
 						item.label = `${name} = …`
 						item.insertText = new vscode.SnippetString(name + ' = $0')
 					} break;
+					case 'any':
 					case 'number': {
 						item.label = `${name} = …`
 						item.insertText = new vscode.SnippetString(name + ' = $0')
-					} break;
-					case 'inline-block': {
-						item.label = `${name} {…}`
-						item.insertText = new vscode.SnippetString(name + ' {\u000a\t$0\u000a}')
 					} break;
 					default: item.insertText = new vscode.SnippetString(`${name} = "$0"`)
 				}

@@ -13,6 +13,7 @@
   - `jwks_url`, `jwks_ttl` attributes, `backend` block or reference [#40](https://github.com/avenga/couper-vscode/pull/40)
   - `beta_scope_claim` [#41](https://github.com/avenga/couper-vscode/pull/41)
   - `beta_role_claim`, `beta_role_map` [#42](https://github.com/avenga/couper-vscode/pull/42)
+  - `token_value` [#45](https://github.com/avenga/couper-vscode/pull/45)
 - `jwt_signing_profile` block:
   - `headers` map [#43](https://github.com/avenga/couper-vscode/pull/43)
 
