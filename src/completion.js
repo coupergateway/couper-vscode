@@ -107,6 +107,7 @@ for (const [name, attribute] of Object.entries(attributes)) {
 						item.label = `${name} = …`
 						item.insertText = new vscode.SnippetString(name + ' = $0')
 					} break;
+					case 'any':
 					case 'number': {
 						item.label = `${name} = …`
 						item.insertText = new vscode.SnippetString(name + ' = $0')

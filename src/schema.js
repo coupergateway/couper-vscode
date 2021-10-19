@@ -436,7 +436,7 @@ const attributes = {
     },
     token_value: {
         parents: ['jwt'],
-        type: 'number' // rather a string but prevents "" completion
+        type: 'any'
     },
     ttfb_timeout: {
         parents: ['backend']
