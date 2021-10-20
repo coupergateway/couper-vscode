@@ -162,6 +162,17 @@ const attributes = {
     beta_scope_claim: {
         parents: ['jwt']
     },
+    beta_metrics: {
+        parents: ['settings'],
+        type: 'boolean',
+    },
+    beta_metrics_port: {
+        parents: ['settings'],
+        type: 'number',
+    },
+    beta_service_name: {
+        parents: ['settings'],
+    },
     body: {
         parents: ['request', 'response']
     },

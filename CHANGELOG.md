@@ -16,6 +16,8 @@
   - `token_value` [#45](https://github.com/avenga/couper-vscode/pull/45)
 - `jwt_signing_profile` block:
   - `headers` map [#43](https://github.com/avenga/couper-vscode/pull/43)
+- `settings` block:
+  - `beta_metrics`, `beta_metrics_port`, `beta_service_name` [#47](https://github.com/avenga/couper-vscode/pull/47)
 
 <a name="v0.6.0"></a>
 
