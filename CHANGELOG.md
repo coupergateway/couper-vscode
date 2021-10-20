@@ -1,6 +1,12 @@
 # Changelog
 
-## [Unreleased](https://github.com/avenga/couper/compare-vscode/v0.6.0...master)
+## [Unreleased](https://github.com/avenga/couper/compare-vscode/v0.7.0...master)
+
+<a name="v0.7.0"></a>
+
+> 2021-10-20
+
+## [v0.7.0](https://github.com/avenga/couper-vscode/compare/v0.6.0...v0.7.0)
 
 ### Added
 
