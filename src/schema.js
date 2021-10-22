@@ -297,6 +297,9 @@ const attributes = {
     key_file: {
         parents: ['jwt', 'jwt_signing_profile']
     },
+    log_fields: {
+        parents: ['api', 'backend', 'endpoint', 'error_handler', 'files', 'server', 'spa']
+    },
     log_format: {
         parents: ['settings']
     },
