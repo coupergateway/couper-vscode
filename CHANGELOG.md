@@ -6,6 +6,14 @@
 
 - `functions`:
   - `relative_url()` [#48](https://github.com/avenga/couper-vscode/pull/48)
+- `log_fields` attribute in blocks:
+  - `api`
+  - `backend`
+  - `endpoint`
+  - `error_handler`
+  - `files`
+  - `server`
+  - `spa`
 
 <a name="v0.7.0"></a>
 
