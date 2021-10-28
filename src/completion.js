@@ -2,7 +2,7 @@
 
 const vscode = require('vscode')
 const common = require('./common')
-const { attributes, blocks, functions, variables } = require('./schema')
+const { attributes, blocks, functions, variables, DEFAULT_LABEL } = require('./schema')
 
 const selector = { language: 'couper' }
 
@@ -12,39 +12,50 @@ const variableRegex = /(.+)\..*\.$/
 
 const providers = []
 
+function createBlockCompletionItem(name, label) {
+	const hasLabel = label !== undefined && label !== null
+
+	var pattern
+	var priority
+	if (hasLabel) {
+		pattern = `${name} "${label}" {…}`
+		priority = "01"
+	} else {
+		pattern = `${name} {…}`
+		priority = "00"
+	}
+	const item = new vscode.CompletionItem(pattern, vscode.CompletionItemKind.Struct)
+	item.detail = 'Block'
+	const labelValue = hasLabel ? `"\${1:${label}}" ` : ''
+	const snippet = name + ' ' + labelValue + '{\u000a\t$0\u000a}'
+	item.insertText = new vscode.SnippetString(snippet)
+	item.sortText = priority + name
+
+	return item
+}
+
 for (const [name, block] of Object.entries(blocks)) {
 	const provider = vscode.languages.registerCompletionItemProvider(selector,
 		{
 			provideCompletionItems(document, position, token, context) {
 				const linePrefix = document.lineAt(position).text.substr(0, position.character)
 				const parentBlock = common.getParentBlock(document, position)
+
 				if (!/^\s*([\w-]+)?$/.test(linePrefix) || (block.parents || ['']).indexOf(parentBlock) === -1) {
 					return undefined
 				}
 
 				let items = []
-
-				const item = new vscode.CompletionItem(`${name} {…}`, vscode.CompletionItemKind.Struct)
-				item.detail = 'Block'
-				const label = name === 'endpoint' ? '/' : 'label'
 				const labelled = !!((typeof block.labelled === 'function') ? block.labelled(parentBlock) : block.labelled)
-				const labelValue = labelled ? `"\${1:${label}}" ` : ''
-				const snippet = name + ' ' + labelValue + '{\u000a\t$0\u000a}'
-				item.insertText = new vscode.SnippetString(snippet)
-				item.sortText = `0${name}`
-				items.push(item)
 
-				if (block.labels !== undefined && block.labels[parentBlock] !== undefined) {
-					for (var i = 0; i < block.labels[parentBlock].length; i++) {
-						var key = block.labels[parentBlock][i]
+				let labels = (typeof block.labels === 'function') ? block.labels(parentBlock) : block.labels
+				if (!Array.isArray(labels) || labels.length === 0) {
+					labels = labelled ? [DEFAULT_LABEL] : [null]
+				}
 
-						const item = new vscode.CompletionItem(`${name} "${key}" {…}`, vscode.CompletionItemKind.Struct)
-						item.detail = 'Block'
-						const snippet = name + ' ' + `"${key}" ` + '{\u000a\t$0\u000a}'
-						item.insertText = new vscode.SnippetString(snippet)
-						item.sortText = (i+1) + `${name}`
-						items.push(item)
-					}
+				for (let label of labels) {
+					const item = createBlockCompletionItem(name, label)
+					items.push(item)
 				}
 
 				return items

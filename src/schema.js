@@ -1,9 +1,11 @@
 // TODO: generate from golang:hcl :)
 
+const DEFAULT_LABEL = "…"
+
 const blocks = {
     api: {
         parents: ['server'],
-        labelled: false
+        labels: [null, DEFAULT_LABEL]
     },
     backend: {
         parents: ['beta_oauth2', 'beta_oidc', 'definitions', 'jwt', 'oauth2', 'proxy', 'request'],
@@ -35,12 +37,14 @@ const blocks = {
     },
     endpoint: {
         parents: ['api', 'server'],
-        labelled: true
+        labels: ['/']
     },
     error_handler: {
         parents: ['basic_auth', 'beta_oauth2', 'beta_oidc', 'jwt', 'saml'],
-        labelled: false,
-        labels: {
+        labels: (parentBlockName) => {
+            return [null].concat(blocks.error_handler._labelsForParent[parentBlockName])
+        },
+        _labelsForParent: {
             'basic_auth':  ['basic_auth', 'basic_auth_credentials_missing'],
             'jwt':         ['jwt', 'jwt_token_expired', 'jwt_token_invalid', 'jwt_token_missing'],
             'saml':        ['saml2'],
@@ -85,7 +89,7 @@ const blocks = {
         labelled: true
     },
     server: {
-        labelled: true
+        labels: [null, DEFAULT_LABEL]
     },
     settings: {
         labelled: false
@@ -543,4 +547,4 @@ const variables = {
     }
 }
 
-module.exports = { attributes, blocks, functions, variables }
+module.exports = { attributes, blocks, functions, variables, DEFAULT_LABEL }
