@@ -2,6 +2,11 @@
 
 ## [Unreleased](https://github.com/avenga/couper/compare-vscode/v0.7.0...master)
 
+### Added
+
+- `functions`:
+  - `relative_url()` [#48](https://github.com/avenga/couper-vscode/pull/48)
+
 <a name="v0.7.0"></a>
 
 > 2021-10-20
