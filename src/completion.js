@@ -77,7 +77,7 @@ for (const [name, attribute] of Object.entries(attributes)) {
 					return undefined
 				}
 
-				const item = new vscode.CompletionItem( `${name} = …`, vscode.CompletionItemKind.Property)
+				const item = new vscode.CompletionItem(`${name} = "…"`, vscode.CompletionItemKind.Property)
 				item.detail = 'Attribute'
 				item.sortText = `1${name}`
 				switch (attribute.type) {
