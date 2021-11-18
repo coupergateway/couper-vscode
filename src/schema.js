@@ -40,12 +40,14 @@ const blocks = {
         labels: ['/']
     },
     error_handler: {
-        parents: ['basic_auth', 'beta_oauth2', 'beta_oidc', 'jwt', 'saml'],
+        parents: ['api', 'basic_auth', 'beta_oauth2', 'beta_oidc', 'endpoint', 'jwt', 'saml'],
         labels: (parentBlockName) => {
             return [null].concat(blocks.error_handler._labelsForParent[parentBlockName])
         },
         _labelsForParent: {
+            'api':         ['beta_scope', 'beta_insufficient_scope', 'beta_operation_denied'],
             'basic_auth':  ['basic_auth', 'basic_auth_credentials_missing'],
+            'endpoint':    ['beta_scope', 'beta_insufficient_scope', 'beta_operation_denied'],
             'jwt':         ['jwt', 'jwt_token_expired', 'jwt_token_invalid', 'jwt_token_missing'],
             'saml':        ['saml2'],
             'beta_oauth2': ['oauth2'],
