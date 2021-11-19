@@ -19,10 +19,10 @@ function createBlockCompletionItem(name, label) {
 	var priority
 	if (hasLabel) {
 		pattern = `${name} "${label}" {…}`
-		priority = "01"
+		priority = `0${name}1`
 	} else {
 		pattern = `${name} {…}`
-		priority = "00"
+		priority = `0${name}0`
 	}
 	const item = new vscode.CompletionItem(pattern, vscode.CompletionItemKind.Struct)
 	item.detail = 'Block'
