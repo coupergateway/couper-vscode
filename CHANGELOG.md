@@ -8,6 +8,11 @@
   - `split()` [#52](https://github.com/avenga/couper-vscode/pull/52)
   - `substr()` [#52](https://github.com/avenga/couper-vscode/pull/52)
 
+### Changed
+
+- `functions`:
+  - `coalesce()` is renamed to `default()` [#52](https://github.com/avenga/couper-vscode/pull/52)
+
 ---
 
 > 2021-11-25
