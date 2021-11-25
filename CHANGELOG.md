@@ -1,6 +1,12 @@
 # Changelog
 
-## [Unreleased](https://github.com/avenga/couper/compare-vscode/v0.8.0...master)
+## [Unreleased](https://github.com/avenga/couper/compare-vscode/v0.8.1...master)
+
+---
+
+> 2021-11-25
+
+## [v0.8.1](https://github.com/avenga/couper-vscode/releases/tag/v8.1.0)
 
 ### Added
 
@@ -12,8 +18,6 @@
 
 - `functions`:
   - `coalesce()` is renamed to `default()` [#52](https://github.com/avenga/couper-vscode/pull/52)
-
----
 
 > 2021-11-25
 
@@ -29,8 +33,6 @@
   - `error_handler` block [#51](https://github.com/avenga/couper-vscode/pull/51)
 - `endpoint` block:
   - `error_handler` block [#51](https://github.com/avenga/couper-vscode/pull/51)
-
----
 
 > 2021-10-20
 
