@@ -2,6 +2,12 @@
 
 ## [Unreleased](https://github.com/avenga/couper/compare-vscode/v0.8.0...master)
 
+### Added
+
+- `functions`:
+  - `split()` [#52](https://github.com/avenga/couper-vscode/pull/52)
+  - `substr()` [#52](https://github.com/avenga/couper-vscode/pull/52)
+
 ---
 
 > 2021-11-25
