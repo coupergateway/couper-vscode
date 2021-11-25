@@ -496,6 +496,8 @@ const functions = {
     merge: { description: 'Deep-merges two or more of either objects or tuples. `null` arguments are ignored. A `null` attribute value in an object removes the previous attribute value. An attribute value with a different type than the current value is set as the new value. `merge()` with no parameters returns `null`.' },
     relative_url: { description: 'Returns a relative URL by retaining path, query and fragment components. The input URL must begin with `/<path>`, `//<authority>`, `http://` or `https://`, otherwise an error is thrown.' },
     saml_sso_url: { description: 'Creates a SAML SingleSignOn URL (including the `SAMLRequest` parameter) from a referenced `saml` block.' },
+    split: { description: 'Divides a given string by a given separator.' },
+    substr: { description: 'Extracts a sequence of characters from another string.' },
     to_lower: { description: 'Converts a given string to lowercase.' },
     to_upper: { description: 'Converts a given string to uppercase.' },
     unixtime: { description: 'Retrieves the current UNIX timestamp in seconds.' },
