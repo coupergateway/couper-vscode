@@ -6,7 +6,7 @@
 
 > 2021-11-25
 
-## [v0.8.1](https://github.com/avenga/couper-vscode/releases/tag/v8.1.0)
+## [v0.8.1](https://github.com/avenga/couper-vscode/releases/tag/v0.8.1)
 
 ### Added
 
