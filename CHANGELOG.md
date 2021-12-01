@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/avenga/couper/compare-vscode/v1.3.0...master)
 
+### Added
+
+- completion for `beta_health` [#50](https://github.com/avenga/couper-vscode/pull/50)
+
 ### Changed
 
 - permission-related attributes/error types [#75](https://github.com/avenga/couper-vscode/pull/75):

@@ -27,6 +27,10 @@ const blocks = {
         description: "Access control for an OAuth2 Authorization Code Grant Flow redirect endpoint.",
         labelled: true
     },
+    beta_health: {
+        parents: ['backend'],
+        labelled: false
+    },
     cors: {
         parents: ['api', 'files', 'server', 'spa'],
         description: "Configures CORS (Cross-Origin Resource Sharing) behavior.",
@@ -313,6 +317,17 @@ const attributes = {
         examples: ['sequences'],
         arrayType: 'number'
     },
+    expect_status: {
+        parents: ['beta_health'],
+        type: 'number'
+    },
+    expect_text: {
+        parents: ['beta_health']
+    },
+    failure_threshold: {
+        parents: ['beta_health'],
+        type: 'number'
+    },
     file: {
         parents: ['openapi']
     },
@@ -329,7 +344,7 @@ const attributes = {
         examples: ['jwt-access-control']
     },
     headers: {
-        parents: ['jwt_signing_profile', 'request', 'response'],
+        parents: ['beta_health', 'jwt_signing_profile', 'request', 'response'],
         examples: ['static-responses'],
         type: 'map'
     },
@@ -365,6 +380,9 @@ const attributes = {
     ignore_response_violations: {
         parents: ['openapi'],
         type: 'boolean'
+    },
+    interval: {
+        parents: ['beta_health']
     },
     json_body: {
         parents: ['request', 'response'],
@@ -418,7 +436,7 @@ const attributes = {
         parents: ['basic_auth']
     },
     path: {
-        parents: ['backend', 'endpoint', 'error_handler', 'proxy']
+        parents: ['backend', 'endpoint', 'error_handler', 'beta_health', 'proxy']
     },
     path_prefix: {
         parents: ['backend']
@@ -539,7 +557,7 @@ const attributes = {
         type: 'number'
     },
     timeout: {
-        parents: ['backend', 'websockets']
+        parents: ['backend', 'beta_health', 'websockets']
     },
     token_endpoint: {
         parents: ['beta_oauth2', 'oauth2']
