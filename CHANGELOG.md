@@ -13,6 +13,10 @@
   - access-control definitions:
     -  `basic_auth`, `beta_oauth2`, `beta_oidc`, `jwt`, `saml`
 
+### Changed
+
+- Unbeta the `OIDC` block and the `oauth2_authorization_url()` function [#57](https://github.com/avenga/couper-vscode/pull/57)
+
 ---
 
 > 2021-11-25
