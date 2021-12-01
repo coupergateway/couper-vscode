@@ -8,9 +8,10 @@
   - `endpoint`
   - `error_handler`
   - `files`
-  - `jwt`
   - `server`
   - `spa`
+  - access-control definitions:
+    -  `basic_auth`, `beta_oauth2`, `beta_oidc`, `jwt`, `saml`
 
 ---
 
