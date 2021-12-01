@@ -207,6 +207,9 @@ const attributes = {
     connect_timeout: {
         parents: ['backend']
     },
+    custom_log_fields: {
+        parents: ['api', 'backend', 'endpoint', 'error_handler', 'files', 'server', 'spa', 'jwt', 'basic_auth', 'saml', 'beta_oidc', 'beta_oauth2']
+    },
     default_port: {
         parents: ['settings'],
         type: 'number'

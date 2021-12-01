@@ -2,6 +2,17 @@
 
 ## [Unreleased](https://github.com/avenga/couper/compare-vscode/v0.8.1...master)
 
+- `custom_log_fields` attribute in blocks: [#54](https://github.com/avenga/couper-vscode/pull/54)
+  - `api`
+  - `backend`
+  - `endpoint`
+  - `error_handler`
+  - `files`
+  - `server`
+  - `spa`
+  - access-control definitions:
+    -  `basic_auth`, `beta_oauth2`, `beta_oidc`, `jwt`, `saml`
+
 ---
 
 > 2021-11-25
