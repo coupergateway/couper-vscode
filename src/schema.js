@@ -423,7 +423,7 @@ const attributes = {
     },
     signature_algorithm: {
         parents: ['jwt', 'jwt_signing_profile'],
-        options: ['HS256', 'HS384', 'HS512', 'RS256', 'RS384', 'RS512']
+        options: ['ES256', 'ES384', 'ES512', 'HS256', 'HS384', 'HS512', 'RS256', 'RS384', 'RS512']
     },
     signing_key: {
         parents: ['jwt']
