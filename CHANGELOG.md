@@ -15,7 +15,7 @@
 
 ### Changed
 
-- Unbeta the `OIDC` block and the `oauth2_authorization_url()` function [#57](https://github.com/avenga/couper-vscode/pull/57)
+- Unbeta the `OIDC` block and the `oauth2_authorization_url()` and `oauth2_verifier()` functions [#57](https://github.com/avenga/couper-vscode/pull/57)
 
 ---
 
