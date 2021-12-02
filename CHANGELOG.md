@@ -2,6 +2,8 @@
 
 ## [Unreleased](https://github.com/avenga/couper/compare-vscode/v0.8.1...master)
 
+### Added
+
 - `custom_log_fields` attribute in blocks: [#54](https://github.com/avenga/couper-vscode/pull/54)
   - `api`
   - `backend`
@@ -10,12 +12,11 @@
   - `files`
   - `server`
   - `spa`
-  - access-control definitions:
-    -  `basic_auth`, `beta_oauth2`, `beta_oidc`, `jwt`, `saml`
+  - access-control definitions: `basic_auth`, `beta_oauth2`, `oidc`, `jwt`, `saml`
 
 ### Changed
 
-- Unbeta the `OIDC` block and the `oauth2_authorization_url()` and `oauth2_verifier()` functions [#57](https://github.com/avenga/couper-vscode/pull/57)
+- Unbeta the `oidc` block and the `oauth2_authorization_url()` and `oauth2_verifier()` functions [#57](https://github.com/avenga/couper-vscode/pull/57)
 
 ---
 
