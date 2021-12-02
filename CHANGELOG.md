@@ -13,6 +13,10 @@
   - access-control definitions:
     -  `basic_auth`, `beta_oauth2`, `beta_oidc`, `jwt`, `saml`
 
+### Added
+
+- completion for EC signing algorithms [#56](https://github.com/avenga/couper-vscode/pull/56)
+
 ---
 
 > 2021-11-25
