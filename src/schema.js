@@ -8,7 +8,7 @@ const blocks = {
         labels: [null, DEFAULT_LABEL]
     },
     backend: {
-        parents: ['beta_oauth2', 'beta_oidc', 'definitions', 'jwt', 'oauth2', 'proxy', 'request'],
+        parents: ['beta_oauth2', 'definitions', 'jwt', 'oauth2', 'oidc', 'proxy', 'request'],
         labelled: (parentBlockName) => {
             return parentBlockName === "definitions"
         }
@@ -18,10 +18,6 @@ const blocks = {
         labelled: true
     },
     beta_oauth2: {
-        parents: ['definitions'],
-        labelled: true
-    },
-    beta_oidc: {
         parents: ['definitions'],
         labelled: true
     },
@@ -40,7 +36,7 @@ const blocks = {
         labels: ['/']
     },
     error_handler: {
-        parents: ['api', 'basic_auth', 'beta_oauth2', 'beta_oidc', 'endpoint', 'jwt', 'saml'],
+        parents: ['api', 'basic_auth', 'beta_oauth2', 'endpoint', 'jwt', 'oidc', 'saml'],
         labels: (parentBlockName) => {
             return [null].concat(blocks.error_handler._labelsForParent[parentBlockName])
         },
@@ -51,7 +47,7 @@ const blocks = {
             'jwt':         ['jwt', 'jwt_token_expired', 'jwt_token_invalid', 'jwt_token_missing'],
             'saml':        ['saml2'],
             'beta_oauth2': ['oauth2'],
-            'beta_oidc':   ['oauth2']
+            'oidc':        ['oauth2']
         }
     },
     files: {
@@ -69,6 +65,10 @@ const blocks = {
     oauth2: {
         parents: ['backend'],
         labelled: false
+    },
+    oidc: {
+        parents: ['definitions'],
+        labelled: true
     },
     openapi: {
         parents: ['backend'],
@@ -147,7 +147,7 @@ const attributes = {
         parents: ['beta_oauth2']
     },
     backend: { // label reference
-        parents: ['beta_oauth2', 'beta_oidc', 'jwt', 'oauth2', 'proxy', 'request']
+        parents: ['beta_oauth2', 'jwt', 'oauth2', 'oidc', 'proxy', 'request']
     },
     base_path: {
         parents: ['api', 'files', 'server', 'spa']
@@ -190,16 +190,16 @@ const attributes = {
         type: 'map'
     },
     client_id: {
-        parents: ['beta_oauth2', 'beta_oidc', 'oauth2']
+        parents: ['beta_oauth2', 'oauth2', 'oidc']
     },
     client_secret: {
-        parents: ['beta_oauth2', 'beta_oidc', 'oauth2']
+        parents: ['beta_oauth2', 'oauth2', 'oidc']
     },
     configuration_url: {
-        parents: ['beta_oidc']
+        parents: ['oidc']
     },
     configuration_ttl: {
-        parents: ['beta_oidc']
+        parents: ['oidc']
     },
     cookie: {
         parents: ['jwt']
@@ -354,7 +354,7 @@ const attributes = {
         parents: ['basic_auth']
     },
     redirect_uri: {
-        parents: ['beta_oauth2', 'beta_oidc']
+        parents: ['beta_oauth2', 'oidc']
     },
     remove_form_params: {
         parents: ['backend', 'endpoint', 'error_handler', 'proxy'],
@@ -396,7 +396,7 @@ const attributes = {
         type: 'number'
     },
     scope: {
-        parents: ['beta_oauth2', 'beta_oidc', 'oauth2']
+        parents: ['beta_oauth2', 'oauth2', 'oidc']
     },
     secure_cookies: {
         parents: ['settings']
@@ -451,7 +451,7 @@ const attributes = {
         parents: ['beta_oauth2', 'oauth2']
     },
     token_endpoint_auth_method: {
-        parents: ['beta_oauth2', 'beta_oidc', 'oauth2'],
+        parents: ['beta_oauth2', 'oauth2', 'oidc'],
         options: ['client_secret_basic', 'client_secret_post']
     },
     token_value: {
@@ -471,11 +471,11 @@ const attributes = {
         parents: ['basic_auth']
     },
 	verifier_method: {
-		parents: ['beta_oauth2', 'beta_oidc'],
+		parents: ['beta_oauth2', 'oidc'],
 		options: ['ccm_s256', 'nonce', 'state']
 	},
 	verifier_value: {
-		parents: ['beta_oauth2', 'beta_oidc']
+		parents: ['beta_oauth2', 'oidc']
 	},
     websockets: {
         parents: ['proxy'],
@@ -490,13 +490,13 @@ const attributes = {
 const functions = {
     base64_decode: { description: 'Decodes Base64 data, as specified in RFC 4648.' },
     base64_encode: { description: 'Encodes Base64 data, as specified in RFC 4648.' },
-    beta_oauth_authorization_url: { description: 'Creates an OAuth2 authorization URL from a referenced OAuth2 AC Block or OIDC Block.' },
-    beta_oauth_verifier: { description: 'Creates a cryptographically random key as specified in RFC 7636, applicable for all verifier methods; e.g. to be set as a cookie and read into verifier_value. Multiple calls of this function in the same client request context return the same value.' },
     default: { description: 'Returns the first of the given arguments that is not null.' },
     json_decode: { description: 'Parses the given JSON string and, if it is valid, returns the value it represents.' },
     json_encode: { description: 'Returns a JSON serialization of the given value.' },
     jwt_sign: { description: 'jwt_sign creates and signs a JSON Web Token (JWT) from information from a referenced jwt_signing_profile block and additional claims provided as a function parameter.' },
     merge: { description: 'Deep-merges two or more of either objects or tuples. `null` arguments are ignored. A `null` attribute value in an object removes the previous attribute value. An attribute value with a different type than the current value is set as the new value. `merge()` with no parameters returns `null`.' },
+    oauth2_authorization_url: { description: 'Creates an OAuth2 authorization URL from a referenced OAuth2 AC Block or OIDC Block.' },
+    oauth2_verifier: { description: 'Creates a cryptographically random key as specified in RFC 7636, applicable for all verifier methods; e.g. to be set as a cookie and read into verifier_value. Multiple calls of this function in the same client request context return the same value.' },
     relative_url: { description: 'Returns a relative URL by retaining path, query and fragment components. The input URL must begin with `/<path>`, `//<authority>`, `http://` or `https://`, otherwise an error is thrown.' },
     saml_sso_url: { description: 'Creates a SAML SingleSignOn URL (including the `SAMLRequest` parameter) from a referenced `saml` block.' },
     split: { description: 'Divides a given string by a given separator.' },
