@@ -240,6 +240,10 @@ const attributes = {
     error_file: {
         parents: ['api', 'endpoint', 'error_handler', 'files', 'server']
     },
+    expected_status: {
+        parents: ['proxy', 'request'],
+        type: 'array'
+    },
     file: {
         parents: ['openapi']
     },
