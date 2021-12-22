@@ -242,7 +242,8 @@ const attributes = {
     },
     expected_status: {
         parents: ['proxy', 'request'],
-        type: 'array'
+        type: 'array',
+        arrayType: 'number'
     },
     file: {
         parents: ['openapi']

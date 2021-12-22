@@ -83,7 +83,11 @@ for (const [name, attribute] of Object.entries(attributes)) {
 				switch (attribute.type) {
 					case 'array': {
 						item.label = `${name} = […]`
-						item.insertText = new vscode.SnippetString(`${name} = ["$0"]`)
+						if (attribute.arrayType == 'number') {
+							item.insertText = new vscode.SnippetString(`${name} = [$0]`)
+						} else {
+							item.insertText = new vscode.SnippetString(`${name} = ["$0"]`)
+						}
 					} break;
 					case 'map': {
 						item.label = `${name} = {…}`
