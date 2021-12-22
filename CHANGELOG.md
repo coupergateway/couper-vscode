@@ -13,6 +13,8 @@
   - `server`
   - `spa`
   - access-control definitions: `basic_auth`, `beta_oauth2`, `oidc`, `jwt`, `saml`
+- `expected_status` attribute in `proxy` and `request` blocks [#59](https://github.com/avenga/couper-vscode/pull/59)
+- `sequence` and `unexpected_status` error types [#59](https://github.com/avenga/couper-vscode/pull/59)
 
 ### Changed
 
