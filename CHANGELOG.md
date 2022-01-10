@@ -1,6 +1,10 @@
 # Changelog
 
-## [Unreleased](https://github.com/avenga/couper/compare-vscode/v0.8.1...master)
+## [Unreleased](https://github.com/avenga/couper/compare-vscode/v0.9.0...master)
+
+---
+
+## [v0.9.0](https://github.com/avenga/couper-vscode/releases/tag/v0.9.0)
 
 ### Added
 
@@ -15,16 +19,11 @@
   - access-control definitions: `basic_auth`, `beta_oauth2`, `oidc`, `jwt`, `saml`
 - `expected_status` attribute in `proxy` and `request` blocks [#59](https://github.com/avenga/couper-vscode/pull/59)
 - `sequence` and `unexpected_status` error types [#59](https://github.com/avenga/couper-vscode/pull/59)
+- completion for EC signing algorithms [#56](https://github.com/avenga/couper-vscode/pull/56)
 
 ### Changed
 
 - Unbeta the `oidc` block and the `oauth2_authorization_url()` and `oauth2_verifier()` functions [#57](https://github.com/avenga/couper-vscode/pull/57)
-
-### Added
-
-- completion for EC signing algorithms [#56](https://github.com/avenga/couper-vscode/pull/56)
-
----
 
 > 2021-11-25
 
