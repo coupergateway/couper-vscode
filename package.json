@@ -20,11 +20,17 @@
     "theme": "light"
   },
   "engines": {
-    "vscode": "^1.0.0"
+    "vscode": "^1.59.0"
   },
   "main": "src/extension.js",
+  "browser": "dist/web/extension.js",
   "scripts": {
-    "watch": "true"
+    "pretest": "npm run compile-web",
+    "vscode:prepublish": "npm run package-web",
+    "compile-web": "webpack",
+    "watch-web": "webpack --watch",
+    "package-web": "webpack --mode production --devtool hidden-source-map",
+    "lint": "eslint src --ext ts"
   },
   "contributes": {
     "languages": [
@@ -53,7 +59,18 @@
     "workspaceContains:**/*.hcl"
   ],
   "devDependencies": {
-    "vscode": "^1.1.37"
+    "@types/vscode": "^1.59.0",
+    "eslint": "^7.32.0",
+    "@typescript-eslint/eslint-plugin": "^4.31.1",
+    "@typescript-eslint/parser": "^4.31.1",
+    "typescript": "^4.4.3",
+    "@vscode/test-web": "^0.0.12",
+    "ts-loader": "^9.2.5",
+    "webpack": "^5.52.1",
+    "webpack-cli": "^4.8.0",
+    "@types/webpack-env": "^1.16.2",
+    "assert": "^2.0.0",
+    "process": "^0.11.10"
   },
   "bugs": "https://github.com/avenga/couper-vscode/issues",
   "repository": {

@@ -1,8 +1,16 @@
 # Changelog
 
-## [Unreleased](https://github.com/avenga/couper/compare-vscode/v0.9.0...master)
+## [Unreleased](https://github.com/avenga/couper/compare-vscode/v1.0.0...master)
 
 ---
+
+## [v1.0.0](https://github.com/avenga/couper-vscode/releases/tag/v1.0.0)
+
+### Added
+
+- Support for running as [web-extension](https://code.visualstudio.com/api/extension-guides/web-extensions) [#60](https://github.com/avenga/couper-vscode/pull/60)
+  - [vscode.dev](https://vscode.dev/)
+  - [github.dev](https://github.dev/github/dev)
 
 ## [v0.9.0](https://github.com/avenga/couper-vscode/releases/tag/v0.9.0)
 
