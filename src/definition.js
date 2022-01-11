@@ -1,7 +1,7 @@
 "use strict"
 
 const vscode = require('vscode')
-const common = require('./common')
+const common = require('common')
 
 const selector = { language: 'couper' }
 

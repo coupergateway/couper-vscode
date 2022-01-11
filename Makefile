@@ -9,6 +9,9 @@ install:
 run:
 	code --extensionDevelopmentPath=$(__DIR__)
 
-# TAG=v0.3 make changelog
-changelog:
-	git-chglog --next-tag $(TAG) $(TAG)
+run-web:
+	code --extensionDevelopmentPath=$(__DIR__) --extensionDevelopmentKind=web
+
+host-vscode-dev:
+	$(npx serve --cors -l 5000)
+	npx localtunnel -p 5000
