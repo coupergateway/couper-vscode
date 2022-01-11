@@ -1,7 +1,7 @@
 {
   "name": "couper",
   "displayName": "Couper Configuration",
-  "version": "0.9.0",
+  "version": "1.0.0",
   "publisher": "AvengaGermanyGmbH",
   "description": "Provides autocompletion, syntax/semantic validation and syntax highlighting for Couper's HCL based configuration file.",
   "keywords": [
@@ -60,17 +60,17 @@
   ],
   "devDependencies": {
     "@types/vscode": "^1.59.0",
-    "eslint": "^7.32.0",
+    "@types/webpack-env": "^1.16.2",
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "@typescript-eslint/parser": "^4.31.1",
-    "typescript": "^4.4.3",
     "@vscode/test-web": "^0.0.12",
-    "ts-loader": "^9.2.5",
-    "webpack": "^5.52.1",
-    "webpack-cli": "^4.8.0",
-    "@types/webpack-env": "^1.16.2",
     "assert": "^2.0.0",
-    "process": "^0.11.10"
+    "eslint": "^7.32.0",
+    "process": "^0.11.10",
+    "ts-loader": "^9.2.5",
+    "typescript": "^4.4.3",
+    "webpack": "^5.52.1",
+    "webpack-cli": "^4.8.0"
   },
   "bugs": "https://github.com/avenga/couper-vscode/issues",
   "repository": {
