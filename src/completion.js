@@ -1,8 +1,8 @@
 "use strict"
 
 const vscode = require('vscode')
-const common = require('common')
-const { attributes, blocks, functions, variables, DEFAULT_LABEL } = require('schema')
+const common = require('./common')
+const { attributes, blocks, functions, variables, DEFAULT_LABEL } = require('./schema')
 
 const selector = { language: 'couper' }
 
