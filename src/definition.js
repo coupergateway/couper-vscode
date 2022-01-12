@@ -64,7 +64,7 @@ const definitionProvider = vscode.languages.registerDefinitionProvider(selector,
         }
 
         const text = document.getText()
-        const offset = text.search(new RegExp('^\\s*(?:' + block + ')\\s+' + escapedQuotedWord + '\\s*{', 'm'))
+        const offset = text.search(new RegExp('^[ \t]*(?:' + block + ')\\s+' + escapedQuotedWord + '\\s*{', 'm'))
         if (offset === -1) {
             return null
         }

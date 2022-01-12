@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/avenga/couper/compare-vscode/v1.0.0...master)
 
+### Fixed
+
+- _Go to definition_ sometimes jumped too short [#61](https://github.com/avenga/couper-vscode/pull/61)
+
 ---
 
 ## [v1.0.0](https://github.com/avenga/couper-vscode/releases/tag/v1.0.0)
