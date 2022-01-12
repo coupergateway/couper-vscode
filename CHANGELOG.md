@@ -2,6 +2,14 @@
 
 ## [Unreleased](https://github.com/avenga/couper/compare-vscode/v1.0.1...master)
 
+### Added
+
+- `log_level` attribute for `settings` block [#62](https://github.com/avenga/couper-vscode/pull/62)
+
+### Fixed
+
+- type of `custom_log_fields` [#62](https://github.com/avenga/couper-vscode/pull/62)
+
 ---
 
 ## [v1.0.1](https://github.com/avenga/couper-vscode/releases/tag/v1.0.1)
