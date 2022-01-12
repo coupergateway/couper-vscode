@@ -314,6 +314,10 @@ const attributes = {
     log_format: {
         parents: ['settings']
     },
+    log_level: {
+        parents: ['settings'],
+        options: ['info', 'panic', 'fatal', 'error', 'warn', 'debug', 'trace']
+    },
     log_pretty: {
         parents: ['settings'],
         type: 'boolean'
