@@ -208,7 +208,8 @@ const attributes = {
         parents: ['backend']
     },
     custom_log_fields: {
-        parents: ['api', 'backend', 'endpoint', 'error_handler', 'files', 'server', 'spa', 'jwt', 'basic_auth', 'saml', 'beta_oidc', 'beta_oauth2']
+        parents: ['api', 'backend', 'endpoint', 'error_handler', 'files', 'server', 'spa', 'jwt', 'basic_auth', 'saml', 'beta_oidc', 'beta_oauth2'],
+        type: 'map'
     },
     default_port: {
         parents: ['settings'],
@@ -313,6 +314,10 @@ const attributes = {
     },
     log_format: {
         parents: ['settings']
+    },
+    log_level: {
+        parents: ['settings'],
+        options: ['info', 'panic', 'fatal', 'error', 'warn', 'debug', 'trace']
     },
     log_pretty: {
         parents: ['settings'],
