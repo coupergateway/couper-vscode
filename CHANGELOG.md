@@ -5,6 +5,7 @@
 ### Added
 
 - `log_level` attribute for `settings` block [#62](https://github.com/avenga/couper-vscode/pull/62)
+- `saml` error type [#63](https://github.com/avenga/couper-vscode/pull/63)
 
 ### Fixed
 
