@@ -231,6 +231,10 @@ const attributes = {
         parents: ['backend'],
         type: 'boolean'
     },
+	disable_private_caching: {
+		parents: ['jwt'],
+        type: 'boolean'
+	},
     document_root: {
         parents: ['files']
     },
