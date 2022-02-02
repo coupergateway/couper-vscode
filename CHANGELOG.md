@@ -5,6 +5,7 @@
 ### Added
 
 - `log_level` attribute for `settings` block [#62](https://github.com/avenga/couper-vscode/pull/62)
+- `backend_request` and `backend_response` variables [#64](https://github.com/avenga/couper-vscode/pull/64)
 
 ### Fixed
 
