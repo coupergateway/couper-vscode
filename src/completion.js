@@ -174,6 +174,13 @@ for (const [v] of Object.entries(variables)) {
 					return undefined
 				}
 
+				if (variables[v].parents) {
+					const parentBlock = common.getParentBlock(document, position)
+					if (variables[v].parents.indexOf(parentBlock) === -1) {
+						return undefined
+					}
+				}
+
 				let linePrefix = document.lineAt(position).text.substr(0, position.character)
 
 				let match = linePrefix.match(variableRegex)
