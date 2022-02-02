@@ -169,15 +169,19 @@ for (const [v] of Object.entries(variables)) {
 	const provider = vscode.languages.registerCompletionItemProvider(selector,
 		{
 			provideCompletionItems(document, position) {
-				let linePrefix = document.lineAt(position).text.substr(0, position.character)
 				const validScope = isValidScope(document, position, variableScopeRegex)
+				if (!validScope) {
+					return undefined
+				}
+
+				let linePrefix = document.lineAt(position).text.substr(0, position.character)
 
 				let match = linePrefix.match(variableRegex)
 				if (match !== null && match.length > 0) {
 					linePrefix = match[0]
 				}
 
-				if (!validScope || !attributeRegex.test(linePrefix) || linePrefix.endsWith('.')) {
+				if (!attributeRegex.test(linePrefix) || linePrefix.endsWith('.')) {
 					return undefined
 				}
 
