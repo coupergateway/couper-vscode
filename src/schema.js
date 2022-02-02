@@ -521,6 +521,7 @@ const commonProperties = ['body', 'context', 'cookies', 'headers', 'json_body']
 
 const variables = {
     backend_request: {
+        parents: ['backend'],
         values: commonProperties.concat(...[
             'form_body',
             'host',
@@ -550,6 +551,7 @@ const variables = {
         ])
     },
     backend_response: {
+        parents: ['backend'],
         values: commonProperties.concat(...[
             'status'
         ])
