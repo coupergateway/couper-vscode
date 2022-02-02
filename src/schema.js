@@ -480,13 +480,13 @@ const attributes = {
     user: {
         parents: ['basic_auth']
     },
-	verifier_method: {
-		parents: ['beta_oauth2', 'oidc'],
-		options: ['ccm_s256', 'nonce', 'state']
-	},
-	verifier_value: {
-		parents: ['beta_oauth2', 'oidc']
-	},
+    verifier_method: {
+        parents: ['beta_oauth2', 'oidc'],
+        options: ['ccm_s256', 'nonce', 'state']
+    },
+    verifier_value: {
+        parents: ['beta_oauth2', 'oidc']
+    },
     websockets: {
         parents: ['proxy'],
         type: 'boolean'
