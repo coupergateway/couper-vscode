@@ -484,13 +484,13 @@ const attributes = {
     user: {
         parents: ['basic_auth']
     },
-	verifier_method: {
-		parents: ['beta_oauth2', 'oidc'],
-		options: ['ccm_s256', 'nonce', 'state']
-	},
-	verifier_value: {
-		parents: ['beta_oauth2', 'oidc']
-	},
+    verifier_method: {
+        parents: ['beta_oauth2', 'oidc'],
+        options: ['ccm_s256', 'nonce', 'state']
+    },
+    verifier_value: {
+        parents: ['beta_oauth2', 'oidc']
+    },
     websockets: {
         parents: ['proxy'],
         type: 'boolean'
@@ -524,6 +524,21 @@ const functions = {
 const commonProperties = ['body', 'context', 'cookies', 'headers', 'json_body']
 
 const variables = {
+    backend_request: {
+        parents: ['backend'],
+        values: commonProperties.concat(...[
+            'form_body',
+            'host',
+            'id',
+            'method',
+            'origin',
+            'path',
+            'port',
+            'protocol',
+            'query',
+            'url'
+        ])
+    },
     backend_requests: {
         child: 'default',
         values: commonProperties.concat(...[
@@ -537,6 +552,12 @@ const variables = {
             'protocol',
             'query',
             'url'
+        ])
+    },
+    backend_response: {
+        parents: ['backend'],
+        values: commonProperties.concat(...[
+            'status'
         ])
     },
     backend_responses: {
