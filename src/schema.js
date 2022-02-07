@@ -168,6 +168,10 @@ const attributes = {
     beta_scope_claim: {
         parents: ['jwt']
     },
+    beta_scope_map: {
+        parents: ['jwt'],
+        type: 'map'
+    },
     beta_metrics: {
         parents: ['settings'],
         type: 'boolean',
