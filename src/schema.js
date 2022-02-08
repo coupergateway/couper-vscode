@@ -155,6 +155,14 @@ const attributes = {
     basic_auth: {
         parents: ['backend']
     },
+    beta_metrics: {
+        parents: ['settings'],
+        type: 'boolean',
+    },
+    beta_metrics_port: {
+        parents: ['settings'],
+        type: 'number',
+    },
     beta_roles_claim: {
         parents: ['jwt']
     },
@@ -168,13 +176,9 @@ const attributes = {
     beta_scope_claim: {
         parents: ['jwt']
     },
-    beta_metrics: {
-        parents: ['settings'],
-        type: 'boolean',
-    },
-    beta_metrics_port: {
-        parents: ['settings'],
-        type: 'number',
+    beta_scope_map: {
+        parents: ['jwt'],
+        type: 'map'
     },
     beta_service_name: {
         parents: ['settings'],
