@@ -136,6 +136,7 @@
         { "include": "#variable-type-array" },
         { "include": "#variable-type-map" },
         { "include": "#expr-term-get-attr" },
+        { "include": "#function-call" },
         { "include": "#variable" }
       ]
     },
@@ -173,13 +174,12 @@
           },
           "patterns" : [
             { "include": "#variable-interpolation" },
-            { "include": "#variable-interpolation-function" },
             { "include": "#expression" }
           ]
         }
       ]
     },
-    "variable-interpolation-function": {
+    "function-call": {
       "patterns" : [
         {
           "begin": "([\\w-]+)\\(",
@@ -188,7 +188,6 @@
           },
           "end" : "\\)",
           "patterns" : [
-            { "include": "#variable-interpolation-function" },
             { "include": "#expression" }
           ]
         }
