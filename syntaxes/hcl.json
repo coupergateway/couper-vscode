@@ -9,7 +9,7 @@
   "patterns": [
     { "include": "#comments" },
     { "include": "#constructs" },
-    { "include": "#variable" }
+    { "include": "#attributes" }
   ],
   "repository": {
     "comments": {
@@ -54,7 +54,7 @@
           "patterns" : [
             { "include": "$self" },
             { "include": "#comments" },
-            { "include": "#variable" }
+            { "include": "#attributes" }
           ]
         },
         {
@@ -68,7 +68,7 @@
           "patterns" : [
             { "include": "$self" },
             { "include": "#comments" },
-            { "include": "#variable" },
+            { "include": "#attributes" },
             { "include": "#quoted-key-assignment" }
           ]
         },
@@ -83,12 +83,12 @@
           "patterns" : [
             { "include": "$self" },
             { "include": "#comments" },
-            { "include": "#variable" }
+            { "include": "#attributes" }
           ]
         }
       ]
     },
-    "variable": {
+    "attributes": {
       "patterns" : [
         {
           "begin": "([\\w\\.-]+)\\s*(=)\\s*",
