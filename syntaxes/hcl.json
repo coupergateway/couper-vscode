@@ -102,12 +102,8 @@
           },
           "patterns": [
             { "include": "#comments" },
-            { "include": "#variable-type-string" },
             { "include": "#variable-type-heredoc" },
-            { "include": "#numeric-literal" },
-            { "include": "#variable-type-constant" },
-            { "include": "#variable-type-array" },
-            { "include": "#variable-type-map" }
+            { "include": "#expression" }
           ]
         }
       ]
@@ -126,13 +122,41 @@
           },
           "patterns": [
             { "include": "#comments" },
-            { "include": "#variable-type-string" },
             { "include": "#variable-type-heredoc" },
-            { "include": "#numeric-literal" },
-            { "include": "#variable-type-constant" },
-            { "include": "#variable-type-array" },
-            { "include": "#variable-type-map" }
+            { "include": "#expression" }
           ]
+        }
+      ]
+    },
+    "expression": {
+      "patterns": [
+        { "include": "#variable-type-string" },
+        { "include": "#numeric-literal" },
+        { "include": "#variable-type-constant" },
+        { "include": "#variable-type-array" },
+        { "include": "#variable-type-map" },
+        { "include": "#expr-term-get-attr" },
+        { "include": "#variable" }
+      ]
+    },
+    "variable": {
+      "patterns": [
+        {
+          "match": "(couper|env|request|backend_requests|backend_responses)",
+          "captures": {
+            "0": { "name": "variable.language.hcl" }
+          }
+        }
+      ]
+    },
+    "expr-term-get-attr": {
+      "patterns": [
+        {
+          "match": "(\\.)\\s*([\\w-]+)",
+          "captures": {
+            "1": { "name": "keyword.operator.hcl" },
+            "2": { "name": "variable.other.hcl" }
+          }
         }
       ]
     },
@@ -150,12 +174,12 @@
           "patterns" : [
             { "include": "#variable-interpolation" },
             { "include": "#variable-interpolation-function" },
-            { "include": "#variable-interpolation-reference" }
+            { "include": "#expression" }
           ]
         }
       ]
     },
-    "variable-interpolation-function" : {
+    "variable-interpolation-function": {
       "patterns" : [
         {
           "begin": "([\\w-]+)\\(",
@@ -165,23 +189,8 @@
           "end" : "\\)",
           "patterns" : [
             { "include": "#variable-interpolation-function" },
-            { "include": "#variable-interpolation-reference" },
-            { "include": "#numeric-literal" },
-            { "include": "#variable-type-constant" },
-            { "include": "#variable-type-string" }
+            { "include": "#expression" }
           ]
-        }
-      ]
-    },
-    "variable-interpolation-reference" : {
-      "patterns" : [
-        {
-          "match": "\\b([\\w-]+)\\.([\\w-]+)\\.?([\\w-]+)*\\b",
-          "captures": {
-            "1": { "name": "storage.modifier.hcl" },
-            "2": { "name": "entity.name.type.hcl" },
-            "3": { "name": "variable.other.member" }
-          }
         }
       ]
     },
@@ -198,10 +207,7 @@
             "0": { "name": "keyword.operator.hcl" }
           },
           "patterns": [
-            { "include": "#variable-interpolation-reference"},
-            { "include": "#numeric-literal" },
-            { "include": "#variable-type-constant" },
-            { "include": "#variable-type-string" },
+            { "include": "#expression"},
             {
               "match": "\\s*,\\s*"
             }
