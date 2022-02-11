@@ -104,7 +104,7 @@
             { "include": "#comments" },
             { "include": "#variable-type-string" },
             { "include": "#variable-type-heredoc" },
-            { "include": "#variable-type-decimal" },
+            { "include": "#numeric-literal" },
             { "include": "#variable-type-constant" },
             { "include": "#variable-type-array" },
             { "include": "#variable-type-map" }
@@ -128,7 +128,7 @@
             { "include": "#comments" },
             { "include": "#variable-type-string" },
             { "include": "#variable-type-heredoc" },
-            { "include": "#variable-type-decimal" },
+            { "include": "#numeric-literal" },
             { "include": "#variable-type-constant" },
             { "include": "#variable-type-array" },
             { "include": "#variable-type-map" }
@@ -166,7 +166,7 @@
           "patterns" : [
             { "include": "#variable-interpolation-function" },
             { "include": "#variable-interpolation-reference" },
-            { "include": "#variable-type-decimal" },
+            { "include": "#numeric-literal" },
             { "include": "#variable-type-constant" },
             { "include": "#variable-type-string" }
           ]
@@ -199,7 +199,7 @@
           },
           "patterns": [
             { "include": "#variable-interpolation-reference"},
-            { "include": "#variable-type-decimal" },
+            { "include": "#numeric-literal" },
             { "include": "#variable-type-constant" },
             { "include": "#variable-type-string" },
             {
@@ -216,7 +216,7 @@
           "end": "\\]",
           "patterns": [
             { "include": "#comments" },
-            { "include": "#variable-type-decimal" },
+            { "include": "#numeric-literal" },
             { "include": "#variable-type-constant" },
             { "include": "#variable-type-string" },
             {
@@ -243,7 +243,7 @@
                 "0": { "name": "keyword.operator.hcl" }
               },
               "patterns": [
-                { "include": "#variable-type-decimal" },
+                { "include": "#numeric-literal" },
                 { "include": "#variable-type-constant" },
                 { "include": "#variable-type-string" },
                 {
@@ -255,11 +255,10 @@
         }
       ]
     },
-    "variable-type-decimal" : {
+    "numeric-literal" : {
       "patterns" : [
         {
-          "comment" :"Numbers in decimal with optional suffixes",
-          "match": "\\b[0-9\\.]+([kKmMgG]b?)?\\b",
+          "match": "\\b[0-9]+(\\.[0-9]+)?([eE][+-]?[0-9]+)?\\b",
           "captures": {
             "0": { "name": "constant.numeric.hcl" }
           }
