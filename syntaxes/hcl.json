@@ -150,6 +150,7 @@
             "0": { "name": "keyword.operator.hcl" }
           },
           "patterns" : [
+            { "include": "#variable-interpolation" },
             { "include": "#variable-interpolation-function" },
             { "include": "#variable-interpolation-reference" }
           ]
