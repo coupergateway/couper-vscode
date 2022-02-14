@@ -12,6 +12,7 @@
 ### Fixed
 
 - type of `custom_log_fields` [#62](https://github.com/avenga/couper-vscode/pull/62)
+- expression highlighting [#67](https://github.com/avenga/couper-vscode/pull/67)
 
 ---
 

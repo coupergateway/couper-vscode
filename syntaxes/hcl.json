@@ -9,7 +9,7 @@
   "patterns": [
     { "include": "#comments" },
     { "include": "#constructs" },
-    { "include": "#variable" }
+    { "include": "#attributes" }
   ],
   "repository": {
     "comments": {
@@ -54,7 +54,7 @@
           "patterns" : [
             { "include": "$self" },
             { "include": "#comments" },
-            { "include": "#variable" }
+            { "include": "#attributes" }
           ]
         },
         {
@@ -68,7 +68,7 @@
           "patterns" : [
             { "include": "$self" },
             { "include": "#comments" },
-            { "include": "#variable" },
+            { "include": "#attributes" },
             { "include": "#quoted-key-assignment" }
           ]
         },
@@ -83,12 +83,12 @@
           "patterns" : [
             { "include": "$self" },
             { "include": "#comments" },
-            { "include": "#variable" }
+            { "include": "#attributes" }
           ]
         }
       ]
     },
-    "variable": {
+    "attributes": {
       "patterns" : [
         {
           "begin": "([\\w\\.-]+)\\s*(=)\\s*",
@@ -102,13 +102,8 @@
           },
           "patterns": [
             { "include": "#comments" },
-            { "include": "#variable-type-string" },
             { "include": "#variable-type-heredoc" },
-            { "include": "#variable-type-hexadecimal" },
-            { "include": "#variable-type-decimal" },
-            { "include": "#variable-type-constant" },
-            { "include": "#variable-type-array" },
-            { "include": "#variable-type-map" }
+            { "include": "#expression" }
           ]
         }
       ]
@@ -127,14 +122,44 @@
           },
           "patterns": [
             { "include": "#comments" },
-            { "include": "#variable-type-string" },
             { "include": "#variable-type-heredoc" },
-            { "include": "#variable-type-hexadecimal" },
-            { "include": "#variable-type-decimal" },
-            { "include": "#variable-type-constant" },
-            { "include": "#variable-type-array" },
-            { "include": "#variable-type-map" }
+            { "include": "#expression" }
           ]
+        }
+      ]
+    },
+    "expression": {
+      "patterns": [
+        { "include": "#variable-type-string" },
+        { "include": "#numeric-literal" },
+        { "include": "#variable-type-constant" },
+        { "include": "#variable-type-array" },
+        { "include": "#variable-type-map" },
+        { "include": "#expr-term-get-attr" },
+        { "include": "#function-call" },
+        { "include": "#variable" }
+      ]
+    },
+    "variable": {
+      "patterns": [
+        {
+          "match": "\\b(couper|env|request|backend_requests?|backend_responses?)\\b",
+          "captures": {
+            "0": { "name": "variable.language.hcl" }
+          }
+        }
+      ]
+    },
+    "expr-term-get-attr": {
+      "patterns": [
+        {
+          "match": "(\\.)\\s*([\\w-]+)(?:\\s*(\\.)\\s*([\\w-]+))?",
+          "captures": {
+            "1": { "name": "keyword.operator.hcl" },
+            "2": { "name": "variable.other.hcl" },
+            "3": { "name": "keyword.operator.hcl" },
+            "4": { "name": "variable.language.hcl" }
+          }
         }
       ]
     },
@@ -150,13 +175,13 @@
             "0": { "name": "keyword.operator.hcl" }
           },
           "patterns" : [
-            { "include": "#variable-interpolation-function" },
-            { "include": "#variable-interpolation-reference" }
+            { "include": "#variable-interpolation" },
+            { "include": "#expression" }
           ]
         }
       ]
     },
-    "variable-interpolation-function" : {
+    "function-call": {
       "patterns" : [
         {
           "begin": "([\\w-]+)\\(",
@@ -165,25 +190,8 @@
           },
           "end" : "\\)",
           "patterns" : [
-            { "include": "#variable-interpolation-function" },
-            { "include": "#variable-interpolation-reference" },
-            { "include": "#variable-type-hexadecimal" },
-            { "include": "#variable-type-decimal" },
-            { "include": "#variable-type-constant" },
-            { "include": "#variable-type-string" }
+            { "include": "#expression" }
           ]
-        }
-      ]
-    },
-    "variable-interpolation-reference" : {
-      "patterns" : [
-        {
-          "match": "\\b([\\w-]+)\\.([\\w-]+)\\.?([\\w-]+)*\\b",
-          "captures": {
-            "1": { "name": "storage.modifier.hcl" },
-            "2": { "name": "entity.name.type.hcl" },
-            "3": { "name": "variable.other.member" }
-          }
         }
       ]
     },
@@ -200,11 +208,7 @@
             "0": { "name": "keyword.operator.hcl" }
           },
           "patterns": [
-            { "include": "#variable-interpolation-reference"},
-            { "include": "#variable-type-decimal" },
-            { "include": "#variable-type-hexadecimal" },
-            { "include": "#variable-type-constant" },
-            { "include": "#variable-type-string" },
+            { "include": "#expression"},
             {
               "match": "\\s*,\\s*"
             }
@@ -219,8 +223,7 @@
           "end": "\\]",
           "patterns": [
             { "include": "#comments" },
-            { "include": "#variable-type-decimal" },
-            { "include": "#variable-type-hexadecimal" },
+            { "include": "#numeric-literal" },
             { "include": "#variable-type-constant" },
             { "include": "#variable-type-string" },
             {
@@ -247,8 +250,7 @@
                 "0": { "name": "keyword.operator.hcl" }
               },
               "patterns": [
-                { "include": "#variable-type-decimal" },
-                { "include": "#variable-type-hexadecimal" },
+                { "include": "#numeric-literal" },
                 { "include": "#variable-type-constant" },
                 { "include": "#variable-type-string" },
                 {
@@ -260,22 +262,10 @@
         }
       ]
     },
-    "variable-type-hexadecimal" : {
+    "numeric-literal" : {
       "patterns" : [
         {
-          "comment" :"Numbers in hexadecimal with optional suffixes",
-          "match": "0x[0-9A-Fa-f]+([kKmMgG]b?)?",
-          "captures": {
-            "0": { "name": "constant.numeric.hcl" }
-          }
-        }
-      ]
-    },
-    "variable-type-decimal" : {
-      "patterns" : [
-        {
-          "comment" :"Numbers in decimal with optional suffixes",
-          "match": "\\b[0-9\\.]+([kKmMgG]b?)?\\b",
+          "match": "\\b[0-9]+(\\.[0-9]+)?([eE][+-]?[0-9]+)?\\b",
           "captures": {
             "0": { "name": "constant.numeric.hcl" }
           }
