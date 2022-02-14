@@ -39,6 +39,9 @@ for (const [name, block] of Object.entries(blocks)) {
 		{
 			provideCompletionItems(document, position, token, context) {
 				const linePrefix = document.lineAt(position).text.substr(0, position.character)
+				if (common.isObjectContext(document, position)) {
+					return undefined
+				}
 				const parentBlock = common.getParentBlock(document, position)
 
 				if (!/^\s*([\w-]+)?$/.test(linePrefix) || (block.parents || ['']).indexOf(parentBlock) === -1) {
@@ -70,6 +73,10 @@ for (const [name, attribute] of Object.entries(attributes)) {
 	const provider = vscode.languages.registerCompletionItemProvider(selector,
 		{
 			provideCompletionItems(document, position, token, context) {
+				if (common.isObjectContext(document, position)) {
+					return undefined
+				}
+
 				const linePrefix = document.lineAt(position).text.substr(0, position.character)
 				const parentBlock = common.getParentBlock(document, position)
 				const writeAttrRegex = /^\s*([\w-]+)?$/
