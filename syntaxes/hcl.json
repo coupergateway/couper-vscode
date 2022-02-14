@@ -153,10 +153,12 @@
     "expr-term-get-attr": {
       "patterns": [
         {
-          "match": "(\\.)\\s*([\\w-]+)",
+          "match": "(\\.)\\s*([\\w-]+)(?:\\s*(\\.)\\s*([\\w-]+))?",
           "captures": {
             "1": { "name": "keyword.operator.hcl" },
-            "2": { "name": "variable.other.hcl" }
+            "2": { "name": "variable.other.hcl" },
+            "3": { "name": "keyword.operator.hcl" },
+            "4": { "name": "variable.language.hcl" }
           }
         }
       ]
