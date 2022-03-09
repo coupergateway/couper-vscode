@@ -76,11 +76,11 @@ const blocks = {
     },
     proxy: {
         parents: ['endpoint', 'error_handler'],
-        labelled: false
+        labels: [null, DEFAULT_LABEL]
     },
     request: {
         parents: ['endpoint', 'error_handler'],
-        labelled: true
+        labels: [null, DEFAULT_LABEL]
     },
     response: {
         parents: ['endpoint', 'error_handler'],
