@@ -4,10 +4,12 @@
 
 ### Added
 
+- Auto-indentation via <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>F</kbd> [#69](https://github.com/avenga/couper-vscode/pull/69)
 - `log_level` attribute for `settings` block [#62](https://github.com/avenga/couper-vscode/pull/62)
 - `disable_private_caching` attribute for `jwt` block [#65](https://github.com/avenga/couper-vscode/pull/65)
 - `beta_scope_map` attribute for `jwt` block [#66](https://github.com/avenga/couper-vscode/pull/66)
 - `backend_request` and `backend_response` variables [#64](https://github.com/avenga/couper-vscode/pull/64)
+
 
 ### Fixed
 

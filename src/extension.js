@@ -4,8 +4,9 @@ Object.defineProperty(exports, "__esModule", { value: true })
 
 const Completion = require("./completion")
 const Definition = require("./definition")
+const Formatter = require("./formatter")
 
 exports.activate = (context) => {
-	context.subscriptions.concat(Completion.providers, Definition.providers)
+	context.subscriptions.concat(Completion.providers, Definition.providers, Formatter.providers)
 	console.info("Extension loaded: Couper Configuration")
 }
