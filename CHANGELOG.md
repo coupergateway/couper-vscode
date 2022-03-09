@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/avenga/couper/compare-vscode/v1.1.0...master)
 
+### Added
+
+- `backend_request` and `backend_response` variables [#64](https://github.com/avenga/couper-vscode/pull/64)
+
 ---
 
 ## [v1.1.0](https://github.com/avenga/couper-vscode/releases/tag/v1.1.0)

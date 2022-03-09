@@ -528,6 +528,21 @@ const functions = {
 const commonProperties = ['body', 'context', 'cookies', 'headers', 'json_body']
 
 const variables = {
+    backend_request: {
+        parents: ['backend'],
+        values: commonProperties.concat(...[
+            'form_body',
+            'host',
+            'id',
+            'method',
+            'origin',
+            'path',
+            'port',
+            'protocol',
+            'query',
+            'url'
+        ])
+    },
     backend_requests: {
         child: 'default',
         values: commonProperties.concat(...[
@@ -541,6 +556,12 @@ const variables = {
             'protocol',
             'query',
             'url'
+        ])
+    },
+    backend_response: {
+        parents: ['backend'],
+        values: commonProperties.concat(...[
+            'status'
         ])
     },
     backend_responses: {
