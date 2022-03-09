@@ -1,6 +1,10 @@
 # Changelog
 
-## [Unreleased](https://github.com/avenga/couper/compare-vscode/v1.0.1...master)
+## [Unreleased](https://github.com/avenga/couper/compare-vscode/v1.1.0...master)
+
+---
+
+## [v1.1.0](https://github.com/avenga/couper-vscode/releases/tag/v1.1.0)
 
 ### Added
 
@@ -16,8 +20,6 @@
 - type of `custom_log_fields` [#62](https://github.com/avenga/couper-vscode/pull/62)
 - expression highlighting [#67](https://github.com/avenga/couper-vscode/pull/67)
 - Suggest both `proxy` and `request` blocks with and without label. [#70](https://github.com/avenga/couper-vscode/pull/70)
-
----
 
 ## [v1.0.1](https://github.com/avenga/couper-vscode/releases/tag/v1.0.1)
 
