@@ -316,7 +316,7 @@
       "patterns" : [
         {
           "comment" : "Heredoc string",
-          "begin": "<<-?(\\w+)",
+          "begin": "<<-?([\\w-]+)",
           "beginCaptures": {
             "0": { "name": "entity.name.tag.hcl" }
           },
