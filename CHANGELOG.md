@@ -5,6 +5,7 @@
 ### Added
 
 - `backend_request` and `backend_response` variables [#64](https://github.com/avenga/couper-vscode/pull/64)
+- `ca_file` attribute to `settings` block [#71](https://github.com/avenga/couper-vscode/pull/71)
 
 ---
 
