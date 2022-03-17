@@ -5,6 +5,7 @@
 ### Added
 
 - `backend_request` and `backend_response` variables [#64](https://github.com/avenga/couper-vscode/pull/64)
+- `contains()`, `join()`, `keys()`, `length()`, `lookup()`, `set_intersection()`, `to_number()` functions [#72](https://github.com/avenga/couper-vscode/pull/72)
 
 ---
 
