@@ -5,34 +5,42 @@ const DEFAULT_LABEL = "…"
 const blocks = {
     api: {
         parents: ['server'],
+        description: "Bundles endpoints under a certain `base_path`.",
         labels: [null, DEFAULT_LABEL]
     },
     backend: {
         parents: ['beta_oauth2', 'definitions', 'jwt', 'oauth2', 'oidc', 'proxy', 'request'],
+        description: "Defines the connection to a local/remote backend service.",
         labelled: (parentBlockName) => {
             return parentBlockName === "definitions"
         }
     },
     basic_auth: {
         parents: ['definitions'],
+        description: "Access control for Basic Authentication.",
         labelled: true
     },
     beta_oauth2: {
         parents: ['definitions'],
+        description: "Access control for an OAuth2 Authorization Code Grant Flow redirect endpoint.",
         labelled: true
     },
     cors: {
         parents: ['api', 'files', 'server', 'spa'],
+        description: "Configures CORS (Cross-Origin Resource Sharing) behavior.",
         labelled: false
     },
     defaults: {
+        description: "Sets default values.",
         labelled: false
     },
     definitions: {
+        description: "Defines configurations for reuse.",
         labelled: false
     },
     endpoint: {
         parents: ['api', 'server'],
+        description: "Defines the entry points of Couper.",
         labels: ['/']
     },
     error_handler: {
@@ -52,56 +60,71 @@ const blocks = {
     },
     files: {
         parents: ['server'],
+        description: "Configures file serving.",
         labelled: false
     },
     jwt: {
         parents: ['definitions'],
+        description: "Configures a JSON Web Token access control.",
         labelled: true
     },
     jwt_signing_profile: {
         parents: ['definitions'],
+        description: "Configure a JSON Web Token signing profile which is referenced in the `jwt_sign()` function.",
         labelled: true
     },
     oauth2: {
         parents: ['backend'],
+        description: "Configures the OAuth2 Client Credentials flow to request a bearer token for its backend request.",
         labelled: false
     },
     oidc: {
         parents: ['definitions'],
+        description: "An access control for an OIDC Authorization Code Grant Flow redirect endpoint.",
         labelled: true
     },
     openapi: {
         parents: ['backend'],
+        description: "Configures the OpenAPI 3 validation of messages to and from the origin.",
         labelled: false
     },
     proxy: {
         parents: ['endpoint', 'error_handler'],
+        description: "Executes a proxy request to a backend service.",
         labels: [null, DEFAULT_LABEL]
     },
     request: {
         parents: ['endpoint', 'error_handler'],
+        description: "Executes a request to a backend service.",
+        examples: ['custom-requests', 'multiple-requests'],
         labels: [null, DEFAULT_LABEL]
     },
     response: {
         parents: ['endpoint', 'error_handler'],
+        description: "Sends a client response.",
         labelled: false
     },
     saml: {
         parents: ['definitions'],
+        description: "An access control for a SAML ACS endpoint.",
         labelled: true
     },
     server: {
-        labels: [null, DEFAULT_LABEL]
+        labels: [null, DEFAULT_LABEL],
+        description: "Bundles gateway services accessible under a port.",
     },
     settings: {
+        description: "Configures global behavior of your gateway.",
         labelled: false
     },
     spa: {
         parents: ['server'],
+        description: "Configures how SPA assets are served.",
         labelled: false
     },
     websockets: {
         parents: ['proxy'],
+        description: "Activates support for WebSocket connections.",
         labelled: false
     }
 }
@@ -109,6 +132,7 @@ const blocks = {
 const attributes = {
     access_control: {
         parents: ['api', 'endpoint', 'files', 'server', 'spa'],
+        description: "Secures the current block context with a predefined access control.",
         type: 'array'
     },
     accept_forwarded_url: {
@@ -545,6 +569,7 @@ const commonProperties = ['body', 'context', 'cookies', 'headers', 'json_body']
 const variables = {
     backend_request: {
         parents: ['backend'],
+        description: "Holds information about the current backend request.",
         values: commonProperties.concat(...[
             'form_body',
             'host',
@@ -560,6 +585,7 @@ const variables = {
     },
     backend_requests: {
         child: 'default',
+        description: "An object with all backend requests and their attributes. To access a specific request use the related label.\n\n`request` and `proxy` blocks without a label will be available as `default`.\n\n**Example:** Use `backend_requests.default.method` to access the HTTP method of the default  request.",
         values: commonProperties.concat(...[
             'form_body',
             'host',
@@ -589,6 +615,7 @@ const variables = {
         values: ['version']
     },
     env: {
+        description: "The value of an environment variable.",
         values: []
     },
     request: {
