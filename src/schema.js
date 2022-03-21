@@ -137,7 +137,8 @@ const attributes = {
     },
     allowed_methods: {
         parents: ['api', 'endpoint'],
-        type: 'array'
+        type: 'array',
+        options: ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
     },
     allowed_origins: {
         parents: ['cors'],
