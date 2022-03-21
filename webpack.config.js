@@ -24,6 +24,8 @@ const webExtensionConfig = {
             completion: path.resolve(__dirname,'src/completion.js'),
             definition: path.resolve(__dirname,'src/definition.js'),
             extension: path.resolve(__dirname,'src/extension.js'),
+            tooltips: path.resolve(__dirname,'src/tooltips.js'),
+            formatter: path.resolve(__dirname,'src/formatter.js'),
             schema: path.resolve(__dirname,'src/schema.js'),
         },
         fallback: {
