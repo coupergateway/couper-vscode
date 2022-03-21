@@ -17,6 +17,7 @@
 - `disable_private_caching` attribute for `jwt` block [#65](https://github.com/avenga/couper-vscode/pull/65)
 - `beta_scope_map` attribute for `jwt` block [#66](https://github.com/avenga/couper-vscode/pull/66)
 - `saml` error type [#63](https://github.com/avenga/couper-vscode/pull/63)
+- `allowed_methods` attribute for `api` or `endpoint` blocks [#68](https://github.com/avenga/couper-vscode/pull/68)
 
 
 ### Fixed
