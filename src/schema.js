@@ -194,6 +194,9 @@ const attributes = {
     bootstrap_file: {
         parents: ['spa']
     },
+    ca_file: {
+      parents: ['settings']
+    },
     claims: {
         parents: ['jwt', 'jwt_signing_profile'],
         type: 'map'
