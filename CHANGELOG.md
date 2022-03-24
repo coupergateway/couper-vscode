@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased](https://github.com/avenga/couper/compare-vscode/v1.1.0...master)
+## [Unreleased](https://github.com/avenga/couper/compare-vscode/v1.2.0...master)
 
 ---
 
