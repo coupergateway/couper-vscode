@@ -2,13 +2,15 @@
 
 ## [Unreleased](https://github.com/avenga/couper/compare-vscode/v1.1.0...master)
 
+---
+
+## [v1.2.0](https://github.com/avenga/couper-vscode/releases/tag/v1.2.0)
+
 ### Added
 
 - `backend_request` and `backend_response` variables [#64](https://github.com/avenga/couper-vscode/pull/64)
 - `contains()`, `join()`, `keys()`, `length()`, `lookup()`, `set_intersection()`, `to_number()` functions [#72](https://github.com/avenga/couper-vscode/pull/72)
 - `ca_file` attribute to `settings` block [#71](https://github.com/avenga/couper-vscode/pull/71)
-
----
 
 ## [v1.1.0](https://github.com/avenga/couper-vscode/releases/tag/v1.1.0)
 
