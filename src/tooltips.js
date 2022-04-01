@@ -29,12 +29,12 @@ const hoverProvider = vscode.languages.registerHoverProvider(selector, {
 			if (/^(\s+"[^"]*")*\s*{\s*$/.test(followingText)) {
 				type = "block"
 				schemaElement = blocks[word]
-				url = REFERENCE_URL + "#" + word.replace('_', '-') + '-block'
+				url = REFERENCE_URL + "#" + word.replace(/_/g, '-') + '-block'
 			} else if (/^\s*=/.test(followingText)) {
 				type = "attribute"
 				schemaElement = attributes[word]
 				const parentBlock = common.getParentBlock(document, position)
-				url = REFERENCE_URL + "#" + parentBlock.replace('_', '-') + '-block'
+				url = REFERENCE_URL + "#" + parentBlock.replace(/_/g, '-') + '-block'
 			}
 		} else {
 			if (/^\s*\(/.test(followingText)) {
