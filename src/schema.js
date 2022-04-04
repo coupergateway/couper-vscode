@@ -132,6 +132,7 @@ const blocks = {
     spa: {
         parents: ['server'],
         description: "Configures how SPA assets are served.",
+        examples: ['spa-serving'],
         labelled: false
     },
     websockets: {
