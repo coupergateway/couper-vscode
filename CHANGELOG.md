@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/avenga/couper/compare-vscode/v1.2.0...master)
 
+### Added
+
+- Documentation tooltips [#74](https://github.com/avenga/couper-vscode/pull/74)
+
 ---
 
 ## [v1.2.0](https://github.com/avenga/couper-vscode/releases/tag/v1.2.0)
