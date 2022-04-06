@@ -32,18 +32,18 @@
           "comment": "Multiple line comment block",
           "begin": "/\\*",
           "beginCaptures": {
-            "0" : { "name": "comment.block.documentation.hcl" }
+            "0": { "name": "comment.block.documentation.hcl" }
           },
           "end": "\\*/",
           "endCaptures": {
-            "0" : { "name": "comment.block.documentation.hcl" }
+            "0": { "name": "comment.block.documentation.hcl" }
           },
-          "contentName" : "comment.block.documentation.hcl"
+          "contentName": "comment.block.documentation.hcl"
         }
       ]
     },
     "block": {
-      "patterns" : [
+      "patterns": [
         {
           "begin": "([\\w-]+)((?:\\s*\"[^\"]*\")*)\\s*\\{",
           "beginCaptures": {
@@ -52,7 +52,7 @@
             "2": { "name": "string.quoted.double.hcl" }
           },
           "end": "\\}",
-          "patterns" : [
+          "patterns": [
             { "include": "$self" },
             { "include": "#comments" },
             { "include": "#attributes" }
@@ -61,7 +61,7 @@
       ]
     },
     "attributes": {
-      "patterns" : [
+      "patterns": [
         {
           "begin": "([\\w\\.-]+)\\s*(=)\\s*",
           "beginCaptures": {
@@ -69,7 +69,7 @@
             "2": { "name": "keyword.operator.hcl" }
           },
           "end": "(?<!\\2)$",
-          "endCaptures" : {
+          "endCaptures": {
             "0": { "name": "keyword.operator.hcl" }
           },
           "patterns": [
@@ -81,7 +81,7 @@
       ]
     },
     "quoted-key-assignment": {
-      "patterns" : [
+      "patterns": [
         {
           "begin": "(\"[^\"]+\")\\s*([=:])\\s*",
           "beginCaptures": {
@@ -89,7 +89,7 @@
             "2": { "name": "keyword.operator.hcl" }
           },
           "end": "(?<!\\2)$",
-          "endCaptures" : {
+          "endCaptures": {
             "0": { "name": "keyword.operator.hcl" }
           },
           "patterns": [
@@ -101,7 +101,7 @@
       ]
     },
     "key-assignment": {
-      "patterns" : [
+      "patterns": [
         {
           "begin": "([\\w\\.-]+)\\s*([=:])\\s*",
           "beginCaptures": {
@@ -109,7 +109,7 @@
             "2": { "name": "keyword.operator.hcl" }
           },
           "end": "(?<!\\2)$",
-          "endCaptures" : {
+          "endCaptures": {
             "0": { "name": "keyword.operator.hcl" }
           },
           "patterns": [
@@ -155,18 +155,18 @@
         }
       ]
     },
-    "variable-interpolation" : {
-      "patterns" : [
+    "variable-interpolation": {
+      "patterns": [
         {
           "begin": "\\$\\{",
           "beginCaptures": {
             "0": { "name": "keyword.operator.hcl" }
           },
-          "end" : "\\}",
+          "end": "\\}",
           "endCaptures": {
             "0": { "name": "keyword.operator.hcl" }
           },
-          "patterns" : [
+          "patterns": [
             { "include": "#variable-interpolation" },
             { "include": "#expression" }
           ]
@@ -174,14 +174,14 @@
       ]
     },
     "function-call": {
-      "patterns" : [
+      "patterns": [
         {
           "begin": "([\\w-]+)\\(",
           "beginCaptures": {
             "1": { "name": "entity.name.function.hcl" }
           },
-          "end" : "\\)",
-          "patterns" : [
+          "end": "\\)",
+          "patterns": [
             { "include": "#expression" }
           ]
         }
@@ -202,12 +202,12 @@
         }
       ]
     },
-    "object" : {
+    "object": {
       "patterns": [
         {
           "begin": "\\{",
           "end": "\\}",
-          "patterns" : [
+          "patterns": [
             { "include": "#comments" },
             { "include": "#key-assignment" },
             { "include": "#quoted-key-assignment" },
@@ -218,8 +218,8 @@
         }
       ]
     },
-    "numeric-literal" : {
-      "patterns" : [
+    "numeric-literal": {
+      "patterns": [
         {
           "match": "\\b[0-9]+(\\.[0-9]+)?([eE][+-]?[0-9]+)?\\b",
           "captures": {
@@ -229,7 +229,7 @@
       ]
     },
     "variable-type-constant": {
-      "patterns" : [
+      "patterns": [
         {
           "match": "\\b(true|false|null)\\b",
           "captures": {
@@ -238,28 +238,28 @@
         }
       ]
     },
-    "variable-type-string" : {
-      "patterns" : [
+    "variable-type-string": {
+      "patterns": [
         {
-          "comment" : "Usual string",
+          "comment": "Usual string",
           "begin": "\"",
-          "beginCaptures" : {
+          "beginCaptures": {
             "0": { "name": "string.quoted.double.hcl" }
           },
           "end": "\"",
-          "endCaptures" : {
+          "endCaptures": {
             "0": { "name": "string.quoted.double.hcl" }
           },
-          "patterns" : [
-            { "include" : "#variable-interpolation" },
+          "patterns": [
+            { "include": "#variable-interpolation" },
             {
-              "match" : "\\\\[nrt\\\\\"]|\\\\u([a-fA-F0-9]{8}|[a-fA-F0-9]{4})",
+              "match": "\\\\[nrt\\\\\"]|\\\\u([a-fA-F0-9]{8}|[a-fA-F0-9]{4})",
               "captures": {
                 "0": { "name": "constant.character.escape.hcl" }
               }
             },
             {
-              "match" : ".",
+              "match": ".",
               "captures": {
                 "0": { "name": "string.quoted.double.hcl" }
               }
@@ -268,10 +268,10 @@
         }
       ]
     },
-    "variable-type-heredoc" : {
-      "patterns" : [
+    "variable-type-heredoc": {
+      "patterns": [
         {
-          "comment" : "Heredoc string",
+          "comment": "Heredoc string",
           "begin": "<<-?([\\w-]+)",
           "beginCaptures": {
             "0": { "name": "entity.name.tag.hcl" }
