@@ -7,12 +7,12 @@
     "hcl"
   ],
   "patterns": [
-    { "include": "#comments" },
+    { "include": "#comment" },
     { "include": "#block" },
-    { "include": "#attributes" }
+    { "include": "#attribute" }
   ],
   "repository": {
-    "comments": {
+    "comment": {
       "patterns": [
         {
           "comment": "Single line comments with number-sign",
@@ -54,13 +54,13 @@
           "end": "\\}",
           "patterns": [
             { "include": "$self" },
-            { "include": "#comments" },
-            { "include": "#attributes" }
+            { "include": "#comment" },
+            { "include": "#attribute" }
           ]
         }
       ]
     },
-    "attributes": {
+    "attribute": {
       "patterns": [
         {
           "begin": "([\\w\\.-]+)\\s*(=)\\s*",
@@ -73,8 +73,8 @@
             "0": { "name": "keyword.operator.hcl" }
           },
           "patterns": [
-            { "include": "#comments" },
-            { "include": "#variable-type-heredoc" },
+            { "include": "#comment" },
+            { "include": "#heredoc" },
             { "include": "#expression" }
           ]
         }
@@ -93,8 +93,8 @@
             "0": { "name": "keyword.operator.hcl" }
           },
           "patterns": [
-            { "include": "#comments" },
-            { "include": "#variable-type-heredoc" },
+            { "include": "#comment" },
+            { "include": "#heredoc" },
             { "include": "#expression" }
           ]
         }
@@ -113,8 +113,8 @@
             "0": { "name": "keyword.operator.hcl" }
           },
           "patterns": [
-            { "include": "#comments" },
-            { "include": "#variable-type-heredoc" },
+            { "include": "#comment" },
+            { "include": "#heredoc" },
             { "include": "#expression" }
           ]
         }
@@ -122,10 +122,10 @@
     },
     "expression": {
       "patterns": [
-        { "include": "#variable-type-string" },
+        { "include": "#string" },
         { "include": "#numeric-literal" },
-        { "include": "#variable-type-constant" },
-        { "include": "#variable-type-array" },
+        { "include": "#constant" },
+        { "include": "#tuple" },
         { "include": "#object" },
         { "include": "#expr-term-get-attr" },
         { "include": "#function-call" },
@@ -167,7 +167,7 @@
             "0": { "name": "keyword.operator.hcl" }
           },
           "patterns": [
-            { "include": "#variable-interpolation" },
+            { "include": "$self" },
             { "include": "#expression" }
           ]
         }
@@ -187,13 +187,13 @@
         }
       ]
     },
-    "variable-type-array": {
+    "tuple": {
       "patterns": [
         {
           "begin": "\\[",
           "end": "\\]",
           "patterns": [
-            { "include": "#comments" },
+            { "include": "#comment" },
             { "include": "#expression" },
             {
               "match": "\\s*,\\s*"
@@ -208,7 +208,7 @@
           "begin": "\\{",
           "end": "\\}",
           "patterns": [
-            { "include": "#comments" },
+            { "include": "#comment" },
             { "include": "#key-assignment" },
             { "include": "#quoted-key-assignment" },
             {
@@ -228,7 +228,7 @@
         }
       ]
     },
-    "variable-type-constant": {
+    "constant": {
       "patterns": [
         {
           "match": "\\b(true|false|null)\\b",
@@ -238,7 +238,7 @@
         }
       ]
     },
-    "variable-type-string": {
+    "string": {
       "patterns": [
         {
           "comment": "Usual string",
@@ -268,7 +268,7 @@
         }
       ]
     },
-    "variable-type-heredoc": {
+    "heredoc": {
       "patterns": [
         {
           "comment": "Heredoc string",
