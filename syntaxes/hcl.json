@@ -83,7 +83,7 @@
     "quoted-key-assignment": {
       "patterns" : [
         {
-          "begin": "(\"[^\"]+\")\\s*(=)\\s*",
+          "begin": "(\"[^\"]+\")\\s*([=:])\\s*",
           "beginCaptures": {
             "1": { "name": "variable.parameter.hcl" },
             "2": { "name": "keyword.operator.hcl" }
