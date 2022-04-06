@@ -223,9 +223,7 @@
           "end": "\\]",
           "patterns": [
             { "include": "#comments" },
-            { "include": "#numeric-literal" },
-            { "include": "#variable-type-constant" },
-            { "include": "#variable-type-string" },
+            { "include": "#expression" },
             {
               "match": "\\s*,\\s*"
             }
