@@ -274,21 +274,55 @@
         }
       ]
     },
-    "variable-interpolation": {
+    "template": {
+      "patterns": [
+        { "include": "#template-interpolation" },
+        { "include": "#template-directive" }
+      ]
+    },
+    "template-interpolation": {
       "patterns": [
         {
-          "begin": "\\$\\{",
+          "begin": "(?<!\\$)\\${~?",
           "beginCaptures": {
-            "0": { "name": "keyword.operator.hcl" }
+            "0": { "name": "punctuation.section.interpolation.begin.hcl" }
           },
-          "end": "\\}",
+          "end": "~?}",
           "endCaptures": {
-            "0": { "name": "keyword.operator.hcl" }
+            "0": { "name": "punctuation.section.interpolation.end.hcl" }
           },
           "patterns": [
-            { "include": "$self" },
             { "include": "#expression" }
           ]
+        }
+      ]
+    },
+    "template-directive": {
+      "patterns": [
+        {
+          "begin": "(?<!%)\\%{~?\\s*(if|for)\\b",
+          "beginCaptures": {
+            "0": { "name": "keyword.control.hcl" }
+          },
+          "end": "~?}",
+          "endCaptures": {
+            "0": { "name": "keyword.control.hcl" }
+          },
+          "patterns": [
+            { "include": "#expression" },
+            {
+              "match": "in",
+              "captures": {
+                "0": { "name": "keyword.control.hcl" }
+              }
+            }
+          ]
+        },
+        {
+          "match": "(?<!%)\\%{~?\\s*(endif|endfor|else)\\s*~?}",
+          "captures": {
+            "0": { "name": "keyword.control.hcl" }
+          }
         }
       ]
     },
@@ -352,7 +386,7 @@
         {
           "match": "\\b(true|false|null)\\b",
           "captures": {
-            "0": { "name": "constant.numeric.hcl" }
+            "0": { "name": "constant.language.hcl" }
           }
         }
       ]
@@ -370,7 +404,7 @@
             "0": { "name": "string.quoted.double.hcl" }
           },
           "patterns": [
-            { "include": "#variable-interpolation" },
+            { "include": "#template" },
             {
               "match": "\\\\[nrt\\\\\"]|\\\\u([a-fA-F0-9]{8}|[a-fA-F0-9]{4})",
               "captures": {
