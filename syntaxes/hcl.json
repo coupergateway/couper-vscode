@@ -45,13 +45,16 @@
     "block": {
       "patterns": [
         {
-          "begin": "([\\w-]+)((?:\\s*\"[^\"]*\")*)\\s*\\{",
+          "begin": "([\\w-]+)((?:\\s*\"[^\"]*\")*)\\s*({)",
           "beginCaptures": {
-            "0": { "name": "meta.function.hcl" },
             "1": { "name": "storage.type.hcl" },
-            "2": { "name": "string.quoted.double.hcl" }
+            "2": { "name": "string.quoted.double.hcl" },
+            "3": { "name": "storage.type.hcl" }
           },
-          "end": "\\}",
+          "end": "}",
+          "endCaptures": {
+            "0": { "name": "storage.type.hcl" }
+          },
           "patterns": [
             { "include": "$self" },
             { "include": "#comment" },
