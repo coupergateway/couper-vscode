@@ -219,7 +219,7 @@ const attributes = {
     beta_required_permission: {
         parents: ['api', 'endpoint']
     },
-    beta_scope_claim: {
+    beta_permissions_claim: {
         parents: ['jwt']
     },
     beta_scope_map: {
