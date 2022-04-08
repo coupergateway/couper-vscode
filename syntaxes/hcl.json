@@ -141,6 +141,7 @@
         { "include": "#string" },
         { "include": "#numeric-literal" },
         { "include": "#constant" },
+        { "include": "#for-expression" },
         { "include": "#tuple" },
         { "include": "#object" },
         { "include": "#expr-term-get-attr" },
@@ -167,6 +168,65 @@
             "2": { "name": "variable.other.hcl" },
             "3": { "name": "keyword.operator.hcl" },
             "4": { "name": "variable.language.hcl" }
+          }
+        }
+      ]
+    },
+    "for-expression": {
+      "patterns": [
+        {
+          "begin": "{for\\s+(?!=)",
+          "beginCaptures": {
+            "0": { "name": "keyword.control.hcl" }
+          },
+          "end": "}",
+          "endCaptures": {
+            "0": { "name": "keyword.control.hcl" }
+          },
+          "patterns": [
+            { "include": "#for-operator" },
+            { "include": "#expression" },
+            { "include": "#for-condition" }
+          ]
+        },
+        {
+          "begin": "\\[for\\s+",
+          "beginCaptures": {
+            "0": { "name": "keyword.control.hcl" }
+          },
+          "end": "\\]",
+          "endCaptures": {
+            "0": { "name": "keyword.control.hcl" }
+          },
+          "patterns": [
+            { "include": "#for-operator" },
+            { "include": "#expression" },
+            { "include": "#for-condition" }
+          ]
+        }
+      ]
+    },
+    "for-condition": {
+      "patterns": [
+        {
+          "begin": "if",
+          "beginCaptures": {
+             "0": { "name": "keyword.control.hcl" }
+          },
+          "end": "(?=[\\]}])",
+          "patterns": [
+            { "include": "#expression" },
+            { "include": "#error" }
+          ]
+        }
+      ]
+    },
+    "for-operator": {
+      "patterns": [
+        {
+          "match": "\\bin\\b|=>",
+          "captures": {
+            "0": { "name": "keyword.control.hcl" }
           }
         }
       ]
@@ -207,7 +267,7 @@
     "tuple": {
       "patterns": [
         {
-          "begin": "\\[",
+          "begin": "\\[(?!for\\s)",
           "end": "\\]",
           "patterns": [
             { "include": "#comment" },
@@ -221,7 +281,7 @@
     "object": {
       "patterns": [
         {
-          "begin": "{",
+          "begin": "{(?!for\\s)",
           "end": "}",
           "patterns": [
             { "include": "#comment" },
