@@ -52,9 +52,9 @@ const blocks = {
             return [null].concat(blocks.error_handler._labelsForParent[parentBlockName])
         },
         _labelsForParent: {
-            'api':         ['beta_scope', 'beta_insufficient_scope', 'beta_operation_denied'],
+            'api':         ['beta_scope', 'beta_insufficient_scope'],
             'basic_auth':  ['basic_auth', 'basic_auth_credentials_missing'],
-            'endpoint':    ['beta_scope', 'beta_insufficient_scope', 'beta_operation_denied', 'sequence', 'unexpected_status'],
+            'endpoint':    ['beta_scope', 'beta_insufficient_scope', 'sequence', 'unexpected_status'],
             'jwt':         ['jwt', 'jwt_token_expired', 'jwt_token_invalid', 'jwt_token_missing'],
             'saml':        ['saml'],
             'beta_oauth2': ['oauth2'],
