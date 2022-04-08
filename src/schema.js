@@ -222,7 +222,7 @@ const attributes = {
     beta_permissions_claim: {
         parents: ['jwt']
     },
-    beta_scope_map: {
+    beta_permissions_map: {
         parents: ['jwt'],
         type: 'map'
     },
