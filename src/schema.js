@@ -216,7 +216,7 @@ const attributes = {
         parents: ['jwt'],
         type: 'map'
     },
-    beta_scope: {
+    beta_required_permission: {
         parents: ['api', 'endpoint']
     },
     beta_scope_claim: {
