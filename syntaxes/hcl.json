@@ -9,7 +9,8 @@
   "patterns": [
     { "include": "#comment" },
     { "include": "#block" },
-    { "include": "#attribute" }
+    { "include": "#attribute" },
+    { "include": "#error" }
   ],
   "repository": {
     "comment": {
@@ -42,10 +43,18 @@
         }
       ]
     },
+    "error": {
+      "patterns": [
+        {
+          "match": "\\S",
+          "captures": { "0": { "name": "invalid.illegal.hcl" } }
+        }
+      ]
+    },
     "block": {
       "patterns": [
         {
-          "begin": "([\\w-]+)((?:\\s*\"[^\"]*\")*)\\s*({)",
+          "begin": "([\\w.-]+)((?:\\s*\"[^\"]*\")*)\\s*({)",
           "beginCaptures": {
             "1": { "name": "storage.type.hcl" },
             "2": { "name": "string.quoted.double.hcl" },
@@ -58,7 +67,8 @@
           "patterns": [
             { "include": "$self" },
             { "include": "#comment" },
-            { "include": "#attribute" }
+            { "include": "#attribute" },
+            { "include": "#error" }
           ]
         }
       ]
@@ -66,7 +76,7 @@
     "attribute": {
       "patterns": [
         {
-          "begin": "([\\w\\.-]+)\\s*(=)\\s*",
+          "begin": "([\\w.-]+)\\s*(=)\\s*",
           "beginCaptures": {
             "1": { "name": "variable.parameter.hcl" },
             "2": { "name": "keyword.operator.hcl" }
@@ -78,7 +88,8 @@
           "patterns": [
             { "include": "#comment" },
             { "include": "#heredoc" },
-            { "include": "#expression" }
+            { "include": "#expression" },
+            { "include": "#error" }
           ]
         }
       ]
@@ -98,7 +109,8 @@
           "patterns": [
             { "include": "#comment" },
             { "include": "#heredoc" },
-            { "include": "#expression" }
+            { "include": "#expression" },
+            { "include": "#error" }
           ]
         }
       ]
@@ -106,7 +118,7 @@
     "key-assignment": {
       "patterns": [
         {
-          "begin": "([\\w\\.-]+)\\s*([=:])\\s*",
+          "begin": "([\\w.-]+)\\s*([:=])\\s*",
           "beginCaptures": {
             "1": { "name": "variable.parameter.hcl" },
             "2": { "name": "keyword.operator.hcl" }
@@ -118,7 +130,8 @@
           "patterns": [
             { "include": "#comment" },
             { "include": "#heredoc" },
-            { "include": "#expression" }
+            { "include": "#expression" },
+            { "include": "#error" }
           ]
         }
       ]
@@ -185,6 +198,7 @@
           },
           "end": "\\)",
           "patterns": [
+            { "include": "#comment" },
             { "include": "#expression" }
           ]
         }
@@ -198,9 +212,8 @@
           "patterns": [
             { "include": "#comment" },
             { "include": "#expression" },
-            {
-              "match": "\\s*,\\s*"
-            }
+            { "match": "(?<![,\\[\\s])\\s*," },
+            { "include": "#error" }
           ]
         }
       ]
@@ -208,15 +221,14 @@
     "object": {
       "patterns": [
         {
-          "begin": "\\{",
-          "end": "\\}",
+          "begin": "{",
+          "end": "}",
           "patterns": [
             { "include": "#comment" },
             { "include": "#key-assignment" },
             { "include": "#quoted-key-assignment" },
-            {
-              "match": "\\s*,\\s*"
-            }
+            { "match": "(?<![,{\\s])\\s*,"},
+            { "include": "#error" }
           ]
         }
       ]
