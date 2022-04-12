@@ -54,9 +54,12 @@
     "block": {
       "patterns": [
         {
-          "begin": "([\\w.-]+)((?:\\s*\"[^\"]*\")*)\\s*({)",
+          "begin": "([\\p{L}\\p{Nl}\\p{Mn}\\p{Mc}\\p{Nd}\\p{Pc}-]+)((?:\\s*\"[^\"]*\")*)\\s*({)",
           "beginCaptures": {
-            "1": { "name": "storage.type.hcl" },
+            "1": {
+              "name": "storage.type.hcl" ,
+              "patterns": [ { "include": "#identifier" } ]
+            },
             "2": { "name": "string.quoted.double.hcl" },
             "3": { "name": "storage.type.hcl" }
           },
@@ -76,15 +79,15 @@
     "attribute": {
       "patterns": [
         {
-          "begin": "([\\w.-]+)\\s*(=)\\s*",
+          "begin": "([\\p{L}\\p{Nl}\\p{Mn}\\p{Mc}\\p{Nd}\\p{Pc}-]+)\\s*(=)\\s*",
           "beginCaptures": {
-            "1": { "name": "variable.parameter.hcl" },
+            "1": {
+              "name": "variable.parameter.hcl",
+              "patterns": [ { "include": "#identifier" } ]
+            },
             "2": { "name": "keyword.operator.hcl" }
           },
-          "end": "(?<!\\2)$",
-          "endCaptures": {
-            "0": { "name": "keyword.operator.hcl" }
-          },
+          "end": "$",
           "patterns": [
             { "include": "#comment" },
             { "include": "#heredoc" },
@@ -92,6 +95,14 @@
             { "include": "#error" }
           ]
         }
+      ]
+    },
+    "identifier": {
+      "patterns": [
+        {
+          "match": "[\\p{L}\\p{Nl}][\\p{L}\\p{Nl}\\p{Mn}\\p{Mc}\\p{Nd}\\p{Pc}-]*"
+        },
+        { "include": "#error" }
       ]
     },
     "quoted-key-assignment": {
@@ -115,9 +126,12 @@
     "key-assignment": {
       "patterns": [
         {
-          "begin": "([\\w.-]+)\\s*([:=])\\s*",
+          "begin": "([\\p{L}\\p{Nl}\\p{Mn}\\p{Mc}\\p{Nd}\\p{Pc}-]+)\\s*([:=])\\s*",
           "beginCaptures": {
-            "1": { "name": "constant.language.hcl" },
+            "1": {
+              "name": "constant.language.hcl",
+              "patterns": [ { "include": "#identifier" } ]
+            },
             "2": { "name": "keyword.operator.hcl" }
           },
           "end": "$|(?=[,}])",
