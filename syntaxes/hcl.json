@@ -164,7 +164,32 @@
         { "include": "#object" },
         { "include": "#expr-term-get-attr" },
         { "include": "#function-call" },
-        { "include": "#variable" }
+        { "include": "#variable" },
+        { "include": "#operator" },
+        { "include": "#parenthesized-expression" }
+      ]
+    },
+    "operator": {
+      "patterns": [
+        {
+          "match": "&&|\\|\\||==|!=|<=|>=|<=|[!?:+*/%<>-]|\\.\\.\\.",
+          "captures": {
+             "0": { "name": "keyword.operator.hcl" }
+           }
+        }
+      ]
+    },
+    "parenthesized-expression": {
+      "patterns": [
+        {
+          "begin": "\\(",
+          "end": "\\)",
+          "patterns": [
+            { "include": "#comment" },
+            { "include": "#expression" },
+            { "include": "#error" }
+          ]
+        }
       ]
     },
     "variable": {
