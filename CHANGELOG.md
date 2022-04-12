@@ -2,6 +2,14 @@
 
 ## [Unreleased](https://github.com/avenga/couper/compare-vscode/v1.3.0...master)
 
+### Changed
+
+- permission-related attributes/error types [#75](https://github.com/avenga/couper-vscode/pull/75):
+  - renamed `beta_scope` attribute to `beta_required_permission`
+  - renamed `beta_scope_claim` and `beta_scope_map` attributes to `beta_permissions_claim` and `beta_permissions_map`
+  - removed `beta_operation_denied` and `beta_scope` error types
+  - renamed `beta_insufficient_scope` error type to `beta_insufficient_permissions`
+
 ---
 
 ## [v1.3.0](https://github.com/avenga/couper-vscode/releases/tag/v1.3.0)
