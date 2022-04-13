@@ -272,8 +272,7 @@
           },
           "end": "(?=[\\]}])",
           "patterns": [
-            { "include": "#expression" },
-            { "include": "#error" }
+            { "include": "#expression" }
           ]
         }
       ]
