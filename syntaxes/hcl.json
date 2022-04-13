@@ -7,12 +7,13 @@
     "hcl"
   ],
   "patterns": [
-    { "include": "#comments" },
-    { "include": "#constructs" },
-    { "include": "#attributes" }
+    { "include": "#comment" },
+    { "include": "#block" },
+    { "include": "#attribute" },
+    { "include": "#error" }
   ],
   "repository": {
-    "comments": {
+    "comment": {
       "patterns": [
         {
           "comment": "Single line comments with number-sign",
@@ -32,112 +33,177 @@
           "comment": "Multiple line comment block",
           "begin": "/\\*",
           "beginCaptures": {
-            "0" : { "name": "comment.block.documentation.hcl" }
+            "0": { "name": "comment.block.documentation.hcl" }
           },
           "end": "\\*/",
           "endCaptures": {
-            "0" : { "name": "comment.block.documentation.hcl" }
+            "0": { "name": "comment.block.documentation.hcl" }
           },
-          "contentName" : "comment.block.documentation.hcl"
+          "contentName": "comment.block.documentation.hcl"
         }
       ]
     },
-    "constructs": {
-      "patterns" : [
+    "error": {
+      "patterns": [
         {
-          "begin": "([\\w-]+)\\s*\\{",
-          "beginCaptures": {
-            "0": { "name": "meta.function.hcl" },
-            "1": { "name": "storage.type.hcl" }
-          },
-          "end": "\\}",
-          "patterns" : [
-            { "include": "$self" },
-            { "include": "#comments" },
-            { "include": "#attributes" }
-          ]
-        },
-        {
-          "begin": "([\\w-]+)\\s*=\\s*\\{",
-          "comment": "map assignment with equal sign",
-          "beginCaptures": {
-            "0": { "name": "meta.function.hcl" },
-            "1": { "name": "variable.parameter.hcl" }
-          },
-          "end": "\\}",
-          "patterns" : [
-            { "include": "$self" },
-            { "include": "#comments" },
-            { "include": "#attributes" },
-            { "include": "#quoted-key-assignment" }
-          ]
-        },
-        {
-          "begin": "([\\w-]+)((?:\\s*\"[^\"]*\")*)\\s*\\{",
-          "beginCaptures": {
-            "0": { "name": "meta.function.hcl" },
-            "1": { "name": "storage.type.hcl" },
-            "2": { "name": "string.quoted.double.hcl" }
-          },
-          "end": "\\}",
-          "patterns" : [
-            { "include": "$self" },
-            { "include": "#comments" },
-            { "include": "#attributes" }
-          ]
+          "match": "\\S",
+          "captures": { "0": { "name": "invalid.illegal.hcl" } }
         }
       ]
     },
-    "attributes": {
-      "patterns" : [
+    "block": {
+      "patterns": [
         {
-          "begin": "([\\w\\.-]+)\\s*(=)\\s*",
+          "begin": "([\\p{L}\\p{Nl}\\p{Mn}\\p{Mc}\\p{Nd}\\p{Pc}-]+)((?:\\s*\"[^\"]*\")*)\\s*({)",
           "beginCaptures": {
-            "1": { "name": "variable.parameter.hcl" },
-            "2": { "name": "keyword.operator.hcl" }
+            "1": {
+              "name": "storage.type.hcl" ,
+              "patterns": [ { "include": "#identifier" } ]
+            },
+            "2": { "name": "string.quoted.double.hcl" },
+            "3": { "name": "storage.type.hcl" }
           },
-          "end": "(?<!\\2)$",
-          "endCaptures" : {
-            "0": { "name": "keyword.operator.hcl" }
+          "end": "}",
+          "endCaptures": {
+            "0": { "name": "storage.type.hcl" }
           },
           "patterns": [
-            { "include": "#comments" },
-            { "include": "#variable-type-heredoc" },
-            { "include": "#expression" }
+            { "include": "$self" },
+            { "include": "#comment" },
+            { "include": "#attribute" },
+            { "include": "#error" }
           ]
         }
+      ]
+    },
+    "attribute": {
+      "patterns": [
+        {
+          "begin": "([\\p{L}\\p{Nl}\\p{Mn}\\p{Mc}\\p{Nd}\\p{Pc}-]+)\\s*(=)\\s*",
+          "beginCaptures": {
+            "1": {
+              "name": "variable.parameter.hcl",
+              "patterns": [ { "include": "#identifier" } ]
+            },
+            "2": { "name": "keyword.operator.hcl" }
+          },
+          "end": "$",
+          "patterns": [
+            { "include": "#comment" },
+            { "include": "#heredoc" },
+            { "include": "#expression" },
+            { "include": "#error" }
+          ]
+        }
+      ]
+    },
+    "identifier": {
+      "patterns": [
+        {
+          "match": "[\\p{L}\\p{Nl}][\\p{L}\\p{Nl}\\p{Mn}\\p{Mc}\\p{Nd}\\p{Pc}-]*"
+        },
+        { "include": "#error" }
       ]
     },
     "quoted-key-assignment": {
-      "patterns" : [
+      "patterns": [
         {
-          "begin": "(\"[^\"]+\")\\s*(=)\\s*",
+          "begin": "(\"[^\"]+\")\\s*([=:])\\s*",
           "beginCaptures": {
-            "1": { "name": "variable.parameter.hcl" },
+            "1": { "name": "constant.language.hcl" },
             "2": { "name": "keyword.operator.hcl" }
           },
-          "end": "(?<!\\2)$",
-          "endCaptures" : {
-            "0": { "name": "keyword.operator.hcl" }
-          },
+          "end": "$|(?=[,}])",
           "patterns": [
-            { "include": "#comments" },
-            { "include": "#variable-type-heredoc" },
-            { "include": "#expression" }
+            { "include": "#comment" },
+            { "include": "#heredoc" },
+            { "include": "#expression" },
+            { "include": "#error" }
+          ]
+        }
+      ]
+    },
+    "key-assignment": {
+      "patterns": [
+        {
+          "begin": "([\\p{L}\\p{Nl}\\p{Mn}\\p{Mc}\\p{Nd}\\p{Pc}-]+)\\s*([:=])\\s*",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.language.hcl",
+              "patterns": [ { "include": "#identifier" } ]
+            },
+            "2": { "name": "keyword.operator.hcl" }
+          },
+          "end": "$|(?=[,}])",
+          "patterns": [
+            { "include": "#comment" },
+            { "include": "#heredoc" },
+            { "include": "#expression" },
+            { "include": "#error" }
+          ]
+        }
+      ]
+    },
+    "expression-key-assignment": {
+      "patterns": [
+        {
+          "begin": "\\((.*?)\\)\\s*([=:])\\s*",
+          "beginCaptures": {
+            "1": {
+              "patterns": [
+                { "include": "#comment" },
+                { "include": "#expression" },
+                { "include": "#error" }
+              ]
+            },
+            "2": { "name": "keyword.operator.hcl" }
+          },
+          "end": "$|(?=[,}])",
+          "patterns": [
+            { "include": "#comment" },
+            { "include": "#heredoc" },
+            { "include": "#expression" },
+            { "include": "#error" }
           ]
         }
       ]
     },
     "expression": {
       "patterns": [
-        { "include": "#variable-type-string" },
+        { "include": "#string" },
         { "include": "#numeric-literal" },
-        { "include": "#variable-type-constant" },
-        { "include": "#variable-type-array" },
-        { "include": "#variable-type-map" },
+        { "include": "#constant" },
+        { "include": "#for-expression" },
+        { "include": "#tuple" },
+        { "include": "#object" },
         { "include": "#expr-term-get-attr" },
         { "include": "#function-call" },
-        { "include": "#variable" }
+        { "include": "#variable" },
+        { "include": "#operator" },
+        { "include": "#parenthesized-expression" }
+      ]
+    },
+    "operator": {
+      "patterns": [
+        {
+          "match": "&&|\\|\\||==|!=|<=|>=|<=|[!?:+*/%<>-]|\\.\\.\\.",
+          "captures": {
+             "0": { "name": "keyword.operator.hcl" }
+           }
+        }
+      ]
+    },
+    "parenthesized-expression": {
+      "patterns": [
+        {
+          "begin": "\\(",
+          "end": "\\)",
+          "patterns": [
+            { "include": "#comment" },
+            { "include": "#expression" },
+            { "include": "#error" }
+          ]
+        }
       ]
     },
     "variable": {
@@ -163,107 +229,163 @@
         }
       ]
     },
-    "variable-interpolation" : {
-      "patterns" : [
+    "for-expression": {
+      "patterns": [
         {
-          "begin": "\\$\\{",
+          "begin": "{for\\s+(?!=)",
           "beginCaptures": {
-            "0": { "name": "keyword.operator.hcl" }
+            "0": { "name": "keyword.control.hcl" }
           },
-          "end" : "\\}",
+          "end": "}",
           "endCaptures": {
-            "0": { "name": "keyword.operator.hcl" }
+            "0": { "name": "keyword.control.hcl" }
           },
-          "patterns" : [
-            { "include": "#variable-interpolation" },
+          "patterns": [
+            { "include": "#for-operator" },
+            { "include": "#expression" },
+            { "include": "#for-condition" }
+          ]
+        },
+        {
+          "begin": "\\[for\\s+",
+          "beginCaptures": {
+            "0": { "name": "keyword.control.hcl" }
+          },
+          "end": "\\]",
+          "endCaptures": {
+            "0": { "name": "keyword.control.hcl" }
+          },
+          "patterns": [
+            { "include": "#for-operator" },
+            { "include": "#expression" },
+            { "include": "#for-condition" }
+          ]
+        }
+      ]
+    },
+    "for-condition": {
+      "patterns": [
+        {
+          "begin": "if",
+          "beginCaptures": {
+             "0": { "name": "keyword.control.hcl" }
+          },
+          "end": "(?=[\\]}])",
+          "patterns": [
             { "include": "#expression" }
           ]
         }
       ]
     },
+    "for-operator": {
+      "patterns": [
+        {
+          "match": "\\bin\\b|=>",
+          "captures": {
+            "0": { "name": "keyword.control.hcl" }
+          }
+        }
+      ]
+    },
+    "template": {
+      "patterns": [
+        { "include": "#template-interpolation" },
+        { "include": "#template-directive" }
+      ]
+    },
+    "template-interpolation": {
+      "patterns": [
+        {
+          "begin": "(?<!\\$)\\${~?",
+          "beginCaptures": {
+            "0": { "name": "punctuation.section.interpolation.begin.hcl" }
+          },
+          "end": "~?}",
+          "endCaptures": {
+            "0": { "name": "punctuation.section.interpolation.end.hcl" }
+          },
+          "patterns": [
+            { "include": "#expression" }
+          ]
+        }
+      ]
+    },
+    "template-directive": {
+      "patterns": [
+        {
+          "begin": "(?<!%)\\%{~?\\s*(if|for)\\b",
+          "beginCaptures": {
+            "0": { "name": "keyword.control.hcl" }
+          },
+          "end": "~?}",
+          "endCaptures": {
+            "0": { "name": "keyword.control.hcl" }
+          },
+          "patterns": [
+            { "include": "#expression" },
+            {
+              "match": "in",
+              "captures": {
+                "0": { "name": "keyword.control.hcl" }
+              }
+            }
+          ]
+        },
+        {
+          "match": "(?<!%)\\%{~?\\s*(endif|endfor|else)\\s*~?}",
+          "captures": {
+            "0": { "name": "keyword.control.hcl" }
+          }
+        }
+      ]
+    },
     "function-call": {
-      "patterns" : [
+      "patterns": [
         {
           "begin": "([\\w-]+)\\(",
           "beginCaptures": {
             "1": { "name": "entity.name.function.hcl" }
           },
-          "end" : "\\)",
-          "patterns" : [
+          "end": "\\)",
+          "patterns": [
+            { "include": "#comment" },
             { "include": "#expression" }
           ]
         }
       ]
     },
-    "variable-interpolation-map-reference" : {
-      "patterns" : [
-        {
-          "begin": "(\"?[\\w\\s\\.-]+\"?)\\s*(=)\\s*",
-          "beginCaptures": {
-            "1": { "name": "variable.other" },
-            "2": { "name": "keyword.operator.hcl" }
-          },
-          "end": "(?<!\\2)\\s*($|(?=\\}))",
-          "endCaptures" : {
-            "0": { "name": "keyword.operator.hcl" }
-          },
-          "patterns": [
-            { "include": "#expression"},
-            {
-              "match": "\\s*,\\s*"
-            }
-          ]
-        }
-      ]
-    },
-    "variable-type-array": {
+    "tuple": {
       "patterns": [
         {
-          "begin": "\\[",
+          "begin": "\\[(?!for\\s)",
           "end": "\\]",
           "patterns": [
-            { "include": "#comments" },
-            { "include": "#numeric-literal" },
-            { "include": "#variable-type-constant" },
-            { "include": "#variable-type-string" },
-            {
-              "match": "\\s*,\\s*"
-            }
+            { "include": "#comment" },
+            { "include": "#expression" },
+            { "match": "(?<![,\\[\\s])\\s*," },
+            { "include": "#error" }
           ]
         }
       ]
     },
-    "variable-type-map" : {
+    "object": {
       "patterns": [
         {
-          "begin": "\\{",
-          "end": "\\}",
-          "patterns" : [
-            {
-              "begin": "(\"[\\w\\s\\.-]+\")\\s*(:)",
-              "beginCaptures": {
-                "1": { "name": "string.quoted.double.hcl" },
-                "2": { "name": "keyword.operator.hcl" }
-              },
-              "end": "(?<!\\2)\\s*($|(?=\\}))",
-              "endCaptures" : {
-                "0": { "name": "keyword.operator.hcl" }
-              },
-              "patterns": [
-                { "include": "#numeric-literal" },
-                { "include": "#variable-type-constant" },
-                { "include": "#variable-type-string" },
-                {
-                  "match": "\\s*,\\s*"
-                }
-              ]
-            }
+          "begin": "{(?!for\\s)",
+          "end": "}",
+          "patterns": [
+            { "include": "#comment" },
+            { "include": "#key-assignment" },
+            { "include": "#quoted-key-assignment" },
+            { "include": "#expression-key-assignment" },
+            { "match": "(?<![,{\\s])\\s*,"},
+            { "include": "#error" }
           ]
         }
       ]
     },
-    "numeric-literal" : {
-      "patterns" : [
+    "numeric-literal": {
+      "patterns": [
         {
           "match": "\\b[0-9]+(\\.[0-9]+)?([eE][+-]?[0-9]+)?\\b",
           "captures": {
@@ -272,38 +394,38 @@
         }
       ]
     },
-    "variable-type-constant": {
-      "patterns" : [
+    "constant": {
+      "patterns": [
         {
           "match": "\\b(true|false|null)\\b",
           "captures": {
-            "0": { "name": "constant.numeric.hcl" }
+            "0": { "name": "constant.language.hcl" }
           }
         }
       ]
     },
-    "variable-type-string" : {
-      "patterns" : [
+    "string": {
+      "patterns": [
         {
-          "comment" : "Usual string",
+          "comment": "Usual string",
           "begin": "\"",
-          "beginCaptures" : {
+          "beginCaptures": {
             "0": { "name": "string.quoted.double.hcl" }
           },
           "end": "\"",
-          "endCaptures" : {
+          "endCaptures": {
             "0": { "name": "string.quoted.double.hcl" }
           },
-          "patterns" : [
-            { "include" : "#variable-interpolation" },
+          "patterns": [
+            { "include": "#template" },
             {
-              "match" : "\\\\[nrt\\\\\"]|\\\\u([a-fA-F0-9]{8}|[a-fA-F0-9]{4})",
+              "match": "\\\\[nrt\\\\\"]|\\\\u([a-fA-F0-9]{8}|[a-fA-F0-9]{4})",
               "captures": {
                 "0": { "name": "constant.character.escape.hcl" }
               }
             },
             {
-              "match" : ".",
+              "match": ".",
               "captures": {
                 "0": { "name": "string.quoted.double.hcl" }
               }
@@ -312,10 +434,10 @@
         }
       ]
     },
-    "variable-type-heredoc" : {
-      "patterns" : [
+    "heredoc": {
+      "patterns": [
         {
-          "comment" : "Heredoc string",
+          "comment": "Heredoc string",
           "begin": "<<-?([\\w-]+)",
           "beginCaptures": {
             "0": { "name": "entity.name.tag.hcl" }

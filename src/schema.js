@@ -266,7 +266,7 @@ const attributes = {
         parents: ['backend']
     },
     custom_log_fields: {
-        parents: ['api', 'backend', 'endpoint', 'error_handler', 'files', 'server', 'spa', 'jwt', 'basic_auth', 'saml', 'beta_oidc', 'beta_oauth2'],
+        parents: ['api', 'backend', 'endpoint', 'error_handler', 'files', 'server', 'spa', 'jwt', 'basic_auth', 'saml', 'oidc', 'beta_oauth2'],
         examples: ['custom-logging', 'sequences'],
         type: 'map'
     },

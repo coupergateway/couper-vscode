@@ -10,6 +10,10 @@
   - removed `beta_operation_denied` and `beta_scope` error types
   - renamed `beta_insufficient_scope` error type to `beta_insufficient_permissions`
 
+### Fixed
+
+- many highlighting issues [#76](https://github.com/avenga/couper-vscode/pull/76)
+
 ---
 
 ## [v1.3.0](https://github.com/avenga/couper-vscode/releases/tag/v1.3.0)
