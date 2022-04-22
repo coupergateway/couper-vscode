@@ -317,11 +317,11 @@ const attributes = {
         examples: ['sequences'],
         arrayType: 'number'
     },
-    expect_status: {
+    expected_status: {
         parents: ['beta_health'],
         type: 'number'
     },
-    expect_text: {
+    expected_text: {
         parents: ['beta_health']
     },
     failure_threshold: {
