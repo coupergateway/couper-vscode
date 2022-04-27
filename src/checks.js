@@ -36,37 +36,37 @@ const CHECKS = [
 	// Block/attribute hierarchy
 	(document, textLine) => {
 		for (const type of ["block", "attribute"]) {
-		const matches = textLine.text.match(REGEXES[type])
-		if (!matches) {
-			continue
-		}
-
-		const name = RegExp.$1
-		const element = schema[type + "s"]
-		if (!element[name]) {
-			return CheckFailed(`Unknown ${type} "${name}".`)
-		}
-
-		const parentBlock = common.getParentBlock(document, textLine.range.start)
-
-		const allowedParents = element[name].parents?.sort() ?? []
-		if (parentBlock) {
-			if (allowedParents.length === 0) {
-				return CheckFailed(`"${name}" is a top-level ${type}, but has parent "${parentBlock}".`)
+			const matches = textLine.text.match(REGEXES[type])
+			if (!matches) {
+				continue
 			}
 
-			if (!allowedParents.includes(parentBlock)) {
+			const name = RegExp.$1
+			const element = schema[type + "s"]
+			if (!element[name]) {
+				return CheckFailed(`Unknown ${type} "${name}".`)
+			}
+
+			const parentBlock = common.getParentBlock(document, textLine.range.start)
+
+			const allowedParents = element[name].parents?.sort() ?? []
+			if (parentBlock) {
+				if (allowedParents.length === 0) {
+					return CheckFailed(`"${name}" is a top-level ${type}, but has parent "${parentBlock}".`)
+				}
+
+				if (!allowedParents.includes(parentBlock)) {
+					const hint = getHint(allowedParents)
+					return CheckFailed(`${type} "${name}" is invalid within "${parentBlock}". ${hint}`)
+				}
+
+				continue
+			}
+
+			if (allowedParents.length > 0) {
 				const hint = getHint(allowedParents)
-				return CheckFailed(`${type} "${name}" is invalid within "${parentBlock}". ${hint}`)
+				return CheckFailed(`"${name}" is not a top-level ${type}. ${hint}`)
 			}
-
-			continue
-		}
-
-		if (allowedParents.length > 0) {
-			const hint = getHint(allowedParents)
-			return CheckFailed(`"${name}" is not a top-level ${type}. ${hint}`)
-		}
 		}
 
 		return CheckOK
