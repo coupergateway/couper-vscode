@@ -2,16 +2,19 @@
 
 const vscode = require('vscode')
 const common = require('./common')
-const { blocks } = require('./schema')
+const schema = require('./schema')
 
-const BLOCK_REGEX = /^\s*([\w_-]+)\s*("[^"]+"\s*)*\s*{/
+const REGEXES = {
+	block: /^\s*([\w_-]+)\s*("[^"]+"\s*)*\s*{/,
+	attribute: /^\s*([\w_-]+)\s*=/
+}
 
 const CheckOK = {ok: true}
 
 function CheckFailed(message, severity) {
 	return {
 		ok: false,
-		message: message,
+		message: message.length > 0 ? message.charAt(0).toUpperCase() + message.slice(1) : "",
 		severity: severity
 	}
 }
@@ -30,37 +33,40 @@ function getHint(allowedParents) {
 // --------------------------------------------------------------------------
 
 const CHECKS = [
-	// Block hierarchy
+	// Block/attribute hierarchy
 	(document, textLine) => {
-		const matches = textLine.text.match(BLOCK_REGEX)
+		for (const type of ["block", "attribute"]) {
+		const matches = textLine.text.match(REGEXES[type])
 		if (!matches) {
-			return CheckOK
+			continue
 		}
 
-		const block = RegExp.$1
-		if (!blocks[block]) {
-			return CheckFailed(`Unknown block: ${block}`)
+		const name = RegExp.$1
+		const element = schema[type + "s"]
+		if (!element[name]) {
+			return CheckFailed(`Unknown ${type} "${name}".`)
 		}
 
 		const parentBlock = common.getParentBlock(document, textLine.range.start)
 
-		const allowedParents = blocks[block].parents?.sort() ?? []
+		const allowedParents = element[name].parents?.sort() ?? []
 		if (parentBlock) {
 			if (allowedParents.length === 0) {
-				return CheckFailed(`Block "${block}" is a top-level block, but has parent "${parentBlock}".`)
+				return CheckFailed(`"${name}" is a top-level ${type}, but has parent "${parentBlock}".`)
 			}
 
 			if (!allowedParents.includes(parentBlock)) {
 				const hint = getHint(allowedParents)
-				return CheckFailed(`Block "${block}" is invalid within "${parentBlock}". ${hint}`)
+				return CheckFailed(`${type} "${name}" is invalid within "${parentBlock}". ${hint}`)
 			}
 
-			return CheckOK
+			continue
 		}
 
 		if (allowedParents.length > 0) {
 			const hint = getHint(allowedParents)
-			return CheckFailed(`Block "${block}" is not a top-level block. ${hint}`)
+			return CheckFailed(`"${name}" is not a top-level ${type}. ${hint}`)
+		}
 		}
 
 		return CheckOK
