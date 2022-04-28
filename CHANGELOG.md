@@ -5,6 +5,7 @@
 ### Added
 
 - completion for `beta_health` [#50](https://github.com/avenga/couper-vscode/pull/50)
+- completion for `backend`, `backend_timeout`, `backend_openapi_validation` error types [#78](https://github.com/avenga/couper-vscode/pull/78)
 
 ### Changed
 

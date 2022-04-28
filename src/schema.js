@@ -56,9 +56,9 @@ const blocks = {
             return [null].concat(blocks.error_handler._labelsForParent[parentBlockName])
         },
         _labelsForParent: {
-            'api':         ['beta_insufficient_permissions'],
+            'api':         ['backend', 'backend_timeout', 'backend_openapi_validation', 'beta_insufficient_permissions'],
             'basic_auth':  ['basic_auth', 'basic_auth_credentials_missing'],
-            'endpoint':    ['beta_insufficient_permissions', 'sequence', 'unexpected_status'],
+            'endpoint':    ['backend', 'backend_timeout', 'backend_openapi_validation', 'beta_insufficient_permissions', 'sequence', 'unexpected_status'],
             'jwt':         ['jwt', 'jwt_token_expired', 'jwt_token_invalid', 'jwt_token_missing'],
             'saml':        ['saml'],
             'beta_oauth2': ['oauth2'],
