@@ -54,5 +54,4 @@ function getContext(document, position) {
 	})
 }
 
-exports.getParentBlock = getParentBlock
-exports.isObjectContext = isObjectContext
+module.exports = { getParentBlock, isObjectContext, getContext }

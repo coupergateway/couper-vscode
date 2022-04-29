@@ -5,7 +5,7 @@ const common = require('./common')
 const schema = require('./schema')
 
 const REGEXES = {
-	block: /^\s*([\w_-]+)\s*("[^"]+"\s*)*\s*{/,
+	block: /^\s*([\w_-]+)\s*("[^"]*"\s*)*\s*{/,
 	attribute: /^\s*([\w_-]+)\s*=/
 }
 
@@ -35,6 +35,14 @@ function getHint(allowedParents) {
 const CHECKS = [
 	// Block/attribute hierarchy
 	(document, textLine) => {
+		const context = common.getContext(document, textLine.range.start)
+
+		const isTopLevel = context.length === 0
+		if (!isTopLevel && context[0].type === "object") {
+			// Do not check inside objects/maps
+			return CheckOK
+		}
+
 		for (const type of ["block", "attribute"]) {
 			const matches = textLine.text.match(REGEXES[type])
 			if (!matches) {
@@ -47,10 +55,9 @@ const CHECKS = [
 				return CheckFailed(`Unknown ${type} "${name}".`)
 			}
 
-			const parentBlock = common.getParentBlock(document, textLine.range.start)
-
 			const allowedParents = element[name].parents?.sort() ?? []
-			if (parentBlock) {
+			if (!isTopLevel) {
+				const parentBlock = context[0].name
 				if (allowedParents.length === 0) {
 					return CheckFailed(`"${name}" is a top-level ${type}, but has parent "${parentBlock}".`)
 				}
@@ -59,11 +66,7 @@ const CHECKS = [
 					const hint = getHint(allowedParents)
 					return CheckFailed(`${type} "${name}" is invalid within "${parentBlock}". ${hint}`)
 				}
-
-				continue
-			}
-
-			if (allowedParents.length > 0) {
+			} else if (allowedParents.length > 0) {
 				const hint = getHint(allowedParents)
 				return CheckFailed(`"${name}" is not a top-level ${type}. ${hint}`)
 			}
