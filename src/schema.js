@@ -159,20 +159,20 @@ const attributes = {
     },
     add_form_params: {
         parents: ['backend', 'endpoint', 'error_handler', 'proxy'],
-        type: 'map'
+        type: 'object'
     },
     add_query_params: {
         parents: ['backend', 'endpoint', 'error_handler', 'proxy'],
         examples: ['query'],
-        type: 'map'
+        type: 'object'
     },
     add_request_headers: {
         parents: ['backend', 'endpoint', 'error_handler', 'proxy', 'websockets'],
-        type: 'map'
+        type: 'object'
     },
     add_response_headers: {
         parents: ['api', 'backend', 'endpoint', 'error_handler', 'files', 'proxy', 'server', 'spa', 'websockets'],
-        type: 'map'
+        type: 'object'
     },
     allow_credentials: {
         parents: ['cors'],
@@ -218,7 +218,7 @@ const attributes = {
     },
     beta_roles_map: {
         parents: ['jwt'],
-        type: 'map'
+        type: 'object'
     },
     beta_required_permission: {
         parents: ['api', 'endpoint']
@@ -228,7 +228,7 @@ const attributes = {
     },
     beta_permissions_map: {
         parents: ['jwt'],
-        type: 'map'
+        type: 'object'
     },
     beta_service_name: {
         parents: ['settings'],
@@ -246,7 +246,7 @@ const attributes = {
     claims: {
         parents: ['jwt', 'jwt_signing_profile'],
         examples: ['jwt-access-control'],
-        type: 'map'
+        type: 'object'
     },
     client_id: {
         parents: ['beta_oauth2', 'oauth2', 'oidc'],
@@ -257,25 +257,28 @@ const attributes = {
         examples: ['oauth2-client-credentials', 'oidc']
     },
     configuration_max_stale: {
-        parents: ['oidc']
+        parents: ['oidc'],
+        type: 'duration'
     },
     configuration_url: {
         parents: ['oidc'],
         examples: ['oidc']
     },
     configuration_ttl: {
-        parents: ['oidc']
+        parents: ['oidc'],
+        type: 'duration'
     },
     cookie: {
         parents: ['jwt']
     },
     connect_timeout: {
-        parents: ['backend']
+        parents: ['backend'],
+        type: 'duration'
     },
     custom_log_fields: {
         parents: ['api', 'backend', 'endpoint', 'error_handler', 'files', 'server', 'spa', 'jwt', 'basic_auth', 'saml', 'oidc', 'beta_oauth2'],
         examples: ['custom-logging', 'sequences'],
-        type: 'map'
+        type: 'object'
     },
     default_port: {
         parents: ['settings'],
@@ -308,7 +311,7 @@ const attributes = {
     environment_variables: {
         parents: ['defaults'],
         examples: ['env-var'],
-        type: 'map'
+        type: 'object'
     },
     error_file: {
         parents: ['api', 'endpoint', 'error_handler', 'files', 'server'],
@@ -332,7 +335,7 @@ const attributes = {
     },
     form_body: {
         parents: ['request'],
-        type: 'map'
+        type: 'object'
     },
     grant_type: {
         parents: ['beta_oauth2', 'oauth2'],
@@ -345,7 +348,7 @@ const attributes = {
     headers: {
         parents: ['beta_health', 'jwt_signing_profile', 'request', 'response'],
         examples: ['static-responses'],
-        type: 'map'
+        type: 'object'
     },
     health_path: {
         parents: ['settings']
@@ -381,18 +384,21 @@ const attributes = {
         type: 'boolean'
     },
     interval: {
-        parents: ['beta_health']
+        parents: ['beta_health'],
+        type: 'duration'
     },
     json_body: {
         parents: ['request', 'response'],
         examples: ['static-responses'],
-        type: 'map'
+        type: 'object'
     },
     jwks_ttl: {
-        parents: ['jwt', 'oidc']
+        parents: ['jwt', 'oidc'],
+        type: 'duration'
     },
     jwks_max_stale: {
-        parents: ['jwt', 'oidc']
+        parents: ['jwt', 'oidc'],
+        type: 'duration'
     },
     jwks_url: {
         parents: ['jwt'],
@@ -418,7 +424,8 @@ const attributes = {
         type: 'boolean'
     },
     max_age: {
-        parents: ['cors']
+        parents: ['cors'],
+        type: 'duration'
     },
     max_connections: {
         parents: ['backend'],
@@ -453,7 +460,7 @@ const attributes = {
     },
     query_params: {
         parents: ['request'],
-        type: 'map'
+        type: 'object'
     },
     realm: {
         parents: ['basic_auth']
@@ -511,21 +518,21 @@ const attributes = {
     },
     set_form_params: {
         parents: ['backend', 'endpoint', 'error_handler', 'proxy'],
-        type: 'map'
+        type: 'object'
     },
     set_query_params: {
         parents: ['backend', 'endpoint', 'error_handler', 'proxy'],
         examples: ['query'],
-        type: 'map'
+        type: 'object'
     },
     set_request_headers: {
         parents: ['backend', 'endpoint', 'error_handler', 'proxy', 'websockets'],
         examples: ['sending-jwt-upstream'],
-        type: 'map'
+        type: 'object'
     },
     set_response_headers: {
         parents: ['api', 'backend', 'endpoint', 'error_handler', 'files', 'proxy', 'server', 'spa', 'websockets'],
-        type: 'map'
+        type: 'object'
     },
     set_response_status: {
         parents: ['backend', 'endpoint', 'error_handler'],
@@ -543,7 +550,8 @@ const attributes = {
         parents: ['jwt']
     },
     signing_ttl: {
-        parents: ['jwt']
+        parents: ['jwt'],
+        type: 'duration'
     },
     sp_acs_url: {
         parents: ['saml'],
@@ -559,7 +567,8 @@ const attributes = {
         type: 'number'
     },
     timeout: {
-        parents: ['backend', 'beta_health', 'websockets']
+        parents: ['backend', 'beta_health', 'websockets'],
+        type: 'duration'
     },
     token_endpoint: {
         parents: ['beta_oauth2', 'oauth2']
@@ -574,7 +583,8 @@ const attributes = {
         type: 'any'
     },
     ttfb_timeout: {
-        parents: ['backend']
+        parents: ['backend'],
+        type: 'duration'
     },
     ttl: {
         parents: ['jwt_signing_profile']

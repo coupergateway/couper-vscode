@@ -96,7 +96,7 @@ for (const [name, attribute] of Object.entries(attributes)) {
 							item.insertText = new vscode.SnippetString(`${name} = ["$0"]`)
 						}
 					} break;
-					case 'map': {
+					case 'object': {
 						item.label = `${name} = {…}`
 						item.insertText = new vscode.SnippetString(name + ' = {\u000a\t$0\u000a}')
 					} break;
