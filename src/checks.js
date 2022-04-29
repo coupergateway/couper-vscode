@@ -32,6 +32,40 @@ function getHint(allowedParents) {
 
 // --------------------------------------------------------------------------
 
+function checkBlockLabels(name, labels, parentBlock) {
+	const element = schema.blocks[name]
+
+	let elementLabels = element.labels
+	if (!elementLabels) {
+		elementLabels = element.labelled ? ["..."] : []
+	} else if (typeof element.labels === 'function') {
+		elementLabels = element.labels(parentBlock)
+	}
+
+	let hasLabel = false
+	let hasNull = false
+	for (const label of elementLabels) {
+		if (label === null) {
+			hasNull = true
+		} else {
+			hasLabel = true
+		}
+	}
+
+	const labelRequired = hasLabel && !hasNull
+	const labelAllowed = hasLabel && hasNull
+
+	if (labelRequired && !labels) {
+		return CheckFailed(`Missing label for block "${name}".`)
+	}
+
+	if (!labelRequired && !labelAllowed && labels) {
+		return CheckFailed(`Invalid label for block "${name}".`)
+	}
+
+	return CheckOK
+}
+
 const CHECKS = [
 	// Block/attribute hierarchy
 	(document, textLine) => {
@@ -69,6 +103,15 @@ const CHECKS = [
 			} else if (allowedParents.length > 0) {
 				const hint = getHint(allowedParents)
 				return CheckFailed(`"${name}" is not a top-level ${type}. ${hint}`)
+			}
+
+			if (type === "block") {
+				const labels = RegExp.$2
+				const parentBlock = context[0]?.name
+				const result = checkBlockLabels(name, labels, parentBlock)
+				if (!result.ok) {
+					return result
+				}
 			}
 		}
 
