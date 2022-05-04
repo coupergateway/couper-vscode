@@ -7,6 +7,8 @@
 - completion for `beta_health` [#50](https://github.com/avenga/couper-vscode/pull/50)
 - completion for `backend`, `backend_timeout`, `backend_openapi_validation` error types [#78](https://github.com/avenga/couper-vscode/pull/78)
 - completion for `access-control` and `endpoint`  error types [#80](https://github.com/avenga/couper-vscode/pull/80)
+- completion for `jwks_max_stale` in `jwt` block [#79](https://github.com/avenga/couper-vscode/pull/79)
+- completion for `jwks_ttl`, `jwks_max_stale`, `configuration_max_stale` in `oidc` block [#79](https://github.com/avenga/couper-vscode/pull/79)
 
 ### Changed
 

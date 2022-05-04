@@ -256,6 +256,9 @@ const attributes = {
         parents: ['beta_oauth2', 'oauth2', 'oidc'],
         examples: ['oauth2-client-credentials', 'oidc']
     },
+    configuration_max_stale: {
+        parents: ['oidc']
+    },
     configuration_url: {
         parents: ['oidc'],
         examples: ['oidc']
@@ -386,7 +389,10 @@ const attributes = {
         type: 'map'
     },
     jwks_ttl: {
-        parents: ['jwt']
+        parents: ['jwt', 'oidc']
+    },
+    jwks_max_stale: {
+        parents: ['jwt', 'oidc']
     },
     jwks_url: {
         parents: ['jwt'],
