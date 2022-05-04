@@ -52,7 +52,10 @@ const hoverProvider = vscode.languages.registerHoverProvider(selector, {
 			return undefined
 		}
 
-		const title = `**\`${word}\` ${type}**`
+		let title = `**\`${word}\` ${type}**`
+		if (type === "attribute") {
+			title += ` (\`${schemaElement.type ?? "string"}\`)`
+		}
 		const icon = vscode.Uri.joinPath(globalThis.BASE_URI, GITHUB_ICON)
 		const description = schemaElement.description ?? ""
 		const reference = `![](${icon}) [Reference →](${url})`
