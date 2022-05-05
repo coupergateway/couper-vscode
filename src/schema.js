@@ -58,7 +58,7 @@ const blocks = {
         _labelsForParent: {
             'api':         ['access_control', 'backend', 'backend_timeout', 'backend_openapi_validation', 'beta_insufficient_permissions'],
             'basic_auth':  ['access_control', 'basic_auth', 'basic_auth_credentials_missing'],
-            'endpoint':    ['access_control', 'backend', 'backend_timeout', 'backend_openapi_validation', 'beta_insufficient_permissions', 'sequence', 'unexpected_status'],
+            'endpoint':    ['access_control', 'backend', 'backend_timeout', 'backend_openapi_validation', 'beta_insufficient_permissions', 'endpoint', 'sequence', 'unexpected_status'],
             'jwt':         ['access_control', 'jwt', 'jwt_token_expired', 'jwt_token_invalid', 'jwt_token_missing'],
             'saml':        ['access_control', 'saml'],
             'beta_oauth2': ['access_control', 'oauth2'],
