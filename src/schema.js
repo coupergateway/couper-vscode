@@ -56,13 +56,13 @@ const blocks = {
             return [null].concat(blocks.error_handler._labelsForParent[parentBlockName])
         },
         _labelsForParent: {
-            'api':         ['backend', 'backend_timeout', 'backend_openapi_validation', 'beta_insufficient_permissions'],
-            'basic_auth':  ['basic_auth', 'basic_auth_credentials_missing'],
-            'endpoint':    ['backend', 'backend_timeout', 'backend_openapi_validation', 'beta_insufficient_permissions', 'sequence', 'unexpected_status'],
-            'jwt':         ['jwt', 'jwt_token_expired', 'jwt_token_invalid', 'jwt_token_missing'],
-            'saml':        ['saml'],
-            'beta_oauth2': ['oauth2'],
-            'oidc':        ['oauth2']
+            'api':         ['access_control', 'backend', 'backend_timeout', 'backend_openapi_validation', 'beta_insufficient_permissions'],
+            'basic_auth':  ['access_control', 'basic_auth', 'basic_auth_credentials_missing'],
+            'endpoint':    ['access_control', 'backend', 'backend_timeout', 'backend_openapi_validation', 'beta_insufficient_permissions', 'sequence', 'unexpected_status'],
+            'jwt':         ['access_control', 'jwt', 'jwt_token_expired', 'jwt_token_invalid', 'jwt_token_missing'],
+            'saml':        ['access_control', 'saml'],
+            'beta_oauth2': ['access_control', 'oauth2'],
+            'oidc':        ['access_control', 'oauth2']
         }
     },
     files: {
