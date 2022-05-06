@@ -312,14 +312,10 @@ const attributes = {
         examples: ['simple-fileserving']
     },
     expected_status: {
-        parents: ['proxy', 'request'],
+        parents: ['beta_health', 'proxy', 'request'],
         type: 'array',
         examples: ['sequences'],
         arrayType: 'number'
-    },
-    expected_status: {
-        parents: ['beta_health'],
-        type: 'number'
     },
     expected_text: {
         parents: ['beta_health']
