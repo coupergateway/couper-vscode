@@ -13,8 +13,8 @@ const blocks = {
         parents: ['beta_oauth2', 'definitions', 'jwt', 'oauth2', 'oidc', 'proxy', 'request'],
         description: "Defines the connection to a local/remote backend service.",
         examples: ['backend-configuration'],
-        labelled: (parentBlockName) => {
-            return parentBlockName === "definitions"
+        labels: (parentBlockName) => {
+            return parentBlockName === "definitions" ? [DEFAULT_LABEL] : [DEFAULT_LABEL, null]
         }
     },
     basic_auth: {
