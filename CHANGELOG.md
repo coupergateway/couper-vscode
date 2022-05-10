@@ -19,6 +19,7 @@
 ### Fixed
 
 - many highlighting issues [#76](https://github.com/avenga/couper-vscode/pull/76)
+- completion for labeled `backend` block [#82](https://github.com/avenga/couper-vscode/pull/82)
 
 ---
 
