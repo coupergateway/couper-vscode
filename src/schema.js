@@ -587,7 +587,8 @@ const attributes = {
         type: 'duration'
     },
     ttl: {
-        parents: ['jwt_signing_profile']
+        parents: ['jwt_signing_profile'],
+        type: 'duration'
     },
     url: {
         parents: ['request', 'proxy']
