@@ -43,6 +43,10 @@
           ".hcl",
           ".couper"
         ],
+        "icon": {
+          "light": "./images/couper_icon.png",
+          "dark": "./images/couper_icon.png"
+        },
         "configuration": "./language-configuration.json"
       }
     ],
