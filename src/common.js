@@ -2,7 +2,7 @@
 
 const vscode = require('vscode')
 
-const parentBlockRegex = /\b([\w-]+)(?:[ \t]+"[^"]+")?[ \t]*=?[ \t]*{/g
+const parentBlockRegex = /\b([\w-]+)(?:[ \t]+"[^"]+")*[ \t]*=?[ \t]*{/g
 const blockRegex = /{[^{}]*}/g
 // see http://regex.info/listing.cgi?ed=2&p=281
 const filterRegex = /([^"/#]+|"(?:\\.|[^"\\])*")|\/\*[^*]*\*+(?:[^/*][^*]*\*+)*\/|(?:\/\/|#)[^\n]*/g
