@@ -23,6 +23,10 @@ function getError(document, lineNo) {
 }
 
 function refreshDiagnostics(document, diagnostics) {
+	if (!vscode.languages.match(selector, document)) {
+		return
+	}
+
 	const errors = []
 
 	for (let lineNo = 0; lineNo < document.lineCount; lineNo++) {
