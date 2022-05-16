@@ -4,6 +4,7 @@
 
 ### Added
 
+- mark misplaced blocks and attributes, missing or misplaced block labels and wrong attribute values as errors [#83](https://github.com/avenga/couper-vscode/pull/83)
 - completion for `beta_health` [#50](https://github.com/avenga/couper-vscode/pull/50)
 - completion for `backend`, `backend_timeout`, `backend_openapi_validation` error types [#78](https://github.com/avenga/couper-vscode/pull/78)
 - completion for `access-control` and `endpoint`  error types [#80](https://github.com/avenga/couper-vscode/pull/80)
