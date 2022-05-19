@@ -10,6 +10,7 @@
 - completion for `access-control` and `endpoint`  error types [#80](https://github.com/avenga/couper-vscode/pull/80)
 - completion for `jwks_max_stale` in `jwt` block [#79](https://github.com/avenga/couper-vscode/pull/79)
 - completion for `jwks_ttl`, `jwks_max_stale`, `configuration_max_stale` in `oidc` block [#79](https://github.com/avenga/couper-vscode/pull/79)
+- definition lookup for `oidc`, `saml` and `beta_oauth2` access controls and for refined `backend` blocks [#84](https://github.com/avenga/couper-vscode/pull/84)
 
 ### Changed
 
@@ -18,6 +19,7 @@
   - renamed `beta_scope_claim` and `beta_scope_map` attributes to `beta_permissions_claim` and `beta_permissions_map`
   - removed `beta_operation_denied` and `beta_scope` error types
   - renamed `beta_insufficient_scope` error type to `beta_insufficient_permissions`
+- definitions are looked up in all Couper files within the workspace [#84](https://github.com/avenga/couper-vscode/pull/84)
 
 ### Fixed
 
