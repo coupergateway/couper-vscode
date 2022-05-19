@@ -8,19 +8,25 @@ const selector = { language: 'couper' }
 const providers = []
 
 RegExp.escape = (string) => {
-    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+	return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
 
 const definitionProvider = vscode.languages.registerDefinitionProvider(selector, {
 
-    provideDefinition(document, position, token) {
+	async provideDefinition(document, position, token) {
 		const reference = getReference(document, position)
-
 		if (reference === null) {
 			return null
 		}
 
-		return findDefinitionInDocument(document, reference)
+		let definitions = []
+		for (const couperDocument of await getCouperDocuments(document)) {
+			const location = findDefinitionInDocument(couperDocument, reference)
+			if (location !== null) {
+				definitions.push(location)
+			}
+		}
+		return definitions
 	}
 })
 
@@ -93,7 +99,20 @@ function findDefinitionInDocument(document, reference) {
 		return null
 	}
 
-	return [new vscode.Location(document.uri, blockPosition)]
+	return new vscode.Location(document.uri, blockPosition)
+}
+
+async function getCouperDocuments(document) {
+	const workspace = vscode.workspace.getWorkspaceFolder(document.uri)
+	const root = workspace ? workspace.uri : document.uri
+
+	const files = await vscode.workspace.findFiles('**/*.{hcl,couper}')
+	let documents = []
+	for (const file of files) {
+		documents.push(await vscode.workspace.openTextDocument(file))
+	}
+
+	return documents
 }
 
 exports.providers = providers
