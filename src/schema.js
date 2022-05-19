@@ -151,6 +151,7 @@ const attributes = {
         parents: ['api', 'endpoint', 'files', 'server', 'spa'],
         description: "Secures the current block context with a predefined access control.",
         examples: ['jwt-access-control'],
+        definingBlocks: ['basic_auth', 'jwt', 'oidc', 'saml', 'beta_oauth2'],
         type: 'array'
     },
     accept_forwarded_url: {
@@ -197,6 +198,7 @@ const attributes = {
     },
     backend: { // label reference
         parents: ['beta_oauth2', 'jwt', 'oauth2', 'oidc', 'proxy', 'request'],
+        definingBlocks: ["backend"],
         examples: ['backend-configuration']
     },
     base_path: {
@@ -290,6 +292,7 @@ const attributes = {
     },
     disable_access_control: {
         parents: ['api', 'endpoint', 'files', 'server', 'spa'],
+        definingBlocks: ['basic_auth', 'jwt', 'oidc', 'saml', 'beta_oauth2'],
         type: 'array'
     },
     disable_certificate_validation: {

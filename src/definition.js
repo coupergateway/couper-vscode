@@ -2,6 +2,7 @@
 
 const vscode = require('vscode')
 const common = require('./common')
+const { attributes } = require('./schema')
 
 const selector = { language: 'couper' }
 
@@ -10,6 +11,8 @@ const providers = []
 RegExp.escape = (string) => {
 	return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
+
+let blockNamePatterns = {}
 
 const definitionProvider = vscode.languages.registerDefinitionProvider(selector, {
 
@@ -73,23 +76,20 @@ function getReference(document, position) {
 }
 
 function findDefinitionInDocument(document, reference) {
-	var block
-	switch (reference.attribute) {
-		case "backend":
-			block = "backend"
-			break
-		case "access_control":
-		case "disable_access_control":
-			block = "jwt|basic_auth"
-			break
-		default:
+	let blockNamePattern = blockNamePatterns[reference.attribute]
+	if (!blockNamePattern) {
+		const definingBlocks = attributes[reference.attribute]?.definingBlocks
+		if (!definingBlocks) {
 			return null
+		}
+		blockNamePattern = definingBlocks.map(b => RegExp.escape(b)).join('|')
+		blockNamePatterns[reference.attribute] = blockNamePattern
 	}
 
 	const text = document.getText()
 	const escapedWord = RegExp.escape(reference.word)
 
-	const offset = text.search(new RegExp('^[ \t]*(?:' + block + ')\\s*"' + escapedWord + '"\\s*{', 'm'))
+	const offset = text.search(new RegExp('^[ \t]*(?:' + blockNamePattern + ')\\s*"' + escapedWord + '"\\s*{', 'm'))
 	if (offset === -1) {
 		return null
 	}
