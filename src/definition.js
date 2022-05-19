@@ -48,27 +48,14 @@ function getReference(document, position) {
 	}
 
 	const lineText = document.lineAt(position).text
-	const escapedQuotedWord = RegExp.escape(quotedWord)
+	const escapedWord = RegExp.escape(word)
 
 	// access_control = [...], disable_access_control = [...]
-	let matches = lineText.match(new RegExp('(?:^|,)\\s*((?:disable_)?access_control)\\s*=\\s*\\[(.*?' + escapedQuotedWord + '.*?)\\]\\s*(?:,|$)', 'm'))
+	let matches = lineText.match(new RegExp('^\\s*((?:disable_)?access_control)\\s*=\\s*\\[.*?"' + escapedWord + '"', 'm'))
 	if (matches === null) {
 		// backend = "..."
-		matches = lineText.match(new RegExp('(?:^|,)\\s*(backend)\\s*=\\s*' + escapedQuotedWord + '\\s*(?:,|$)', 'm'))
+		matches = lineText.match(new RegExp('^\\s*(backend)\\s*=\\s*"' + escapedWord + '"', 'm'))
 		if (matches === null) {
-			return null
-		}
-	} else {
-		const list = matches[2]
-		const elements = list.trim().split(/\s*,\s*/) // "," not allowed within ID
-		let found = false
-		for (const element of elements) {
-			if (element === quotedWord) {
-				found = true
-				break
-			}
-		}
-		if (!found) {
 			return null
 		}
 	}
