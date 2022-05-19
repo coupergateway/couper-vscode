@@ -56,7 +56,11 @@ function getReference(document, position) {
 		// backend = "..."
 		matches = lineText.match(new RegExp('^\\s*(backend)\\s*=\\s*"' + escapedWord + '"', 'm'))
 		if (matches === null) {
-			return null
+			// backend "..." { ...
+			matches = lineText.match(new RegExp('^\\s*(backend)\\s*"' + escapedWord + '"\\s*{', 'm'))
+			if (matches === null || common.getParentBlock(document, position) === "definitions") {
+				return null
+			}
 		}
 	}
 	return { attribute: matches[1], word: word }
