@@ -3,6 +3,9 @@
 const vscode = require('vscode')
 const common = require('./common')
 const { attributes } = require('./schema')
+const { contributes } = require('../package.json')
+
+const GLOB_PATTERN = '**/*{' + contributes.languages[0].extensions.join(',') + '}'
 
 const selector = { language: 'couper' }
 
@@ -97,7 +100,7 @@ async function getCouperDocuments(document) {
 	const workspace = vscode.workspace.getWorkspaceFolder(document.uri)
 	const root = workspace ? workspace.uri : document.uri
 
-	const files = await vscode.workspace.findFiles('**/*.{hcl,couper}')
+	const files = await vscode.workspace.findFiles(GLOB_PATTERN)
 	let documents = []
 	for (const file of files) {
 		documents.push(await vscode.workspace.openTextDocument(file))
