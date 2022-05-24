@@ -596,6 +596,10 @@ const attributes = {
 	url: {
 		parents: ['request', 'proxy']
 	},
+	use_when_unhealthy: {
+		parents: ['backend'],
+		type: 'boolean'
+	},
 	user: {
 		parents: ['basic_auth']
 	},
