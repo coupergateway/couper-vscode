@@ -98,11 +98,7 @@ function findDefinitionInDocument(document, reference) {
 
 async function getCouperDocuments(document) {
 	const files = await vscode.workspace.findFiles(GLOB_PATTERN)
-	if (files.length === 0) {
-		return [document]
-	}
-
-	let documents = []
+	let documents = [document]
 	for (const file of files) {
 		documents.push(await vscode.workspace.openTextDocument(file))
 	}
