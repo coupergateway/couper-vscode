@@ -519,7 +519,8 @@ const attributes = {
 		parents: ['beta_oauth2', 'oauth2', 'oidc']
 	},
 	secure_cookies: {
-		parents: ['settings']
+		parents: ['settings'],
+		options: ['strip', '']
 	},
 	set_form_params: {
 		parents: ['backend', 'endpoint', 'error_handler', 'proxy'],
