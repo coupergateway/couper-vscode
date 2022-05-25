@@ -503,7 +503,8 @@ const attributes = {
 		parents: ['settings']
 	},
 	request_id_format: {
-		parents: ['settings']
+		parents: ['settings'],
+		options: ['common', 'uuid4']
 	},
 	required_claims: {
 		parents: ['jwt'],
