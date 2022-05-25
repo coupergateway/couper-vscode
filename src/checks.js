@@ -87,6 +87,10 @@ function checkAttributeValue(name, value) {
 		return CheckFailed(invalidType)
 	}
 
+	if (type === 'any') {
+		return CheckOK
+	}
+
 	if (value.match(REGEXES.string)) {
 		if (type !== "string" && type !== "duration") {
 			return CheckFailed(invalidType)

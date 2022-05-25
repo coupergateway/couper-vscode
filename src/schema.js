@@ -394,7 +394,7 @@ const attributes = {
 	json_body: {
 		parents: ['request', 'response'],
 		examples: ['static-responses'],
-		type: 'object'
+		type: 'any'
 	},
 	jwks_ttl: {
 		parents: ['jwt', 'oidc'],
