@@ -416,7 +416,8 @@ const attributes = {
 		examples: ['jwt-access-control']
 	},
 	log_format: {
-		parents: ['settings']
+		parents: ['settings'],
+		options: ['common', 'json']
 	},
 	log_level: {
 		parents: ['settings'],
