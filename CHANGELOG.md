@@ -21,6 +21,7 @@
   - removed `beta_operation_denied` and `beta_scope` error types
   - renamed `beta_insufficient_scope` error type to `beta_insufficient_permissions`
 - definitions are looked up in all Couper files within the workspace [#84](https://github.com/avenga/couper-vscode/pull/84)
+- enhanced completion for `accept_forwarded_url`, `log_format`, `request_id_format` and `secure_cookies` attributes by providing valid options [#88](https://github.com/avenga/couper-vscode/pull/88)
 
 ### Fixed
 
