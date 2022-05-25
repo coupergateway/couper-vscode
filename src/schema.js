@@ -156,7 +156,8 @@ const attributes = {
 	},
 	accept_forwarded_url: {
 		parents: ['settings'],
-		type: 'array'
+		type: 'array',
+		options: ['proto', 'host', 'port']
 	},
 	add_form_params: {
 		parents: ['backend', 'endpoint', 'error_handler', 'proxy'],
