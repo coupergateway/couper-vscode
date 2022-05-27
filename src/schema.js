@@ -187,7 +187,7 @@ const attributes = {
 	},
 	allowed_origins: {
 		parents: ['cors'],
-		type: 'array'
+		type: ['array', 'string']
 	},
 	array_attributes: {
 		parents: ['saml'],
@@ -224,7 +224,8 @@ const attributes = {
 		type: 'object'
 	},
 	beta_required_permission: {
-		parents: ['api', 'endpoint']
+		parents: ['api', 'endpoint'],
+		type: ['string', 'object']
 	},
 	beta_permissions_claim: {
 		parents: ['jwt']
@@ -394,7 +395,7 @@ const attributes = {
 	json_body: {
 		parents: ['request', 'response'],
 		examples: ['static-responses'],
-		type: 'any'
+		type: ['boolean', 'number', 'string', 'object', 'array'],
 	},
 	jwks_ttl: {
 		parents: ['jwt', 'oidc'],
