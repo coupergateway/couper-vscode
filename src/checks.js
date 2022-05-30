@@ -14,6 +14,10 @@ const REGEXES = {
 	boolean: /^(true|false)$/
 }
 
+function makeQuotedList(array) {
+	return array.map(option => `"${option}"`).join(", ")
+}
+
 const CheckOK = {ok: true}
 
 function CheckFailed(message, severity) {
@@ -31,7 +35,7 @@ function getHint(allowedParents) {
 		case 1:
 			return `Parent must be "${allowedParents[0]}".`
 		default:
-			return `\nValid parent blocks: ${allowedParents.join(", ")}`
+			return `\nValid parent blocks: ${makeQuotedList(allowedParents)}`
 	}
 }
 
@@ -96,7 +100,7 @@ function checkAttributeValue(name, value) {
 		}
 
 		if (element.options?.length && !isTemplate && !element.options.includes(stringValue)) {
-			const allowedValues = element.options.sort().join(", ")
+			const allowedValues = makeQuotedList(element.options.sort())
 			return CheckFailed(`Invalid value for "${name}", must be one of: ${allowedValues}`)
 		}
 	} else if (REGEXES.number.test(value) && type !== "number") {

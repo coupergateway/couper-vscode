@@ -156,7 +156,8 @@ const attributes = {
 	},
 	accept_forwarded_url: {
 		parents: ['settings'],
-		type: 'array'
+		type: 'array',
+		options: ['proto', 'host', 'port']
 	},
 	add_form_params: {
 		parents: ['backend', 'endpoint', 'error_handler', 'proxy'],
@@ -416,7 +417,8 @@ const attributes = {
 		examples: ['jwt-access-control']
 	},
 	log_format: {
-		parents: ['settings']
+		parents: ['settings'],
+		options: ['common', 'json']
 	},
 	log_level: {
 		parents: ['settings'],
@@ -502,7 +504,8 @@ const attributes = {
 		parents: ['settings']
 	},
 	request_id_format: {
-		parents: ['settings']
+		parents: ['settings'],
+		options: ['common', 'uuid4']
 	},
 	required_claims: {
 		parents: ['jwt'],
@@ -517,7 +520,8 @@ const attributes = {
 		parents: ['beta_oauth2', 'oauth2', 'oidc']
 	},
 	secure_cookies: {
-		parents: ['settings']
+		parents: ['settings'],
+		options: ['strip', '']
 	},
 	set_form_params: {
 		parents: ['backend', 'endpoint', 'error_handler', 'proxy'],
