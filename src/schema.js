@@ -450,7 +450,7 @@ const attributes = {
 		parents: ['basic_auth']
 	},
 	path: {
-		parents: ['backend', 'endpoint', 'error_handler', 'beta_health', 'proxy']
+		parents: ['backend', 'error_handler', 'beta_health']
 	},
 	path_prefix: {
 		parents: ['backend']
