@@ -12,7 +12,7 @@
 - completion for `jwks_max_stale` in `jwt` block [#79](https://github.com/avenga/couper-vscode/pull/79)
 - completion for `jwks_ttl`, `jwks_max_stale`, `configuration_max_stale` in `oidc` block [#79](https://github.com/avenga/couper-vscode/pull/79)
 - definition lookup for `oidc`, `saml` and `beta_oauth2` access controls and for refined `backend` blocks [#84](https://github.com/avenga/couper-vscode/pull/84)
-- completion for `use_when_unhealthy` in `backend` block [#86](https://github.com/avenga/couper-vscode/pull/86)
+- completion for `use_when_unhealthy` in `backend` block and the `backend_unhealthy` error type [#86](https://github.com/avenga/couper-vscode/pull/86)
 
 ### Changed
 
