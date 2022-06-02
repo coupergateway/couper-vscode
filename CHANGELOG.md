@@ -28,6 +28,10 @@
 - many highlighting issues [#76](https://github.com/avenga/couper-vscode/pull/76)
 - completion for labeled `backend` block [#82](https://github.com/avenga/couper-vscode/pull/82)
 
+### Removed
+
+- completion for `path` attribute in `endpoint` and `proxy` blocks [#90](https://github.com/avenga/couper-vscode/pull/90)
+
 ---
 
 ## [v1.3.0](https://github.com/avenga/couper-vscode/releases/tag/v1.3.0)
