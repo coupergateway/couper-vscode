@@ -69,7 +69,7 @@ const blocks = {
 		parents: ['server'],
 		description: "Configures file serving.",
 		examples: ['simple-fileserving', 'spa-serving'],
-		labelled: false
+		labels: [null, DEFAULT_LABEL]
 	},
 	jwt: {
 		parents: ['definitions'],
