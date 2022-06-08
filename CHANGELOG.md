@@ -1,6 +1,10 @@
 # Changelog
 
-## [Unreleased](https://github.com/avenga/couper/compare-vscode/v1.3.0...master)
+## [Unreleased](https://github.com/avenga/couper/compare-vscode/v1.4.0...master)
+
+---
+
+## [v1.4.0](https://github.com/avenga/couper-vscode/releases/tag/v1.4.0)
 
 ### Added
 
@@ -33,8 +37,6 @@
 ### Removed
 
 - completion for `path` attribute in `endpoint` and `proxy` blocks [#90](https://github.com/avenga/couper-vscode/pull/90)
-
----
 
 ## [v1.3.0](https://github.com/avenga/couper-vscode/releases/tag/v1.3.0)
 
