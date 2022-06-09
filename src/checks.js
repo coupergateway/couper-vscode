@@ -77,8 +77,16 @@ function checkBlockLabels(name, labels, parentBlock) {
 
 function checkAttributeValue(name, value) {
 	const element = schema.attributes[name]
-	const type = schema.attributes[name].type ?? "string"
-	const invalidType = `Invalid value for "${name}": ${type} required.`
+	let types = schema.attributes[name].type ?? ["string"]
+	if (!Array.isArray(types)) {
+		types = [types]
+	}
+	let invalidType = `Invalid value for "${name}", `
+	if (types.length > 1) {
+		invalidType += `type must be one of: ${makeQuotedList(types.sort())}`
+	} else {
+		invalidType += `${types[0]} required.`
+	}
 
 	value = value.trim()
 	// FIXME filter comments
@@ -87,19 +95,19 @@ function checkAttributeValue(name, value) {
 		return CheckFailed(invalidType)
 	}
 
-	if (type === 'any') {
+	if (types.includes('any'))  {
 		return CheckOK
 	}
 
 	if (value.match(REGEXES.string)) {
-		if (type !== "string" && type !== "duration") {
+		if (!types.includes("string") && !types.includes("duration")) {
 			return CheckFailed(invalidType)
 		}
 
 		const isTemplate = REGEXES.template.test(value)
 		const stringValue = RegExp.$1
 
-		if (type === "duration" && !isTemplate && !REGEXES.duration.test(stringValue)) {
+		if (types.includes("duration") && !isTemplate && !REGEXES.duration.test(stringValue)) {
 			return CheckFailed(invalidType)
 		}
 
@@ -107,13 +115,13 @@ function checkAttributeValue(name, value) {
 			const allowedValues = makeQuotedList(element.options.sort())
 			return CheckFailed(`Invalid value for "${name}", must be one of: ${allowedValues}`)
 		}
-	} else if (REGEXES.number.test(value) && type !== "number") {
+	} else if (REGEXES.number.test(value) && !types.includes("number")) {
 		return CheckFailed(invalidType)
-	} else if (REGEXES.boolean.test(value) && type !== "boolean") {
+	} else if (REGEXES.boolean.test(value) && !types.includes("boolean")) {
 		return CheckFailed(invalidType)
-	} else if (/^\[/.test(value) && type !== "array") {
+	} else if (/^\[/.test(value) && !types.includes("tuple")) {
 		return CheckFailed(invalidType)
-	} else if (/^{/.test(value) && type !== "object") {
+	} else if (/^{/.test(value) && !types.includes("object")) {
 		return CheckFailed(invalidType)
 	}
 

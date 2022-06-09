@@ -152,11 +152,11 @@ const attributes = {
 		description: "Secures the current block context with a predefined access control.",
 		examples: ['jwt-access-control'],
 		definingBlocks: ['basic_auth', 'jwt', 'oidc', 'saml', 'beta_oauth2'],
-		type: 'array'
+		type: 'tuple'
 	},
 	accept_forwarded_url: {
 		parents: ['settings'],
-		type: 'array',
+		type: 'tuple',
 		options: ['proto', 'host', 'port']
 	},
 	add_form_params: {
@@ -182,17 +182,17 @@ const attributes = {
 	},
 	allowed_methods: {
 		parents: ['api', 'endpoint'],
-		type: 'array',
+		type: 'tuple',
 		options: ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
 	},
 	allowed_origins: {
 		parents: ['cors'],
-		type: ['array', 'string']
+		type: ['tuple', 'string']
 	},
 	array_attributes: {
 		parents: ['saml'],
 		examples: ['saml'],
-		type: 'array'
+		type: 'tuple'
 	},
 	authorization_endpoint: {
 		parents: ['beta_oauth2']
@@ -295,7 +295,7 @@ const attributes = {
 	disable_access_control: {
 		parents: ['api', 'endpoint', 'files', 'server', 'spa'],
 		definingBlocks: ['basic_auth', 'jwt', 'oidc', 'saml', 'beta_oauth2'],
-		type: 'array'
+		type: 'tuple'
 	},
 	disable_certificate_validation: {
 		parents: ['backend'],
@@ -324,7 +324,7 @@ const attributes = {
 	},
 	expected_status: {
 		parents: ['beta_health', 'proxy', 'request'],
-		type: 'array',
+		type: 'tuple',
 		examples: ['sequences'],
 		arrayType: 'number'
 	},
@@ -363,7 +363,7 @@ const attributes = {
 	},
 	hosts: {
 		parents: ['server'],
-		type: 'array'
+		type: 'tuple'
 	},
 	htpasswd_file: {
 		parents: ['basic_auth']
@@ -374,7 +374,7 @@ const attributes = {
 	},
 	https_dev_proxy: {
 		parents: ['settings'],
-		type: 'array'
+		type: 'tuple'
 	},
 	idp_metadata_file: {
 		parents: ['saml'],
@@ -395,7 +395,7 @@ const attributes = {
 	json_body: {
 		parents: ['request', 'response'],
 		examples: ['static-responses'],
-		type: ['boolean', 'number', 'string', 'object', 'array'],
+		type: ['boolean', 'number', 'string', 'object', 'tuple'],
 	},
 	jwks_ttl: {
 		parents: ['jwt', 'oidc'],
@@ -459,7 +459,7 @@ const attributes = {
 	paths: {
 		parents: ['spa'],
 		examples: ['spa-serving'],
-		type: 'array'
+		type: 'tuple'
 	},
 	proxy: {
 		parents: ['backend']
@@ -477,20 +477,20 @@ const attributes = {
 	},
 	remove_form_params: {
 		parents: ['backend', 'endpoint', 'error_handler', 'proxy'],
-		type: 'array'
+		type: 'tuple'
 	},
 	remove_query_params: {
 		parents: ['backend', 'endpoint', 'error_handler', 'proxy'],
 		examples: ['query'],
-		type: 'array'
+		type: 'tuple'
 	},
 	remove_request_headers: {
 		parents: ['backend', 'endpoint', 'error_handler', 'proxy', 'websockets'],
-		type: 'array'
+		type: 'tuple'
 	},
 	remove_response_headers: {
 		parents: ['api', 'backend', 'endpoint', 'error_handler', 'files', 'proxy', 'server', 'spa', 'websockets'],
-		type: 'array'
+		type: 'tuple'
 	},
 	request_body_limit: {
 		parents: ['endpoint']
@@ -511,7 +511,7 @@ const attributes = {
 	required_claims: {
 		parents: ['jwt'],
 		examples: ['jwt-access-control'],
-		type: 'array'
+		type: 'tuple'
 	},
 	retries: {
 		parents: ['oauth2'],
