@@ -183,7 +183,7 @@ const attributes = {
 	allowed_methods: {
 		parents: ['api', 'endpoint'],
 		type: 'tuple',
-		options: ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
+		options: ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', '*']
 	},
 	allowed_origins: {
 		parents: ['cors'],
