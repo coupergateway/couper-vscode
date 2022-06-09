@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/avenga/couper/compare-vscode/v1.4.0...master)
 
+### Fixed
+
+- type checking for `json_body` too strict [#87](https://github.com/avenga/couper-vscode/pull/87)
+
 ---
 
 ## [v1.4.0](https://github.com/avenga/couper-vscode/releases/tag/v1.4.0)
