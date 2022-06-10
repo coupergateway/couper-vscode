@@ -96,7 +96,7 @@ for (const [name, attribute] of Object.entries(attributes)) {
 					switch (type) {
 						case 'tuple': {
 							item.label = `${name} = […]`
-							if (attribute.arrayType == 'number') {
+							if (attribute.tupleType == 'number') {
 								item.insertText = new vscode.SnippetString(`${name} = [$0]`)
 							} else {
 								item.insertText = new vscode.SnippetString(`${name} = ["$0"]`)

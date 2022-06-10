@@ -326,7 +326,7 @@ const attributes = {
 		parents: ['beta_health', 'proxy', 'request'],
 		type: 'tuple',
 		examples: ['sequences'],
-		arrayType: 'number'
+		tupleType: 'number'
 	},
 	expected_text: {
 		parents: ['beta_health']
