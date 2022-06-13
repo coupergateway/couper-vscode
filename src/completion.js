@@ -84,36 +84,47 @@ for (const [name, attribute] of Object.entries(attributes)) {
 					return undefined
 				}
 
-				const item = new vscode.CompletionItem(`${name} = "…"`, vscode.CompletionItemKind.Property)
-				item.detail = 'Attribute'
-				item.sortText = `1${name}`
-				switch (attribute.type) {
-					case 'array': {
-						item.label = `${name} = […]`
-						if (attribute.arrayType == 'number') {
-							item.insertText = new vscode.SnippetString(`${name} = [$0]`)
-						} else {
-							item.insertText = new vscode.SnippetString(`${name} = ["$0"]`)
-						}
-					} break;
-					case 'object': {
-						item.label = `${name} = {…}`
-						item.insertText = new vscode.SnippetString(name + ' = {\u000a\t$0\u000a}')
-					} break;
-					case 'boolean': {
-						item.label = `${name} = …`
-						item.insertText = new vscode.SnippetString(name + ' = $0')
-					} break;
-					case 'any':
-					case 'number': {
-						item.label = `${name} = …`
-						item.insertText = new vscode.SnippetString(name + ' = $0')
-					} break;
-					default: item.insertText = new vscode.SnippetString(`${name} = "$0"`)
+				const items = []
+				let types = attribute.type ?? ["string"]
+				if (!Array.isArray(types)) {
+					types = [types]
 				}
-				item.command = { command: 'editor.action.triggerSuggest', title: 'Re-trigger completions...' }
+				for (const type of types) {
+					const item = new vscode.CompletionItem(`${name} = "…"`, vscode.CompletionItemKind.Property)
+					item.detail = 'Attribute'
 
-				return [item]
+					switch (type) {
+						case 'tuple': {
+							item.label = `${name} = […]`
+							if (attribute.tupleType == 'number') {
+								item.insertText = new vscode.SnippetString(`${name} = [$0]`)
+							} else {
+								item.insertText = new vscode.SnippetString(`${name} = ["$0"]`)
+							}
+							item.sortText = "2"
+						} break;
+						case 'object': {
+							item.label = `${name} = {…}`
+							item.insertText = new vscode.SnippetString(name + ' = {\u000a\t$0\u000a}')
+							item.sortText = "3"
+						} break;
+						case 'boolean':
+						case 'any':
+						case 'number': {
+							item.label = `${name} = …`
+							item.insertText = new vscode.SnippetString(name + ' = $0')
+							item.sortText = "0"
+						} break;
+						case 'string':
+						default: item.insertText = new vscode.SnippetString(`${name} = "$0"`)
+							item.label = `${name} = "…"`
+							item.sortText = "1"
+					}
+
+					item.command = { command: 'editor.action.triggerSuggest', title: 'Re-trigger completions...' }
+					items[item.label] = item
+				}
+				return Object.values(items)
 			}
 		},
 		name[0],
