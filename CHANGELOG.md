@@ -1,12 +1,14 @@
 # Changelog
 
-## [Unreleased](https://github.com/avenga/couper/compare-vscode/v1.4.0...master)
+## [Unreleased](https://github.com/avenga/couper/compare-vscode/v1.4.1...master)
+
+---
+
+## [v1.4.1](https://github.com/avenga/couper-vscode/releases/tag/v1.4.1)
 
 ### Fixed
 
 - type checking for `json_body` too strict [#87](https://github.com/avenga/couper-vscode/pull/87)
-
----
 
 ## [v1.4.0](https://github.com/avenga/couper-vscode/releases/tag/v1.4.0)
 
