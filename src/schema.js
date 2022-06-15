@@ -29,6 +29,7 @@ const blocks = {
 	},
 	beta_health: {
 		parents: ['backend'],
+		examples: ['health-check'],
 		labelled: false
 	},
 	cors: {
@@ -217,21 +218,26 @@ const attributes = {
 		type: 'number',
 	},
 	beta_roles_claim: {
-		parents: ['jwt']
+		parents: ['jwt'],
+		examples: ['permissions-rbac']
 	},
 	beta_roles_map: {
 		parents: ['jwt'],
+		examples: ['permissions-rbac'],
 		type: 'object'
 	},
 	beta_required_permission: {
 		parents: ['api', 'endpoint'],
+		examples: ['permissions', 'permissions-map', 'permissions-rbac'],
 		type: ['string', 'object']
 	},
 	beta_permissions_claim: {
-		parents: ['jwt']
+		parents: ['jwt'],
+		examples: ['permissions', 'permissions-map', 'permissions-rbac']
 	},
 	beta_permissions_map: {
 		parents: ['jwt'],
+		examples: ['permissions-map'],
 		type: 'object'
 	},
 	beta_service_name: {
