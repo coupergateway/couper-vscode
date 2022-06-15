@@ -667,7 +667,7 @@ const variables = {
 	backend_request: {
 		parents: ['backend'],
 		description: "Holds information about the current backend request.",
-		values: commonProperties.concat(...[
+		values: commonProperties.concat([
 			'form_body',
 			'host',
 			'id',
@@ -683,7 +683,7 @@ const variables = {
 	backend_requests: {
 		child: 'default',
 		description: "An object with all backend requests and their attributes. To access a specific request use the related label.\n\n`request` and `proxy` blocks without a label will be available as `default`.\n\n**Example:** Use `backend_requests.default.method` to access the HTTP method of the default  request.",
-		values: commonProperties.concat(...[
+		values: commonProperties.concat([
 			'form_body',
 			'host',
 			'id',
@@ -698,13 +698,13 @@ const variables = {
 	},
 	backend_response: {
 		parents: ['backend'],
-		values: commonProperties.concat(...[
+		values: commonProperties.concat([
 			'status'
 		])
 	},
 	backend_responses: {
 		child: 'default',
-		values: commonProperties.concat(...[
+		values: commonProperties.concat([
 			'status'
 		])
 	},
@@ -717,7 +717,7 @@ const variables = {
 		values: []
 	},
 	request: {
-		values: commonProperties.concat(...[
+		values: commonProperties.concat([
 			'form_body',
 			'host',
 			'id',
