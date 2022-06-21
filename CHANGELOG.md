@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/avenga/couper/compare-vscode/v1.4.1...master)
 
+### Fixed
+
+- completion for variable properties [#93](https://github.com/avenga/couper-vscode/pull/93)
+
 ---
 
 ## [v1.4.1](https://github.com/avenga/couper-vscode/releases/tag/v1.4.1)

@@ -8,7 +8,7 @@ const selector = { language: 'couper' }
 
 const attributeRegex = /^\s*"?\(?([\w-]+)\)?"?\s*=/
 const attributeMustRegex = /^\s*"?\(?([\w-]+)\)?"?\s*=$/
-const variableRegex = /(.+)\..*\.$/
+const variableRegex = /.+\.(\w*)\.$/
 
 const providers = []
 
@@ -312,7 +312,7 @@ const providerVariables = vscode.languages.registerCompletionItemProvider(select
 				if (properties.child !== undefined) {
 					let match = linePrefix.match(variableRegex)
 					if (match !== null && match.length > 0) {
-						n = match[0]
+						n = name + "." + match[1] + "."
 					}
 				}
 				if (linePrefix.endsWith(n) || linePrefix.endsWith(n+'.')) {
