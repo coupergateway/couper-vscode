@@ -108,6 +108,11 @@ const blocks = {
 		examples: ['api-proxy', 'custom-requests', 'multiple-requests'],
 		labels: [null, DEFAULT_LABEL]
 	},
+	rate_limit: {
+		parents: ['backend'],
+		description: "Protects backend services.",
+		labelled: false
+	},
 	request: {
 		parents: ['endpoint', 'error_handler'],
 		description: "Executes a request to a backend service.",
@@ -474,6 +479,18 @@ const attributes = {
 		parents: ['spa'],
 		examples: ['spa-serving'],
 		type: 'tuple'
+	},
+	period: {
+		parents: ['rate_limit'],
+		type: 'duration'
+	},
+	period_window: {
+		parents: ['rate_limit'],
+		options: ['sliding', 'fixed']
+	},
+	per_period: {
+		parents: ['rate_limit'],
+		type: 'number'
 	},
 	proxy: {
 		parents: ['backend']
