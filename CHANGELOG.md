@@ -16,6 +16,10 @@
 
 ## [v1.4.2](https://github.com/avenga/couper-vscode/releases/tag/v1.4.2)
 
+### Added
+
+- completion for `rate_limit` [#94](https://github.com/avenga/couper-vscode/pull/94)
+
 ### Fixed
 
 - completion for variable properties [#93](https://github.com/avenga/couper-vscode/pull/93)
