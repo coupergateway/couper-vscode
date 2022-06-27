@@ -109,7 +109,12 @@ const blocks = {
 		labels: [null, DEFAULT_LABEL]
 	},
 	rate_limit: {
-		parents: ['backend'],
+		parents: (context) => {
+			if (context.length >= 2 && context[0].name === "backend" && context[1].name === "definitions") {
+				return ['backend']
+			}
+			return `"rate_limit" only valid in a "backend" in a "definitions" block.`
+		},
 		description: "Protects backend services.",
 		labelled: false
 	},
