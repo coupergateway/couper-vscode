@@ -5,6 +5,7 @@
 ### Fixed
 
 - completion for variable properties [#93](https://github.com/avenga/couper-vscode/pull/93)
+- order of suggested attributes in completion [#96](https://github.com/avenga/couper-vscode/pull/96)
 
 ---
 

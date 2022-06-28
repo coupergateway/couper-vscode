@@ -101,24 +101,24 @@ for (const [name, attribute] of Object.entries(attributes)) {
 							} else {
 								item.insertText = new vscode.SnippetString(`${name} = ["$0"]`)
 							}
-							item.sortText = "2"
+							item.sortText = name + "2"
 						} break;
 						case 'object': {
 							item.label = `${name} = {…}`
 							item.insertText = new vscode.SnippetString(name + ' = {\u000a\t$0\u000a}')
-							item.sortText = "3"
+							item.sortText = name + "3"
 						} break;
 						case 'boolean':
 						case 'any':
 						case 'number': {
 							item.label = `${name} = …`
 							item.insertText = new vscode.SnippetString(name + ' = $0')
-							item.sortText = "0"
+							item.sortText = name + "0"
 						} break;
 						case 'string':
 						default: item.insertText = new vscode.SnippetString(`${name} = "$0"`)
 							item.label = `${name} = "…"`
-							item.sortText = "1"
+							item.sortText = name + "1"
 					}
 
 					item.command = { command: 'editor.action.triggerSuggest', title: 'Re-trigger completions...' }
