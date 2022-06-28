@@ -11,7 +11,7 @@ const providers = []
 
 const REFERENCE_URL = "https://github.com/avenga/couper/blob/master/docs/REFERENCE.md"
 const EXAMPLES_URL = "https://github.com/avenga/couper-examples/tree/master/"
-const GITHUB_ICON = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAQAAADY4iz3AAAA50lEQVQY002Qv0qCcQAAT8E/fJEIhdEQuvQGET5DtIWjQY3N1dLuoLs+RTQKoW9QhIKTEDjZYPirr0KSr2sI0rvxtkPEyLo95/44t2fdSASxZNvYFbFtS4KRnYVDg0u/XBocutCOUcpT2tONEzYpMGObd2Ju2f3kAvs6siL/Vhyp9jFoy9RaStlSDWkKMEVWyBSgkCZAlexaylIFCNhd+uKVZfNi3rKXvql2sfYRuk589EA89Mlv1WANczYHyY3Xbon7TlQTm+YQi0njeXbnjrjnWF9tWPwbhRmPxvfnSc0zHwYemxH5BSkBzYl7GC5aAAAAAElFTkSuQmCC"
+const GITHUB_ICON = "images/github.png"
 
 const hoverProvider = vscode.languages.registerHoverProvider(selector, {
 	provideHover(document, position, token) {
@@ -52,17 +52,22 @@ const hoverProvider = vscode.languages.registerHoverProvider(selector, {
 			return undefined
 		}
 
-		const title = `**\`${word}\` ${type}**`
+		let title = `**\`${word}\` ${type}**`
+		if (type === "attribute") {
+			title += ` (\`${schemaElement.type ?? "string"}\`)`
+		}
+		const icon = vscode.Uri.joinPath(globalThis.BASE_URI, GITHUB_ICON)
 		const description = schemaElement.description ?? ""
-		const reference = `![](${GITHUB_ICON}) [Reference →](${url})`
+		const reference = `![](${icon}) [Reference →](${url})`
 		let examplesMarkdown = ""
 
 		if (schemaElement.examples && schemaElement.examples.length > 0) {
-			examplesMarkdown = `![](${GITHUB_ICON}) `
+			examplesMarkdown = `![](${icon}) `
 			let i = 1
 			for (const example of schemaElement.examples) {
 				const url = EXAMPLES_URL + example
-				examplesMarkdown += `[Example ${i++} →](${url})\u00A0\u00A0\u00A0`
+				const counter = schemaElement.examples.length == 1 ? "" : i++
+				examplesMarkdown += `[Example ${counter} →](${url})\u00A0\u00A0\u00A0`
 			}
 		}
 
