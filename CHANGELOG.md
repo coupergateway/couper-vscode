@@ -1,13 +1,15 @@
 # Changelog
 
-## [Unreleased](https://github.com/avenga/couper/compare-vscode/v1.4.1...master)
+## [Unreleased](https://github.com/avenga/couper/compare-vscode/v1.4.2...master)
+
+---
+
+## [v1.4.2](https://github.com/avenga/couper-vscode/releases/tag/v1.4.2)
 
 ### Fixed
 
 - completion for variable properties [#93](https://github.com/avenga/couper-vscode/pull/93)
 - order of suggested attributes in completion [#96](https://github.com/avenga/couper-vscode/pull/96)
-
----
 
 ## [v1.4.1](https://github.com/avenga/couper-vscode/releases/tag/v1.4.1)
 
