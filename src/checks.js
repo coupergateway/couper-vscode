@@ -170,7 +170,17 @@ const CHECKS = [
 				return CheckFailed(`Unknown ${type} "${name}".`)
 			}
 
-			const allowedParents = element[name].parents?.sort() ?? []
+			let allowedParents
+			if (typeof element[name].parents === "function") {
+				const checkParents = element[name].parents(context)
+				if (Array.isArray(checkParents)) {
+					allowedParents = checkParents.sort()
+				} else {
+					return CheckFailed(checkParents)
+				}
+			} else {
+				allowedParents = element[name].parents?.sort() ?? []
+			}
 			if (!isTopLevel) {
 				const parentBlock = context[0].name
 				if (allowedParents.length === 0) {

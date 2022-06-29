@@ -39,24 +39,31 @@ for (const [name, block] of Object.entries(blocks)) {
 		{
 			provideCompletionItems(document, position, token, context) {
 				const linePrefix = document.lineAt(position).text.substr(0, position.character)
-				if (common.isObjectContext(document, position)) {
+
+				if (!/^\s*([\w-]+)?$/.test(linePrefix)) {
 					return undefined
 				}
-				const parentBlock = common.getParentBlock(document, position)
 
-				if (!/^\s*([\w-]+)?$/.test(linePrefix) || (block.parents || ['']).indexOf(parentBlock) === -1) {
+				const hclContext = common.getContext(document, position)
+				if (hclContext.length > 0 && hclContext[0].type === "object") {
+					// We're in an object.
+					return undefined
+				}
+
+				const parentBlock = hclContext.length > 0 ? hclContext[0].name : null
+				const allowedParents = (typeof block.parents === 'function') ? block.parents(hclContext) : (block.parents ?? [null])
+				if (Array.isArray(allowedParents) && !allowedParents.includes(parentBlock)) {
 					return undefined
 				}
 
 				let items = []
-				const labelled = !!((typeof block.labelled === 'function') ? block.labelled(parentBlock) : block.labelled)
-
 				let labels = (typeof block.labels === 'function') ? block.labels(parentBlock) : block.labels
 				if (!Array.isArray(labels) || labels.length === 0) {
+					const labelled = !!((typeof block.labelled === 'function') ? block.labelled(parentBlock) : block.labelled)
 					labels = labelled ? [DEFAULT_LABEL] : [null]
 				}
 
-				for (let label of labels) {
+				for (const label of labels) {
 					const item = createBlockCompletionItem(name, label)
 					items.push(item)
 				}
