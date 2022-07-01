@@ -17,7 +17,7 @@ const REGEXES = {
 }
 
 function makeQuotedList(array) {
-	return array.map(option => `"${option}"`).join(", ")
+	return array.filter(option => option !== null).map(option => `"${option}"`).join(", ")
 }
 
 const CheckOK = {ok: true}
@@ -31,14 +31,28 @@ function CheckFailed(message, severity) {
 }
 
 function getHint(allowedParents) {
+	allowedParents.sort()
 	switch (allowedParents.length) {
 		case 0:
 			return ""
 		case 1:
 			return `Parent must be "${allowedParents[0]}".`
 		default:
-			return `\nValid parent blocks: ${makeQuotedList(allowedParents)}`
+			let hint = `\nMust be within one of ${makeQuotedList(allowedParents)}`
+			if (isAllowedAtTopLevel(allowedParents)) {
+				hint += ` or at top-level`
+			}
+			hint +="."
+			return hint
 	}
+}
+
+function isAllowedAtTopLevelOnly(allowedParents) {
+	return allowedParents.length === 1 && allowedParents[0] === null
+}
+
+function isAllowedAtTopLevel(allowedParents) {
+	return allowedParents.length > 0 && allowedParents.includes(null)
 }
 
 // --------------------------------------------------------------------------
@@ -151,9 +165,9 @@ const CHECKS = [
 	// Block/attribute hierarchy
 	(document, textLine) => {
 		const context = common.getContext(document, textLine.range.start)
-
-		const isTopLevel = context.length === 0
-		if (!isTopLevel && context[0].type === "object") {
+		const filteredContext = context.filter(item => !schema.blocks[item.name]?.preprocessed)
+		const isTopLevel = filteredContext.length === 0
+		if (!isTopLevel && filteredContext[0].type === "object") {
 			// Do not check inside objects/maps
 			return CheckOK
 		}
@@ -172,18 +186,21 @@ const CHECKS = [
 
 			let allowedParents
 			if (typeof element[name].parents === "function") {
-				const checkParents = element[name].parents(context)
-				if (Array.isArray(checkParents)) {
-					allowedParents = checkParents.sort()
-				} else {
-					return CheckFailed(checkParents)
+				allowedParents = element[name].parents(context)
+				if (!Array.isArray(allowedParents)) {
+					return CheckFailed(allowedParents)
 				}
 			} else {
-				allowedParents = element[name].parents?.sort() ?? []
-			}
-			if (!isTopLevel) {
-				const parentBlock = context[0].name
+				allowedParents = Array.from(element[name].parents ?? [])
 				if (allowedParents.length === 0) {
+					allowedParents.push(null)
+				}
+			}
+
+			if (!isTopLevel) {
+				const parentBlock = filteredContext[0].name
+				if (isAllowedAtTopLevelOnly(allowedParents)) {
+					// should not happen since we have "environment"
 					return CheckFailed(`"${name}" is a top-level ${type}, but has parent "${parentBlock}".`)
 				}
 
@@ -191,7 +208,7 @@ const CHECKS = [
 					const hint = getHint(allowedParents)
 					return CheckFailed(`${type} "${name}" is invalid within "${parentBlock}". ${hint}`)
 				}
-			} else if (allowedParents.length > 0) {
+			} else if (!isAllowedAtTopLevel(allowedParents)) {
 				const hint = getHint(allowedParents)
 				return CheckFailed(`"${name}" is not a top-level ${type}. ${hint}`)
 			}
