@@ -138,7 +138,7 @@ const blocks = {
 		parents: ['server'],
 		description: "Configures how SPA assets are served.",
 		examples: ['spa-serving'],
-		labelled: false
+		labels: [null, DEFAULT_LABEL]
 	},
 	websockets: {
 		parents: ['proxy'],
