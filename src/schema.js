@@ -266,6 +266,10 @@ const attributes = {
 		parents: ['beta_oauth2', 'oauth2', 'oidc'],
 		examples: ['oauth2-client-credentials', 'oidc']
 	},
+	configuration_backend: { // label reference
+		parents: ['oidc'],
+		definingBlocks: ["backend"]
+	},
 	configuration_max_stale: {
 		parents: ['oidc'],
 		type: 'duration'
@@ -402,6 +406,10 @@ const attributes = {
 		parents: ['request', 'response'],
 		examples: ['static-responses'],
 		type: ['boolean', 'number', 'string', 'object', 'tuple'],
+	},
+	jwks_uri_backend: { // label reference
+		parents: ['oidc'],
+		definingBlocks: ["backend"]
 	},
 	jwks_ttl: {
 		parents: ['jwt', 'oidc'],
@@ -584,6 +592,10 @@ const attributes = {
 		parents: ['backend', 'beta_health', 'websockets'],
 		type: 'duration'
 	},
+	token_backend: { // label reference
+		parents: ['oidc'],
+		definingBlocks: ["backend"]
+	},
 	token_endpoint: {
 		parents: ['beta_oauth2', 'oauth2']
 	},
@@ -613,6 +625,10 @@ const attributes = {
 	},
 	user: {
 		parents: ['basic_auth']
+	},
+	userinfo_backend: { // label reference
+		parents: ['oidc'],
+		definingBlocks: ["backend"]
 	},
 	verifier_method: {
 		parents: ['beta_oauth2', 'oidc'],
