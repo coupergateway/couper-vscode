@@ -5,8 +5,10 @@ const common = require('./common')
 const schema = require('./schema')
 
 const REGEXES = {
-	block: /^\s*([\w_-]+)\s*("[^"]*"\s*)*\s*{/,
+	block: /^\s*([\w_-]+)\s*(("[^"]*"\s*)*)\s*{/,
 	attribute: /^\s*([\w_-]+)\s*=(.*)$/,
+	labels: /\s*"([^"]*)"\s*/g,
+	labelsyntax: /[^a-zA-Z0-9_]/,
 	string: /^"([^"]*)"$/,
 	duration: /^((\d+(\.\d*)?|\.\d+)([nuµm]?s|[mh]))+$/,
 	template: /^"[^$%]*[$%]{[^"]*"$/,
@@ -70,6 +72,19 @@ function checkBlockLabels(name, labels, parentBlock) {
 
 	if (!labelRequired && !labelAllowed && labels) {
 		return CheckFailed(`Invalid label for block "${name}".`)
+	}
+
+	const matches = [...labels.matchAll(REGEXES.labels)]
+	for (const match of matches) {
+		const label = match[1]
+		if (label === "") {
+			return CheckFailed("Labels must not be empty.")
+		}
+
+		const index = label.search(REGEXES.labelsyntax)
+		if (index != -1) {
+			return CheckFailed(`Invalid character in label "${label}": ${label.charAt(index)}`)
+		}
 	}
 
 	return CheckOK
