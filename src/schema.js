@@ -138,7 +138,7 @@ const blocks = {
 		parents: ['server'],
 		description: "Configures how SPA assets are served.",
 		examples: ['spa-serving'],
-		labelled: false
+		labels: [null, DEFAULT_LABEL]
 	},
 	websockets: {
 		parents: ['proxy'],
@@ -265,6 +265,10 @@ const attributes = {
 	client_secret: {
 		parents: ['beta_oauth2', 'oauth2', 'oidc'],
 		examples: ['oauth2-client-credentials', 'oidc']
+	},
+	configuration_backend: { // label reference
+		parents: ['oidc'],
+		definingBlocks: ["backend"]
 	},
 	configuration_max_stale: {
 		parents: ['oidc'],
@@ -403,6 +407,10 @@ const attributes = {
 		examples: ['static-responses'],
 		type: ['boolean', 'number', 'string', 'object', 'tuple'],
 	},
+	jwks_uri_backend: { // label reference
+		parents: ['oidc'],
+		definingBlocks: ["backend"]
+	},
 	jwks_ttl: {
 		parents: ['jwt', 'oidc'],
 		type: 'duration'
@@ -457,7 +465,7 @@ const attributes = {
 		parents: ['basic_auth']
 	},
 	path: {
-		parents: ['backend', 'error_handler', 'beta_health']
+		parents: ['backend', 'beta_health']
 	},
 	path_prefix: {
 		parents: ['backend']
@@ -584,6 +592,10 @@ const attributes = {
 		parents: ['backend', 'beta_health', 'websockets'],
 		type: 'duration'
 	},
+	token_backend: { // label reference
+		parents: ['oidc'],
+		definingBlocks: ["backend"]
+	},
 	token_endpoint: {
 		parents: ['beta_oauth2', 'oauth2']
 	},
@@ -613,6 +625,10 @@ const attributes = {
 	},
 	user: {
 		parents: ['basic_auth']
+	},
+	userinfo_backend: { // label reference
+		parents: ['oidc'],
+		definingBlocks: ["backend"]
 	},
 	verifier_method: {
 		parents: ['beta_oauth2', 'oidc'],

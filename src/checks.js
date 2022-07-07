@@ -5,8 +5,10 @@ const common = require('./common')
 const schema = require('./schema')
 
 const REGEXES = {
-	block: /^\s*([\w_-]+)\s*("[^"]*"\s*)*\s*{/,
+	block: /^\s*([\w_-]+)\s*(("[^"]*"\s*)*)\s*{/,
 	attribute: /^\s*([\w_-]+)\s*=(.*)$/,
+	labels: /\s*"([^"]*)"\s*/g,
+	labelsyntax: /[^a-zA-Z0-9_]/,
 	string: /^"([^"]*)"$/,
 	duration: /^((\d+(\.\d*)?|\.\d+)([nuµm]?s|[mh]))+$/,
 	template: /^"[^$%]*[$%]{[^"]*"$/,
@@ -70,6 +72,23 @@ function checkBlockLabels(name, labels, parentBlock) {
 
 	if (!labelRequired && !labelAllowed && labels) {
 		return CheckFailed(`Invalid label for block "${name}".`)
+	}
+
+	const labelArray = [...labels.matchAll(REGEXES.labels)].map(match => match[1])
+	if (labelArray.length > 0) {
+		const label = labelArray[0] // Check only first label for now
+		if (["backend", "environment", "basic_auth", "jwt", "oidc", "saml", "beta_oauth2"].includes(name)) {
+			if (label === "") {
+				return CheckFailed("Label must not be empty.")
+			}
+		}
+
+		if (["backend", "request", "proxy", "environment"].includes(name)) {
+			const index = label.search(REGEXES.labelsyntax)
+			if (index != -1) {
+				return CheckFailed(`Invalid character in label "${label}": ${label.charAt(index)}`)
+			}
+		}
 	}
 
 	return CheckOK

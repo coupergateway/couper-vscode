@@ -2,6 +2,16 @@
 
 ## [Unreleased](https://github.com/avenga/couper/compare-vscode/v1.4.2...master)
 
+### Added
+
+- completion for labeled `spa` block [#98](https://github.com/avenga/couper-vscode/pull/98)
+- completion for `configuration_backend`, `jwks_uri_backend`, `token_backend` and `userinfo_backend` attributes in `oidc` block [#98](https://github.com/avenga/couper-vscode/pull/98)
+- checks for invalid block labels [#98](https://github.com/avenga/couper-vscode/pull/98)
+
+### Removed
+
+- completion for `path` attribute in `error_handler` block [#98](https://github.com/avenga/couper-vscode/pull/98)
+
 ---
 
 ## [v1.4.2](https://github.com/avenga/couper-vscode/releases/tag/v1.4.2)
