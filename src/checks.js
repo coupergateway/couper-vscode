@@ -74,16 +74,20 @@ function checkBlockLabels(name, labels, parentBlock) {
 		return CheckFailed(`Invalid label for block "${name}".`)
 	}
 
-	const matches = [...labels.matchAll(REGEXES.labels)]
-	for (const match of matches) {
-		const label = match[1]
-		if (label === "") {
-			return CheckFailed("Labels must not be empty.")
+	const labelArray = [...labels.matchAll(REGEXES.labels)].map(match => match[1])
+	if (labelArray.length > 0) {
+		const label = labelArray[0] // Check only first label for now
+		if (["backend", "environment", "basic_auth", "jwt", "oidc", "saml", "beta_oauth2"].includes(name)) {
+			if (label === "") {
+				return CheckFailed("Label must not be empty.")
+			}
 		}
 
-		const index = label.search(REGEXES.labelsyntax)
-		if (index != -1) {
-			return CheckFailed(`Invalid character in label "${label}": ${label.charAt(index)}`)
+		if (["backend", "request", "proxy", "environment"].includes(name)) {
+			const index = label.search(REGEXES.labelsyntax)
+			if (index != -1) {
+				return CheckFailed(`Invalid character in label "${label}": ${label.charAt(index)}`)
+			}
 		}
 	}
 
