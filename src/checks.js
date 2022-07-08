@@ -36,7 +36,7 @@ function getHint(allowedParents) {
 		case 0:
 			return ""
 		case 1:
-			return `Must be below "${allowedParents[0]}".`
+			return `Must be within "${allowedParents[0]}".`
 		default:
 			let hint = `\nMust be within one of ${makeQuotedList(allowedParents)}`
 			if (isAllowedAtTopLevel(allowedParents)) {
@@ -200,7 +200,7 @@ const CHECKS = [
 			if (!isTopLevel) {
 				const parentBlock = filteredContext[0].name
 				if (isAllowedAtTopLevelOnly(allowedParents)) {
-					return CheckFailed(`"${name}" is a top-level ${type}, but is below "${parentBlock}".`)
+					return CheckFailed(`"${name}" is a top-level ${type}, but is within "${parentBlock}".`)
 				}
 
 				if (!allowedParents.includes(parentBlock)) {
