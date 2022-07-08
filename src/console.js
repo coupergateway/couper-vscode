@@ -14,7 +14,7 @@ const log = (...parameters) => {
 	console.appendLine("")
 }
 
-console.show()
+console.show(true)
 
 exports.info = log
 exports.log = log

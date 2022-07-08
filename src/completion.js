@@ -34,29 +34,58 @@ function createBlockCompletionItem(name, label) {
 	return item
 }
 
+function isCompletionAllowedAtPosition(document, position) {
+	const linePrefix = document.lineAt(position).text.substr(0, position.character)
+	return /^\s*[\w-]*$/.test(linePrefix)
+}
+
+function getHCLContext(document, position) {
+	const hclContext = common.getContext(document, position)
+	hclContext.push({name: null, type: "top-level"})
+	return hclContext
+}
+
+function filterContext(hclContext) {
+	return hclContext.filter(item => !blocks[item.name]?.preprocessed)
+}
+
+function isCompletionAllowedAtContext(element, hclContext, parentBlock) {
+	const allowedParents = (typeof element.parents === 'function') ? element.parents(hclContext) : (element.parents ?? [null])
+	return Array.isArray(allowedParents) && allowedParents.includes(parentBlock)
+}
+
+function getBlockLabels(block, parentBlock) {
+	let labels = (typeof block.labels === 'function') ? block.labels(parentBlock) : block.labels
+	if (!Array.isArray(labels) || labels.length === 0) {
+		const labelled = !!((typeof block.labelled === 'function') ? block.labelled(parentBlock) : block.labelled)
+		labels = labelled ? [DEFAULT_LABEL] : [null]
+	}
+	return labels
+}
+
+// ---------------------------------------------------------------------------
+
 for (const [name, block] of Object.entries(blocks)) {
 	const provider = vscode.languages.registerCompletionItemProvider(selector,
 		{
 			provideCompletionItems(document, position, token, context) {
-				const linePrefix = document.lineAt(position).text.substr(0, position.character)
-				if (common.isObjectContext(document, position)) {
+				if (!isCompletionAllowedAtPosition(document, position)) {
 					return undefined
 				}
-				const parentBlock = common.getParentBlock(document, position)
 
-				if (!/^\s*([\w-]+)?$/.test(linePrefix) || (block.parents || ['']).indexOf(parentBlock) === -1) {
+				const hclContext = getHCLContext(document, position)
+				if (hclContext[0].type === "object") {
+					// We're in an object.
+					return undefined
+				}
+
+				const parentBlock = filterContext(hclContext)[0].name
+				if (!isCompletionAllowedAtContext(block, hclContext, parentBlock)) {
 					return undefined
 				}
 
 				let items = []
-				const labelled = !!((typeof block.labelled === 'function') ? block.labelled(parentBlock) : block.labelled)
-
-				let labels = (typeof block.labels === 'function') ? block.labels(parentBlock) : block.labels
-				if (!Array.isArray(labels) || labels.length === 0) {
-					labels = labelled ? [DEFAULT_LABEL] : [null]
-				}
-
-				for (let label of labels) {
+				for (const label of getBlockLabels(block, parentBlock)) {
 					const item = createBlockCompletionItem(name, label)
 					items.push(item)
 				}
@@ -73,14 +102,18 @@ for (const [name, attribute] of Object.entries(attributes)) {
 	const provider = vscode.languages.registerCompletionItemProvider(selector,
 		{
 			provideCompletionItems(document, position, token, context) {
-				if (common.isObjectContext(document, position)) {
+				if (!isCompletionAllowedAtPosition(document, position)) {
 					return undefined
 				}
 
-				const linePrefix = document.lineAt(position).text.substr(0, position.character)
-				const parentBlock = common.getParentBlock(document, position)
-				const writeAttrRegex = /^\s*([\w-]+)?$/
-				if (!writeAttrRegex.test(linePrefix) || (attribute.parents || []).indexOf(parentBlock) === -1) {
+				const hclContext = getHCLContext(document, position)
+				if (hclContext[0].type === "object") {
+					// We're in an object.
+					return undefined
+				}
+
+				const parentBlock = filterContext(hclContext)[0].name
+				if (!isCompletionAllowedAtContext(attribute, hclContext, parentBlock)) {
 					return undefined
 				}
 
