@@ -25,11 +25,13 @@ const blocks = {
 	beta_oauth2: {
 		parents: ['definitions'],
 		description: "Access control for an OAuth2 Authorization Code Grant Flow redirect endpoint.",
+		docs: '/configuration/block/oauth2',
 		labelled: true
 	},
 	beta_health: {
 		parents: ['backend'],
 		examples: ['health-check'],
+		docs: '/configuration/block/health',
 		labelled: false
 	},
 	cors: {
@@ -87,6 +89,7 @@ const blocks = {
 	oauth2: {
 		parents: ['backend'],
 		description: "Configures the OAuth2 Client Credentials flow to request a bearer token for its backend request.",
+		docs: '/configuration/block/oauth2req_auth',
 		examples: ['oauth2-client-credentials'],
 		labelled: false
 	},

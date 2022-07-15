@@ -9,7 +9,7 @@ const selector = { language: 'couper' }
 
 const providers = []
 
-const REFERENCE_URL = "https://github.com/avenga/couper/blob/master/docs/REFERENCE.md"
+const REFERENCE_URL = "https://docs.couper.io"
 const EXAMPLES_URL = "https://github.com/avenga/couper-examples/tree/master/"
 const GITHUB_ICON = "images/github.png"
 
@@ -29,22 +29,34 @@ const hoverProvider = vscode.languages.registerHoverProvider(selector, {
 			if (/^(\s+"[^"]*")*\s*{\s*$/.test(followingText)) {
 				type = "block"
 				schemaElement = blocks[word]
-				url = REFERENCE_URL + "#" + word.replace(/_/g, '-') + '-block'
+				if (schemaElement.docs) {
+					url = REFERENCE_URL + schemaElement.docs
+				} else {
+					url = REFERENCE_URL + "/configuration/block/" + word
+				}
 			} else if (/^\s*=/.test(followingText)) {
-				type = "attribute"
 				schemaElement = attributes[word]
 				const parentBlock = common.getParentBlock(document, position)
-				url = REFERENCE_URL + "#" + parentBlock.replace(/_/g, '-') + '-block'
+				if (schemaElement.parents.includes(parentBlock)) {
+					type = "attribute"
+					const parentBlockDefintion = blocks[parentBlock]
+					if (parentBlockDefintion.docs) {
+						url = REFERENCE_URL + parentBlockDefintion.docs
+					} else {
+						url = REFERENCE_URL + "/configuration/block/" + parentBlock
+					}
+					url += "#attributes"
+				}
 			}
 		} else {
 			if (/^\s*\(/.test(followingText)) {
 				type = "function"
 				schemaElement = functions[word]
-				url = REFERENCE_URL + "#functions"
+				url = REFERENCE_URL + "/configuration/functions"
 			} else if (/^\./.test(followingText)) {
 				type = "variable"
 				schemaElement = variables[word]
-				url = REFERENCE_URL + "#" + word
+				url = REFERENCE_URL + "/configuration/variables#" + word
 			}
 		}
 
