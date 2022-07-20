@@ -34,7 +34,7 @@ const blocks = {
 	},
 	beta_token_request: {
 		parents: ['backend'],
-		description: "Configures a token request flow to authorize backend requests.",
+		description: "Configures a request to get a token used to authorize backend requests.",
 		labels: [null, DEFAULT_LABEL]
 	},
 	cors: {
