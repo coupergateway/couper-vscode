@@ -10,7 +10,7 @@ const blocks = {
 		labels: [null, DEFAULT_LABEL]
 	},
 	backend: {
-		parents: ['beta_oauth2', 'definitions', 'jwt', 'oauth2', 'oidc', 'proxy', 'request'],
+		parents: ['beta_oauth2', 'beta_token_request', 'definitions', 'jwt', 'oauth2', 'oidc', 'proxy', 'request'],
 		description: "Defines the connection to a local/remote backend service.",
 		examples: ['backend-configuration'],
 		labels: (parentBlockName) => {
@@ -31,6 +31,11 @@ const blocks = {
 		parents: ['backend'],
 		examples: ['health-check'],
 		labelled: false
+	},
+	beta_token_request: {
+		parents: ['backend'],
+		description: "Configures a token request flow to authorize backend requests.",
+		labels: [null, DEFAULT_LABEL]
 	},
 	cors: {
 		parents: ['api', 'files', 'server', 'spa'],
@@ -199,7 +204,7 @@ const attributes = {
 		parents: ['beta_oauth2']
 	},
 	backend: { // label reference
-		parents: ['beta_oauth2', 'jwt', 'oauth2', 'oidc', 'proxy', 'request'],
+		parents: ['beta_oauth2', 'beta_token_request', 'jwt', 'oauth2', 'oidc', 'proxy', 'request'],
 		definingBlocks: ["backend"],
 		examples: ['backend-configuration']
 	},
@@ -244,7 +249,7 @@ const attributes = {
 		parents: ['settings'],
 	},
 	body: {
-		parents: ['request', 'response']
+		parents: ['beta_token_request', 'request', 'response']
 	},
 	bootstrap_file: {
 		parents: ['spa'],
@@ -333,7 +338,7 @@ const attributes = {
 		examples: ['simple-fileserving']
 	},
 	expected_status: {
-		parents: ['beta_health', 'proxy', 'request'],
+		parents: ['beta_health', 'beta_token_request', 'proxy', 'request'],
 		type: 'tuple',
 		examples: ['sequences'],
 		tupleType: 'number'
@@ -349,7 +354,7 @@ const attributes = {
 		parents: ['openapi']
 	},
 	form_body: {
-		parents: ['request'],
+		parents: ['beta_token_request', 'request'],
 		type: 'object'
 	},
 	grant_type: {
@@ -361,7 +366,7 @@ const attributes = {
 		examples: ['jwt-access-control']
 	},
 	headers: {
-		parents: ['beta_health', 'jwt_signing_profile', 'request', 'response'],
+		parents: ['beta_health', 'beta_token_request', 'jwt_signing_profile', 'request', 'response'],
 		examples: ['static-responses'],
 		type: 'object'
 	},
@@ -403,7 +408,7 @@ const attributes = {
 		type: 'duration'
 	},
 	json_body: {
-		parents: ['request', 'response'],
+		parents: ['beta_token_request', 'request', 'response'],
 		examples: ['static-responses'],
 		type: ['boolean', 'number', 'string', 'object', 'tuple'],
 	},
@@ -452,7 +457,7 @@ const attributes = {
 		type: 'number'
 	},
 	method: {
-		parents: ['request']
+		parents: ['beta_token_request', 'request']
 	},
 	no_proxy_from_env: {
 		parents: ['settings'],
@@ -479,7 +484,7 @@ const attributes = {
 		parents: ['backend']
 	},
 	query_params: {
-		parents: ['request'],
+		parents: ['beta_token_request', 'request'],
 		type: 'object'
 	},
 	realm: {
@@ -617,7 +622,7 @@ const attributes = {
 		type: 'duration'
 	},
 	url: {
-		parents: ['request', 'proxy']
+		parents: ['beta_token_request', 'request', 'proxy']
 	},
 	use_when_unhealthy: {
 		parents: ['backend'],
