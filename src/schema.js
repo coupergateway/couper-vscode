@@ -608,6 +608,9 @@ const attributes = {
 		parents: ['beta_oauth2', 'oauth2', 'oidc'],
 		options: ['client_secret_basic', 'client_secret_post']
 	},
+	token: {
+		parents: ['beta_token_request']
+	},
 	token_value: {
 		parents: ['jwt'],
 		examples: ['jwt-access-control'],
@@ -618,7 +621,7 @@ const attributes = {
 		type: 'duration'
 	},
 	ttl: {
-		parents: ['jwt_signing_profile'],
+		parents: ['beta_token_request', 'jwt_signing_profile'],
 		type: 'duration'
 	},
 	url: {
