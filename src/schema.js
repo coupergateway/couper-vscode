@@ -760,6 +760,13 @@ const variables = {
 			'query',
 			'url'
 		])
+	},
+	beta_token_response: {
+		parents: ['beta_token_request'],
+		description: "Holds information about the current token response.",
+		values: commonProperties.concat([
+			'status'
+		])
 	}
 }
 
