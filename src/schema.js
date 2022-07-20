@@ -694,6 +694,24 @@ const functions = {
 const commonProperties = ['body', 'context', 'cookies', 'headers', 'json_body']
 
 const variables = {
+	beta_backend: {
+		parents: ['backend'],
+		description: "An object with backend attributes.",
+		values: [
+			'health', // TODO how to add health object properties?
+			'beta_tokens',
+			'beta_token'
+		]
+	},
+	backends: {
+		child: 'default',
+		description: "An object with all backends and their attributes. To access a specific backend use the related name.",
+		values: [
+			'health',
+			'beta_tokens',
+			'beta_token'
+		]
+	},
 	backend_request: {
 		parents: ['backend'],
 		description: "Holds information about the current backend request.",
