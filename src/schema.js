@@ -32,6 +32,16 @@ const blocks = {
 		examples: ['health-check'],
 		labelled: false
 	},
+	beta_rate_limit: {
+		parents: (context) => {
+			if (context.length >= 2 && context[0].name === "backend" && context[1].name === "definitions") {
+				return ['backend']
+			}
+			return `"beta_rate_limit" only valid in a "backend" in a "definitions" block.`
+		},
+		description: "Protects backend services.",
+		labelled: false
+	},
 	cors: {
 		parents: ['api', 'files', 'server', 'spa'],
 		description: "Configures CORS (Cross-Origin Resource Sharing) behavior.",
@@ -107,16 +117,6 @@ const blocks = {
 		description: "Executes a proxy request to a backend service.",
 		examples: ['api-proxy', 'custom-requests', 'multiple-requests'],
 		labels: [null, DEFAULT_LABEL]
-	},
-	rate_limit: {
-		parents: (context) => {
-			if (context.length >= 2 && context[0].name === "backend" && context[1].name === "definitions") {
-				return ['backend']
-			}
-			return `"rate_limit" only valid in a "backend" in a "definitions" block.`
-		},
-		description: "Protects backend services.",
-		labelled: false
 	},
 	request: {
 		parents: ['endpoint', 'error_handler'],
@@ -464,6 +464,10 @@ const attributes = {
 	method: {
 		parents: ['request']
 	},
+	mode: {
+		parents: ['beta_rate_limit'],
+		options: ['wait', 'block']
+	},
 	no_proxy_from_env: {
 		parents: ['settings'],
 		type: 'boolean'
@@ -486,15 +490,15 @@ const attributes = {
 		type: 'tuple'
 	},
 	period: {
-		parents: ['rate_limit'],
+		parents: ['beta_rate_limit'],
 		type: 'duration'
 	},
 	period_window: {
-		parents: ['rate_limit'],
+		parents: ['beta_rate_limit'],
 		options: ['sliding', 'fixed']
 	},
 	per_period: {
-		parents: ['rate_limit'],
+		parents: ['beta_rate_limit'],
 		type: 'number'
 	},
 	proxy: {
