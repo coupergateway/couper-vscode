@@ -8,6 +8,7 @@ const Definition = require("./definition")
 const Formatter = require("./formatter")
 const Tooltips = require("./tooltips")
 const Diagnostics = require("./diagnostics")
+const SemanticTokens = require("./semantictokens")
 
 exports.activate = (context) => {
 	globalThis.BASE_URI = vscode.Uri.file(context.extensionPath)
@@ -17,6 +18,7 @@ exports.activate = (context) => {
 		Definition.providers,
 		Formatter.providers,
 		Tooltips.providers,
+		SemanticTokens.providers,
 		Diagnostics.providers
 	)
 
