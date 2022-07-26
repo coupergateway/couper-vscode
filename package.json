@@ -31,7 +31,7 @@
     "watch-web": "webpack --watch",
     "package-web": "webpack --mode production --devtool hidden-source-map",
     "jest": "jest",
-    "lint": "eslint src --ext ts"
+    "lint": "eslint src --ext js"
   },
   "contributes": {
     "languages": [

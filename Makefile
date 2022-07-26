@@ -1,4 +1,4 @@
-.PHONY: all install run run-web host-vscode-dev test
+.PHONY: all install run run-web host-vscode-dev test lint
 
 __DIR__ := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
@@ -20,3 +20,6 @@ host-vscode-dev:
 
 test:
 	npm run jest
+
+lint:
+	npm run lint

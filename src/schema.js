@@ -251,7 +251,7 @@ const attributes = {
 		examples: ['spa-serving']
 	},
 	ca_file: {
-	  parents: ['settings']
+		parents: ['settings']
 	},
 	claims: {
 		parents: ['jwt', 'jwt_signing_profile'],

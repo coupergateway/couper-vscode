@@ -42,7 +42,7 @@ function getContext(document, position) {
 
 	let matches = []
 	let match
-	while (match = parentBlockRegex.exec(text)) {
+	while ((match = parentBlockRegex.exec(text)) !== null) {
 		matches.push(match)
 	}
 
