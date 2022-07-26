@@ -4,7 +4,7 @@
 
 ### Added
 
-- completion for `environment` blocks [#92](https://github.com/avenga/couper-vscode/pull/92)
+- completion for `environment` block, attribute and variable [#92](https://github.com/avenga/couper-vscode/pull/92)
 - completion for labeled `spa` blocks [#98](https://github.com/avenga/couper-vscode/pull/98)
 - completion for `configuration_backend`, `jwks_uri_backend`, `token_backend` and `userinfo_backend` attributes in `oidc` block [#98](https://github.com/avenga/couper-vscode/pull/98)
 - checks for invalid block labels [#98](https://github.com/avenga/couper-vscode/pull/98)

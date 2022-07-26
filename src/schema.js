@@ -747,7 +747,7 @@ const variables = {
 		])
 	},
 	couper: {
-		values: ['version']
+		values: ['environment', 'version']
 	},
 	env: {
 		description: "The value of an environment variable.",
