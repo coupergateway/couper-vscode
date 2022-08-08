@@ -359,7 +359,7 @@ const attributes = {
 	},
 	grant_type: {
 		parents: ['beta_oauth2', 'oauth2'],
-		options: ['authorization_code', 'client_credentials']
+		options: ['authorization_code', 'client_credentials', 'password']
 	},
 	header: {
 		parents: ['jwt'],
@@ -467,7 +467,7 @@ const attributes = {
 		parents: ['backend']
 	},
 	password: {
-		parents: ['basic_auth']
+		parents: ['basic_auth', 'oauth2']
 	},
 	path: {
 		parents: ['backend', 'beta_health']
@@ -633,6 +633,9 @@ const attributes = {
 	},
 	user: {
 		parents: ['basic_auth']
+	},
+	username: {
+		parents: ['oauth2']
 	},
 	userinfo_backend: { // label reference
 		parents: ['oidc'],
