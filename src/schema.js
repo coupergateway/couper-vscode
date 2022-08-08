@@ -200,6 +200,9 @@ const attributes = {
 		examples: ['saml'],
 		type: 'tuple'
 	},
+	assertion: {
+		parents: ['oauth2']
+	},
 	authorization_endpoint: {
 		parents: ['beta_oauth2']
 	},
@@ -359,7 +362,7 @@ const attributes = {
 	},
 	grant_type: {
 		parents: ['beta_oauth2', 'oauth2'],
-		options: ['authorization_code', 'client_credentials', 'password']
+		options: ['authorization_code', 'client_credentials', 'password', 'urn:ietf:params:oauth:grant-type:jwt-bearer']
 	},
 	header: {
 		parents: ['jwt'],
