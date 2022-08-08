@@ -91,7 +91,7 @@ const blocks = {
 	},
 	oauth2: {
 		parents: ['backend'],
-		description: "Configures the OAuth2 Client Credentials flow to request a bearer token for its backend request.",
+		description: "Configures an OAuth2 flow to request a bearer token for the backend request.",
 		examples: ['oauth2-client-credentials'],
 		labelled: false
 	},
