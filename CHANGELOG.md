@@ -7,7 +7,7 @@
 - completion for labeled `spa` block [#98](https://github.com/avenga/couper-vscode/pull/98)
 - completion for `configuration_backend`, `jwks_uri_backend`, `token_backend` and `userinfo_backend` attributes in `oidc` block [#98](https://github.com/avenga/couper-vscode/pull/98)
 - checks for invalid block labels [#98](https://github.com/avenga/couper-vscode/pull/98)
-- completion for `beta_token_request` block [#100](https://github.com/avenga/couper-vscode/pull/100)
+- completion for `beta_token_request` block, `backend`, `backends` and `beta_token_response` variables [#100](https://github.com/avenga/couper-vscode/pull/100)
 
 ### Fixed
 
