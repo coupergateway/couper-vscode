@@ -716,7 +716,7 @@ const functions = {
 const commonProperties = ['body', 'context', 'cookies', 'headers', 'json_body']
 
 const variables = {
-	beta_backend: {
+	backend: {
 		parents: ['backend'],
 		description: "An object with backend attributes.",
 		values: [
