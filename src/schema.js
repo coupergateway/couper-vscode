@@ -55,6 +55,19 @@ const blocks = {
 		description: "Defines the entry points of Couper.",
 		labels: ['/']
 	},
+	environment: {
+		preprocessed: true,
+		description: "Refines the configuration based on the current environment.",
+		labels: [DEFAULT_LABEL],
+		parents: context => {
+			for (const item of context) {
+				if (item.name === "environment" && item.type === "block") {
+					return `Nested "environment" blocks are not allowed.`
+				}
+			}
+			return ALL_BLOCKS_BUT_ENVIRONMENT.concat([null]) // top-level
+		}
+	},
 	error_handler: {
 		parents: ['api', 'basic_auth', 'beta_oauth2', 'endpoint', 'jwt', 'oidc', 'saml'],
 		examples: ['error-handling-ba', 'sequences'],
@@ -259,7 +272,7 @@ const attributes = {
 		examples: ['spa-serving']
 	},
 	ca_file: {
-	  parents: ['settings']
+		parents: ['settings']
 	},
 	claims: {
 		parents: ['jwt', 'jwt_signing_profile'],
@@ -348,6 +361,9 @@ const attributes = {
 	},
 	expected_text: {
 		parents: ['beta_health']
+	},
+	environment: {
+		parents: ['settings']
 	},
 	failure_threshold: {
 		parents: ['beta_health'],
@@ -763,7 +779,7 @@ const variables = {
 		])
 	},
 	couper: {
-		values: ['version']
+		values: ['environment', 'version']
 	},
 	env: {
 		description: "The value of an environment variable.",
@@ -793,5 +809,8 @@ const variables = {
 		])
 	}
 }
+
+const ALL_BLOCKS = Object.keys(blocks)
+const ALL_BLOCKS_BUT_ENVIRONMENT = ALL_BLOCKS.filter(block => block !== "environment")
 
 module.exports = { attributes, blocks, functions, variables, DEFAULT_LABEL }

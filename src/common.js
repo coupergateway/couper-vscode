@@ -13,7 +13,7 @@ function getParentBlock(document, position) {
 		return c.type === "block"
 	})
 
-	return blocks.length > 0 ? blocks[0].name : ""
+	return blocks.length > 0 ? blocks[0].name : null
 }
 
 function isObjectContext(document, position) {
