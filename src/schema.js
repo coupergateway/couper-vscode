@@ -91,7 +91,7 @@ const blocks = {
 	},
 	oauth2: {
 		parents: ['backend'],
-		description: "Configures the OAuth2 Client Credentials flow to request a bearer token for its backend request.",
+		description: "Configures an OAuth2 flow to request a bearer token for the backend request.",
 		examples: ['oauth2-client-credentials'],
 		labelled: false
 	},
@@ -199,6 +199,9 @@ const attributes = {
 		parents: ['saml'],
 		examples: ['saml'],
 		type: 'tuple'
+	},
+	assertion: {
+		parents: ['oauth2']
 	},
 	authorization_endpoint: {
 		parents: ['beta_oauth2']
@@ -359,7 +362,7 @@ const attributes = {
 	},
 	grant_type: {
 		parents: ['beta_oauth2', 'oauth2'],
-		options: ['authorization_code', 'client_credentials']
+		options: ['authorization_code', 'client_credentials', 'password', 'urn:ietf:params:oauth:grant-type:jwt-bearer']
 	},
 	header: {
 		parents: ['jwt'],
@@ -467,7 +470,7 @@ const attributes = {
 		parents: ['backend']
 	},
 	password: {
-		parents: ['basic_auth']
+		parents: ['basic_auth', 'oauth2']
 	},
 	path: {
 		parents: ['backend', 'beta_health']
@@ -633,6 +636,9 @@ const attributes = {
 	},
 	user: {
 		parents: ['basic_auth']
+	},
+	username: {
+		parents: ['oauth2']
 	},
 	userinfo_backend: { // label reference
 		parents: ['oidc'],
