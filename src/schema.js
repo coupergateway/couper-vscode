@@ -10,7 +10,7 @@ const blocks = {
 		labels: [null, DEFAULT_LABEL]
 	},
 	backend: {
-		parents: ['beta_oauth2', 'definitions', 'jwt', 'oauth2', 'oidc', 'proxy', 'request'],
+		parents: ['beta_oauth2', 'beta_token_request', 'definitions', 'jwt', 'oauth2', 'oidc', 'proxy', 'request'],
 		description: "Defines the connection to a local/remote backend service.",
 		examples: ['backend-configuration'],
 		labels: (parentBlockName) => {
@@ -31,6 +31,11 @@ const blocks = {
 		parents: ['backend'],
 		examples: ['health-check'],
 		labelled: false
+	},
+	beta_token_request: {
+		parents: ['backend'],
+		description: "Configures a request to get a token used to authorize backend requests.",
+		labels: [null, DEFAULT_LABEL]
 	},
 	cors: {
 		parents: ['api', 'files', 'server', 'spa'],
@@ -70,9 +75,9 @@ const blocks = {
 			return [null].concat(blocks.error_handler._labelsForParent[parentBlockName])
 		},
 		_labelsForParent: {
-			'api':         ['access_control', 'backend', 'backend_timeout', 'backend_openapi_validation', 'backend_unhealthy', 'beta_insufficient_permissions'],
+			'api':         ['access_control', 'backend', 'backend_timeout', 'backend_openapi_validation', 'backend_unhealthy', 'beta_backend_token_request', 'beta_insufficient_permissions'],
 			'basic_auth':  ['access_control', 'basic_auth', 'basic_auth_credentials_missing'],
-			'endpoint':    ['access_control', 'backend', 'backend_timeout', 'backend_openapi_validation', 'backend_unhealthy', 'beta_insufficient_permissions', 'endpoint', 'sequence', 'unexpected_status'],
+			'endpoint':    ['access_control', 'backend', 'backend_timeout', 'backend_openapi_validation', 'backend_unhealthy', 'beta_backend_token_request', 'beta_insufficient_permissions', 'endpoint', 'sequence', 'unexpected_status'],
 			'jwt':         ['access_control', 'jwt', 'jwt_token_expired', 'jwt_token_invalid', 'jwt_token_missing'],
 			'saml':        ['access_control', 'saml'],
 			'beta_oauth2': ['access_control', 'oauth2'],
@@ -99,7 +104,7 @@ const blocks = {
 	},
 	oauth2: {
 		parents: ['backend'],
-		description: "Configures the OAuth2 Client Credentials flow to request a bearer token for its backend request.",
+		description: "Configures an OAuth2 flow to request a bearer token for the backend request.",
 		examples: ['oauth2-client-credentials'],
 		labelled: false
 	},
@@ -208,11 +213,14 @@ const attributes = {
 		examples: ['saml'],
 		type: 'tuple'
 	},
+	assertion: {
+		parents: ['oauth2']
+	},
 	authorization_endpoint: {
 		parents: ['beta_oauth2']
 	},
 	backend: { // label reference
-		parents: ['beta_oauth2', 'jwt', 'oauth2', 'oidc', 'proxy', 'request'],
+		parents: ['beta_oauth2', 'beta_token_request', 'jwt', 'oauth2', 'oidc', 'proxy', 'request'],
 		definingBlocks: ["backend"],
 		examples: ['backend-configuration']
 	},
@@ -257,7 +265,7 @@ const attributes = {
 		parents: ['settings'],
 	},
 	body: {
-		parents: ['request', 'response']
+		parents: ['beta_token_request', 'request', 'response']
 	},
 	bootstrap_file: {
 		parents: ['spa'],
@@ -346,7 +354,7 @@ const attributes = {
 		examples: ['simple-fileserving']
 	},
 	expected_status: {
-		parents: ['beta_health', 'proxy', 'request'],
+		parents: ['beta_health', 'beta_token_request', 'proxy', 'request'],
 		type: 'tuple',
 		examples: ['sequences'],
 		tupleType: 'number'
@@ -365,19 +373,19 @@ const attributes = {
 		parents: ['openapi']
 	},
 	form_body: {
-		parents: ['request'],
+		parents: ['beta_token_request', 'request'],
 		type: 'object'
 	},
 	grant_type: {
 		parents: ['beta_oauth2', 'oauth2'],
-		options: ['authorization_code', 'client_credentials']
+		options: ['authorization_code', 'client_credentials', 'password', 'urn:ietf:params:oauth:grant-type:jwt-bearer']
 	},
 	header: {
 		parents: ['jwt'],
 		examples: ['jwt-access-control']
 	},
 	headers: {
-		parents: ['beta_health', 'jwt_signing_profile', 'request', 'response'],
+		parents: ['beta_health', 'beta_token_request', 'jwt_signing_profile', 'request', 'response'],
 		examples: ['static-responses'],
 		type: 'object'
 	},
@@ -419,7 +427,7 @@ const attributes = {
 		type: 'duration'
 	},
 	json_body: {
-		parents: ['request', 'response'],
+		parents: ['beta_token_request', 'request', 'response'],
 		examples: ['static-responses'],
 		type: ['boolean', 'number', 'string', 'object', 'tuple'],
 	},
@@ -468,7 +476,7 @@ const attributes = {
 		type: 'number'
 	},
 	method: {
-		parents: ['request']
+		parents: ['beta_token_request', 'request']
 	},
 	no_proxy_from_env: {
 		parents: ['settings'],
@@ -478,7 +486,7 @@ const attributes = {
 		parents: ['backend']
 	},
 	password: {
-		parents: ['basic_auth']
+		parents: ['basic_auth', 'oauth2']
 	},
 	path: {
 		parents: ['backend', 'beta_health']
@@ -495,7 +503,7 @@ const attributes = {
 		parents: ['backend']
 	},
 	query_params: {
-		parents: ['request'],
+		parents: ['beta_token_request', 'request'],
 		type: 'object'
 	},
 	realm: {
@@ -619,6 +627,9 @@ const attributes = {
 		parents: ['beta_oauth2', 'oauth2', 'oidc'],
 		options: ['client_secret_basic', 'client_secret_post']
 	},
+	token: {
+		parents: ['beta_token_request']
+	},
 	token_value: {
 		parents: ['jwt'],
 		examples: ['jwt-access-control'],
@@ -629,11 +640,11 @@ const attributes = {
 		type: 'duration'
 	},
 	ttl: {
-		parents: ['jwt_signing_profile'],
+		parents: ['beta_token_request', 'jwt_signing_profile'],
 		type: 'duration'
 	},
 	url: {
-		parents: ['request', 'proxy']
+		parents: ['beta_token_request', 'request', 'proxy']
 	},
 	use_when_unhealthy: {
 		parents: ['backend'],
@@ -641,6 +652,9 @@ const attributes = {
 	},
 	user: {
 		parents: ['basic_auth']
+	},
+	username: {
+		parents: ['oauth2']
 	},
 	userinfo_backend: { // label reference
 		parents: ['oidc'],
@@ -702,6 +716,24 @@ const functions = {
 const commonProperties = ['body', 'context', 'cookies', 'headers', 'json_body']
 
 const variables = {
+	beta_backend: {
+		parents: ['backend'],
+		description: "An object with backend attributes.",
+		values: [
+			'health', // TODO how to add health object properties?
+			'beta_tokens',
+			'beta_token'
+		]
+	},
+	backends: {
+		child: 'default',
+		description: "An object with all backends and their attributes. To access a specific backend use the related name.",
+		values: [
+			'health',
+			'beta_tokens',
+			'beta_token'
+		]
+	},
 	backend_request: {
 		parents: ['backend'],
 		description: "Holds information about the current backend request.",
@@ -767,6 +799,13 @@ const variables = {
 			'protocol',
 			'query',
 			'url'
+		])
+	},
+	beta_token_response: {
+		parents: ['beta_token_request'],
+		description: "Holds information about the current token response.",
+		values: commonProperties.concat([
+			'status'
 		])
 	}
 }
