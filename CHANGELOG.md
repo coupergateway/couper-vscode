@@ -10,6 +10,7 @@
 - checks for invalid block labels [#98](https://github.com/avenga/couper-vscode/pull/98)
 - completion for `beta_token_request` block, `backend`, `backends` and `beta_token_response` variables [#100](https://github.com/avenga/couper-vscode/pull/100)
 - completion for new `grant_type`s `"password"` and `"urn:ietf:params:oauth:grant-type:jwt-bearer"` and related attributes for `oauth2` block [#105](https://github.com/avenga/couper-vscode/pull/105)
+- completion for `beta_rate_limit` [#94](https://github.com/avenga/couper-vscode/pull/94)
 
 ### Fixed
 
@@ -22,10 +23,6 @@
 ---
 
 ## [v1.4.2](https://github.com/avenga/couper-vscode/releases/tag/v1.4.2)
-
-### Added
-
-- completion for `rate_limit` [#94](https://github.com/avenga/couper-vscode/pull/94)
 
 ### Fixed
 
