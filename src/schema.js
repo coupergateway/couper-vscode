@@ -39,7 +39,7 @@ const blocks = {
 			}
 			return `"beta_rate_limit" only valid in a "backend" in a "definitions" block.`
 		},
-		description: "Protects backend services.",
+		description: "Protects backend services. It implements quota management used to avoid cascading failures or to spare resources.",
 		labelled: false
 	},
 	beta_token_request: {
