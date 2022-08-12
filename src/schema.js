@@ -32,6 +32,16 @@ const blocks = {
 		examples: ['health-check'],
 		labelled: false
 	},
+	beta_rate_limit: {
+		parents: (context) => {
+			if (context.length >= 2 && context[0].name === "backend" && context[1].name === "definitions") {
+				return ['backend']
+			}
+			return `"beta_rate_limit" only valid in a "backend" in a "definitions" block.`
+		},
+		description: "Protects backend services. It implements quota management used to avoid cascading failures or to spare resources.",
+		labelled: false
+	},
 	beta_token_request: {
 		parents: ['backend'],
 		description: "Configures a request to get a token used to authorize backend requests.",
@@ -478,6 +488,10 @@ const attributes = {
 	method: {
 		parents: ['beta_token_request', 'request']
 	},
+	mode: {
+		parents: ['beta_rate_limit'],
+		options: ['wait', 'block']
+	},
 	no_proxy_from_env: {
 		parents: ['settings'],
 		type: 'boolean'
@@ -498,6 +512,18 @@ const attributes = {
 		parents: ['spa'],
 		examples: ['spa-serving'],
 		type: 'tuple'
+	},
+	period: {
+		parents: ['beta_rate_limit'],
+		type: 'duration'
+	},
+	period_window: {
+		parents: ['beta_rate_limit'],
+		options: ['sliding', 'fixed']
+	},
+	per_period: {
+		parents: ['beta_rate_limit'],
+		type: 'number'
 	},
 	proxy: {
 		parents: ['backend']
