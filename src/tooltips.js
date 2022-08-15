@@ -4,6 +4,7 @@ const vscode = require('vscode')
 const common = require('./common')
 
 const { attributes, blocks, functions, variables } = require('./schema')
+const { name, publisher } = require('../package.json')
 
 const selector = { language: 'couper' }
 
@@ -12,6 +13,12 @@ const providers = []
 const REFERENCE_URL = "https://docs.couper.io"
 const EXAMPLES_URL = "https://github.com/avenga/couper-examples/tree/master/"
 const GITHUB_ICON = "images/github.png"
+
+function getExtension(extensionName) {
+	return vscode.extensions.getExtension(extensionName ?? (publisher + "." + name))
+}
+
+const extension = getExtension()
 
 const hoverProvider = vscode.languages.registerHoverProvider(selector, {
 	provideHover(document, position, token) {
@@ -68,7 +75,7 @@ const hoverProvider = vscode.languages.registerHoverProvider(selector, {
 		if (type === "attribute") {
 			title += ` (\`${schemaElement.type ?? "string"}\`)`
 		}
-		const icon = vscode.Uri.joinPath(globalThis.BASE_URI, GITHUB_ICON)
+		const icon = vscode.Uri.joinPath(extension.extensionUri, GITHUB_ICON)
 		const description = schemaElement.description ?? ""
 		const reference = `![](${icon}) [Reference →](${url})`
 		let examplesMarkdown = ""
