@@ -137,7 +137,9 @@ const blocks = {
 		parents: ['endpoint', 'error_handler'],
 		description: "Executes a proxy request to a backend service.",
 		examples: ['api-proxy', 'custom-requests', 'multiple-requests'],
-		labels: [null, DEFAULT_LABEL]
+		labels: (parentBlockName) => {
+			return parentBlockName === "definitions" ? [DEFAULT_LABEL] : [DEFAULT_LABEL, null]
+		}
 	},
 	request: {
 		parents: ['endpoint', 'error_handler'],
@@ -495,6 +497,10 @@ const attributes = {
 		parents: ['beta_rate_limit'],
 		options: ['wait', 'block']
 	},
+	name: {
+		parents: ['proxy'],
+		description: "Defines the proxy request name. Allowed only in the definitions block.",
+	},
 	no_proxy_from_env: {
 		parents: ['settings'],
 		type: 'boolean'
@@ -528,8 +534,8 @@ const attributes = {
 		parents: ['beta_rate_limit'],
 		type: 'number'
 	},
-	proxy: {
-		parents: ['backend']
+	proxy: { // (label reference in endpoints)
+		parents: ['backend', 'endpoint']
 	},
 	query_params: {
 		parents: ['beta_token_request', 'request'],
