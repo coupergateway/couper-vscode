@@ -11,6 +11,7 @@
 - completion for `beta_token_request` block, `backend`, `backends` and `beta_token_response` variables [#100](https://github.com/avenga/couper-vscode/pull/100)
 - completion for new `grant_type`s `"password"` and `"urn:ietf:params:oauth:grant-type:jwt-bearer"` and related attributes for `oauth2` block [#105](https://github.com/avenga/couper-vscode/pull/105)
 - completion for `beta_rate_limit` [#94](https://github.com/avenga/couper-vscode/pull/94)
+- completion for reusable `proxy` blocks [#106](https://github.com/avenga/couper-vscode/pull/106)
 
 ### Fixed
 
