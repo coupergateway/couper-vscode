@@ -134,7 +134,7 @@ const blocks = {
 		labelled: false
 	},
 	proxy: {
-		parents: ['endpoint', 'error_handler'],
+		parents: ['definitions', 'endpoint', 'error_handler'],
 		description: "Executes a proxy request to a backend service.",
 		examples: ['api-proxy', 'custom-requests', 'multiple-requests'],
 		labels: (parentBlockName) => {
