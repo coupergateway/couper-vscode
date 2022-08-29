@@ -15,7 +15,7 @@ const REGEXES = {
 	number: /^-?[0-9]+(\.[0-9]+)?([eE][+-]?[0-9]+)?$/,
 	boolean: /^(true|false)$/,
 	function: /^(\w+)\s*(?=\()/,
-	variable: /^(\w+)\s*(\.|\s*$)/
+	variable: /^([a-z_]+)\s*(\.|\s*$)/
 }
 
 const functions = Object.keys(schema.functions)
