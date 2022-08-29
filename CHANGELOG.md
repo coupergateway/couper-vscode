@@ -4,10 +4,18 @@
 
 ### Added
 
-- completion for labeled `spa` block [#98](https://github.com/avenga/couper-vscode/pull/98)
+- completion for `environment` block, attribute and variable [#92](https://github.com/avenga/couper-vscode/pull/92)
+- completion for labeled `spa` blocks [#98](https://github.com/avenga/couper-vscode/pull/98)
 - completion for `configuration_backend`, `jwks_uri_backend`, `token_backend` and `userinfo_backend` attributes in `oidc` block [#98](https://github.com/avenga/couper-vscode/pull/98)
 - checks for invalid block labels [#98](https://github.com/avenga/couper-vscode/pull/98)
 - checks for invalid functions and variables [#102](https://github.com/avenga/couper-vscode/pull/102)
+- completion for `beta_token_request` block, `backend`, `backends` and `beta_token_response` variables [#100](https://github.com/avenga/couper-vscode/pull/100)
+- completion for new `grant_type`s `"password"` and `"urn:ietf:params:oauth:grant-type:jwt-bearer"` and related attributes for `oauth2` block [#105](https://github.com/avenga/couper-vscode/pull/105)
+- completion for `beta_rate_limit` [#94](https://github.com/avenga/couper-vscode/pull/94)
+
+### Fixed
+
+- broken icons in tooltips on vscode.dev [#101](https://github.com/avenga/couper-vscode/pull/101)
 
 ### Removed
 
