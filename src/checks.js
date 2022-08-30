@@ -37,13 +37,14 @@ function getHint(allowedParents) {
 			return ""
 		case 1:
 			return `Must be within "${allowedParents[0]}".`
-		default:
+		default: {
 			let hint = `\nMust be within one of ${makeQuotedList(allowedParents)}`
 			if (isAllowedAtTopLevel(allowedParents)) {
 				hint += ` or at top-level`
 			}
 			hint +="."
 			return hint
+		}
 	}
 }
 

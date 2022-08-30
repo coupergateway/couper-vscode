@@ -1,3 +1,5 @@
+.PHONY: all install run run-web host-vscode-dev test lint
+
 __DIR__ := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
 all: install
@@ -15,3 +17,9 @@ run-web:
 host-vscode-dev:
 	$(npx serve --cors -l 5000)
 	npx localtunnel -p 5000
+
+test:
+	npm run jest
+
+lint:
+	npm run lint
