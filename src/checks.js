@@ -13,8 +13,13 @@ const REGEXES = {
 	duration: /^((\d+(\.\d*)?|\.\d+)([nuµm]?s|[mh]))+$/,
 	template: /^"[^$%]*[$%]{[^"]*"$/,
 	number: /^-?[0-9]+(\.[0-9]+)?([eE][+-]?[0-9]+)?$/,
-	boolean: /^(true|false)$/
+	boolean: /^(true|false)$/,
+	function: /^(\w+)\s*(?=\()/,
+	variable: /^([a-z_]+)\s*(\.|\s*$)/
 }
+
+const functions = Object.keys(schema.functions)
+const variables = Object.keys(schema.variables)
 
 function makeQuotedList(array) {
 	return array.filter(option => option !== null).map(option => `"${option}"`).join(", ")
@@ -153,6 +158,10 @@ function checkAttributeValue(name, value) {
 		return CheckFailed(invalidType)
 	} else if (REGEXES.boolean.test(value) && !types.includes("boolean")) {
 		return CheckFailed(invalidType)
+	} else if (REGEXES.function.test(value) && !functions.includes(RegExp.$1)) {
+		return CheckFailed(`Invalid function "${RegExp.$1}".`)
+	} else if (REGEXES.variable.test(value) && !variables.includes(RegExp.$1)) {
+		return CheckFailed(`Invalid variable "${RegExp.$1}".`)
 	} else if (/^\[/.test(value) && !types.includes("tuple")) {
 		return CheckFailed(invalidType)
 	} else if (/^{/.test(value) && !types.includes("object")) {
