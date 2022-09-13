@@ -1,6 +1,10 @@
 # Changelog
 
-## [Unreleased](https://github.com/avenga/couper/compare-vscode/v1.4.2...master)
+## [Unreleased](https://github.com/avenga/couper/compare-vscode/v1.5.0...master)
+
+---
+
+## [v1.5.0](https://github.com/avenga/couper-vscode/releases/tag/v1.5.0)
 
 ### Added
 
@@ -21,8 +25,6 @@
 ### Removed
 
 - completion for `path` attribute in `error_handler` block [#98](https://github.com/avenga/couper-vscode/pull/98)
-
----
 
 ## [v1.4.2](https://github.com/avenga/couper-vscode/releases/tag/v1.4.2)
 
