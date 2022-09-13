@@ -20,7 +20,7 @@
     "theme": "light"
   },
   "engines": {
-    "vscode": "^1.59.0"
+    "vscode": "^1.71.0"
   },
   "main": "src/extension.js",
   "browser": "dist/web/extension.js",
