@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/avenga/couper/compare-vscode/v1.5.0...master)
 
+### Fixed
+
+- endpoint path and boolean type checks [#107](https://github.com/avenga/couper-vscode/pull/107)
+
 ---
 
 ## [v1.5.0](https://github.com/avenga/couper-vscode/releases/tag/v1.5.0)
