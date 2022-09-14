@@ -252,12 +252,22 @@ const CHECKS = [
 
 	// Endpoint starts with "/"
 	(document, textLine) => {
-		const matches = textLine.text.match(/^\s*endpoint\s*"([^/])/)
+		const matches = textLine.text.match(/^\s*endpoint\s*"(.*?)"/)
 		if (!matches) {
 			return CheckOK
 		}
 
-		return CheckFailed('Endpoint path must start with a "/".', vscode.DiagnosticSeverity.Error)
+		const path = RegExp.$1
+		const segments = path.split("/")
+		if (path === "" || segments[0] !== "") {
+			return CheckFailed('Endpoint path must start with a "/".', vscode.DiagnosticSeverity.Error)
+		}
+
+		if (segments.includes(".") || segments.includes("..")) {
+			return CheckFailed('Endpoint path must not contain "." or ".." segments.', vscode.DiagnosticSeverity.Error)
+		}
+
+		return CheckOK
 	}
 ]
 

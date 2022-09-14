@@ -1,7 +1,7 @@
 const vscode = require('vscode')
 const { CHECKS } = require('../src/checks')
 
-test('Endpoint starts with "/" check', () => {
+test('Endpoint path checks', () => {
 	const check = CHECKS[1]
 	const document = {}
 
@@ -11,6 +11,21 @@ test('Endpoint starts with "/" check', () => {
 	expect(check(document, {text: '\tendpoint "path" {'})).toStrictEqual({
 		ok: false,
 		message: 'Endpoint path must start with a "/".',
+		severity: vscode.DiagnosticSeverity.Error
+	})
+	expect(check(document, {text: '\tendpoint""{'})).toStrictEqual({
+		ok: false,
+		message: 'Endpoint path must start with a "/".',
+		severity: vscode.DiagnosticSeverity.Error
+	})
+	expect(check(document, {text: ' endpoint "/a/.."{'})).toStrictEqual({
+		ok: false,
+		message: 'Endpoint path must not contain "." or ".." segments.',
+		severity: vscode.DiagnosticSeverity.Error
+	})
+	expect(check(document, {text: ' endpoint "/a/./b"{'})).toStrictEqual({
+		ok: false,
+		message: 'Endpoint path must not contain "." or ".." segments.',
 		severity: vscode.DiagnosticSeverity.Error
 	})
 })
