@@ -154,18 +154,30 @@ function checkAttributeValue(name, value) {
 			const allowedValues = makeQuotedList(element.options.sort())
 			return CheckFailed(`Invalid value for "${name}", must be one of: ${allowedValues}`)
 		}
-	} else if (REGEXES.number.test(value) && !types.includes("number")) {
-		return CheckFailed(invalidType)
-	} else if (REGEXES.boolean.test(value) && !types.includes("boolean")) {
-		return CheckFailed(invalidType)
-	} else if (REGEXES.function.test(value) && !functions.includes(RegExp.$1)) {
-		return CheckFailed(`Invalid function "${RegExp.$1}".`)
-	} else if (REGEXES.variable.test(value) && !variables.includes(RegExp.$1)) {
-		return CheckFailed(`Invalid variable "${RegExp.$1}".`)
-	} else if (/^\[/.test(value) && !types.includes("tuple")) {
-		return CheckFailed(invalidType)
-	} else if (/^{/.test(value) && !types.includes("object")) {
-		return CheckFailed(invalidType)
+	} else if (REGEXES.number.test(value)) {
+		if (!types.includes("number")) {
+			return CheckFailed(invalidType)
+		}
+	} else if (REGEXES.boolean.test(value)) {
+		if (!types.includes("boolean")) {
+			return CheckFailed(invalidType)
+		}
+	} else if (REGEXES.function.test(value)) {
+		if (!functions.includes(RegExp.$1)) {
+			return CheckFailed(`Invalid function "${RegExp.$1}".`)
+		}
+	} else if (REGEXES.variable.test(value)) {
+		if (!variables.includes(RegExp.$1)) {
+			return CheckFailed(`Invalid variable "${RegExp.$1}".`)
+		}
+	} else if (/^\[/.test(value)) {
+		if (!types.includes("tuple")) {
+			return CheckFailed(invalidType)
+		}
+	} else if (/^{/.test(value)) {
+		if (!types.includes("object")) {
+			return CheckFailed(invalidType)
+		}
 	}
 
 	return CheckOK
