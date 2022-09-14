@@ -257,7 +257,7 @@ const CHECKS = [
 			return CheckOK
 		}
 
-		return CheckFailed('Endpoint path should start with a "/".', vscode.DiagnosticSeverity.Warning)
+		return CheckFailed('Endpoint path must start with a "/".', vscode.DiagnosticSeverity.Error)
 	}
 ]
 

@@ -10,7 +10,7 @@ test('Endpoint starts with "/" check', () => {
 	expect(check(document, {text: '  endpoint"/"{'})).toStrictEqual({ok: true})
 	expect(check(document, {text: '\tendpoint "path" {'})).toStrictEqual({
 		ok: false,
-		message: 'Endpoint path should start with a "/".',
-		severity: 1
+		message: 'Endpoint path must start with a "/".',
+		severity: vscode.DiagnosticSeverity.Error
 	})
 })
