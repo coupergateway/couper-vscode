@@ -733,6 +733,7 @@ const functions = {
 		examples: ['oidc']
 	},
 	oauth2_verifier: { description: 'Creates a cryptographically random key as specified in RFC 7636, applicable for all verifier methods; e.g. to be set as a cookie and read into verifier_value. Multiple calls of this function in the same client request context return the same value.' },
+	regexp_split: { description: 'Divides a given string by a given separator expression.' },
 	relative_url: { description: 'Returns a relative URL by retaining path, query and fragment components. The input URL must begin with `/<path>`, `//<authority>`, `http://` or `https://`, otherwise an error is thrown.' },
 	saml_sso_url: {
 		description: 'Creates a SAML SingleSignOn URL (including the `SAMLRequest` parameter) from a referenced `saml` block.',
@@ -744,6 +745,7 @@ const functions = {
 	to_lower: { description: 'Converts a given string to lowercase.' },
 	to_number: { description: 'Converts its argument to a number value.' },
 	to_upper: { description: 'Converts a given string to uppercase.' },
+	trim_space: { description: 'Removes any space characters from the start and end of the given string.' },
 	unixtime: { description: 'Retrieves the current UNIX timestamp in seconds.' },
 	url_encode: { description: 'URL-encodes a given string according to RFC 3986.' },
 }
