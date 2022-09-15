@@ -1,5 +1,5 @@
 const vscode = require('vscode')
-const { CHECKS, checkAttributeValue } = require('../src/checks')
+const { CHECKS, __private } = require('../src/checks')
 const schema = require('../src/schema')
 
 test('Endpoint path checks', () => {
@@ -51,7 +51,7 @@ describe('Valid attribute value checks', () => {
 	]
 
 	test.each(testcases)("%s = %s", (name, value) => {
-		expect(checkAttributeValue(name, value)).toStrictEqual({ok: true})
+		expect(__private.checkAttributeValue(name, value)).toStrictEqual({ok: true})
 	})
 })
 
@@ -79,6 +79,6 @@ describe('Invalid attribute value checks', () => {
 
 	test.each(testcases)("%s = %s\r\t\t\t\t\t\t → %s", (name, value, error) => {
 		const expected = {ok: false, message: error, severity: undefined}
-		expect(checkAttributeValue(name, value)).toStrictEqual(expected)
+		expect(__private.checkAttributeValue(name, value)).toStrictEqual(expected)
 	})
 })

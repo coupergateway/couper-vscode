@@ -267,4 +267,10 @@ const CHECKS = [
 	}
 ]
 
-module.exports = { CHECKS, checkAttributeValue }
+module.exports.CHECKS = CHECKS
+
+if (process.env.NODE_ENV === 'test') {
+	module.exports.__private = {
+		checkAttributeValue: checkAttributeValue
+	}
+}
