@@ -668,7 +668,7 @@ const attributes = {
 	token_value: {
 		parents: ['jwt'],
 		examples: ['jwt-access-control'],
-		type: 'any'
+		type: ['string', 'number', 'boolean']
 	},
 	ttfb_timeout: {
 		parents: ['backend'],
