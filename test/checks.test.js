@@ -2,37 +2,38 @@ const vscode = require('vscode')
 const { CHECKS, __private } = require('../src/checks')
 const schema = require('../src/schema')
 
-test('Endpoint path checks', () => {
+describe('Endpoint path checks', () => {
 	const check = CHECKS[1]
 	const document = {}
 
-	expect(check(document, {text: "server {"})).toStrictEqual({ok: true})
-	expect(check(document, {text: 'friendpoint "" {'})).toStrictEqual({ok: true})
-	expect(check(document, {text: '  endpoint"/"{'})).toStrictEqual({ok: true})
-	expect(check(document, {text: '\tendpoint "path" {'})).toStrictEqual({
-		ok: false,
-		message: 'Endpoint path must start with a "/".',
-		severity: vscode.DiagnosticSeverity.Error
+	let testcases = [
+		"server {",
+		 'friendpoint "" {',
+		 '  endpoint"/"{',
+	]
+
+	test.each(testcases)("%s", (text) => {
+		expect(check(document, {text: text})).toStrictEqual({ok: true})
 	})
-	expect(check(document, {text: '\tendpoint""{'})).toStrictEqual({
-		ok: false,
-		message: 'Endpoint path must start with a "/".',
-		severity: vscode.DiagnosticSeverity.Error
-	})
-	expect(check(document, {text: ' endpoint "/a/.."{'})).toStrictEqual({
-		ok: false,
-		message: 'Endpoint path must not contain "." or ".." segments.',
-		severity: vscode.DiagnosticSeverity.Error
-	})
-	expect(check(document, {text: ' endpoint "/a/./b"{'})).toStrictEqual({
-		ok: false,
-		message: 'Endpoint path must not contain "." or ".." segments.',
-		severity: vscode.DiagnosticSeverity.Error
+
+	testcases = [
+		['\tendpoint "path" {', 'Endpoint path must start with a "/".'],
+		['\tendpoint""{', 'Endpoint path must start with a "/".'],
+		[' endpoint "/a/.."{', 'Endpoint path must not contain "." or ".." segments.' ],
+		[' endpoint "/a/./b"{', 'Endpoint path must not contain "." or ".." segments.' ],
+	]
+
+	test.each(testcases)("%s\r\t\t\t\t\t\t → %s", (text, error) => {
+		expect(check(document, {text: text})).toStrictEqual({
+			ok: false,
+			message: error,
+			severity: vscode.DiagnosticSeverity.Error
+		})
 	})
 })
 
-describe('Valid attribute value checks', () => {
-	const testcases = [
+describe('Attribute value checks', () => {
+	let testcases = [
 		["websockets", "false"],
 		["websockets", "true"],
 		["websockets", "env.WEBSOCKETS"],
@@ -53,10 +54,8 @@ describe('Valid attribute value checks', () => {
 	test.each(testcases)("%s = %s", (name, value) => {
 		expect(__private.checkAttributeValue(name, value)).toStrictEqual({ok: true})
 	})
-})
 
-describe('Invalid attribute value checks', () => {
-	const testcases = [
+	testcases = [
 		["websockets", "", 'Invalid value for "websockets", boolean required.'],
 		["websockets", "  ", 'Invalid value for "websockets", boolean required.'],
 		["websockets", "1", 'Invalid value for "websockets", boolean required.'],
