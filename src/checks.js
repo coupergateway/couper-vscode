@@ -130,7 +130,7 @@ function checkAttributeValue(name, value) {
 	value = value.trim()
 	// FIXME filter comments
 
-	if (/^\s*$/.test(value)) {
+	if (value === "") {
 		return CheckFailed(invalidType)
 	}
 
@@ -271,4 +271,4 @@ const CHECKS = [
 	}
 ]
 
-module.exports = { CHECKS }
+module.exports = { CHECKS, checkAttributeValue }
