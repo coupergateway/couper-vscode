@@ -142,7 +142,6 @@ for (const [name, attribute] of Object.entries(attributes)) {
 							item.sortText = name + "3"
 						} break;
 						case 'boolean':
-						case 'any':
 						case 'number': {
 							item.label = `${name} = …`
 							item.insertText = new vscode.SnippetString(name + ' = $0')

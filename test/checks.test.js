@@ -74,7 +74,7 @@ describe('Invalid attribute value checks', () => {
 		["allowed_methods", '"POST"', 'Invalid value for "allowed_methods", tuple required.'],
 		["allowed_origins", '42', 'Invalid value for "allowed_origins", type must be one of: "string", "tuple"'],
 		["add_request_headers", '"User-Agent: foo"', 'Invalid value for "add_request_headers", object required.'],
-		//["token_value", "foobar()", "FIXME"]
+		["token_value", "foobar()", 'Invalid function "foobar".']
 	]
 
 	test.each(testcases)("%s = %s\r\t\t\t\t\t\t → %s", (name, value, error) => {
