@@ -15,8 +15,9 @@ const Regexes = {
 }
 
 const tokenTypes = Object.keys(Regexes)
+const tokenModifiers = ['defaultLibrary', 'readonly'];
 
-function addTokens(tokensBuilder, document, regex, type) {
+function addTokens(tokensBuilder, document, regex, type, modifiers) {
 	const text = document.getText()
 	const matches = text.matchAll(regex)
 	for (const match of matches) {
@@ -31,13 +32,13 @@ function addTokens(tokensBuilder, document, regex, type) {
 	}
 }
 
-const legend = new vscode.SemanticTokensLegend(tokenTypes)
+const legend = new vscode.SemanticTokensLegend(tokenTypes, tokenModifiers)
 
 const semanticTokensProvider = {
 	provideDocumentSemanticTokens(document) {
 		const tokensBuilder = new vscode.SemanticTokensBuilder(legend)
-		addTokens(tokensBuilder, document, Regexes.function, 'function')
-		addTokens(tokensBuilder, document, Regexes.variable, 'variable')
+		addTokens(tokensBuilder, document, Regexes.function, 'function', ['defaultLibrary'])
+		addTokens(tokensBuilder, document, Regexes.variable, 'variable', ['readonly'])
 		return tokensBuilder.build()
 	}
 }
