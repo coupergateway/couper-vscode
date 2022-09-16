@@ -10,7 +10,7 @@ function createRegex(list) {
 }
 
 const Regexes = {
-	variable: createRegex(Object.keys(variables)),
+	variable: createRegex(Object.keys(variables).map(name => "(?<!\\.)" + name)),
 	function: createRegex(Object.keys(functions).map(name => name + "\\s*(?=\\()"))
 }
 
