@@ -5,7 +5,7 @@ const vscode = require('vscode')
 const parentBlockRegex = /\b([\w-]+)(?:[ \t]*"[^"]+")*[ \t]*=?[ \t]*{/g
 const blockRegex = /{[^{}]*}/g
 // see http://regex.info/listing.cgi?ed=2&p=281
-const filterRegex = /([^"/#]+|"(?:\\.|[^"\\])*")|\/\*[^*]*\*+(?:[^/*][^*]*\*+)*\/|(?:\/\/|#)[^\n]*/g
+const filterRegex = /([^"/#]+|"(?:\\.|[^"\\])*(?:"|$))|\/\*[^*]*\*+(?:[^/*][^*]*\*+)*\/|(?:\/\/|#)[^\n]*/g
 
 function getParentBlock(document, position) {
 	const context = getContext(document, position)
@@ -21,12 +21,8 @@ function isObjectContext(document, position) {
 	return context.length > 0 && context[0].type === "object"
 }
 
-// Returns enclosing blocks and objects
-function getContext(document, position) {
-	const range = new vscode.Range(document.positionAt(0), position)
-	let text = document.getText(range)
-
-	text = text.replace(filterRegex, (match, match1) => {
+function filterCommentsAndStrings(text) {
+	return text.replace(filterRegex, (match, match1) => {
 		if (match1 === undefined) {
 			return "" // Comment
 		}
@@ -35,7 +31,14 @@ function getContext(document, position) {
 		}
 		return match1
 	})
+}
 
+// Returns enclosing blocks and objects
+function getContext(document, position) {
+	const range = new vscode.Range(document.positionAt(0), position)
+	let text = document.getText(range)
+
+	text = filterCommentsAndStrings(text)
 	while (blockRegex.test(text)) {
 		text = text.replace(blockRegex, "")
 	}
@@ -54,4 +57,4 @@ function getContext(document, position) {
 	})
 }
 
-module.exports = { getParentBlock, isObjectContext, getContext }
+module.exports = { getParentBlock, isObjectContext, getContext, filterCommentsAndStrings }

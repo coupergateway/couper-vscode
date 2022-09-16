@@ -1,6 +1,7 @@
 "use strict"
 
 const vscode = require('vscode')
+const common = require('./common')
 const selector = { language: 'couper' }
 const { functions, variables } = require('./schema')
 
@@ -21,7 +22,12 @@ function addTokens(tokensBuilder, document, regex, type) {
 	for (const match of matches) {
 		const start = document.positionAt(match.index)
 		const end = document.positionAt(match.index + match[0].length)
-		tokensBuilder.push(new vscode.Range(start, end), type)
+		const range = new vscode.Range(document.positionAt(0), end)
+		const filteredText = common.filterCommentsAndStrings(document.getText(range))
+		if (filteredText.slice(-(match[0].length)) == match[0]) {
+			// token is in not part of a string or comment
+			tokensBuilder.push(new vscode.Range(start, end), type, modifiers)
+		}
 	}
 }
 
