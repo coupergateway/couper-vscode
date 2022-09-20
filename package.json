@@ -30,7 +30,7 @@
     "compile-web": "webpack",
     "watch-web": "webpack --watch",
     "package-web": "webpack --mode production --devtool hidden-source-map",
-    "jest": "jest",
+    "jest": "jest --verbose",
     "lint": "eslint src --ext js"
   },
   "contributes": {
