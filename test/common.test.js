@@ -13,8 +13,8 @@ describe('Filter comments and strings', () => {
 		['server "la//bel" {',             'server "..." {'],
 		['server "la#bel" {',              'server "..." {'],
 		['body = "Hello W',                'body = "..."'],
+		['body = "Hello" /* comment',      'body = "..." '],
 		// FIXME
-		['body = "Hello" /* comment',      'body = "..." /* comment'],
 		['body = "H${"ell"}o"',            'body = "..."ell"..."'],
 	]
 

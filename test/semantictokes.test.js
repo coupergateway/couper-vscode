@@ -50,7 +50,7 @@ describe('Semantic tokens', () => {
 		['body = "env.KEY"'],
 		['# backend'],
 		['// backend'],
-		// FIXME ['/* my backend */']
+		['/* my backend */']
 	]
 
 	test.each(testcases)("%s", (text) => {

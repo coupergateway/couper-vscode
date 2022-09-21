@@ -5,7 +5,7 @@ const vscode = require('vscode')
 const parentBlockRegex = /\b([\w-]+)(?:[ \t]*"[^"]+")*[ \t]*=?[ \t]*{/g
 const blockRegex = /{[^{}]*}/g
 // see http://regex.info/listing.cgi?ed=2&p=281
-const filterRegex = /([^"/#]+|"(?:\\.|[^"\\])*(?:"|$))|\/\*[^*]*\*+(?:[^/*][^*]*\*+)*\/|(?:\/\/|#)[^\n]*/g
+const filterRegex = /([^"/#]+|"(?:\\.|[^"\\])*(?:"|$))|\/\*.*?(?:\*\/|$)|(?:\/\/|#)[^\n]*/gs
 
 function getParentBlock(document, position) {
 	const context = getContext(document, position)
