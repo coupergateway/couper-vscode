@@ -26,7 +26,7 @@ function addTokens(tokensBuilder, document, regex, type, modifiers) {
 		const range = new vscode.Range(document.positionAt(0), end)
 		const filteredText = common.filterCommentsAndStrings(document.getText(range))
 		if (filteredText.slice(-match[0].length) == match[0]) {
-			// token is in not part of a string or comment
+			// token is not part of a string or comment
 			tokensBuilder.push(new vscode.Range(start, end), type, modifiers)
 		}
 	}
