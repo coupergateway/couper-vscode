@@ -19,7 +19,7 @@ host-vscode-dev:
 	npx localtunnel -p 5000
 
 test:
-	npm run jest
+	npm run jest -- --testNamePattern $(TEST)
 
 lint:
 	npm run lint

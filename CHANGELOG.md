@@ -4,6 +4,7 @@
 
 ### Fixed
 
+- wrong variable and function highlighting in comments and strings [#109](https://github.com/avenga/couper-vscode/pull/109)
 - endpoint path and boolean type checks [#107](https://github.com/avenga/couper-vscode/pull/107)
 
 ---
