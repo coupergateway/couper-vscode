@@ -4,7 +4,7 @@
 
 ---
 
-## [v1.5.0](https://github.com/avenga/couper-vscode/releases/tag/v1.5.1)
+## [v1.5.1](https://github.com/avenga/couper-vscode/releases/tag/v1.5.1)
 
 ### Fixed
 
