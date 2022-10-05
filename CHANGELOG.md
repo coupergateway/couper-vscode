@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/avenga/couper/compare-vscode/v1.5.0...master)
 
+### Added
+
+- `trim()` function [#112](https://github.com/avenga/couper-vscode/pull/112)
+
 ### Fixed
 
 - wrong variable and function highlighting in comments and strings [#109](https://github.com/avenga/couper-vscode/pull/109)
