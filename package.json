@@ -1,7 +1,7 @@
 {
   "name": "couper",
   "displayName": "Couper Configuration",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "publisher": "AvengaGermanyGmbH",
   "description": "Provides autocompletion, syntax/semantic validation and syntax highlighting for Couper's HCL based configuration file.",
   "keywords": [
