@@ -78,7 +78,8 @@ const blocks = {
 				}
 			}
 			return ALL_BLOCKS_BUT_ENVIRONMENT.concat([null]) // top-level
-		}
+		},
+		examples: ['environment']
 	},
 	error_handler: {
 		parents: ['api', 'basic_auth', 'beta_oauth2', 'endpoint', 'jwt', 'oidc', 'saml'],
