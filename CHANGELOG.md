@@ -6,6 +6,10 @@
 
 ## [v1.5.1](https://github.com/avenga/couper-vscode/releases/tag/v1.5.1)
 
+### Added
+
+- `trim()` function [#112](https://github.com/avenga/couper-vscode/pull/112)
+
 ### Fixed
 
 - wrong variable and function highlighting in comments and strings [#109](https://github.com/avenga/couper-vscode/pull/109)

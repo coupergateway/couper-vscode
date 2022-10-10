@@ -745,6 +745,7 @@ const functions = {
 	to_lower: { description: 'Converts a given string to lowercase.' },
 	to_number: { description: 'Converts its argument to a number value.' },
 	to_upper: { description: 'Converts a given string to uppercase.' },
+	trim: { description: 'Removes any whitespace characters from the start and end of the given string.' },
 	unixtime: { description: 'Retrieves the current UNIX timestamp in seconds.' },
 	url_encode: { description: 'URL-encodes a given string according to RFC 3986.' },
 }
