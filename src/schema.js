@@ -663,7 +663,7 @@ const attributes = {
 	},
 	token_endpoint_auth_method: {
 		parents: ['beta_oauth2', 'oauth2', 'oidc'],
-		options: ['client_secret_basic', 'client_secret_post']
+		options: ['client_secret_basic', 'client_secret_jwt', 'client_secret_post', 'private_key_jwt']
 	},
 	token: {
 		parents: ['beta_token_request']

@@ -69,7 +69,7 @@ describe('Attribute value checks', () => {
 		["jwks_ttl", '"60min"', 'Invalid value for "jwks_ttl", duration required.'],
 		["jwks_ttl", '3600', 'Invalid value for "jwks_ttl", duration required.'],
 		["max_connections", '"1000"', 'Invalid value for "max_connections", number required.'],
-		["token_endpoint_auth_method", '"foo"', 'Invalid value for "token_endpoint_auth_method", must be one of: "client_secret_basic", "client_secret_post"'],
+		["token_endpoint_auth_method", '"foo"', 'Invalid value for "token_endpoint_auth_method", must be one of: "client_secret_basic", "client_secret_jwt", "client_secret_post", "private_key_jwt"'],
 		["allowed_methods", '"POST"', 'Invalid value for "allowed_methods", tuple required.'],
 		["allowed_origins", '42', 'Invalid value for "allowed_origins", type must be one of: "string", "tuple"'],
 		["add_request_headers", '"User-Agent: foo"', 'Invalid value for "add_request_headers", object required.'],
