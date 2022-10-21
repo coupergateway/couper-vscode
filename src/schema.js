@@ -110,10 +110,12 @@ const blocks = {
 		labelled: true
 	},
 	jwt_signing_profile: {
-		parents: ['definitions'],
+		parents: ['definitions', 'beta_oauth2', 'oauth2', 'oidc'],
 		description: "Configure a JSON Web Token signing profile which is referenced in the `jwt_sign()` function.",
 		examples: ['creating-jwt'],
-		labelled: true
+		labels: (parentBlockName) => {
+			return parentBlockName === "definitions" ? [DEFAULT_LABEL] : [null]
+		}
 	},
 	oauth2: {
 		parents: ['backend'],
