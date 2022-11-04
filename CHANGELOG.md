@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/avenga/couper/compare-vscode/v1.5.1...master)
 
+### Added
+
+- completion for OAuth2 client authentication methods `client_secret_jwt` and `private_key_jwt` [#113](https://github.com/avenga/couper-vscode/pull/113)
+
 ---
 
 ## [v1.5.1](https://github.com/avenga/couper-vscode/releases/tag/v1.5.1)
