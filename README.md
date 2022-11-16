@@ -1,5 +1,8 @@
 # Couper Configuration for Visual Studio Code
-This extension adds Couper-specific highlighting and autocompletion to [Couper's configuration file](https://docs.couper.io/configuration/configuration-file) `couper.hcl` in Visual Studio Code.
+
+![Tests](https://github.com/avenga/couper-vscode/actions/workflows/test.yaml/badge.svg)
+
+This extension adds Couper-specific highlighting, autocompletion, diagnostics and more to [Couper's configuration files](https://docs.couper.io/configuration/configuration-file) in Visual Studio Code.
 
 ### Features
 
@@ -10,7 +13,7 @@ Jump directly to the necessary label or value spots.
 
 ### Development
 
-To test or improve this extension you can start with `make run` within your working directory.
+To test or improve this extension you can start with `make run` and `make test` within your working directory.
 
 #### Web-Extension
 
