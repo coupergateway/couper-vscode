@@ -265,6 +265,10 @@ const attributes = {
 		examples: ['permissions-rbac'],
 		type: 'object'
 	},
+	beta_roles_map_file: {
+		parents: ['jwt'],
+		examples: ['permissions-rbac']
+	},
 	beta_required_permission: {
 		parents: ['api', 'endpoint'],
 		examples: ['permissions', 'permissions-map', 'permissions-rbac'],
@@ -278,6 +282,10 @@ const attributes = {
 		parents: ['jwt'],
 		examples: ['permissions-map'],
 		type: 'object'
+	},
+	beta_permissions_map_file: {
+		parents: ['jwt'],
+		examples: ['permissions-map']
 	},
 	beta_service_name: {
 		parents: ['settings'],
