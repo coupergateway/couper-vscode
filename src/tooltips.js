@@ -77,7 +77,7 @@ const hoverProvider = vscode.languages.registerHoverProvider(selector, {
 		}
 		const icon = vscode.Uri.joinPath(extension.extensionUri, GITHUB_ICON)
 		const description = schemaElement.description ?? ""
-		const reference = `![](${icon}) [Reference →](${url})`
+		const documentation = `![](${icon}) [Documentation →](${url})`
 		let examplesMarkdown = ""
 
 		if (schemaElement.examples && schemaElement.examples.length > 0) {
@@ -85,13 +85,13 @@ const hoverProvider = vscode.languages.registerHoverProvider(selector, {
 			let i = 1
 			for (const example of schemaElement.examples) {
 				const url = EXAMPLES_URL + example
-				const counter = schemaElement.examples.length == 1 ? "" : i++
+				const counter = schemaElement.examples.length === 1 ? "" : i++
 				examplesMarkdown += `[Example ${counter} →](${url})\u00A0\u00A0\u00A0`
 			}
 		}
 
 		return {
-			contents: [title + "\n\n" + description, reference, examplesMarkdown]
+			contents: [title + "\n\n" + description, documentation, examplesMarkdown]
 		}
 	}
 })
