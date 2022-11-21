@@ -297,6 +297,13 @@ const attributes = {
 		parents: ['spa'],
 		examples: ['spa-serving']
 	},
+	bootstrap_data: {
+		parents: ['spa'],
+		type: 'object'
+	},
+	bootstrap_data_placeholder: {
+		parents: ['spa'],
+	},
 	ca_file: {
 		parents: ['settings']
 	},

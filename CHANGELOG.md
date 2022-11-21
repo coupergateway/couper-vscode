@@ -5,7 +5,8 @@
 ### Added
 
 - completion for OAuth2 client authentication methods `client_secret_jwt` and `private_key_jwt` [#113](https://github.com/avenga/couper-vscode/pull/113)
-- completion for `beta_roles_map_file` and `beta_permissions_map_file` attributes [#114](https://github.com/avenga/couper-vscode/pull/114)
+- completion for JWT `beta_roles_map_file` and `beta_permissions_map_file` attributes [#114](https://github.com/avenga/couper-vscode/pull/114)
+- completion for SPA `bootstrap_data` and `bootstrap_data_placeholder` attributes [#115](https://github.com/avenga/couper-vscode/pull/115)
 
 ---
 
