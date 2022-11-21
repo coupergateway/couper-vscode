@@ -10,7 +10,7 @@ const selector = { language: 'couper' }
 
 const providers = []
 
-const REFERENCE_URL = "https://docs.couper.io"
+const DOCUMENTATION_URL = "https://docs.couper.io"
 const EXAMPLES_URL = "https://github.com/avenga/couper-examples/tree/master/"
 const GITHUB_ICON = "images/github.png"
 
@@ -37,9 +37,9 @@ const hoverProvider = vscode.languages.registerHoverProvider(selector, {
 				type = "block"
 				schemaElement = blocks[word]
 				if (schemaElement.docs) {
-					url = REFERENCE_URL + schemaElement.docs
+					url = DOCUMENTATION_URL + schemaElement.docs
 				} else {
-					url = REFERENCE_URL + "/configuration/block/" + word
+					url = DOCUMENTATION_URL + "/configuration/block/" + word
 				}
 			} else if (/^\s*=/.test(followingText)) {
 				schemaElement = attributes[word]
@@ -48,9 +48,9 @@ const hoverProvider = vscode.languages.registerHoverProvider(selector, {
 					type = "attribute"
 					const parentBlockDefintion = blocks[parentBlock]
 					if (parentBlockDefintion.docs) {
-						url = REFERENCE_URL + parentBlockDefintion.docs
+						url = DOCUMENTATION_URL + parentBlockDefintion.docs
 					} else {
-						url = REFERENCE_URL + "/configuration/block/" + parentBlock
+						url = DOCUMENTATION_URL + "/configuration/block/" + parentBlock
 					}
 					url += "#attributes"
 				}
@@ -59,11 +59,11 @@ const hoverProvider = vscode.languages.registerHoverProvider(selector, {
 			if (/^\s*\(/.test(followingText)) {
 				type = "function"
 				schemaElement = functions[word]
-				url = REFERENCE_URL + "/configuration/functions"
+				url = DOCUMENTATION_URL + "/configuration/functions"
 			} else if (/^\./.test(followingText)) {
 				type = "variable"
 				schemaElement = variables[word]
-				url = REFERENCE_URL + "/configuration/variables#" + word
+				url = DOCUMENTATION_URL + "/configuration/variables#" + word
 			}
 		}
 
