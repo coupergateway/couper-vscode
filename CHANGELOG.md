@@ -1,14 +1,16 @@
 # Changelog
 
-## [Unreleased](https://github.com/avenga/couper/compare-vscode/v1.5.1...master)
+## [Unreleased](https://github.com/avenga/couper/compare-vscode/v1.6.0...master)
+
+---
+
+## [v1.6.0](https://github.com/avenga/couper-vscode/releases/tag/v1.6.0)
 
 ### Added
 
 - completion for OAuth2 client authentication methods `client_secret_jwt` and `private_key_jwt` [#113](https://github.com/avenga/couper-vscode/pull/113)
 - completion for JWT `beta_roles_map_file` and `beta_permissions_map_file` attributes [#114](https://github.com/avenga/couper-vscode/pull/114)
 - completion for SPA `bootstrap_data` and `bootstrap_data_placeholder` attributes [#115](https://github.com/avenga/couper-vscode/pull/115)
-
----
 
 ## [v1.5.1](https://github.com/avenga/couper-vscode/releases/tag/v1.5.1)
 
