@@ -34,6 +34,11 @@ const blocks = {
 		docs: '/configuration/block/health',
 		labelled: false
 	},
+	beta_job: {
+		parents: ['definitions'],
+		docs: '/configuration/block/job',
+		labelled: true
+	},
 	beta_rate_limit: {
 		parents: (context) => {
 			if (context.length >= 2 && context[0].name === "backend" && context[1].name === "definitions") {
@@ -145,7 +150,7 @@ const blocks = {
 		}
 	},
 	request: {
-		parents: ['endpoint', 'error_handler'],
+		parents: ['endpoint', 'error_handler', 'beta_job'],
 		description: "Executes a request to a backend service.",
 		examples: ['custom-requests', 'multiple-requests'],
 		labels: [null, DEFAULT_LABEL]
@@ -344,7 +349,7 @@ const attributes = {
 		type: 'duration'
 	},
 	custom_log_fields: {
-		parents: ['api', 'backend', 'endpoint', 'error_handler', 'files', 'server', 'spa', 'jwt', 'basic_auth', 'saml', 'oidc', 'beta_oauth2'],
+		parents: ['api', 'backend', 'endpoint', 'error_handler', 'files', 'server', 'spa', 'jwt', 'basic_auth', 'saml', 'oidc', 'beta_job', 'beta_oauth2'],
 		examples: ['custom-logging', 'sequences'],
 		type: 'object'
 	},
@@ -456,7 +461,7 @@ const attributes = {
 		type: 'boolean'
 	},
 	interval: {
-		parents: ['beta_health'],
+		parents: ['beta_health', 'beta_job'],
 		type: 'duration'
 	},
 	json_body: {
