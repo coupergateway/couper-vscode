@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/avenga/couper/compare-vscode/v1.6.0...master)
 
+### Added
+
+- completion for `beta_job` block and its attributes [#117](https://github.com/avenga/couper-vscode/pull/117)
+
 ---
 
 ## [v1.6.0](https://github.com/avenga/couper-vscode/releases/tag/v1.6.0)
