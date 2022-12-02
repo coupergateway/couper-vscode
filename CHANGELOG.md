@@ -5,6 +5,7 @@
 ### Added
 
 - completion for `beta_job` block and its attributes [#117](https://github.com/avenga/couper-vscode/pull/117)
+- jump to proxy definition [#118](https://github.com/avenga/couper-vscode/pull/118)
 
 ---
 
