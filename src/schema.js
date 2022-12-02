@@ -558,7 +558,8 @@ const attributes = {
 		type: 'number'
 	},
 	proxy: { // (label reference in endpoints)
-		parents: ['backend', 'endpoint']
+		parents: ['backend', 'endpoint'],
+		definingBlocks: ["proxy"]
 	},
 	query_params: {
 		parents: ['beta_token_request', 'request'],
