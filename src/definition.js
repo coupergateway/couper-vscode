@@ -56,8 +56,8 @@ function getReference(document, position) {
 	// access_control = [...], disable_access_control = [...]
 	let matches = lineText.match(new RegExp('^\\s*((?:disable_)?access_control)\\s*=\\s*\\[.*?"' + escapedWord + '"', 'm'))
 	if (matches === null) {
-		// backend = "..."
-		matches = lineText.match(new RegExp('^\\s*((?:configuration_|jwks_uri_|userinfo_|token_)?backend)\\s*=\\s*"' + escapedWord + '"', 'm'))
+		// backend = "..." / ..._backend = "..." / proxy = "..."
+		matches = lineText.match(new RegExp('^\\s*((?:configuration_|jwks_uri_|userinfo_|token_)?backend|proxy)\\s*=\\s*"' + escapedWord + '"', 'm'))
 		if (matches === null) {
 			// backend "..." { ...
 			matches = lineText.match(new RegExp('^\\s*(backend)\\s*"' + escapedWord + '"\\s*{', 'm'))
