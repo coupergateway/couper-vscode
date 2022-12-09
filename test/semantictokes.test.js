@@ -1,7 +1,7 @@
 const vscode = require('vscode')
 const { providers } = require('../src/semantictokens')
 
-tokensProvider = providers[0]
+const tokensProvider = providers[0]
 
 const modifiers = {
 	variable: ["readonly"],
