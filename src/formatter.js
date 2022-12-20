@@ -6,7 +6,7 @@ const selector = { language: 'couper' }
 
 const HEREDOC_REGEX = /^\s*[\w-]+\s*=\s*<<(-?)([\w-]+)\s*$/
 const LBRACE_REGEX = /[{([]\s*$/
-const RBRACE_REGEX = /^\s*[})\]]\s*$/
+const RBRACE_REGEX = /^\s*([})\]]\s*)+$/
 
 const providers = []
 
