@@ -621,7 +621,7 @@ const attributes = {
 		parents: ['settings'],
 		options: ['strip', '']
 	},
-	server_timing_headers: {
+	server_timing_header: {
 		parents: ['settings'],
 		type: 'boolean'
 	},
