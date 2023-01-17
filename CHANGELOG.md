@@ -6,6 +6,7 @@
 
 - completion for `beta_job` block and its attributes [#117](https://github.com/avenga/couper-vscode/pull/117)
 - jump to proxy definition [#118](https://github.com/avenga/couper-vscode/pull/118)
+- completion for `server_timing_header` attribute in `settings` block [#120](https://github.com/avenga/couper-vscode/pull/120)
 
 ---
 

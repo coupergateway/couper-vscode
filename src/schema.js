@@ -621,6 +621,10 @@ const attributes = {
 		parents: ['settings'],
 		options: ['strip', '']
 	},
+	server_timing_header: {
+		parents: ['settings'],
+		type: 'boolean'
+	},
 	set_form_params: {
 		parents: ['backend', 'endpoint', 'error_handler', 'proxy'],
 		type: 'object'
