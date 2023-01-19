@@ -261,11 +261,6 @@ const attributes = {
 		parents: ['settings'],
 		type: 'number',
 	},
-	beta_permissions_map: {
-		parents: ['jwt'],
-		examples: ['permissions-map'],
-		type: 'object'
-	},
 	beta_permissions_map_file: {
 		parents: ['jwt'],
 		examples: ['permissions-map']
@@ -534,6 +529,11 @@ const attributes = {
 	permissions_claim: {
 		parents: ['jwt'],
 		examples: ['permissions', 'permissions-map', 'permissions-rbac']
+	},
+	permissions_map: {
+		parents: ['jwt'],
+		examples: ['permissions-map'],
+		type: 'object'
 	},
 	per_period: {
 		parents: ['beta_rate_limit'],
