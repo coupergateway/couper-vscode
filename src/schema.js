@@ -274,11 +274,6 @@ const attributes = {
 		parents: ['jwt'],
 		examples: ['permissions-rbac']
 	},
-	beta_required_permission: {
-		parents: ['api', 'endpoint'],
-		examples: ['permissions', 'permissions-map', 'permissions-rbac'],
-		type: ['string', 'object']
-	},
 	beta_permissions_claim: {
 		parents: ['jwt'],
 		examples: ['permissions', 'permissions-map', 'permissions-rbac']
@@ -609,6 +604,11 @@ const attributes = {
 		parents: ['jwt'],
 		examples: ['jwt-access-control'],
 		type: 'tuple'
+	},
+	required_permission: {
+		parents: ['api', 'endpoint'],
+		examples: ['permissions', 'permissions-map', 'permissions-rbac'],
+		type: ['string', 'object']
 	},
 	retries: {
 		parents: ['oauth2'],
