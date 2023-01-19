@@ -261,11 +261,6 @@ const attributes = {
 		parents: ['settings'],
 		type: 'number',
 	},
-	beta_roles_map: {
-		parents: ['jwt'],
-		examples: ['permissions-rbac'],
-		type: 'object'
-	},
 	beta_roles_map_file: {
 		parents: ['jwt'],
 		examples: ['permissions-rbac']
@@ -613,6 +608,11 @@ const attributes = {
 	roles_claim: {
 		parents: ['jwt'],
 		examples: ['permissions-rbac']
+	},
+	roles_map: {
+		parents: ['jwt'],
+		examples: ['permissions-rbac'],
+		type: 'object'
 	},
 	scope: {
 		parents: ['beta_oauth2', 'oauth2', 'oidc']
