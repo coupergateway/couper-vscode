@@ -261,10 +261,6 @@ const attributes = {
 		parents: ['settings'],
 		type: 'number',
 	},
-	beta_permissions_map_file: {
-		parents: ['jwt'],
-		examples: ['permissions-map']
-	},
 	beta_service_name: {
 		parents: ['settings'],
 	},
@@ -534,6 +530,10 @@ const attributes = {
 		parents: ['jwt'],
 		examples: ['permissions-map'],
 		type: 'object'
+	},
+	permissions_map_file: {
+		parents: ['jwt'],
+		examples: ['permissions-map']
 	},
 	per_period: {
 		parents: ['beta_rate_limit'],
