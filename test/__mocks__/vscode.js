@@ -34,6 +34,7 @@ class TextDocument {
 	constructor(text) {
 		this.text = text
 		this.lines = text.split("\n")
+		this.lineCount = this.lines.length
 	}
 
 	getText(range) {
@@ -53,10 +54,32 @@ class TextDocument {
 
 	offsetAt(position) {
 		const precedingLines = this.lines.slice(0, position.line)
-		const lastLine = this.lines[Math.min(position.line, this.lines.length - 1)]
+		const lastLine = this.lines[Math.min(position.line, this.lineCount - 1)]
 		const newlineCount = precedingLines.length
 		const characterCount = Math.min(position.character, lastLine.length)
 		return precedingLines.join("").length + newlineCount + characterCount
+	}
+
+	lineAt(lineNumber) {
+		const text = this.lines[lineNumber]
+		const start = new Position(lineNumber, 0)
+		const end = new Position(lineNumber, text.length)
+		return new TextLine(text, new Range(this.offsetAt(start), this.offsetAt(end)))
+	}
+}
+
+class TextLine {
+	constructor(text, range) {
+		this.text = text
+		this.range = range
+		const index = this.text.search(/\S/)
+		this.firstNonWhitespaceCharacterIndex = index == -1 ? text.length : index
+	}
+}
+
+class TextEdit {
+	static replace(range, text) {
+		return { range: range, replace: text }
 	}
 }
 
@@ -71,6 +94,8 @@ const vscode = {
 	Position: Position,
 	Range: Range,
 	TextDocument: TextDocument,
+	TextLine: TextLine,
+	TextEdit: TextEdit,
 
 	SemanticTokensLegend: SemanticTokensLegend,
 	SemanticTokensBuilder: SemanticTokensBuilder,
@@ -78,7 +103,10 @@ const vscode = {
 	languages: {
 		registerDocumentSemanticTokensProvider: (selector, provider) => {
 			return provider
-		}
+		},
+		registerDocumentFormattingEditProvider: (selector, provider) => {
+			return provider
+		},
 	}
 }
 

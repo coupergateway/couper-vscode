@@ -5,10 +5,14 @@ const vscode = require('vscode')
 const selector = { language: 'couper' }
 
 const HEREDOC_REGEX = /^\s*[\w-]+\s*=\s*<<(-?)([\w-]+)\s*$/
-const LBRACE_REGEX = /[{([]\s*$/
-const RBRACE_REGEX = /^\s*[})\]]\s*$/
+const LBRACE_REGEX = /[{([]/g
+const RBRACE_REGEX = /[})\]]/g
 
 const providers = []
+
+const countREOccurences = (str, re) => {
+  return ((str || '').match(re) || []).length
+}
 
 const formattingProvider = vscode.languages.registerDocumentFormattingEditProvider(selector, {
 	provideDocumentFormattingEdits(document, options) {
@@ -24,8 +28,11 @@ const formattingProvider = vscode.languages.registerDocumentFormattingEditProvid
 
 		for (let i = 0; i < document.lineCount; i++) {
 			const line = document.lineAt(i)
-			if (!isHereDoc && RBRACE_REGEX.test(line.text)) {
-				indentDepth--
+			const countOpening = countREOccurences(line.text, LBRACE_REGEX)
+			const countClosing = countREOccurences(line.text, RBRACE_REGEX)
+			const diffOpeningClosing = countOpening - countClosing
+			if (!isHereDoc && diffOpeningClosing < 0) {
+				indentDepth = indentDepth + diffOpeningClosing
 			} else if (isHereDoc) {
 				const foundHereDocEnd = hereDocEndRegex.test(line.text)
 				if (foundHereDocEnd && isIndentedHereDoc) {
@@ -40,8 +47,8 @@ const formattingProvider = vscode.languages.registerDocumentFormattingEditProvid
 				edits.push(vscode.TextEdit.replace(line.range, indentation + text))
 			}
 
-			if (!isHereDoc && LBRACE_REGEX.test(line.text)) {
-				indentDepth++
+			if (!isHereDoc && diffOpeningClosing > 0) {
+				indentDepth = indentDepth + diffOpeningClosing
 				continue
 			}
 

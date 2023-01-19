@@ -1,4 +1,4 @@
-const { Range, Position, TextDocument } = require('vscode')
+const { Range, Position, TextDocument, TextLine } = require('vscode')
 
 describe('VSCode API mock', () => {
 	describe('Position', () => {
@@ -23,6 +23,19 @@ describe('VSCode API mock', () => {
 			const range = new Range(start, end)
 			expect(range.start).toStrictEqual(start)
 			expect(range.end).toStrictEqual(end)
+		})
+	})
+
+	describe('TextLine', () => {
+		let testcases = [
+			["", 0],
+			["   ", 3],
+			[" foo", 1],
+		]
+
+		test.each(testcases)('new TextLine("%s")', (text, firstNonWhitespace) => {
+			const line = new TextLine(text)
+			expect(line.firstNonWhitespaceCharacterIndex).toBe(firstNonWhitespace)
 		})
 	})
 
@@ -65,6 +78,17 @@ describe('VSCode API mock', () => {
 			const range = new Range(new Position(0, 2), new Position(1, 3))
 			expect(document.getText()).toBe(text)
 			expect(document.getText(range)).toBe('ne 1\nLin')
+		})
+
+		testcases = [
+			[ "empty", 1, ""],
+			[ "single line", 1, "Line"],
+			[ "3 lines", 3, text],
+		]
+
+		test.each(testcases)("lineCount %s → %i", (name, lineCount, text) => {
+			const document = new TextDocument(text)
+			expect(document.lineCount).toBe(lineCount)
 		})
 	})
 })
