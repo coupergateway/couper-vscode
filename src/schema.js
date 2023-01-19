@@ -261,10 +261,6 @@ const attributes = {
 		parents: ['settings'],
 		type: 'number',
 	},
-	beta_permissions_claim: {
-		parents: ['jwt'],
-		examples: ['permissions', 'permissions-map', 'permissions-rbac']
-	},
 	beta_permissions_map: {
 		parents: ['jwt'],
 		examples: ['permissions-map'],
@@ -534,6 +530,10 @@ const attributes = {
 	period_window: {
 		parents: ['beta_rate_limit'],
 		options: ['sliding', 'fixed']
+	},
+	permissions_claim: {
+		parents: ['jwt'],
+		examples: ['permissions', 'permissions-map', 'permissions-rbac']
 	},
 	per_period: {
 		parents: ['beta_rate_limit'],
