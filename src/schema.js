@@ -261,10 +261,6 @@ const attributes = {
 		parents: ['settings'],
 		type: 'number',
 	},
-	beta_roles_claim: {
-		parents: ['jwt'],
-		examples: ['permissions-rbac']
-	},
 	beta_roles_map: {
 		parents: ['jwt'],
 		examples: ['permissions-rbac'],
@@ -613,6 +609,10 @@ const attributes = {
 	retries: {
 		parents: ['oauth2'],
 		type: 'number'
+	},
+	roles_claim: {
+		parents: ['jwt'],
+		examples: ['permissions-rbac']
 	},
 	scope: {
 		parents: ['beta_oauth2', 'oauth2', 'oidc']
