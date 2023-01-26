@@ -12,9 +12,18 @@
 - jump to proxy definition [#118](https://github.com/avenga/couper-vscode/pull/118)
 - completion for `server_timing_header` attribute in `settings` block [#120](https://github.com/avenga/couper-vscode/pull/120)
 
+### Changed
+
+- Unbeta permission features: [#121](https://github.com/avenga/couper-vscode/pull/121)
+  - `beta_required_permission` attribute for `api` and `endpoint` blocks,
+  - `beta_insufficient_permissions` `error_handler` label,
+  - `beta_permissions_claim`, `beta_permissions_map`, `beta_permissions_map_file`, `beta_roles_claim`, `beta_roles_map` and `beta_roles_map_file` attributes for `jwt` block.
+
 ### Fixed
 
 - formatting of more complex hcl files [#119](https://github.com/avenga/couper-vscode/pull/119)
+
+---
 
 ## [v1.6.0](https://github.com/avenga/couper-vscode/releases/tag/v1.6.0)
 
