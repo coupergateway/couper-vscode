@@ -1,6 +1,10 @@
 # Changelog
 
-## [Unreleased](https://github.com/avenga/couper/compare-vscode/v1.6.0...master)
+## [Unreleased](https://github.com/avenga/couper/compare-vscode/v1.7.0...master)
+
+---
+
+## [v1.7.0](https://github.com/avenga/couper-vscode/releases/tag/v1.7.0)
 
 ### Added
 
@@ -8,7 +12,9 @@
 - jump to proxy definition [#118](https://github.com/avenga/couper-vscode/pull/118)
 - completion for `server_timing_header` attribute in `settings` block [#120](https://github.com/avenga/couper-vscode/pull/120)
 
----
+### Fixed
+
+- formatting of more complex hcl files [#119](https://github.com/avenga/couper-vscode/pull/119)
 
 ## [v1.6.0](https://github.com/avenga/couper-vscode/releases/tag/v1.6.0)
 
