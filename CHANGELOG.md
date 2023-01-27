@@ -1,6 +1,10 @@
 # Changelog
 
-## [Unreleased](https://github.com/avenga/couper/compare-vscode/v1.7.0...master)
+## [Unreleased](https://github.com/avenga/couper/compare-vscode/v1.8.0...master)
+
+---
+
+## [v1.8.0](https://github.com/avenga/couper-vscode/releases/tag/v1.8.0)
 
 ### Changed
 
@@ -8,8 +12,6 @@
   - `beta_required_permission` attribute for `api` and `endpoint` blocks,
   - `beta_insufficient_permissions` `error_handler` label,
   - `beta_permissions_claim`, `beta_permissions_map`, `beta_permissions_map_file`, `beta_roles_claim`, `beta_roles_map` and `beta_roles_map_file` attributes for `jwt` block.
-
----
 
 ## [v1.7.0](https://github.com/avenga/couper-vscode/releases/tag/v1.7.0)
 
