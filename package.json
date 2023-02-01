@@ -1,7 +1,7 @@
 {
   "name": "couperconf",
   "displayName": "Couper Configuration",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "publisher": "couper",
   "description": "Provides autocompletion, syntax/semantic validation and syntax highlighting for Couper's HCL based configuration file.",
   "keywords": [
