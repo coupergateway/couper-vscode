@@ -8,8 +8,8 @@
 
 ### Fixed
 
-- missing transition for unbeta permission features while using different Couper versions [#122](https://github.com/avenga/couper-vscode/pull/122)
-
+- missing transition for unbeta permission features while using different Couper versions [#126](https://github.com/avenga/couper-vscode/pull/126)
+  - added a deprecated-warning
 
 ## [v1.8.0](https://github.com/avenga/couper-vscode/releases/tag/v1.8.0)
 
