@@ -35,6 +35,14 @@ function CheckFailed(message, severity) {
 	}
 }
 
+function CheckDeprecated(message) {
+	return {
+		ok: false,
+		message: message,
+		severity: vscode.DiagnosticSeverity.Warning
+	}
+}
+
 function getHint(allowedParents) {
 	allowedParents.sort()
 	switch (allowedParents.length) {
@@ -105,7 +113,7 @@ function checkBlockLabels(name, labels, parentBlock) {
 
 		if (["backend", "request", "proxy", "environment"].includes(name)) {
 			const index = label.search(REGEXES.labelsyntax)
-			if (index != -1) {
+			if (index !== -1) {
 				return CheckFailed(`Invalid character in label "${label}": ${label.charAt(index)}`)
 			}
 		}
@@ -174,6 +182,11 @@ function checkAttributeValue(name, value) {
 		if (!types.includes("object")) {
 			return CheckFailed(invalidType)
 		}
+	}
+
+	let deprecated = schema.attributes[name].deprecated
+	if (deprecated !== undefined && deprecated.version !== undefined && deprecated.attribute !== undefined) {
+		return CheckDeprecated(`\`${name}\` is deprecated with Couper \`${deprecated.version}\` in favor of \`${deprecated.attribute}\``)
 	}
 
 	return CheckOK

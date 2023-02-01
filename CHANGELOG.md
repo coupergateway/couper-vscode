@@ -1,8 +1,15 @@
 # Changelog
 
-## [Unreleased](https://github.com/avenga/couper/compare-vscode/v1.8.0...master)
+## [Unreleased](https://github.com/avenga/couper/compare-vscode/v1.8.1...master)
 
 ---
+
+## [v1.8.1](https://github.com/avenga/couper-vscode/releases/tag/v1.8.1)
+
+### Fixed
+
+- missing transition for unbeta permission features while using different Couper versions [#122](https://github.com/avenga/couper-vscode/pull/122)
+
 
 ## [v1.8.0](https://github.com/avenga/couper-vscode/releases/tag/v1.8.0)
 
