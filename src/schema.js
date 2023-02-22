@@ -253,6 +253,10 @@ const attributes = {
 	basic_auth: {
 		parents: ['backend']
 	},
+	bearer: {
+		parents: ['jwt'],
+		type: 'boolean',
+	},
 	beta_metrics: {
 		parents: ['settings'],
 		type: 'boolean',
