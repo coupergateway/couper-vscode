@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/avenga/couper/compare-vscode/v1.8.1...master)
 
+### Added
+
+- completion for `bearer` attribute for `jwt` block [#128](https://github.com/avenga/couper-vscode/pull/128)
+
 ---
 
 ## [v1.8.1](https://github.com/avenga/couper-vscode/releases/tag/v1.8.1)
