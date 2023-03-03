@@ -186,7 +186,7 @@ function checkAttributeValue(name, value) {
 
 	let deprecated = schema.attributes[name].deprecated
 	if (deprecated !== undefined && deprecated.version !== undefined && deprecated.attribute !== undefined) {
-		return CheckDeprecated(`\`${name}\` is deprecated with Couper \`${deprecated.version}\` in favor of \`${deprecated.attribute}\``)
+		return CheckDeprecated(`\`${name}\` is deprecated in favor of \`${deprecated.attribute} and will no longer be supported with Couper \`${deprecated.version}\`\``)
 	}
 
 	return CheckOK

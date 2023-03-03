@@ -530,7 +530,7 @@ const attributes = {
 		parents: ['jwt'],
 		examples: ['permissions', 'permissions-map', 'permissions-rbac'],
 		deprecated: {
-			version: 'v1.12',
+			version: 'v1.13',
 			attribute: 'permissions_claim'
 		}
 	},
@@ -544,7 +544,7 @@ const attributes = {
 		examples: ['permissions-map'],
 		type: 'object',
 		deprecated: {
-			version: 'v1.12',
+			version: 'v1.13',
 			attribute: 'permissions_map'
 		}
 	},
@@ -556,7 +556,7 @@ const attributes = {
 		parents: ['jwt'],
 		examples: ['permissions-map'],
 		deprecated: {
-			version: 'v1.12',
+			version: 'v1.13',
 			attribute: 'permissions_map_file'
 		}
 	},
@@ -627,7 +627,7 @@ const attributes = {
 		examples: ['permissions', 'permissions-map', 'permissions-rbac'],
 		type: ['string', 'object'],
 		deprecated: {
-			version: 'v1.12',
+			version: 'v1.13',
 			attribute: 'required_permission'
 		}
 	},
@@ -643,7 +643,7 @@ const attributes = {
 		parents: ['jwt'],
 		examples: ['permissions-rbac'],
 		deprecated: {
-			version: 'v1.12',
+			version: 'v1.13',
 			attribute: 'roles_claim'
 		}
 	},
@@ -657,7 +657,7 @@ const attributes = {
 		examples: ['permissions-rbac'],
 		type: 'object',
 		deprecated: {
-			version: 'v1.12',
+			version: 'v1.13',
 			attribute: 'roles_map'
 		}
 	},
@@ -669,7 +669,7 @@ const attributes = {
 		parents: ['jwt'],
 		examples: ['permissions-rbac'],
 		deprecated: {
-			version: 'v1.12',
+			version: 'v1.13',
 			attribute: 'roles_map_file'
 		}
 	},
