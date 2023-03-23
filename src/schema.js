@@ -93,9 +93,9 @@ const blocks = {
 			return [null].concat(blocks.error_handler._labelsForParent[parentBlockName])
 		},
 		_labelsForParent: {
-			'api':         ['access_control', 'backend', 'backend_timeout', 'backend_openapi_validation', 'backend_unhealthy', 'beta_backend_token_request', 'insufficient_permissions', 'beta_insufficient_permissions'],
+			'api':         ['access_control', 'backend', 'backend_timeout', 'backend_openapi_validation', 'backend_unhealthy', 'beta_backend_token_request', 'insufficient_permissions'],
 			'basic_auth':  ['access_control', 'basic_auth', 'basic_auth_credentials_missing'],
-			'endpoint':    ['access_control', 'backend', 'backend_timeout', 'backend_openapi_validation', 'backend_unhealthy', 'beta_backend_token_request', 'endpoint', 'insufficient_permissions', 'beta_insufficient_permissions', 'sequence', 'unexpected_status'],
+			'endpoint':    ['access_control', 'backend', 'backend_timeout', 'backend_openapi_validation', 'backend_unhealthy', 'beta_backend_token_request', 'endpoint', 'insufficient_permissions', 'sequence', 'unexpected_status'],
 			'jwt':         ['access_control', 'jwt', 'jwt_token_expired', 'jwt_token_invalid', 'jwt_token_missing'],
 			'saml':        ['access_control', 'saml'],
 			'beta_oauth2': ['access_control', 'oauth2'],
@@ -530,39 +530,14 @@ const attributes = {
 		parents: ['jwt'],
 		examples: ['permissions', 'permissions-map', 'permissions-rbac']
 	},
-	beta_permissions_claim: {
-		parents: ['jwt'],
-		examples: ['permissions', 'permissions-map', 'permissions-rbac'],
-		deprecated: {
-			version: 'v1.13',
-			attribute: 'permissions_claim'
-		}
-	},
 	permissions_map: {
 		parents: ['jwt'],
 		examples: ['permissions-map'],
 		type: 'object'
 	},
-	beta_permissions_map: {
-		parents: ['jwt'],
-		examples: ['permissions-map'],
-		type: 'object',
-		deprecated: {
-			version: 'v1.13',
-			attribute: 'permissions_map'
-		}
-	},
 	permissions_map_file: {
 		parents: ['jwt'],
 		examples: ['permissions-map']
-	},
-	beta_permissions_map_file: {
-		parents: ['jwt'],
-		examples: ['permissions-map'],
-		deprecated: {
-			version: 'v1.13',
-			attribute: 'permissions_map_file'
-		}
 	},
 	per_period: {
 		parents: ['beta_rate_limit'],
@@ -626,15 +601,6 @@ const attributes = {
 		examples: ['permissions', 'permissions-map', 'permissions-rbac'],
 		type: ['string', 'object']
 	},
-	beta_required_permission: {
-		parents: ['api', 'endpoint'],
-		examples: ['permissions', 'permissions-map', 'permissions-rbac'],
-		type: ['string', 'object'],
-		deprecated: {
-			version: 'v1.13',
-			attribute: 'required_permission'
-		}
-	},
 	retries: {
 		parents: ['oauth2'],
 		type: 'number'
@@ -643,39 +609,14 @@ const attributes = {
 		parents: ['jwt'],
 		examples: ['permissions-rbac']
 	},
-	beta_roles_claim: {
-		parents: ['jwt'],
-		examples: ['permissions-rbac'],
-		deprecated: {
-			version: 'v1.13',
-			attribute: 'roles_claim'
-		}
-	},
 	roles_map: {
 		parents: ['jwt'],
 		examples: ['permissions-rbac'],
 		type: 'object'
 	},
-	beta_roles_map: {
-		parents: ['jwt'],
-		examples: ['permissions-rbac'],
-		type: 'object',
-		deprecated: {
-			version: 'v1.13',
-			attribute: 'roles_map'
-		}
-	},
 	roles_map_file: {
 		parents: ['jwt'],
 		examples: ['permissions-rbac']
-	},
-	beta_roles_map_file: {
-		parents: ['jwt'],
-		examples: ['permissions-rbac'],
-		deprecated: {
-			version: 'v1.13',
-			attribute: 'roles_map_file'
-		}
 	},
 	scope: {
 		parents: ['beta_oauth2', 'oauth2', 'oidc']
