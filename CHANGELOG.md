@@ -6,6 +6,9 @@
 
 - completion for `bearer` attribute for `jwt` block [#128](https://github.com/avenga/couper-vscode/pull/128)
 
+### Removed
+- deprecated `beta_`-prefixed permission-related features [#131](https://github.com/avenga/couper-vscode/pull/131)
+
 ---
 
 ## [v1.8.1](https://github.com/avenga/couper-vscode/releases/tag/v1.8.1)
