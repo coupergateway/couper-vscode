@@ -5,6 +5,7 @@
 ### Added
 
 - completion for `bearer` attribute for `jwt` block [#128](https://github.com/avenga/couper-vscode/pull/128)
+- completion for `beta_introspection` block and its child blocks and attributes [#132](https://github.com/avenga/couper-vscode/pull/132)
 
 ---
 
