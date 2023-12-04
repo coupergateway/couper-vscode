@@ -1,6 +1,6 @@
 # Couper Configuration for Visual Studio Code
 
-![Tests](https://github.com/avenga/couper-vscode/actions/workflows/test.yaml/badge.svg)
+![Tests](https://github.com/coupergateway/couper-vscode/actions/workflows/test.yaml/badge.svg)
 
 This extension adds Couper-specific highlighting, autocompletion, diagnostics and more to [Couper's configuration files](https://docs.couper.io/configuration/configuration-file) in Visual Studio Code.
 
@@ -22,7 +22,7 @@ on vscode.dev environment. See https://code.visualstudio.com/api/extension-guide
 
 ### About Couper
 
-[Couper](https://github.com/avenga/couper) is a lightweight API gateway designed to support developers in building and operating API-driven Web projects. Acting as a proxy component it connects clients with (micro) services and adds access control and observability to the project.
+[Couper](https://github.com/coupergateway/couper) is a lightweight API gateway designed to support developers in building and operating API-driven Web projects. Acting as a proxy component it connects clients with (micro) services and adds access control and observability to the project.
 
 ### [License](LICENSE)
 
