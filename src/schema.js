@@ -54,6 +54,16 @@ const blocks = {
 		description: "Configures a request to get a token used to authorize backend requests.",
 		labels: [null, DEFAULT_LABEL]
 	},
+	client_certificate: {
+		parents: (context) => {
+			if (context.length >= 2 && context[0].name === "tls" && context[1].name === "server") {
+				return ['tls']
+			}
+			return `"client_certificate" only valid in a "tls" in a "server" block.`
+		},
+		description: "Configures a client certificate.",
+		labels: [null, DEFAULT_LABEL]
+	},
 	cors: {
 		parents: ['api', 'files', 'server', 'spa'],
 		description: "Configures CORS (Cross-Origin Resource Sharing) behavior.",
@@ -287,6 +297,12 @@ const attributes = {
 	bootstrap_data_placeholder: {
 		parents: ['spa'],
 	},
+	ca_certificate: {
+		parents: ['client_certificate']
+	},
+	ca_certificate_file: {
+		parents: ['client_certificate']
+	},
 	ca_file: {
 		parents: ['settings']
 	},
@@ -470,6 +486,12 @@ const attributes = {
 	key_file: {
 		parents: ['jwt', 'jwt_signing_profile'],
 		examples: ['jwt-access-control']
+	},
+	leaf_certificate: {
+		parents: ['client_certificate']
+	},
+	leaf_certificate_file: {
+		parents: ['client_certificate']
 	},
 	log_format: {
 		parents: ['settings'],
