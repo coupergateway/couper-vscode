@@ -202,8 +202,8 @@ const blocks = {
 		labels: [null, DEFAULT_LABEL]
 	},
 	tls: {
-		parents: ['server'], // TODO add backend
-		description: "Configures mTLS for server.", // TODO add backend
+		parents: ['backend', 'server'],
+		description: "Configures mTLS for backend or server.",
 		labelled: false
 	},
 	websockets: {
@@ -321,9 +321,41 @@ const attributes = {
 		examples: ['jwt-access-control'],
 		type: 'object'
 	},
+	client_certificate: {
+		parents: (context) => {
+			if (context.length >= 2 && context[0].name === "tls" && context[1].name === "backend") {
+				return ['tls']
+			}
+			return `"client_certificate" only valid in a "tls" in a "backend" block.`
+		}
+	},
+	client_certificate_file: {
+		parents: (context) => {
+			if (context.length >= 2 && context[0].name === "tls" && context[1].name === "backend") {
+				return ['tls']
+			}
+			return `"client_certificate_file" only valid in a "tls" in a "backend" block.`
+		}
+	},
 	client_id: {
 		parents: ['beta_oauth2', 'oauth2', 'oidc'],
 		examples: ['oauth2-client-credentials', 'oidc']
+	},
+	client_private_key: {
+		parents: (context) => {
+			if (context.length >= 2 && context[0].name === "tls" && context[1].name === "backend") {
+				return ['tls']
+			}
+			return `"client_private_key" only valid in a "tls" in a "backend" block.`
+		}
+	},
+	client_private_key_file: {
+		parents: (context) => {
+			if (context.length >= 2 && context[0].name === "tls" && context[1].name === "backend") {
+				return ['tls']
+			}
+			return `"client_private_key_file" only valid in a "tls" in a "backend" block.`
+		}
 	},
 	client_secret: {
 		parents: ['beta_oauth2', 'oauth2', 'oidc'],
@@ -732,6 +764,22 @@ const attributes = {
 	secure_cookies: {
 		parents: ['settings'],
 		options: ['strip', '']
+	},
+	server_ca_certificate: {
+		parents: (context) => {
+			if (context.length >= 2 && context[0].name === "tls" && context[1].name === "backend") {
+				return ['tls']
+			}
+			return `"server_ca_certificate" only valid in a "tls" in a "backend" block.`
+		}
+	},
+	server_ca_certificate_file: {
+		parents: (context) => {
+			if (context.length >= 2 && context[0].name === "tls" && context[1].name === "backend") {
+				return ['tls']
+			}
+			return `"server_ca_certificate_file" only valid in a "tls" in a "backend" block.`
+		}
 	},
 	server_timing_header: {
 		parents: ['settings'],
