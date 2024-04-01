@@ -181,6 +181,16 @@ const blocks = {
 		labels: [null, DEFAULT_LABEL],
 		description: "Bundles gateway services accessible under a port.",
 	},
+	server_certificate: {
+		parents: (context) => {
+			if (context.length >= 2 && context[0].name === "tls" && context[1].name === "server") {
+				return ['tls']
+			}
+			return `"server_certificate" only valid in a "tls" in a "server" block.`
+		},
+		description: "Configures a server certificate.",
+		labels: [null, DEFAULT_LABEL]
+	},
 	settings: {
 		description: "Configures global behavior of your gateway.",
 		labelled: false
@@ -594,6 +604,18 @@ const attributes = {
 	per_period: {
 		parents: ['beta_rate_limit'],
 		type: 'number'
+	},
+	public_key: {
+		parents: ['server_certificate']
+	},
+	public_key_file: {
+		parents: ['server_certificate']
+	},
+	private_key: {
+		parents: ['server_certificate']
+	},
+	private_key_file: {
+		parents: ['server_certificate']
 	},
 	proxy: { // (label reference in endpoints)
 		parents: ['backend', 'endpoint'],
