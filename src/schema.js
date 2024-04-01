@@ -181,6 +181,11 @@ const blocks = {
 		examples: ['spa-serving'],
 		labels: [null, DEFAULT_LABEL]
 	},
+	tls: {
+		parents: ['server'], // TODO add backend
+		description: "Configures mTLS for server.", // TODO add backend
+		labelled: false
+	},
 	websockets: {
 		parents: ['proxy'],
 		description: "Activates support for WebSocket connections.",
