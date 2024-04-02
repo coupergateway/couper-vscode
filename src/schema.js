@@ -2,6 +2,15 @@
 
 const DEFAULT_LABEL = "…"
 
+const createCheckGrandparent = (feature, parentBlockName, grandparentBlockName) => {
+	return (context) => {
+		if (context.length >= 2 && context[0].name === parentBlockName && context[1].name === grandparentBlockName) {
+			return [parentBlockName]
+		}
+		return `"${feature}" only valid in a "${parentBlockName}" in a "${grandparentBlockName}" block.`
+	}
+}
+
 const blocks = {
 	api: {
 		parents: ['server'],
@@ -40,12 +49,7 @@ const blocks = {
 		labelled: true
 	},
 	beta_rate_limit: {
-		parents: (context) => {
-			if (context.length >= 2 && context[0].name === "backend" && context[1].name === "definitions") {
-				return ['backend']
-			}
-			return `"beta_rate_limit" only valid in a "backend" in a "definitions" block.`
-		},
+		parents: createCheckGrandparent("beta_rate_limit", "backend", "definitions"),
 		description: "Protects backend services. It implements quota management used to avoid cascading failures or to spare resources.",
 		labelled: false
 	},
@@ -55,12 +59,7 @@ const blocks = {
 		labels: [null, DEFAULT_LABEL]
 	},
 	client_certificate: {
-		parents: (context) => {
-			if (context.length >= 2 && context[0].name === "tls" && context[1].name === "server") {
-				return ['tls']
-			}
-			return `"client_certificate" only valid in a "tls" in a "server" block.`
-		},
+		parents: createCheckGrandparent("client_certificate", "tls", "server"),
 		description: "Configures a client certificate.",
 		labels: [null, DEFAULT_LABEL]
 	},
@@ -182,12 +181,7 @@ const blocks = {
 		description: "Bundles gateway services accessible under a port.",
 	},
 	server_certificate: {
-		parents: (context) => {
-			if (context.length >= 2 && context[0].name === "tls" && context[1].name === "server") {
-				return ['tls']
-			}
-			return `"server_certificate" only valid in a "tls" in a "server" block.`
-		},
+		parents: createCheckGrandparent("server_certificate", "tls", "server"),
 		description: "Configures a server certificate.",
 		labels: [null, DEFAULT_LABEL]
 	},
@@ -322,40 +316,20 @@ const attributes = {
 		type: 'object'
 	},
 	client_certificate: {
-		parents: (context) => {
-			if (context.length >= 2 && context[0].name === "tls" && context[1].name === "backend") {
-				return ['tls']
-			}
-			return `"client_certificate" only valid in a "tls" in a "backend" block.`
-		}
+		parents: createCheckGrandparent("client_certificate", "tls", "backend")
 	},
 	client_certificate_file: {
-		parents: (context) => {
-			if (context.length >= 2 && context[0].name === "tls" && context[1].name === "backend") {
-				return ['tls']
-			}
-			return `"client_certificate_file" only valid in a "tls" in a "backend" block.`
-		}
+		parents: createCheckGrandparent("client_certificate_file", "tls", "backend")
 	},
 	client_id: {
 		parents: ['beta_oauth2', 'oauth2', 'oidc'],
 		examples: ['oauth2-client-credentials', 'oidc']
 	},
 	client_private_key: {
-		parents: (context) => {
-			if (context.length >= 2 && context[0].name === "tls" && context[1].name === "backend") {
-				return ['tls']
-			}
-			return `"client_private_key" only valid in a "tls" in a "backend" block.`
-		}
+		parents: createCheckGrandparent("client_private_key", "tls", "backend")
 	},
 	client_private_key_file: {
-		parents: (context) => {
-			if (context.length >= 2 && context[0].name === "tls" && context[1].name === "backend") {
-				return ['tls']
-			}
-			return `"client_private_key_file" only valid in a "tls" in a "backend" block.`
-		}
+		parents: createCheckGrandparent("client_private_key_file", "tls", "backend")
 	},
 	client_secret: {
 		parents: ['beta_oauth2', 'oauth2', 'oidc'],
@@ -766,20 +740,10 @@ const attributes = {
 		options: ['strip', '']
 	},
 	server_ca_certificate: {
-		parents: (context) => {
-			if (context.length >= 2 && context[0].name === "tls" && context[1].name === "backend") {
-				return ['tls']
-			}
-			return `"server_ca_certificate" only valid in a "tls" in a "backend" block.`
-		}
+		parents: createCheckGrandparent("server_ca_certificate", "tls", "backend")
 	},
 	server_ca_certificate_file: {
-		parents: (context) => {
-			if (context.length >= 2 && context[0].name === "tls" && context[1].name === "backend") {
-				return ['tls']
-			}
-			return `"server_ca_certificate_file" only valid in a "tls" in a "backend" block.`
-		}
+		parents: createCheckGrandparent("server_ca_certificate_file", "tls", "backend")
 	},
 	server_timing_header: {
 		parents: ['settings'],
