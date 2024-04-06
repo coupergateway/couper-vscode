@@ -257,6 +257,10 @@ const attributes = {
 		parents: ['jwt'],
 		type: 'boolean',
 	},
+	beta_dpop: {
+		parents: ['jwt'],
+		type: 'boolean',
+	},
 	beta_metrics: {
 		parents: ['settings'],
 		type: 'boolean',
