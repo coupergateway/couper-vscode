@@ -5,7 +5,7 @@
 ### Added
 
 - completion for `bearer` attribute for `jwt` block [#128](https://github.com/coupergateway/couper-vscode/pull/128)
-- completion for `tls`, `server_certificate` and `client_certificate` blocks and their attributes [#136](https://github.com/coupergateway/couper-vscode/pull/136)
+- completion for `tls`, `server_certificate` and `client_certificate` blocks and their attributes; completion for `can()` and `url_decode()` functions [#136](https://github.com/coupergateway/couper-vscode/pull/136)
 
 ---
 
