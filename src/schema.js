@@ -867,6 +867,7 @@ const attributes = {
 const functions = {
 	base64_decode: { description: 'Decodes Base64 data, as specified in RFC 4648.' },
 	base64_encode: { description: 'Encodes Base64 data, as specified in RFC 4648.' },
+	can: { description: 'Tries to evaluate the expression given in its first argument.' },
 	contains: { description: 'Determines whether a given list contains a given single value as one of its elements.' },
 	default: { description: 'Returns the first of the given arguments that is not null.' },
 	join: { description: 'Concatenates together the string elements of one or more lists with a given separator.' },
