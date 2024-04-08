@@ -898,6 +898,7 @@ const functions = {
 	to_upper: { description: 'Converts a given string to uppercase.' },
 	trim: { description: 'Removes any whitespace characters from the start and end of the given string.' },
 	unixtime: { description: 'Retrieves the current UNIX timestamp in seconds.' },
+	url_decode: { description: 'URL-decodes a given string according to RFC 3986.' },
 	url_encode: { description: 'URL-encodes a given string according to RFC 3986.' },
 }
 
