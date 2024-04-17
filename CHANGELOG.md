@@ -7,6 +7,9 @@
 - completion for `bearer` attribute for `jwt` block [#128](https://github.com/coupergateway/couper-vscode/pull/128)
 - completion for `tls`, `server_certificate` and `client_certificate` blocks and their attributes; completion for `can()` and `url_decode()` functions [#136](https://github.com/coupergateway/couper-vscode/pull/136)
 
+### Removed
+- deprecated `beta_`-prefixed permission-related features [#131](https://github.com/avenga/couper-vscode/pull/131)
+
 ---
 
 ## [v1.8.1](https://github.com/coupergateway/couper-vscode/releases/tag/v1.8.1)
