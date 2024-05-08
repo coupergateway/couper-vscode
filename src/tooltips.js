@@ -11,7 +11,7 @@ const selector = { language: 'couper' }
 const providers = []
 
 const DOCUMENTATION_URL = "https://docs.couper.io"
-const EXAMPLES_URL = "https://github.com/avenga/couper-examples/tree/master/"
+const EXAMPLES_URL = "https://github.com/coupergateway/couper-examples/tree/master/"
 const GITHUB_ICON = "images/github.png"
 
 function getExtension(extensionName) {

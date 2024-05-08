@@ -2,6 +2,15 @@
 
 const DEFAULT_LABEL = "…"
 
+const createCheckGrandparent = (feature, parentBlockName, grandparentBlockName) => {
+	return (context) => {
+		if (context.length >= 2 && context[0].name === parentBlockName && context[1].name === grandparentBlockName) {
+			return [parentBlockName]
+		}
+		return `"${feature}" only valid in a "${parentBlockName}" in a "${grandparentBlockName}" block.`
+	}
+}
+
 const blocks = {
 	api: {
 		parents: ['server'],
@@ -45,18 +54,18 @@ const blocks = {
 		labelled: true
 	},
 	beta_rate_limit: {
-		parents: (context) => {
-			if (context.length >= 2 && context[0].name === "backend" && context[1].name === "definitions") {
-				return ['backend']
-			}
-			return `"beta_rate_limit" only valid in a "backend" in a "definitions" block.`
-		},
+		parents: createCheckGrandparent("beta_rate_limit", "backend", "definitions"),
 		description: "Protects backend services. It implements quota management used to avoid cascading failures or to spare resources.",
 		labelled: false
 	},
 	beta_token_request: {
 		parents: ['backend'],
 		description: "Configures a request to get a token used to authorize backend requests.",
+		labels: [null, DEFAULT_LABEL]
+	},
+	client_certificate: {
+		parents: createCheckGrandparent("client_certificate", "tls", "server"),
+		description: "Configures a client certificate.",
 		labels: [null, DEFAULT_LABEL]
 	},
 	cors: {
@@ -176,6 +185,11 @@ const blocks = {
 		labels: [null, DEFAULT_LABEL],
 		description: "Bundles gateway services accessible under a port.",
 	},
+	server_certificate: {
+		parents: createCheckGrandparent("server_certificate", "tls", "server"),
+		description: "Configures a server certificate.",
+		labels: [null, DEFAULT_LABEL]
+	},
 	settings: {
 		description: "Configures global behavior of your gateway.",
 		labelled: false
@@ -185,6 +199,11 @@ const blocks = {
 		description: "Configures how SPA assets are served.",
 		examples: ['spa-serving'],
 		labels: [null, DEFAULT_LABEL]
+	},
+	tls: {
+		parents: ['backend', 'server'],
+		description: "Configures mTLS for backend or server.",
+		labelled: false
 	},
 	websockets: {
 		parents: ['proxy'],
@@ -287,6 +306,12 @@ const attributes = {
 	bootstrap_data_placeholder: {
 		parents: ['spa'],
 	},
+	ca_certificate: {
+		parents: ['client_certificate']
+	},
+	ca_certificate_file: {
+		parents: ['client_certificate']
+	},
 	ca_file: {
 		parents: ['settings']
 	},
@@ -295,9 +320,21 @@ const attributes = {
 		examples: ['jwt-access-control'],
 		type: 'object'
 	},
+	client_certificate: {
+		parents: createCheckGrandparent("client_certificate", "tls", "backend")
+	},
+	client_certificate_file: {
+		parents: createCheckGrandparent("client_certificate_file", "tls", "backend")
+	},
 	client_id: {
 		parents: ['beta_introspection', 'beta_oauth2', 'oauth2', 'oidc'],
 		examples: ['oauth2-client-credentials', 'oidc']
+	},
+	client_private_key: {
+		parents: createCheckGrandparent("client_private_key", "tls", "backend")
+	},
+	client_private_key_file: {
+		parents: createCheckGrandparent("client_private_key_file", "tls", "backend")
 	},
 	client_secret: {
 		parents: ['beta_introspection', 'beta_oauth2', 'oauth2', 'oidc'],
@@ -478,6 +515,12 @@ const attributes = {
 		parents: ['jwt', 'jwt_signing_profile'],
 		examples: ['jwt-access-control']
 	},
+	leaf_certificate: {
+		parents: ['client_certificate']
+	},
+	leaf_certificate_file: {
+		parents: ['client_certificate']
+	},
 	log_format: {
 		parents: ['settings'],
 		options: ['common', 'json']
@@ -579,6 +622,18 @@ const attributes = {
 	per_period: {
 		parents: ['beta_rate_limit'],
 		type: 'number'
+	},
+	public_key: {
+		parents: ['server_certificate']
+	},
+	public_key_file: {
+		parents: ['server_certificate']
+	},
+	private_key: {
+		parents: ['server_certificate']
+	},
+	private_key_file: {
+		parents: ['server_certificate']
 	},
 	proxy: { // (label reference in endpoints)
 		parents: ['backend', 'endpoint'],
@@ -695,6 +750,12 @@ const attributes = {
 	secure_cookies: {
 		parents: ['settings'],
 		options: ['strip', '']
+	},
+	server_ca_certificate: {
+		parents: createCheckGrandparent("server_ca_certificate", "tls", "backend")
+	},
+	server_ca_certificate_file: {
+		parents: createCheckGrandparent("server_ca_certificate_file", "tls", "backend")
 	},
 	server_timing_header: {
 		parents: ['settings'],
@@ -818,6 +879,7 @@ const attributes = {
 const functions = {
 	base64_decode: { description: 'Decodes Base64 data, as specified in RFC 4648.' },
 	base64_encode: { description: 'Encodes Base64 data, as specified in RFC 4648.' },
+	can: { description: 'Tries to evaluate the expression given in its first argument.' },
 	contains: { description: 'Determines whether a given list contains a given single value as one of its elements.' },
 	default: { description: 'Returns the first of the given arguments that is not null.' },
 	join: { description: 'Concatenates together the string elements of one or more lists with a given separator.' },
@@ -849,6 +911,7 @@ const functions = {
 	to_upper: { description: 'Converts a given string to uppercase.' },
 	trim: { description: 'Removes any whitespace characters from the start and end of the given string.' },
 	unixtime: { description: 'Retrieves the current UNIX timestamp in seconds.' },
+	url_decode: { description: 'URL-decodes a given string according to RFC 3986.' },
 	url_encode: { description: 'URL-encodes a given string according to RFC 3986.' },
 }
 
