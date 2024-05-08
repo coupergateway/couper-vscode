@@ -19,7 +19,7 @@ const blocks = {
 		labels: [null, DEFAULT_LABEL]
 	},
 	backend: {
-		parents: ['beta_oauth2', 'beta_token_request', 'definitions', 'jwt', 'oauth2', 'oidc', 'proxy', 'request'],
+		parents: ['beta_introspection', 'beta_oauth2', 'beta_token_request', 'definitions', 'jwt', 'oauth2', 'oidc', 'proxy', 'request'],
 		description: "Defines the connection to a local/remote backend service.",
 		examples: ['backend-configuration'],
 		labels: (parentBlockName) => {
@@ -41,6 +41,11 @@ const blocks = {
 		parents: ['backend'],
 		examples: ['health-check'],
 		docs: '/configuration/block/health',
+		labelled: false
+	},
+	beta_introspection: {
+		parents: ['jwt'],
+		docs: '/configuration/block/introspection',
 		labelled: false
 	},
 	beta_job: {
@@ -124,7 +129,7 @@ const blocks = {
 		labelled: true
 	},
 	jwt_signing_profile: {
-		parents: ['definitions', 'beta_oauth2', 'oauth2', 'oidc'],
+		parents: ['beta_introspection', 'definitions', 'beta_oauth2', 'oauth2', 'oidc'],
 		description: "Configure a JSON Web Token signing profile which is referenced in the `jwt_sign()` function.",
 		examples: ['creating-jwt'],
 		labels: (parentBlockName) => {
@@ -262,7 +267,7 @@ const attributes = {
 		parents: ['beta_oauth2']
 	},
 	backend: { // label reference
-		parents: ['beta_oauth2', 'beta_token_request', 'jwt', 'oauth2', 'oidc', 'proxy', 'request'],
+		parents: ['beta_introspection', 'beta_oauth2', 'beta_token_request', 'jwt', 'oauth2', 'oidc', 'proxy', 'request'],
 		definingBlocks: ["backend"],
 		examples: ['backend-configuration']
 	},
@@ -322,7 +327,7 @@ const attributes = {
 		parents: createCheckGrandparent("client_certificate_file", "tls", "backend")
 	},
 	client_id: {
-		parents: ['beta_oauth2', 'oauth2', 'oidc'],
+		parents: ['beta_introspection', 'beta_oauth2', 'oauth2', 'oidc'],
 		examples: ['oauth2-client-credentials', 'oidc']
 	},
 	client_private_key: {
@@ -332,7 +337,7 @@ const attributes = {
 		parents: createCheckGrandparent("client_private_key_file", "tls", "backend")
 	},
 	client_secret: {
-		parents: ['beta_oauth2', 'oauth2', 'oidc'],
+		parents: ['beta_introspection', 'beta_oauth2', 'oauth2', 'oidc'],
 		examples: ['oauth2-client-credentials', 'oidc']
 	},
 	configuration_backend: { // label reference
@@ -391,6 +396,13 @@ const attributes = {
 	document_root: {
 		parents: ['files'],
 		examples: ['simple-fileserving', 'spa-serving']
+	},
+	endpoint: {
+		parents: ['beta_introspection']
+	},
+	endpoint_auth_method: {
+		parents: ['beta_introspection'],
+		options: ['client_secret_basic', 'client_secret_jwt', 'client_secret_post', 'private_key_jwt']
 	},
 	environment_variables: {
 		parents: ['defaults'],
@@ -827,7 +839,7 @@ const attributes = {
 		type: 'duration'
 	},
 	ttl: {
-		parents: ['beta_token_request', 'jwt_signing_profile'],
+		parents: ['beta_introspection', 'beta_token_request', 'jwt_signing_profile'],
 		type: 'duration'
 	},
 	url: {
