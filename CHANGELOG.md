@@ -2,6 +2,9 @@
 
 ## [Unreleased](https://github.com/coupergateway/couper/compare-vscode/v1.9.0...master)
 
+### Removed
+- deprecated `beta_`-prefixed permission-related features [#131](https://github.com/avenga/couper-vscode/pull/131)
+
 ---
 
 ## [v1.9.0](https://github.com/coupergateway/couper-vscode/releases/tag/v1.9.0)
