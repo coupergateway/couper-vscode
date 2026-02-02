@@ -1,4 +1,7 @@
-// TODO: generate from golang:hcl :)
+// Auto-generated from Couper Go code with manual overlay
+// Do not edit directly - modify schema-overlay.json instead
+// Generated: 2026-02-02T21:54:25.673Z
+
 
 const DEFAULT_LABEL = "…"
 
@@ -11,992 +14,1171 @@ const createCheckGrandparent = (feature, parentBlockName, grandparentBlockName) 
 	}
 }
 
+
 const blocks = {
 	api: {
-		parents: ['server'],
-		description: "Bundles endpoints under a certain `base_path`.",
-		examples: ['api-proxy'],
-		labels: [null, DEFAULT_LABEL]
+		parents: ["server"],
+		description: "Configures an API (zero or more).",
+		labelOptional: true,
+		examples: ["api-proxy"]
 	},
 	backend: {
-		parents: ['beta_oauth2', 'beta_token_request', 'definitions', 'jwt', 'oauth2', 'oidc', 'proxy', 'request'],
-		description: "Defines the connection to a local/remote backend service.",
-		examples: ['backend-configuration'],
-		labels: (parentBlockName) => {
-			return parentBlockName === "definitions" ? [DEFAULT_LABEL] : [DEFAULT_LABEL, null]
-		}
+		parents: ["definitions","introspection","jwt","beta_oauth2","oauth2","oidc","proxy","request","token_request"],
+		description: "Configure a backend (zero or more).",
+		labelOptional: true,
+		examples: ["backend-configuration"]
 	},
 	basic_auth: {
-		parents: ['definitions'],
-		description: "Access control for Basic Authentication.",
+		parents: ["definitions"],
+		description: "Configure a BasicAuth access control (zero or more).",
 		labelled: true
 	},
 	beta_oauth2: {
-		parents: ['definitions'],
-		description: "Access control for an OAuth2 Authorization Code Grant Flow redirect endpoint.",
-		docs: '/configuration/block/oauth2',
-		labelled: true
-	},
-	beta_health: {
-		parents: ['backend'],
-		examples: ['health-check'],
-		docs: '/configuration/block/health',
-		labelled: false
-	},
-	beta_job: {
-		parents: ['definitions'],
-		docs: '/configuration/block/job',
-		labelled: true
-	},
-	beta_rate_limit: {
-		parents: createCheckGrandparent("beta_rate_limit", "backend", "definitions"),
-		description: "Protects backend services. It implements quota management used to avoid cascading failures or to spare resources.",
-		labelled: false
-	},
-	beta_token_request: {
-		parents: ['backend'],
-		description: "Configures a request to get a token used to authorize backend requests.",
-		labels: [null, DEFAULT_LABEL]
+		parents: ["definitions"],
+		description: "Configure an OAuth2 access control (zero or more).",
+		labelled: true,
+		docs: "/configuration/block/oauth2"
 	},
 	client_certificate: {
-		parents: createCheckGrandparent("client_certificate", "tls", "server"),
-		description: "Configures a client certificate.",
-		labels: [null, DEFAULT_LABEL]
+		parents: ["tls"],
+		description: "Configures a client certificate (zero or more).",
+		labelOptional: true
 	},
 	cors: {
-		parents: ['api', 'files', 'server', 'spa'],
-		description: "Configures CORS (Cross-Origin Resource Sharing) behavior.",
-		labelled: false
+		parents: ["api","files","server","spa"],
+		description: "Configures CORS settings (zero or one)."
 	},
 	defaults: {
-		description: "Sets default values.",
-		labelled: false
+
 	},
 	definitions: {
-		description: "Defines configurations for reuse.",
-		labelled: false
+
 	},
 	endpoint: {
-		parents: ['api', 'server'],
-		description: "Defines the entry points of Couper.",
-		labels: ['/']
+		parents: ["api","server"],
+		description: "Configures an endpoint (zero or more).",
+		labelled: true,
+		labels: ["/"]
 	},
 	environment: {
-		preprocessed: true,
 		description: "Refines the configuration based on the current environment.",
-		labels: [DEFAULT_LABEL],
-		parents: context => {
-			for (const item of context) {
-				if (item.name === "environment" && item.type === "block") {
-					return `Nested "environment" blocks are not allowed.`
-				}
-			}
-			return ALL_BLOCKS_BUT_ENVIRONMENT.concat([null]) // top-level
-		},
-		examples: ['environment']
+		labelled: true,
+		examples: ["environment"]
 	},
 	error_handler: {
-		parents: ['api', 'basic_auth', 'beta_oauth2', 'endpoint', 'jwt', 'oidc', 'saml'],
-		examples: ['error-handling-ba', 'sequences'],
-		labels: (parentBlockName) => {
-			return [null].concat(blocks.error_handler._labelsForParent[parentBlockName])
-		},
-		_labelsForParent: {
-			'api':         ['access_control', 'backend', 'backend_timeout', 'backend_openapi_validation', 'backend_unhealthy', 'beta_backend_token_request', 'insufficient_permissions', 'beta_insufficient_permissions'],
-			'basic_auth':  ['access_control', 'basic_auth', 'basic_auth_credentials_missing'],
-			'endpoint':    ['access_control', 'backend', 'backend_timeout', 'backend_openapi_validation', 'backend_unhealthy', 'beta_backend_token_request', 'endpoint', 'insufficient_permissions', 'beta_insufficient_permissions', 'sequence', 'unexpected_status'],
-			'jwt':         ['access_control', 'jwt', 'jwt_token_expired', 'jwt_token_invalid', 'jwt_token_missing'],
-			'saml':        ['access_control', 'saml'],
-			'beta_oauth2': ['access_control', 'oauth2'],
-			'oidc':        ['access_control', 'oauth2']
-		}
+		parents: ["api","basic_auth","endpoint","jwt","beta_oauth2","oidc","rate_limiter","saml"],
+		description: "Configures an error handler (zero or more).",
+		examples: ["error-handling-ba","sequences"],
+		_labelsForParent: {"api":["access_control","backend","backend_timeout","backend_openapi_validation","backend_unhealthy","beta_backend_token_request","insufficient_permissions","beta_insufficient_permissions"],"basic_auth":["access_control","basic_auth","basic_auth_credentials_missing"],"endpoint":["access_control","backend","backend_timeout","backend_openapi_validation","backend_unhealthy","beta_backend_token_request","endpoint","insufficient_permissions","beta_insufficient_permissions","sequence","unexpected_status"],"jwt":["access_control","jwt","jwt_token_expired","jwt_token_invalid","jwt_token_missing"],"saml":["access_control","saml"],"beta_oauth2":["access_control","oauth2"],"oidc":["access_control","oauth2"]}
 	},
 	files: {
-		parents: ['server'],
-		description: "Configures file serving.",
-		examples: ['simple-fileserving', 'spa-serving'],
-		labels: [null, DEFAULT_LABEL]
+		parents: ["server"],
+		description: "Configures file serving (zero or more).",
+		labelOptional: true,
+		examples: ["simple-fileserving","spa-serving"]
+	},
+	health: {
+
+	},
+	introspection: {
+
+	},
+	job: {
+		labelled: true
 	},
 	jwt: {
-		parents: ['definitions'],
-		description: "Configures a JSON Web Token access control.",
-		examples: ['jwt-access-control', 'creating-jwt'],
-		labelled: true
+		parents: ["definitions"],
+		description: "Configure a JWT access control (zero or more).",
+		labelled: true,
+		examples: ["jwt-access-control","creating-jwt"]
 	},
 	jwt_signing_profile: {
-		parents: ['definitions', 'beta_oauth2', 'oauth2', 'oidc'],
-		description: "Configure a JSON Web Token signing profile which is referenced in the `jwt_sign()` function.",
-		examples: ['creating-jwt'],
-		labels: (parentBlockName) => {
-			return parentBlockName === "definitions" ? [DEFAULT_LABEL] : [null]
-		}
+		parents: ["definitions","introspection","beta_oauth2","oauth2","oidc"],
+		description: "Configure a JWT signing profile (zero or more).",
+		labelOptional: true,
+		examples: ["creating-jwt"]
 	},
 	oauth2: {
-		parents: ['backend'],
-		description: "Configures the OAuth2 Client Credentials flow to request a bearer token for its backend request.",
-		docs: '/configuration/block/oauth2req_auth',
-		examples: ['oauth2-client-credentials'],
-		labelled: false
+		parents: ["backend"],
+		description: "Configures an OAuth2 authorization (zero or one).",
+		docs: "/configuration/block/oauth2req_auth",
+		examples: ["oauth2-client-credentials"]
 	},
 	oidc: {
-		parents: ['definitions'],
-		description: "An access control for an OIDC Authorization Code Grant Flow redirect endpoint.",
-		examples: ['oidc'],
-		labelled: true
+		parents: ["definitions"],
+		description: "Configure an OIDC access control (zero or more).",
+		labelled: true,
+		examples: ["oidc"]
 	},
 	openapi: {
-		parents: ['backend'],
-		description: "Configures the OpenAPI 3 validation of messages to and from the origin.",
-		examples: ['backend-validation'],
-		labelled: false
+		parents: ["backend"],
+		description: "Configures OpenAPI validation (zero or one).",
+		examples: ["backend-validation"]
 	},
 	proxy: {
-		parents: ['definitions', 'endpoint', 'error_handler'],
-		description: "Executes a proxy request to a backend service.",
-		examples: ['api-proxy', 'custom-requests', 'multiple-requests'],
-		labels: (parentBlockName) => {
-			return parentBlockName === "definitions" ? [DEFAULT_LABEL] : [DEFAULT_LABEL, null]
-		}
+		parents: ["definitions","endpoint","error_handler"],
+		description: "Configure a proxy (zero or more).",
+		labelOptional: true,
+		examples: ["api-proxy","custom-requests","multiple-requests"]
 	},
-	request: {
-		parents: ['endpoint', 'error_handler', 'beta_job'],
-		description: "Executes a request to a backend service.",
-		examples: ['custom-requests', 'multiple-requests'],
-		labels: [null, DEFAULT_LABEL]
+	rate_limit: {
+
 	},
-	response: {
-		parents: ['endpoint', 'error_handler'],
-		description: "Sends a client response.",
-		examples: ['static-responses'],
-		labelled: false
-	},
-	saml: {
-		parents: ['definitions'],
-		description: "An access control for a SAML ACS endpoint.",
-		examples: ['saml'],
+	rate_limiter: {
 		labelled: true
 	},
+	request: {
+		parents: ["endpoint","error_handler","job"],
+		description: "Configures a request (zero or more).",
+		labelOptional: true,
+		examples: ["custom-requests","multiple-requests"]
+	},
+	response: {
+		parents: ["endpoint","error_handler"],
+		description: "Configures the response (zero or one).",
+		examples: ["static-responses"]
+	},
+	saml: {
+		parents: ["definitions"],
+		description: "Configure a SAML access control (zero or more).",
+		labelled: true,
+		examples: ["saml"]
+	},
 	server: {
-		labels: [null, DEFAULT_LABEL],
-		description: "Bundles gateway services accessible under a port.",
+		labelOptional: true
 	},
 	server_certificate: {
-		parents: createCheckGrandparent("server_certificate", "tls", "server"),
-		description: "Configures a server certificate.",
-		labels: [null, DEFAULT_LABEL]
+		parents: ["tls"],
+		description: "Configures a server certificate (zero or more).",
+		labelOptional: true
 	},
 	settings: {
-		description: "Configures global behavior of your gateway.",
-		labelled: false
+
 	},
 	spa: {
-		parents: ['server'],
-		description: "Configures how SPA assets are served.",
-		examples: ['spa-serving'],
-		labels: [null, DEFAULT_LABEL]
+		parents: ["server"],
+		description: "Configures an SPA (zero or more).",
+		labelOptional: true,
+		examples: ["spa-serving"]
 	},
 	tls: {
-		parents: ['backend', 'server'],
-		description: "Configures mTLS for backend or server.",
-		labelled: false
+		parents: ["backend","server"],
+		description: "Configures backend TLS (zero or one)."
+	},
+	token_request: {
+		labelOptional: true
 	},
 	websockets: {
-		parents: ['proxy'],
-		description: "Activates support for WebSocket connections.",
-		labelled: false
+		parents: ["proxy"],
+		description: "Configures support for websockets connections (zero or one)."
+	},
+	beta_health: {
+		examples: ["health-check"],
+		docs: "/configuration/block/health"
+	},
+	beta_job: {
+		docs: "/configuration/block/job"
 	}
 }
 
 const attributes = {
-	access_control: {
-		parents: ['api', 'endpoint', 'files', 'server', 'spa'],
-		description: "Secures the current block context with a predefined access control.",
-		examples: ['jwt-access-control'],
-		definingBlocks: ['basic_auth', 'jwt', 'oidc', 'saml', 'beta_oauth2'],
-		type: 'tuple'
-	},
 	accept_forwarded_url: {
-		parents: ['settings'],
-		type: 'tuple',
-		options: ['proto', 'host', 'port']
+		parents: ["settings"],
+		description: "Which `X-Forwarded-*` request HTTP header fields should be accepted to change the [request variables](../variables#request) `url`, `origin`, `protocol`, `host`, `port`. Valid values: `\"proto\"`, `\"host\"` and `\"port\"`. The port in a `X-Forwarded-Port` header takes precedence over a port in `X-Forwarded-Host`. Affects relative URL values for [`sp_acs_url`](saml) attribute and `redirect_uri` attribute within [`beta_oauth2`](oauth2) and [`oidc`](oidc).",
+		type: "tuple",
+		options: ["proto"]
+	},
+	access_control: {
+		parents: ["api","endpoint","files","server","spa"],
+		description: "Sets predefined [access control](../access-control) for this block.",
+		type: "tuple",
+		definingBlocks: ["basic_auth","jwt","oidc","saml","beta_oauth2","beta_rate_limiter"],
+		examples: ["jwt-access-control"]
 	},
 	add_form_params: {
-		parents: ['backend', 'endpoint', 'error_handler', 'proxy'],
-		type: 'object'
+		parents: ["backend","endpoint","error_handler","proxy"],
+		description: "Key/value pairs to add form parameters to the upstream request body.",
+		type: "object"
 	},
 	add_query_params: {
-		parents: ['backend', 'endpoint', 'error_handler', 'proxy'],
-		examples: ['query'],
-		type: 'object'
+		parents: ["backend","endpoint","error_handler","proxy"],
+		description: "Key/value pairs to add query parameters to the upstream request URL.",
+		type: "object",
+		examples: ["query"]
 	},
 	add_request_headers: {
-		parents: ['backend', 'endpoint', 'error_handler', 'proxy', 'websockets'],
-		type: 'object'
+		parents: ["backend","endpoint","error_handler","proxy","websockets"],
+		description: "Key/value pairs to add as request headers in the upstream request.",
+		type: "object"
 	},
 	add_response_headers: {
-		parents: ['api', 'backend', 'endpoint', 'error_handler', 'files', 'proxy', 'server', 'spa', 'websockets'],
-		type: 'object'
+		parents: ["api","backend","endpoint","error_handler","files","proxy","server","spa","websockets"],
+		description: "Key/value pairs to add as response headers in the client response.",
+		type: "object"
 	},
 	allow_credentials: {
-		parents: ['cors'],
-		type: 'boolean'
+		parents: ["cors"],
+		description: "Set to `true` if the response can be shared with credentialed requests (containing `Cookie` or `Authorization` HTTP header fields).",
+		type: "boolean"
 	},
 	allowed_methods: {
-		parents: ['api', 'endpoint'],
-		type: 'tuple',
-		options: ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', '*']
+		parents: ["api","endpoint"],
+		description: "Sets allowed methods as _default_ for all contained endpoints. Requests with a method that is not allowed result in an error response with a `405 Method Not Allowed` status.",
+		type: "tuple",
+		options: ["GET","HEAD","POST","PUT","PATCH","DELETE","OPTIONS","*"]
 	},
 	allowed_origins: {
-		parents: ['cors'],
-		type: ['tuple', 'string']
+		parents: ["cors"],
+		description: "An allowed origin or a list of allowed origins.",
+		type: "object"
 	},
 	array_attributes: {
-		parents: ['saml'],
-		examples: ['saml'],
-		type: 'tuple'
+		parents: ["saml"],
+		description: "A list of assertion attributes that may have several values. Results in at least an empty array in `request.context.<label>.attributes.<name>`",
+		type: "tuple",
+		examples: ["saml"]
 	},
 	assertion: {
-		parents: ['oauth2']
+		parents: ["oauth2"],
+		description: "The assertion (JWT for jwt-bearer flow). Required if `grant_type` is `\"urn:ietf:params:oauth:grant-type:jwt-bearer\"` and no nested `jwt_signing_profile` block is present.",
+		type: "string"
 	},
 	authorization_endpoint: {
-		parents: ['beta_oauth2']
+		parents: ["beta_oauth2"],
+		description: "The authorization server endpoint URL used for authorization.",
+		type: "string"
 	},
-	backend: { // label reference
-		parents: ['beta_oauth2', 'beta_token_request', 'jwt', 'oauth2', 'oidc', 'proxy', 'request'],
+	backend: {
+		parents: ["beta_oauth2","introspection","jwt","oauth2","oidc","proxy","request","token_request"],
+		description: "References a [backend](/configuration/block/backend) in [definitions](/configuration/block/definitions) for introspection requests. Mutually exclusive with `backend` block.",
+		type: "string",
 		definingBlocks: ["backend"],
-		examples: ['backend-configuration']
+		examples: ["backend-configuration"]
 	},
 	base_path: {
-		parents: ['api', 'files', 'server', 'spa']
+		parents: ["api","files","server","spa"],
+		description: "Configures the path prefix for all requests.",
+		type: "string"
 	},
 	basic_auth: {
-		parents: ['backend']
+		parents: ["backend"],
+		description: "Basic auth for the upstream request with format `user:pass`.",
+		type: "string"
 	},
 	bearer: {
-		parents: ['jwt'],
-		type: 'boolean',
+		parents: ["jwt"],
+		description: "If set to `true` the token is obtained from an `Authorization: Bearer ...` request header. Cannot be used together with `cookie`, `beta_dpop`, `header` or `token_value`.",
+		type: "boolean"
+	},
+	beta_dpop: {
+		parents: ["jwt"],
+		description: "If set to `true` the token is obtained from an `Authorization: DPoP ...` request header. Cannot be used together with `bearer`, `cookie`, `header` or `token_value`.",
+		type: "boolean"
 	},
 	beta_metrics: {
-		parents: ['settings'],
-		type: 'boolean',
+		parents: ["settings"],
+		description: "Enables the Prometheus [metrics](/observation/metrics) exporter.",
+		type: "boolean"
 	},
 	beta_metrics_port: {
-		parents: ['settings'],
-		type: 'number',
+		parents: ["settings"],
+		description: "Prometheus exporter listen port.",
+		type: "number"
 	},
 	beta_service_name: {
-		parents: ['settings'],
+		parents: ["settings"],
+		description: "Service name which applies to the `service_name` metric labels.",
+		type: "string"
+	},
+	bind_address: {
+		parents: ["settings"],
+		description: "A comma-separated list of addresses to bind.",
+		type: "string"
 	},
 	body: {
-		parents: ['beta_token_request', 'request', 'response']
-	},
-	bootstrap_file: {
-		parents: ['spa'],
-		examples: ['spa-serving']
+		parents: ["request","response","token_request"],
+		description: "Plain text request body, implicitly sets `Content-Type: text/plain` header field.",
+		type: "string"
 	},
 	bootstrap_data: {
-		parents: ['spa'],
-		type: 'object'
+		parents: ["spa"],
+		description: "JSON object which replaces the placeholder from `bootstrap_file` content.",
+		type: "expression"
 	},
 	bootstrap_data_placeholder: {
-		parents: ['spa'],
+		parents: ["spa"],
+		description: "String which will be replaced with `bootstrap_data`.",
+		type: "string"
+	},
+	bootstrap_file: {
+		parents: ["spa"],
+		description: "Location of the bootstrap file.",
+		type: "string",
+		examples: ["spa-serving"]
 	},
 	ca_certificate: {
-		parents: ['client_certificate']
+		parents: ["client_certificate"],
+		description: "Public part of the certificate authority in DER or PEM format. Mutually exclusive with `ca_certificate_file`.",
+		type: "string"
 	},
 	ca_certificate_file: {
-		parents: ['client_certificate']
+		parents: ["client_certificate"],
+		description: "Reference to a file containing the public part of the certificate authority file in DER or PEM format. Mutually exclusive with `ca_certificate`.",
+		type: "string"
 	},
 	ca_file: {
-		parents: ['settings']
+		parents: ["settings"],
+		description: "Adds the given PEM encoded CA certificate to the existing system certificate pool for all outgoing connections.",
+		type: "string"
 	},
 	claims: {
-		parents: ['jwt', 'jwt_signing_profile'],
-		examples: ['jwt-access-control'],
-		type: 'object'
+		parents: ["jwt","jwt_signing_profile"],
+		description: "Claims for the JWT payload, claim values are evaluated per request.",
+		type: "object",
+		examples: ["jwt-access-control"]
 	},
 	client_certificate: {
-		parents: createCheckGrandparent("client_certificate", "tls", "backend")
+		parents: ["tls"],
+		description: "Public part of the client certificate in DER or PEM format. Mutually exclusive with `client_certificate_file`.",
+		type: "string"
 	},
 	client_certificate_file: {
-		parents: createCheckGrandparent("client_certificate_file", "tls", "backend")
+		parents: ["tls"],
+		description: "Reference to a file containing the public part of the client certificate file in DER or PEM format. Mutually exclusive with `client_certificate`.",
+		type: "string"
 	},
 	client_id: {
-		parents: ['beta_oauth2', 'oauth2', 'oidc'],
-		examples: ['oauth2-client-credentials', 'oidc']
+		parents: ["beta_oauth2","introspection","oauth2","oidc"],
+		description: "The client identifier.",
+		type: "string",
+		examples: ["oauth2-client-credentials","oidc"]
 	},
 	client_private_key: {
-		parents: createCheckGrandparent("client_private_key", "tls", "backend")
+		parents: ["tls"],
+		description: "Private part of the client certificate in DER or PEM format. Required to complete an mTLS handshake. Mutually exclusive with `client_private_key_file`.",
+		type: "string"
 	},
 	client_private_key_file: {
-		parents: createCheckGrandparent("client_private_key_file", "tls", "backend")
+		parents: ["tls"],
+		description: "Reference to a file containing the private part of the client certificate file in DER or PEM format. Required to complete an mTLS handshake. Mutually exclusive with `client_private_key`.",
+		type: "string"
 	},
 	client_secret: {
-		parents: ['beta_oauth2', 'oauth2', 'oidc'],
-		examples: ['oauth2-client-credentials', 'oidc']
+		parents: ["beta_oauth2","introspection","oauth2","oidc"],
+		description: "The client password. Required unless the `endpoint_auth_method` is `\"private_key_jwt\"`.",
+		type: "string",
+		examples: ["oauth2-client-credentials","oidc"]
 	},
-	configuration_backend: { // label reference
-		parents: ['oidc'],
+	configuration_backend: {
+		parents: ["oidc"],
+		description: "References a [backend](/configuration/block/backend) in [definitions](/configuration/block/definitions) for OpenID configuration requests.",
+		type: "string",
 		definingBlocks: ["backend"]
 	},
 	configuration_max_stale: {
-		parents: ['oidc'],
-		type: 'duration'
-	},
-	configuration_url: {
-		parents: ['oidc'],
-		examples: ['oidc']
+		parents: ["oidc"],
+		description: "Duration a cached OpenID configuration stays valid after its TTL has passed.",
+		type: "duration"
 	},
 	configuration_ttl: {
-		parents: ['oidc'],
-		type: 'duration'
+		parents: ["oidc"],
+		description: "The duration to cache the OpenID configuration located at `configuration_url`.",
+		type: "duration"
 	},
-	cookie: {
-		parents: ['jwt']
+	configuration_url: {
+		parents: ["oidc"],
+		description: "The OpenID configuration URL.",
+		type: "string",
+		examples: ["oidc"]
 	},
 	connect_timeout: {
-		parents: ['backend'],
-		type: 'duration'
+		parents: ["backend"],
+		description: "The total timeout for dialing and connect to the origin.",
+		type: "duration"
+	},
+	cookie: {
+		parents: ["jwt"],
+		description: "Read token value from a cookie. Cannot be used together with `bearer`, `beta_dpop`, `header` or `token_value`",
+		type: "string"
 	},
 	custom_log_fields: {
-		parents: ['api', 'backend', 'endpoint', 'error_handler', 'files', 'server', 'spa', 'jwt', 'basic_auth', 'saml', 'oidc', 'beta_job', 'beta_oauth2'],
-		examples: ['custom-logging', 'sequences'],
-		type: 'object'
+		parents: ["api","backend","basic_auth","beta_oauth2","endpoint","error_handler","files","job","jwt","oidc","rate_limiter","saml","server","spa"],
+		description: "Log fields for [custom logging](/observation/logging#custom-logging). Inherited by nested blocks.",
+		type: "object",
+		examples: ["custom-logging","sequences"]
 	},
 	default_port: {
-		parents: ['settings'],
-		type: 'number'
+		parents: ["settings"],
+		description: "Port which will be used if not explicitly specified per host within the [`hosts`](server) attribute.",
+		type: "number"
 	},
 	disable: {
-		parents: ['cors'],
-		type: 'boolean'
+		parents: ["cors"],
+		description: "Set to `true` to disable the inheritance of CORS from parent context.",
+		type: "boolean"
 	},
 	disable_access_control: {
-		parents: ['api', 'endpoint', 'files', 'server', 'spa'],
-		definingBlocks: ['basic_auth', 'jwt', 'oidc', 'saml', 'beta_oauth2'],
-		type: 'tuple'
+		parents: ["api","endpoint","server","spa"],
+		description: "Disables access controls by name.",
+		type: "tuple",
+		definingBlocks: ["basic_auth","jwt","oidc","saml","beta_oauth2","beta_rate_limiter"]
 	},
 	disable_certificate_validation: {
-		parents: ['backend'],
-		type: 'boolean'
+		parents: ["backend"],
+		description: "Disables the peer certificate validation. Must not be used in backend refinement.",
+		type: "boolean"
 	},
 	disable_connection_reuse: {
-		parents: ['backend'],
-		type: 'boolean'
+		parents: ["backend"],
+		description: "Disables reusage of connections to the origin. Must not be used in backend refinement.",
+		type: "boolean"
 	},
 	disable_private_caching: {
-		parents: ['jwt'],
-		type: 'boolean'
+		parents: ["jwt"],
+		description: "If set to `true`, Couper does not add the `private` directive to the `Cache-Control` HTTP header field value.",
+		type: "boolean"
 	},
 	document_root: {
-		parents: ['files'],
-		examples: ['simple-fileserving', 'spa-serving']
+		parents: ["files"],
+		description: "Location of the document root (directory).",
+		type: "string",
+		examples: ["simple-fileserving","spa-serving"]
 	},
-	environment_variables: {
-		parents: ['defaults'],
-		examples: ['env-var'],
-		type: 'object'
+	endpoint: {
+		parents: ["introspection"],
+		description: "The authorization server's `introspection_endpoint`.",
+		type: "string"
 	},
-	error_file: {
-		parents: ['api', 'endpoint', 'error_handler', 'files', 'server'],
-		examples: ['simple-fileserving']
-	},
-	expected_status: {
-		parents: ['beta_health', 'beta_token_request', 'proxy', 'request'],
-		type: 'tuple',
-		examples: ['sequences'],
-		tupleType: 'number'
-	},
-	expected_text: {
-		parents: ['beta_health']
+	endpoint_auth_method: {
+		parents: ["introspection"],
+		description: "Defines the method to authenticate the client at the introspection endpoint. If set to `\"client_secret_post\"`, the client credentials are transported in the request body. If set to `\"client_secret_basic\"`, the client credentials are transported via Basic Authentication. If set to `\"client_secret_jwt\"`, the client is authenticated via a JWT signed with the `client_secret`. If set to `\"private_key_jwt\"`, the client is authenticated via a JWT signed with its private key (see `jwt_signing_profile` block).",
+		type: "string"
 	},
 	environment: {
-		parents: ['settings']
+		parents: ["settings"],
+		description: "The [environment](../command-line#basic-options) Couper is to run in.",
+		type: "string"
+	},
+	environment_variables: {
+		parents: ["defaults"],
+		description: "One or more environment variable assignments. Keys must be either identifiers or simple string expressions.",
+		type: "object",
+		examples: ["env-var"]
+	},
+	error_file: {
+		parents: ["api","endpoint","error_handler","files","server"],
+		description: "Location of the error file template.",
+		type: "string",
+		examples: ["simple-fileserving"]
+	},
+	expected_status: {
+		parents: ["health","proxy","request","token_request"],
+		description: "One of wanted response status codes.",
+		type: "tuple",
+		examples: ["sequences"]
+	},
+	expected_text: {
+		parents: ["health"],
+		description: "Text which the response body must contain.",
+		type: "string"
 	},
 	failure_threshold: {
-		parents: ['beta_health'],
-		type: 'number'
+		parents: ["health"],
+		description: "Failed checks needed to consider backend unhealthy.",
+		type: "number"
 	},
 	file: {
-		parents: ['openapi']
+		parents: ["openapi"],
+		description: "OpenAPI YAML definition file.",
+		type: "string"
 	},
 	form_body: {
-		parents: ['beta_token_request', 'request'],
-		type: 'object'
+		parents: ["request","token_request"],
+		description: "Form request body, implicitly sets `Content-Type: application/x-www-form-urlencoded` header field.",
+		type: "string"
 	},
 	grant_type: {
-		parents: ['beta_oauth2', 'oauth2'],
-		options: ['authorization_code', 'client_credentials', 'password', 'urn:ietf:params:oauth:grant-type:jwt-bearer']
+		parents: ["beta_oauth2","oauth2"],
+		description: "The grant type. Required, to be set to: `\"authorization_code\"`",
+		type: "string",
+		options: ["authorization_code","client_credentials","password","urn:ietf:params:oauth:grant-type:jwt-bearer"]
 	},
 	header: {
-		parents: ['jwt'],
-		examples: ['jwt-access-control']
+		parents: ["jwt"],
+		description: "Read token value from the given request header field. Implies `Bearer` if `Authorization` (case-insensitive) is used (deprecated!), otherwise any other header name can be used. Cannot be used together with `bearer`, `cookie`, `beta_dpop` or `token_value`.",
+		type: "string",
+		examples: ["jwt-access-control"]
 	},
 	headers: {
-		parents: ['beta_health', 'beta_token_request', 'jwt_signing_profile', 'request', 'response'],
-		examples: ['static-responses'],
-		type: 'object'
+		parents: ["health","jwt_signing_profile","request","response","token_request"],
+		description: "Request HTTP header fields.",
+		type: "object",
+		examples: ["static-responses"]
 	},
 	health_path: {
-		parents: ['settings']
+		parents: ["settings"],
+		description: "Health path for all configured servers and ports.",
+		type: "string"
 	},
 	hostname: {
-		parents: ['backend']
+		parents: ["backend"],
+		description: "Value of the HTTP host header field for the origin request. Since hostname replaces the request host the value will also be used for a server identity check during a TLS handshake with the origin.",
+		type: "string"
 	},
 	hosts: {
-		parents: ['server'],
-		type: 'tuple'
+		parents: ["server"],
+		description: "Mandatory, if there is more than one `server` block.",
+		type: "tuple"
 	},
 	htpasswd_file: {
-		parents: ['basic_auth']
+		parents: ["basic_auth"],
+		description: "The htpasswd file.",
+		type: "string"
 	},
 	http2: {
-		parents: ['backend'],
-		type: 'boolean'
+		parents: ["backend"],
+		description: "Enables the HTTP2 support. Must not be used in backend refinement.",
+		type: "boolean"
 	},
 	https_dev_proxy: {
-		parents: ['settings'],
-		type: 'tuple'
+		parents: ["settings"],
+		description: "TLS port mappings to define the TLS listen port and the target one. Self-signed certificates will be generated on the fly based on the given hostname. Certificates will be held in memory.",
+		type: "tuple"
 	},
 	idp_metadata_file: {
-		parents: ['saml'],
-		examples: ['saml']
+		parents: ["saml"],
+		description: "File reference to the Identity Provider metadata XML file.",
+		type: "string",
+		examples: ["saml"]
 	},
 	ignore_request_violations: {
-		parents: ['openapi'],
-		type: 'boolean'
+		parents: ["openapi"],
+		description: "Logs request validation results, skips error handling.",
+		type: "boolean"
 	},
 	ignore_response_violations: {
-		parents: ['openapi'],
-		type: 'boolean'
+		parents: ["openapi"],
+		description: "Logs response validation results, skips error handling.",
+		type: "boolean"
 	},
 	interval: {
-		parents: ['beta_health', 'beta_job'],
-		type: 'duration'
+		parents: ["health","job"],
+		description: "Time interval for recheck.",
+		type: "string"
 	},
 	json_body: {
-		parents: ['beta_token_request', 'request', 'response'],
-		examples: ['static-responses'],
-		type: ['boolean', 'number', 'string', 'object', 'tuple'],
-	},
-	jwks_uri_backend: { // label reference
-		parents: ['oidc'],
-		definingBlocks: ["backend"]
-	},
-	jwks_ttl: {
-		parents: ['jwt', 'oidc'],
-		type: 'duration'
+		parents: ["request","response","token_request"],
+		description: "JSON request body, implicitly sets `Content-Type: application/json` header field.",
+		type: "string",
+		examples: ["static-responses"]
 	},
 	jwks_max_stale: {
-		parents: ['jwt', 'oidc'],
-		type: 'duration'
+		parents: ["jwt","oidc"],
+		description: "Time period the cached JWK set stays valid after its TTL has passed.",
+		type: "duration"
+	},
+	jwks_ttl: {
+		parents: ["jwt","oidc"],
+		description: "Time period the JWK set stays valid and may be cached.",
+		type: "duration"
+	},
+	jwks_uri_backend: {
+		parents: ["oidc"],
+		description: "References a [backend](/configuration/block/backend) in [definitions](/configuration/block/definitions) for JWKS requests.",
+		type: "string",
+		definingBlocks: ["backend"]
 	},
 	jwks_url: {
-		parents: ['jwt'],
-		examples: ['jwt-access-control']
+		parents: ["jwt"],
+		description: "URI pointing to a set of [JSON Web Keys (RFC 7517)](https://datatracker.ietf.org/doc/html/rfc7517)",
+		type: "string",
+		examples: ["jwt-access-control"]
 	},
 	key: {
-		parents: ['jwt', 'jwt_signing_profile'],
-		examples: ['jwt-access-control']
+		parents: ["jwt","jwt_signing_profile","rate_limiter"],
+		description: "Private key (in PEM format) for `RS*` and `ES*` variants or the secret for `HS*` algorithms. Mutually exclusive with `key_file`.",
+		type: "string",
+		examples: ["jwt-access-control"]
 	},
 	key_file: {
-		parents: ['jwt', 'jwt_signing_profile'],
-		examples: ['jwt-access-control']
+		parents: ["jwt","jwt_signing_profile"],
+		description: "Reference to file containing signing key. Mutually exclusive with `key`. See `key` for more information.",
+		type: "string",
+		examples: ["jwt-access-control"]
 	},
 	leaf_certificate: {
-		parents: ['client_certificate']
+		parents: ["client_certificate"],
+		description: "Public part of the client certificate in DER or PEM format. Mutually exclusive with `leaf_certificate_file`.",
+		type: "string"
 	},
 	leaf_certificate_file: {
-		parents: ['client_certificate']
+		parents: ["client_certificate"],
+		description: "Reference to a file containing the public part of the client certificate file in DER or PEM format. Mutually exclusive with `leaf_certificate`.",
+		type: "string"
 	},
 	log_format: {
-		parents: ['settings'],
-		options: ['common', 'json']
+		parents: ["settings"],
+		description: "Tab/field based colored logs or JSON logs: `\"common\"` or `\"json\"`.",
+		type: "string",
+		options: ["common","json"]
 	},
 	log_level: {
-		parents: ['settings'],
-		options: ['info', 'panic', 'fatal', 'error', 'warn', 'debug', 'trace']
+		parents: ["settings"],
+		description: "Sets the log level: `\"panic\"`, `\"fatal\"`, `\"error\"`, `\"warn\"`, `\"info\"`, `\"debug\"`, `\"trace\"`.",
+		type: "string",
+		options: ["info","panic","fatal","error","warn","debug","trace"]
 	},
 	log_pretty: {
-		parents: ['settings'],
-		type: 'boolean'
+		parents: ["settings"],
+		description: "Global option for `json` log format which pretty prints with basic key coloring.",
+		type: "boolean"
 	},
 	max_age: {
-		parents: ['cors'],
-		type: 'duration'
+		parents: ["cors"],
+		description: "Indicates the time the information provided by the `Access-Control-Allow-Methods` and `Access-Control-Allow-Headers` response HTTP header fields.",
+		type: "duration"
 	},
 	max_connections: {
-		parents: ['backend'],
-		type: 'number'
+		parents: ["backend"],
+		description: "The maximum number of concurrent connections in any state (_active_ or _idle_) to the origin. Must not be used in backend refinement.",
+		type: "number"
 	},
 	method: {
-		parents: ['beta_token_request', 'request']
+		parents: ["request","token_request"],
+		description: "The request method.",
+		type: "string"
 	},
 	mode: {
-		parents: ['beta_rate_limit'],
-		options: ['wait', 'block']
+		parents: ["rate_limit"],
+		description: "If `mode` is set to `block` and the rate limit is exceeded, the client request is immediately answered with HTTP status code `429` (Too Many Requests) and no backend request is made. If `mode` is set to `wait` and the rate limit is exceeded, the request waits for the next free rate limiting period.",
+		type: "string",
+		options: ["wait","block"]
 	},
 	name: {
-		parents: ['proxy'],
-		description: "Defines the proxy request name. Allowed only in the definitions block.",
+		parents: ["proxy"],
+		description: "Defines the proxy request name. Allowed only in the [`definitions` block](definitions).",
+		type: "string"
 	},
 	no_proxy_from_env: {
-		parents: ['settings'],
-		type: 'boolean'
+		parents: ["settings"],
+		description: "Disables the connect hop to configured [proxy via environment](https://godoc.org/golang.org/x/net/http/httpproxy).",
+		type: "boolean"
 	},
 	origin: {
-		parents: ['backend']
+		parents: ["backend"],
+		description: "URL to connect to for backend requests.",
+		type: "string"
 	},
 	password: {
-		parents: ['basic_auth', 'oauth2']
+		parents: ["basic_auth","oauth2"],
+		description: "The corresponding password.",
+		type: "string"
 	},
 	path: {
-		parents: ['backend', 'beta_health']
+		parents: ["backend","health"],
+		description: "Changeable part of upstream URL.",
+		type: "string"
 	},
 	path_prefix: {
-		parents: ['backend']
+		parents: ["backend"],
+		description: "Prefixes all backend request paths with the given prefix.",
+		type: "string"
 	},
 	paths: {
-		parents: ['spa'],
-		examples: ['spa-serving'],
-		type: 'tuple'
-	},
-	period: {
-		parents: ['beta_rate_limit'],
-		type: 'duration'
-	},
-	period_window: {
-		parents: ['beta_rate_limit'],
-		options: ['sliding', 'fixed']
-	},
-	permissions_claim: {
-		parents: ['jwt'],
-		examples: ['permissions', 'permissions-map', 'permissions-rbac']
-	},
-	beta_permissions_claim: {
-		parents: ['jwt'],
-		examples: ['permissions', 'permissions-map', 'permissions-rbac'],
-		deprecated: {
-			version: 'v1.13',
-			attribute: 'permissions_claim'
-		}
-	},
-	permissions_map: {
-		parents: ['jwt'],
-		examples: ['permissions-map'],
-		type: 'object'
-	},
-	beta_permissions_map: {
-		parents: ['jwt'],
-		examples: ['permissions-map'],
-		type: 'object',
-		deprecated: {
-			version: 'v1.13',
-			attribute: 'permissions_map'
-		}
-	},
-	permissions_map_file: {
-		parents: ['jwt'],
-		examples: ['permissions-map']
-	},
-	beta_permissions_map_file: {
-		parents: ['jwt'],
-		examples: ['permissions-map'],
-		deprecated: {
-			version: 'v1.13',
-			attribute: 'permissions_map_file'
-		}
+		parents: ["spa"],
+		description: "List of SPA paths that need the bootstrap file.",
+		type: "tuple",
+		examples: ["spa-serving"]
 	},
 	per_period: {
-		parents: ['beta_rate_limit'],
-		type: 'number'
+		parents: ["rate_limit","rate_limiter"],
+		description: "Defines the number of allowed backend requests in a period.",
+		type: "number"
 	},
-	public_key: {
-		parents: ['server_certificate']
+	period: {
+		parents: ["rate_limit","rate_limiter"],
+		description: "Defines the rate limit period.",
+		type: "duration"
 	},
-	public_key_file: {
-		parents: ['server_certificate']
+	period_window: {
+		parents: ["rate_limit","rate_limiter"],
+		description: "Defines the window of the period. A `fixed` window permits `per_period` requests within `period` after the first request to the parent backend. After the `period` has expired, another `per_period` request is permitted. The sliding window ensures that only `per_period` requests are sent in any interval of length `period`.",
+		type: "string",
+		options: ["sliding","fixed"]
+	},
+	permissions_claim: {
+		parents: ["jwt"],
+		description: "Name of claim containing the granted permissions. The claim value must either be a string containing a space-separated list of permissions or a list of string permissions.",
+		type: "string",
+		examples: ["permissions","permissions-map","permissions-rbac"]
+	},
+	permissions_map: {
+		parents: ["jwt"],
+		description: "Mapping of granted permissions to additional granted permissions. Maps values from `permissions_claim` and those created from `roles_map`. The map is called recursively. Mutually exclusive with `permissions_map_file`.",
+		type: "object",
+		examples: ["permissions-map"]
+	},
+	permissions_map_file: {
+		parents: ["jwt"],
+		description: "Reference to JSON file containing permission mappings. Mutually exclusive with `permissions_map`. See `permissions_map` for more information.",
+		type: "string",
+		examples: ["permissions-map"]
+	},
+	pprof: {
+		parents: ["settings"],
+		description: "Enables [profiling](https://github.com/google/pprof/blob/main/doc/README.md#pprof).",
+		type: "boolean"
+	},
+	pprof_port: {
+		parents: ["settings"],
+		description: "Port for profiling interface.",
+		type: "number"
 	},
 	private_key: {
-		parents: ['server_certificate']
+		parents: ["server_certificate"],
+		description: "Private part of the certificate in DER or PEM format. Mutually exclusive with `private_key_file`.",
+		type: "string"
 	},
 	private_key_file: {
-		parents: ['server_certificate']
+		parents: ["server_certificate"],
+		description: "Reference to a file containing the private part of the certificate file in DER or PEM format. Mutually exclusive with `private_key`.",
+		type: "string"
 	},
-	proxy: { // (label reference in endpoints)
-		parents: ['backend', 'endpoint'],
+	proxy: {
+		parents: ["backend","endpoint"],
+		description: "A proxy URL for the related origin request.",
+		type: "string",
 		definingBlocks: ["proxy"]
 	},
+	public_key: {
+		parents: ["server_certificate"],
+		description: "Public part of the certificate in DER or PEM format. Mutually exclusive with `public_key_file`.",
+		type: "string"
+	},
+	public_key_file: {
+		parents: ["server_certificate"],
+		description: "Reference to a file containing the public part of the certificate file in DER or PEM format. Mutually exclusive with `public_key`.",
+		type: "string"
+	},
 	query_params: {
-		parents: ['beta_token_request', 'request'],
-		type: 'object'
+		parents: ["request","token_request"],
+		description: "Key/value pairs to set query parameters for this request.",
+		type: "object"
 	},
 	realm: {
-		parents: ['basic_auth']
+		parents: ["basic_auth"],
+		description: "The realm to be sent in a WWW-Authenticate response HTTP header field.",
+		type: "string"
 	},
 	redirect_uri: {
-		parents: ['beta_oauth2', 'oidc'],
-		examples: ['oidc']
+		parents: ["beta_oauth2","oidc"],
+		description: "The Couper endpoint for receiving the authorization code. Relative URL references are resolved against the origin of the current request URL. The origin can be changed with the [`accept_forwarded_url` attribute](settings) if Couper is running behind a proxy.",
+		type: "string",
+		examples: ["oidc"]
 	},
 	remove_form_params: {
-		parents: ['backend', 'endpoint', 'error_handler', 'proxy'],
-		type: 'tuple'
+		parents: ["backend","endpoint","error_handler","proxy"],
+		description: "List of names to remove form parameters from the upstream request body.",
+		type: "object"
 	},
 	remove_query_params: {
-		parents: ['backend', 'endpoint', 'error_handler', 'proxy'],
-		examples: ['query'],
-		type: 'tuple'
+		parents: ["backend","endpoint","error_handler","proxy"],
+		description: "List of names to remove query parameters from the upstream request URL.",
+		type: "tuple",
+		examples: ["query"]
 	},
 	remove_request_headers: {
-		parents: ['backend', 'endpoint', 'error_handler', 'proxy', 'websockets'],
-		type: 'tuple'
+		parents: ["backend","endpoint","error_handler","proxy","websockets"],
+		description: "List of names to remove headers from the upstream request.",
+		type: "tuple"
 	},
 	remove_response_headers: {
-		parents: ['api', 'backend', 'endpoint', 'error_handler', 'files', 'proxy', 'server', 'spa', 'websockets'],
-		type: 'tuple'
+		parents: ["api","backend","endpoint","error_handler","files","proxy","server","spa","websockets"],
+		description: "List of names to remove headers from the client response.",
+		type: "tuple"
 	},
 	request_body_limit: {
-		parents: ['endpoint']
+		parents: ["endpoint"],
+		description: "Configures the maximum buffer size while accessing `request.form_body` or `request.json_body` content. Valid units are: `KiB`, `MiB`, `GiB`.",
+		type: "string"
 	},
 	request_id_accept_from_header: {
-		parents: ['settings']
+		parents: ["settings"],
+		description: "Client request HTTP header field that transports the `request.id` which Couper takes for logging and transport to the backend (if configured).",
+		type: "string"
 	},
 	request_id_backend_header: {
-		parents: ['settings']
+		parents: ["settings"],
+		description: "HTTP header field which Couper uses to transport the `request.id` to the backend.",
+		type: "string"
 	},
 	request_id_client_header: {
-		parents: ['settings']
+		parents: ["settings"],
+		description: "HTTP header field which Couper uses to transport the `request.id` to the client.",
+		type: "string"
 	},
 	request_id_format: {
-		parents: ['settings'],
-		options: ['common', 'uuid4']
+		parents: ["settings"],
+		description: "If set to `\"uuid4\"` an RFC 4122 UUID is used for `request.id` and related log fields. Valid values: `\"common\"` or `\"uuid4\"`.",
+		type: "string",
+		options: ["common","uuid4"]
 	},
 	required_claims: {
-		parents: ['jwt'],
-		examples: ['jwt-access-control'],
-		type: 'tuple'
+		parents: ["jwt"],
+		description: "List of claim names that must be given for a valid token.",
+		type: "tuple",
+		examples: ["jwt-access-control"]
 	},
 	required_permission: {
-		parents: ['api', 'endpoint'],
-		examples: ['permissions', 'permissions-map', 'permissions-rbac'],
-		type: ['string', 'object']
-	},
-	beta_required_permission: {
-		parents: ['api', 'endpoint'],
-		examples: ['permissions', 'permissions-map', 'permissions-rbac'],
-		type: ['string', 'object'],
-		deprecated: {
-			version: 'v1.13',
-			attribute: 'required_permission'
-		}
+		parents: ["api","endpoint"],
+		description: "Permission required to use this API (see [error type](/configuration/error-handling#error-types) `insufficient_permissions`).",
+		type: ["string","object (string"],
+		examples: ["permissions","permissions-map","permissions-rbac"]
 	},
 	retries: {
-		parents: ['oauth2'],
-		type: 'number'
+		parents: ["oauth2"],
+		description: "The number of retries to get the token and resource, if the resource-request responds with `401 Unauthorized` HTTP status code.",
+		type: "number"
 	},
 	roles_claim: {
-		parents: ['jwt'],
-		examples: ['permissions-rbac']
-	},
-	beta_roles_claim: {
-		parents: ['jwt'],
-		examples: ['permissions-rbac'],
-		deprecated: {
-			version: 'v1.13',
-			attribute: 'roles_claim'
-		}
+		parents: ["jwt"],
+		description: "Name of claim specifying the roles of the user represented by the token. The claim value must either be a string containing a space-separated list of role values or a list of string role values.",
+		type: "string",
+		examples: ["permissions-rbac"]
 	},
 	roles_map: {
-		parents: ['jwt'],
-		examples: ['permissions-rbac'],
-		type: 'object'
-	},
-	beta_roles_map: {
-		parents: ['jwt'],
-		examples: ['permissions-rbac'],
-		type: 'object',
-		deprecated: {
-			version: 'v1.13',
-			attribute: 'roles_map'
-		}
+		parents: ["jwt"],
+		description: "Mapping of roles to granted permissions. Non-mapped roles can be assigned with `*` to specific permissions. Mutually exclusive with `roles_map_file`.",
+		type: "object",
+		examples: ["permissions-rbac"]
 	},
 	roles_map_file: {
-		parents: ['jwt'],
-		examples: ['permissions-rbac']
-	},
-	beta_roles_map_file: {
-		parents: ['jwt'],
-		examples: ['permissions-rbac'],
-		deprecated: {
-			version: 'v1.13',
-			attribute: 'roles_map_file'
-		}
+		parents: ["jwt"],
+		description: "Reference to JSON file containing role mappings. Mutually exclusive with `roles_map`. See `roles_map` for more information.",
+		type: "string",
+		examples: ["permissions-rbac"]
 	},
 	scope: {
-		parents: ['beta_oauth2', 'oauth2', 'oidc']
+		parents: ["beta_oauth2","oauth2","oidc"],
+		description: "A space separated list of requested scope values for the access token.",
+		type: "string"
 	},
 	secure_cookies: {
-		parents: ['settings'],
-		options: ['strip', '']
+		parents: ["settings"],
+		description: "If set to `\"strip\"`, the `Secure` flag is removed from all `Set-Cookie` HTTP header fields. Valid values: `\"\"` or `\"strip\"`.",
+		type: "string",
+		options: ["strip",""]
 	},
 	server_ca_certificate: {
-		parents: createCheckGrandparent("server_ca_certificate", "tls", "backend")
+		parents: ["tls"],
+		description: "Public part of the certificate authority in DER or PEM format. Mutually exclusive with `server_ca_certificate_file`.",
+		type: "string"
 	},
 	server_ca_certificate_file: {
-		parents: createCheckGrandparent("server_ca_certificate_file", "tls", "backend")
+		parents: ["tls"],
+		description: "Reference to a file containing the public part of the certificate authority file in DER or PEM format. Mutually exclusive with `server_ca_certificate`.",
+		type: "string"
 	},
 	server_timing_header: {
-		parents: ['settings'],
-		type: 'boolean'
+		parents: ["settings"],
+		description: "If enabled, Couper includes an additional [Server-Timing](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Server-Timing) HTTP response header field detailing connection and transport relevant metrics for each backend request.",
+		type: "boolean"
 	},
 	set_form_params: {
-		parents: ['backend', 'endpoint', 'error_handler', 'proxy'],
-		type: 'object'
+		parents: ["backend","endpoint","error_handler","proxy"],
+		description: "Key/value pairs to set query parameters in the upstream request URL.",
+		type: "object"
 	},
 	set_query_params: {
-		parents: ['backend', 'endpoint', 'error_handler', 'proxy'],
-		examples: ['query'],
-		type: 'object'
+		parents: ["backend","endpoint","error_handler","proxy"],
+		description: "Key/value pairs to set query parameters in the upstream request URL.",
+		type: "object",
+		examples: ["query"]
 	},
 	set_request_headers: {
-		parents: ['backend', 'endpoint', 'error_handler', 'proxy', 'websockets'],
-		examples: ['sending-jwt-upstream'],
-		type: 'object'
+		parents: ["backend","endpoint","error_handler","proxy","websockets"],
+		description: "Key/value pairs to set as request headers in the upstream request.",
+		type: "object",
+		examples: ["sending-jwt-upstream"]
 	},
 	set_response_headers: {
-		parents: ['api', 'backend', 'endpoint', 'error_handler', 'files', 'proxy', 'server', 'spa', 'websockets'],
-		type: 'object'
+		parents: ["api","backend","endpoint","error_handler","files","proxy","server","spa","websockets"],
+		description: "Key/value pairs to set as response headers in the client response.",
+		type: "object"
 	},
 	set_response_status: {
-		parents: ['backend', 'endpoint', 'error_handler'],
-		type: 'number'
+		parents: ["backend","endpoint"],
+		description: "Modifies the response status code.",
+		type: "number"
 	},
 	signature_algorithm: {
-		parents: ['jwt', 'jwt_signing_profile'],
-		options: ['ES256', 'ES384', 'ES512', 'HS256', 'HS384', 'HS512', 'RS256', 'RS384', 'RS512'],
-		examples: ['jwt-access-control']
+		parents: ["jwt","jwt_signing_profile"],
+		description: "Algorithm used for signing: `\"RS256\"`, `\"RS384\"`, `\"RS512\"`, `\"HS256\"`, `\"HS384\"`, `\"HS512\"`, `\"ES256\"`, `\"ES384\"`, `\"ES512\"`.",
+		type: "string",
+		options: ["ES256","ES384","ES512","HS256","HS384","HS512","RS256","RS384","RS512"],
+		examples: ["jwt-access-control"]
 	},
 	signing_key: {
-		parents: ['jwt']
+		parents: ["jwt"],
+		description: "Private key (in PEM format) for `RS*` and `ES*` variants. Mutually exclusive with `signing_key_file`.",
+		type: "string"
 	},
 	signing_key_file: {
-		parents: ['jwt']
+		parents: ["jwt"],
+		description: "Reference to file containing signing key. Mutually exclusive with `signing_key`. See `signing_key` for more information.",
+		type: "string"
 	},
 	signing_ttl: {
-		parents: ['jwt'],
-		type: 'duration'
+		parents: ["jwt"],
+		description: "The token's time-to-live (creates the `exp` claim).",
+		type: "duration"
 	},
 	sp_acs_url: {
-		parents: ['saml'],
-		examples: ['saml'],
+		parents: ["saml"],
+		description: "The URL of the Service Provider's ACS endpoint. Relative URL references are resolved against the origin of the current request URL. The origin can be changed with the [`accept_forwarded_url` attribute](settings) if Couper is running behind a proxy.",
+		type: "string",
+		examples: ["saml"]
 	},
 	sp_entity_id: {
-		parents: ['saml'],
-		examples: ['saml']
+		parents: ["saml"],
+		description: "The Service Provider's entity ID.",
+		type: "string",
+		examples: ["saml"]
 	},
 	status: {
-		parents: ['response'],
-		examples: ['static-responses'],
-		type: 'number'
+		parents: ["response"],
+		description: "The HTTP status code to return.",
+		type: "number",
+		examples: ["static-responses"]
 	},
 	timeout: {
-		parents: ['backend', 'beta_health', 'websockets'],
-		type: 'duration'
+		parents: ["backend","health","websockets"],
+		description: "The total deadline duration a backend request has for write and read/pipe.",
+		type: "duration"
 	},
-	token_backend: { // label reference
-		parents: ['oidc'],
+	token: {
+		parents: ["token_request"],
+		description: "The token to be stored in `backends.<backend_name>.tokens.<token_request_name>`.",
+		type: "string"
+	},
+	token_backend: {
+		parents: ["oidc"],
+		description: "References a [backend](/configuration/block/backend) in [definitions](/configuration/block/definitions) for token requests.",
+		type: "string",
 		definingBlocks: ["backend"]
 	},
 	token_endpoint: {
-		parents: ['beta_oauth2', 'oauth2']
+		parents: ["beta_oauth2","oauth2"],
+		description: "The authorization server endpoint URL used for requesting the token.",
+		type: "string"
 	},
 	token_endpoint_auth_method: {
-		parents: ['beta_oauth2', 'oauth2', 'oidc'],
-		options: ['client_secret_basic', 'client_secret_jwt', 'client_secret_post', 'private_key_jwt']
-	},
-	token: {
-		parents: ['beta_token_request']
+		parents: ["beta_oauth2","oauth2","oidc"],
+		description: "Defines the method to authenticate the client at the token endpoint. If set to `\"client_secret_post\"`, the client credentials are transported in the request body. If set to `\"client_secret_basic\"`, the client credentials are transported via Basic Authentication. If set to `\"client_secret_jwt\"`, the client is authenticated via a JWT signed with the `client_secret`. If set to `\"private_key_jwt\"`, the client is authenticated via a JWT signed with its private key (see `jwt_signing_profile` block).",
+		type: "string",
+		options: ["client_secret_basic","client_secret_jwt","client_secret_post","private_key_jwt"]
 	},
 	token_value: {
-		parents: ['jwt'],
-		examples: ['jwt-access-control'],
-		type: ['string', 'number', 'boolean']
+		parents: ["jwt"],
+		description: "Expression to obtain the token. Cannot be used together with `bearer`, `cookie`, `beta_dpop` or `header`.",
+		type: "string",
+		examples: ["jwt-access-control"]
 	},
 	ttfb_timeout: {
-		parents: ['backend'],
-		type: 'duration'
+		parents: ["backend"],
+		description: "The duration from writing the full request to the origin and receiving the answer.",
+		type: "duration"
 	},
 	ttl: {
-		parents: ['beta_token_request', 'jwt_signing_profile'],
-		type: 'duration'
+		parents: ["introspection","jwt_signing_profile","token_request"],
+		description: "The time-to-live of a cached introspection response. With a non-positive value the introspection endpoint is called each time a token is validated.",
+		type: "duration"
 	},
 	url: {
-		parents: ['beta_token_request', 'request', 'proxy']
+		parents: ["proxy","request","token_request"],
+		description: "URL of the resource to request. May be relative to an origin specified in a referenced or nested `backend` block.",
+		type: "string"
 	},
 	use_when_unhealthy: {
-		parents: ['backend'],
-		type: 'boolean'
+		parents: ["backend"],
+		description: "Ignores the health state and continues with the outgoing request.",
+		type: "boolean"
 	},
 	user: {
-		parents: ['basic_auth']
+		parents: ["basic_auth"],
+		description: "The user name.",
+		type: "string"
 	},
-	username: {
-		parents: ['oauth2']
-	},
-	userinfo_backend: { // label reference
-		parents: ['oidc'],
+	userinfo_backend: {
+		parents: ["oidc"],
+		description: "References a [backend](/configuration/block/backend) in [definitions](/configuration/block/definitions) for userinfo requests.",
+		type: "string",
 		definingBlocks: ["backend"]
 	},
+	username: {
+		parents: ["oauth2"],
+		description: "The (service account's) username (for password flow). Required if grant_type is `\"password\"`.",
+		type: "string"
+	},
 	verifier_method: {
-		parents: ['beta_oauth2', 'oidc'],
-		options: ['ccm_s256', 'nonce', 'state']
+		parents: ["beta_oauth2","oidc"],
+		description: "The method to verify the integrity of the authorization code flow. Available values: `\"ccm_s256\"` (`code_challenge` parameter with `code_challenge_method` `S256`), `\"state\"` (`state` parameter)",
+		type: "string",
+		options: ["ccm_s256","nonce","state"]
 	},
 	verifier_value: {
-		parents: ['beta_oauth2', 'oidc']
+		parents: ["beta_oauth2","oidc"],
+		description: "The value of the (unhashed) verifier. E.g. using cookie value created with `oauth2_verifier()` function](../functions)",
+		type: "string"
 	},
 	websockets: {
-		parents: ['proxy'],
-		type: 'boolean'
+		parents: ["proxy"],
+		description: "Allows support for WebSockets. This attribute is only allowed in the \"default\" proxy block. Other `proxy` blocks, `request` blocks or `response` blocks are not allowed within the current `endpoint` block. Mutually exclusive with `websockets` block.",
+		type: "boolean"
 	},
 	xfh: {
-		parents: ['settings'],
-		type: 'boolean'
+		parents: ["settings"],
+		description: "Whether to use the `X-Forwarded-Host` header as the request host.",
+		type: "boolean"
 	}
 }
 
 const functions = {
-	base64_decode: { description: 'Decodes Base64 data, as specified in RFC 4648.' },
-	base64_encode: { description: 'Encodes Base64 data, as specified in RFC 4648.' },
-	can: { description: 'Tries to evaluate the expression given in its first argument.' },
-	contains: { description: 'Determines whether a given list contains a given single value as one of its elements.' },
-	default: { description: 'Returns the first of the given arguments that is not null.' },
-	join: { description: 'Concatenates together the string elements of one or more lists with a given separator.' },
-	json_decode: { description: 'Parses the given JSON string and, if it is valid, returns the value it represents.' },
+	base64_decode: {
+		description: "Decodes Base64 data, as specified in RFC 4648."
+	},
+	base64_encode: {
+		description: "Encodes Base64 data, as specified in RFC 4648."
+	},
+	can: {
+		description: "Tries to evaluate the expression given in its first argument."
+	},
+	coalesce: {
+		description: "Returns the first of the given arguments that is not null."
+	},
+	contains: {
+		description: "Determines whether a given list contains a given single value as one of its elements."
+	},
+	default: {
+		description: "Returns the first of the given arguments that is not null."
+	},
+	join: {
+		description: "Concatenates together the string elements of one or more lists with a given separator."
+	},
+	json_decode: {
+		description: "Parses the given JSON string and, if it is valid, returns the value it represents."
+	},
 	json_encode: {
-		description: 'Returns a JSON serialization of the given value.',
-		examples: ['sending-jwt-upstream'],
+		description: "Returns a JSON serialization of the given value.",
+		examples: ["sending-jwt-upstream"]
 	},
-	jwt_sign: { description: 'jwt_sign creates and signs a JSON Web Token (JWT) from information from a referenced jwt_signing_profile block and additional claims provided as a function parameter.' },
-	keys: { description: 'Takes a map and returns a sorted list of the map keys.' },
-	length: { description: 'Returns the number of elements in the given collection.' },
-	lookup: { description: 'Performs a dynamic lookup into a map.' },
-	merge: { description: 'Deep-merges two or more of either objects or tuples. `null` arguments are ignored. A `null` attribute value in an object removes the previous attribute value. An attribute value with a different type than the current value is set as the new value. `merge()` with no parameters returns `null`.' },
+	jwt_sign: {
+		description: "Creates and signs a JSON Web Token (JWT) from information from a referenced jwt_signing_profile block and additional claims provided as a function parameter."
+	},
+	keys: {
+		description: "Takes a map and returns a sorted list of the map keys."
+	},
+	length: {
+		description: "Returns the number of elements in the given collection."
+	},
+	lookup: {
+		description: "Performs a dynamic lookup into a map."
+	},
+	merge: {
+		description: "Deep-merges two or more of either objects or tuples. `null` arguments are ignored."
+	},
 	oauth2_authorization_url: {
-		description: 'Creates an OAuth2 authorization URL from a referenced OAuth2 AC Block or OIDC Block.',
-		examples: ['oidc']
+		description: "Creates an OAuth2 authorization URL from a referenced OAuth2 AC Block or OIDC Block.",
+		examples: ["oidc"]
 	},
-	oauth2_verifier: { description: 'Creates a cryptographically random key as specified in RFC 7636, applicable for all verifier methods; e.g. to be set as a cookie and read into verifier_value. Multiple calls of this function in the same client request context return the same value.' },
-	relative_url: { description: 'Returns a relative URL by retaining path, query and fragment components. The input URL must begin with `/<path>`, `//<authority>`, `http://` or `https://`, otherwise an error is thrown.' },
+	oauth2_verifier: {
+		description: "Creates a cryptographically random key as specified in RFC 7636."
+	},
+	relative_url: {
+		description: "Returns a relative URL by retaining path, query and fragment components."
+	},
 	saml_sso_url: {
-		description: 'Creates a SAML SingleSignOn URL (including the `SAMLRequest` parameter) from a referenced `saml` block.',
-		examples: ['saml']
+		description: "Creates a SAML SingleSignOn URL (including the SAMLRequest parameter) from a referenced saml block.",
+		examples: ["saml"]
 	},
-	set_intersection: { description: 'Returns a new set containing the elements that exist in all of the given sets.' },
-	split: { description: 'Divides a given string by a given separator.' },
-	substr: { description: 'Extracts a sequence of characters from another string.' },
-	to_lower: { description: 'Converts a given string to lowercase.' },
-	to_number: { description: 'Converts its argument to a number value.' },
-	to_upper: { description: 'Converts a given string to uppercase.' },
-	trim: { description: 'Removes any whitespace characters from the start and end of the given string.' },
-	unixtime: { description: 'Retrieves the current UNIX timestamp in seconds.' },
-	url_decode: { description: 'URL-decodes a given string according to RFC 3986.' },
-	url_encode: { description: 'URL-encodes a given string according to RFC 3986.' },
+	set_intersection: {
+		description: "Returns a new set containing the elements that exist in all of the given sets."
+	},
+	split: {
+		description: "Divides a given string by a given separator."
+	},
+	substr: {
+		description: "Extracts a sequence of characters from another string."
+	},
+	to_lower: {
+		description: "Converts a given string to lowercase."
+	},
+	to_number: {
+		description: "Converts its argument to a number value."
+	},
+	to_upper: {
+		description: "Converts a given string to uppercase."
+	},
+	trim: {
+		description: "Removes any whitespace characters from the start and end of the given string."
+	},
+	unixtime: {
+		description: "Retrieves the current UNIX timestamp in seconds."
+	},
+	url_decode: {
+		description: "URL-decodes a given string according to RFC 3986."
+	},
+	url_encode: {
+		description: "URL-encodes a given string according to RFC 3986."
+	}
 }
 
 const commonProperties = ['body', 'context', 'cookies', 'headers', 'json_body']
 
 const variables = {
 	backend: {
-		parents: ['backend'],
+		parents: ["backend"],
 		description: "An object with backend attributes.",
-		values: [
-			'health', // TODO how to add health object properties?
-			'beta_tokens',
-			'beta_token'
-		]
-	},
-	backends: {
-		child: 'default',
-		description: "An object with all backends and their attributes. To access a specific backend use the related name.",
-		values: [
-			'health',
-			'beta_tokens',
-			'beta_token'
-		]
+		values: ["health","beta_tokens","beta_token"]
 	},
 	backend_request: {
-		parents: ['backend'],
+		parents: ["backend"],
 		description: "Holds information about the current backend request.",
-		values: commonProperties.concat([
-			'form_body',
-			'host',
-			'id',
-			'method',
-			'origin',
-			'path',
-			'port',
-			'protocol',
-			'query',
-			'url'
-		])
+		values: ["body","context","cookies","headers","json_body","form_body","host","id","method","origin","path","port","protocol","query","url"]
 	},
 	backend_requests: {
-		child: 'default',
-		description: "An object with all backend requests and their attributes. To access a specific request use the related label.\n\n`request` and `proxy` blocks without a label will be available as `default`.\n\n**Example:** Use `backend_requests.default.method` to access the HTTP method of the default  request.",
-		values: commonProperties.concat([
-			'form_body',
-			'host',
-			'id',
-			'method',
-			'origin',
-			'path',
-			'port',
-			'protocol',
-			'query',
-			'url'
-		])
+		description: "An object with all backend requests and their attributes.",
+		child: "default",
+		values: ["body","context","cookies","headers","json_body","form_body","host","id","method","origin","path","port","protocol","query","url"]
 	},
 	backend_response: {
-		parents: ['backend'],
-		values: commonProperties.concat([
-			'status'
-		])
+		parents: ["backend"],
+		values: ["body","context","cookies","headers","json_body","status"]
 	},
 	backend_responses: {
-		child: 'default',
-		values: commonProperties.concat([
-			'status'
-		])
+		child: "default",
+		values: ["body","context","cookies","headers","json_body","status"]
+	},
+	backends: {
+		description: "An object with all backends and their attributes.",
+		child: "default",
+		values: ["health","beta_tokens","beta_token"]
+	},
+	beta_token_response: {
+		parents: ["beta_token_request"],
+		description: "Holds information about the current token response.",
+		values: ["body","context","cookies","headers","json_body","status"]
 	},
 	couper: {
-		values: ['environment', 'version']
+		values: ["environment","version"]
 	},
 	env: {
 		description: "The value of an environment variable.",
-		examples: ['env-var', 'docker-compose#environment-variables'],
-		values: []
+		examples: ["env-var","docker-compose#environment-variables"]
 	},
 	request: {
-		values: commonProperties.concat([
-			'form_body',
-			'host',
-			'id',
-			'method',
-			'origin',
-			'path',
-			'path_params',
-			'port',
-			'protocol',
-			'query',
-			'url'
-		])
-	},
-	beta_token_response: {
-		parents: ['beta_token_request'],
-		description: "Holds information about the current token response.",
-		values: commonProperties.concat([
-			'status'
-		])
+		description: "Client request data including method, path, headers, query, body, and cookies.",
+		values: ["body","context","cookies","headers","json_body","form_body","host","id","method","origin","path","path_params","port","protocol","query","url"]
 	}
 }
 
