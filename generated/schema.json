@@ -296,7 +296,10 @@
         "cors"
       ],
       "description": "An allowed origin or a list of allowed origins.",
-      "type": "object"
+      "type": [
+        "string",
+        "tuple"
+      ]
     },
     "array_attributes": {
       "parents": [
