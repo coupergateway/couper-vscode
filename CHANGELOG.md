@@ -2,6 +2,16 @@
 
 ## [Unreleased](https://github.com/coupergateway/couper/compare-vscode/v1.9.0...master)
 
+### Added
+
+- auto-generated schema infrastructure from Couper Go codebase [#140](https://github.com/coupergateway/couper-vscode/pull/140)
+- completion for `beta_dpop` attribute for `jwt` block [#137](https://github.com/coupergateway/couper-vscode/pull/137)
+- completion for `beta_introspection` block and its child blocks and attributes [#132](https://github.com/coupergateway/couper-vscode/pull/132)
+
+### Removed
+
+- deprecated `beta_`-prefixed permission-related features [#131](https://github.com/coupergateway/couper-vscode/pull/131)
+
 ---
 
 ## [v1.9.0](https://github.com/coupergateway/couper-vscode/releases/tag/v1.9.0)
