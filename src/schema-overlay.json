@@ -1,0 +1,243 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "Manual overlay for Couper VS Code schema. Merged with auto-generated schema.",
+  "blocks": {
+    "api": {
+      "examples": ["api-proxy"]
+    },
+    "backend": {
+      "examples": ["backend-configuration"]
+    },
+    "beta_health": {
+      "examples": ["health-check"],
+      "docs": "/configuration/block/health"
+    },
+    "beta_job": {
+      "docs": "/configuration/block/job"
+    },
+    "beta_oauth2": {
+      "docs": "/configuration/block/oauth2"
+    },
+    "endpoint": {
+      "labels": ["/"]
+    },
+    "environment": {
+      "examples": ["environment"]
+    },
+    "error_handler": {
+      "examples": ["error-handling-ba", "sequences"],
+      "_labelsForParent": {
+        "api": ["access_control", "backend", "backend_timeout", "backend_openapi_validation", "backend_unhealthy", "beta_backend_token_request", "insufficient_permissions", "beta_insufficient_permissions"],
+        "basic_auth": ["access_control", "basic_auth", "basic_auth_credentials_missing"],
+        "endpoint": ["access_control", "backend", "backend_timeout", "backend_openapi_validation", "backend_unhealthy", "beta_backend_token_request", "endpoint", "insufficient_permissions", "beta_insufficient_permissions", "sequence", "unexpected_status"],
+        "jwt": ["access_control", "jwt", "jwt_token_expired", "jwt_token_invalid", "jwt_token_missing"],
+        "saml": ["access_control", "saml"],
+        "beta_oauth2": ["access_control", "oauth2"],
+        "oidc": ["access_control", "oauth2"]
+      }
+    },
+    "files": {
+      "examples": ["simple-fileserving", "spa-serving"]
+    },
+    "jwt": {
+      "examples": ["jwt-access-control", "creating-jwt"]
+    },
+    "jwt_signing_profile": {
+      "examples": ["creating-jwt"]
+    },
+    "oauth2": {
+      "docs": "/configuration/block/oauth2req_auth",
+      "examples": ["oauth2-client-credentials"]
+    },
+    "oidc": {
+      "examples": ["oidc"]
+    },
+    "openapi": {
+      "examples": ["backend-validation"]
+    },
+    "proxy": {
+      "examples": ["api-proxy", "custom-requests", "multiple-requests"]
+    },
+    "request": {
+      "examples": ["custom-requests", "multiple-requests"]
+    },
+    "response": {
+      "examples": ["static-responses"]
+    },
+    "saml": {
+      "examples": ["saml"]
+    },
+    "spa": {
+      "examples": ["spa-serving"]
+    }
+  },
+  "attributes": {
+    "access_control": {
+      "examples": ["jwt-access-control"]
+    },
+    "add_query_params": {
+      "examples": ["query"]
+    },
+    "allowed_methods": {
+      "options": ["GET", "HEAD", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "*"]
+    },
+    "allowed_origins": {
+      "type": ["string", "tuple"]
+    },
+    "array_attributes": {
+      "examples": ["saml"]
+    },
+    "backend": {
+      "examples": ["backend-configuration"]
+    },
+    "bootstrap_file": {
+      "examples": ["spa-serving"]
+    },
+    "claims": {
+      "examples": ["jwt-access-control"]
+    },
+    "client_id": {
+      "examples": ["oauth2-client-credentials", "oidc"]
+    },
+    "client_secret": {
+      "examples": ["oauth2-client-credentials", "oidc"]
+    },
+    "configuration_url": {
+      "examples": ["oidc"]
+    },
+    "custom_log_fields": {
+      "examples": ["custom-logging", "sequences"]
+    },
+    "document_root": {
+      "examples": ["simple-fileserving", "spa-serving"]
+    },
+    "environment_variables": {
+      "examples": ["env-var"]
+    },
+    "error_file": {
+      "examples": ["simple-fileserving"]
+    },
+    "expected_status": {
+      "examples": ["sequences"]
+    },
+    "grant_type": {
+      "options": ["authorization_code", "client_credentials", "password", "urn:ietf:params:oauth:grant-type:jwt-bearer"]
+    },
+    "header": {
+      "examples": ["jwt-access-control"]
+    },
+    "headers": {
+      "examples": ["static-responses"]
+    },
+    "idp_metadata_file": {
+      "examples": ["saml"]
+    },
+    "json_body": {
+      "examples": ["static-responses"]
+    },
+    "jwks_url": {
+      "examples": ["jwt-access-control"]
+    },
+    "key": {
+      "examples": ["jwt-access-control"]
+    },
+    "key_file": {
+      "examples": ["jwt-access-control"]
+    },
+    "log_format": {
+      "options": ["common", "json"]
+    },
+    "log_level": {
+      "options": ["info", "panic", "fatal", "error", "warn", "debug", "trace"]
+    },
+    "mode": {
+      "options": ["wait", "block"]
+    },
+    "paths": {
+      "examples": ["spa-serving"]
+    },
+    "period_window": {
+      "options": ["sliding", "fixed"]
+    },
+    "permissions_claim": {
+      "examples": ["permissions", "permissions-map", "permissions-rbac"]
+    },
+    "permissions_map": {
+      "examples": ["permissions-map"]
+    },
+    "permissions_map_file": {
+      "examples": ["permissions-map"]
+    },
+    "redirect_uri": {
+      "examples": ["oidc"]
+    },
+    "remove_query_params": {
+      "examples": ["query"]
+    },
+    "request_id_format": {
+      "options": ["common", "uuid4"]
+    },
+    "required_claims": {
+      "examples": ["jwt-access-control"]
+    },
+    "required_permission": {
+      "examples": ["permissions", "permissions-map", "permissions-rbac"]
+    },
+    "roles_claim": {
+      "examples": ["permissions-rbac"]
+    },
+    "roles_map": {
+      "examples": ["permissions-rbac"]
+    },
+    "roles_map_file": {
+      "examples": ["permissions-rbac"]
+    },
+    "secure_cookies": {
+      "options": ["strip", ""]
+    },
+    "set_query_params": {
+      "examples": ["query"]
+    },
+    "set_request_headers": {
+      "examples": ["sending-jwt-upstream"]
+    },
+    "signature_algorithm": {
+      "options": ["ES256", "ES384", "ES512", "HS256", "HS384", "HS512", "RS256", "RS384", "RS512"],
+      "examples": ["jwt-access-control"]
+    },
+    "sp_acs_url": {
+      "examples": ["saml"]
+    },
+    "sp_entity_id": {
+      "examples": ["saml"]
+    },
+    "status": {
+      "examples": ["static-responses"]
+    },
+    "token_endpoint_auth_method": {
+      "options": ["client_secret_basic", "client_secret_jwt", "client_secret_post", "private_key_jwt"]
+    },
+    "token_value": {
+      "examples": ["jwt-access-control"]
+    },
+    "verifier_method": {
+      "options": ["ccm_s256", "nonce", "state"]
+    }
+  },
+  "functions": {
+    "json_encode": {
+      "examples": ["sending-jwt-upstream"]
+    },
+    "oauth2_authorization_url": {
+      "examples": ["oidc"]
+    },
+    "saml_sso_url": {
+      "examples": ["saml"]
+    }
+  },
+  "variables": {
+    "env": {
+      "examples": ["env-var", "docker-compose#environment-variables"]
+    }
+  }
+}
