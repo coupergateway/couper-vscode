@@ -1,6 +1,6 @@
 // Auto-generated from Couper Go code with manual overlay
 // Do not edit directly - modify schema-overlay.json instead
-// Generated: 2026-02-02T21:54:25.673Z
+// Generated: 2026-02-11T22:03:59.871Z
 
 
 const DEFAULT_LABEL = "…"
@@ -230,7 +230,7 @@ const attributes = {
 	allowed_origins: {
 		parents: ["cors"],
 		description: "An allowed origin or a list of allowed origins.",
-		type: "object"
+		type: ["string","tuple"]
 	},
 	array_attributes: {
 		parents: ["saml"],

@@ -81,6 +81,9 @@
     "allowed_methods": {
       "options": ["GET", "HEAD", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "*"]
     },
+    "allowed_origins": {
+      "type": ["string", "tuple"]
+    },
     "array_attributes": {
       "examples": ["saml"]
     },
