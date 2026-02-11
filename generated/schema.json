@@ -11,7 +11,7 @@
     "backend": {
       "parents": [
         "definitions",
-        "introspection",
+        "beta_introspection",
         "jwt",
         "beta_oauth2",
         "oauth2",
@@ -29,6 +29,12 @@
       ],
       "description": "Configure a BasicAuth access control (zero or more).",
       "labelled": true
+    },
+    "beta_introspection": {
+      "parents": [
+        "jwt"
+      ],
+      "description": "Configures a client for OAuth2 token introspection."
     },
     "beta_oauth2": {
       "parents": [
@@ -88,7 +94,6 @@
       "labelOptional": true
     },
     "health": {},
-    "introspection": {},
     "job": {
       "labelled": true
     },
@@ -102,7 +107,7 @@
     "jwt_signing_profile": {
       "parents": [
         "definitions",
-        "introspection",
+        "beta_introspection",
         "beta_oauth2",
         "oauth2",
         "oidc"
@@ -324,8 +329,8 @@
     },
     "backend": {
       "parents": [
+        "beta_introspection",
         "beta_oauth2",
-        "introspection",
         "jwt",
         "oauth2",
         "oidc",
@@ -473,8 +478,8 @@
     },
     "client_id": {
       "parents": [
+        "beta_introspection",
         "beta_oauth2",
-        "introspection",
         "oauth2",
         "oidc"
       ],
@@ -497,8 +502,8 @@
     },
     "client_secret": {
       "parents": [
+        "beta_introspection",
         "beta_oauth2",
-        "introspection",
         "oauth2",
         "oidc"
       ],
@@ -632,14 +637,14 @@
     },
     "endpoint": {
       "parents": [
-        "introspection"
+        "beta_introspection"
       ],
       "description": "The authorization server's `introspection_endpoint`.",
       "type": "string"
     },
     "endpoint_auth_method": {
       "parents": [
-        "introspection"
+        "beta_introspection"
       ],
       "description": "Defines the method to authenticate the client at the introspection endpoint. If set to `\"client_secret_post\"`, the client credentials are transported in the request body. If set to `\"client_secret_basic\"`, the client credentials are transported via Basic Authentication. If set to `\"client_secret_jwt\"`, the client is authenticated via a JWT signed with the `client_secret`. If set to `\"private_key_jwt\"`, the client is authenticated via a JWT signed with its private key (see `jwt_signing_profile` block).",
       "type": "string"
@@ -1433,7 +1438,7 @@
     },
     "ttl": {
       "parents": [
-        "introspection",
+        "beta_introspection",
         "jwt_signing_profile",
         "token_request"
       ],

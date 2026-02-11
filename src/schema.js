@@ -1,6 +1,6 @@
 // Auto-generated from Couper Go code with manual overlay
 // Do not edit directly - modify schema-overlay.json instead
-// Generated: 2026-02-11T22:10:46.433Z
+// Generated: 2026-02-11T22:26:53.841Z
 
 
 const DEFAULT_LABEL = "…"
@@ -23,7 +23,7 @@ const blocks = {
 		examples: ["api-proxy"]
 	},
 	backend: {
-		parents: ["definitions","introspection","jwt","beta_oauth2","oauth2","oidc","proxy","request","token_request"],
+		parents: ["definitions","beta_introspection","jwt","beta_oauth2","oauth2","oidc","proxy","request","token_request"],
 		description: "Configure a backend (zero or more).",
 		labelOptional: true,
 		examples: ["backend-configuration"]
@@ -32,6 +32,10 @@ const blocks = {
 		parents: ["definitions"],
 		description: "Configure a BasicAuth access control (zero or more).",
 		labelled: true
+	},
+	beta_introspection: {
+		parents: ["jwt"],
+		description: "Configures a client for OAuth2 token introspection."
 	},
 	beta_oauth2: {
 		parents: ["definitions"],
@@ -80,9 +84,6 @@ const blocks = {
 	health: {
 
 	},
-	introspection: {
-
-	},
 	job: {
 		labelled: true
 	},
@@ -93,7 +94,7 @@ const blocks = {
 		examples: ["jwt-access-control","creating-jwt"]
 	},
 	jwt_signing_profile: {
-		parents: ["definitions","introspection","beta_oauth2","oauth2","oidc"],
+		parents: ["definitions","beta_introspection","beta_oauth2","oauth2","oidc"],
 		description: "Configure a JWT signing profile (zero or more).",
 		labelOptional: true,
 		examples: ["creating-jwt"]
@@ -249,7 +250,7 @@ const attributes = {
 		type: "string"
 	},
 	backend: {
-		parents: ["beta_oauth2","introspection","jwt","oauth2","oidc","proxy","request","token_request"],
+		parents: ["beta_introspection","beta_oauth2","jwt","oauth2","oidc","proxy","request","token_request"],
 		description: "References a [backend](/configuration/block/backend) in [definitions](/configuration/block/definitions) for introspection requests. Mutually exclusive with `backend` block.",
 		type: "string",
 		definingBlocks: ["backend"],
@@ -348,7 +349,7 @@ const attributes = {
 		type: "string"
 	},
 	client_id: {
-		parents: ["beta_oauth2","introspection","oauth2","oidc"],
+		parents: ["beta_introspection","beta_oauth2","oauth2","oidc"],
 		description: "The client identifier.",
 		type: "string",
 		examples: ["oauth2-client-credentials","oidc"]
@@ -364,7 +365,7 @@ const attributes = {
 		type: "string"
 	},
 	client_secret: {
-		parents: ["beta_oauth2","introspection","oauth2","oidc"],
+		parents: ["beta_introspection","beta_oauth2","oauth2","oidc"],
 		description: "The client password. Required unless the `endpoint_auth_method` is `\"private_key_jwt\"`.",
 		type: "string",
 		examples: ["oauth2-client-credentials","oidc"]
@@ -445,12 +446,12 @@ const attributes = {
 		examples: ["simple-fileserving","spa-serving"]
 	},
 	endpoint: {
-		parents: ["introspection"],
+		parents: ["beta_introspection"],
 		description: "The authorization server's `introspection_endpoint`.",
 		type: "string"
 	},
 	endpoint_auth_method: {
-		parents: ["introspection"],
+		parents: ["beta_introspection"],
 		description: "Defines the method to authenticate the client at the introspection endpoint. If set to `\"client_secret_post\"`, the client credentials are transported in the request body. If set to `\"client_secret_basic\"`, the client credentials are transported via Basic Authentication. If set to `\"client_secret_jwt\"`, the client is authenticated via a JWT signed with the `client_secret`. If set to `\"private_key_jwt\"`, the client is authenticated via a JWT signed with its private key (see `jwt_signing_profile` block).",
 		type: "string"
 	},
@@ -990,7 +991,7 @@ const attributes = {
 		type: "duration"
 	},
 	ttl: {
-		parents: ["introspection","jwt_signing_profile","token_request"],
+		parents: ["beta_introspection","jwt_signing_profile","token_request"],
 		description: "The time-to-live of a cached introspection response. With a non-positive value the introspection endpoint is called each time a token is validated.",
 		type: "duration"
 	},
