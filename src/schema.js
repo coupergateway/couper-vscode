@@ -1,6 +1,6 @@
 // Auto-generated from Couper Go code with manual overlay
 // Do not edit directly - modify schema-overlay.json instead
-// Generated: 2026-02-20T21:30:07.934Z
+// Generated: 2026-02-20T22:10:40.237Z
 
 
 const DEFAULT_LABEL = "…"
@@ -85,6 +85,8 @@ const blocks = {
 
 	},
 	job: {
+		parents: ["definitions"],
+		description: "Configure a job (zero or more).",
 		labelled: true
 	},
 	jwt: {

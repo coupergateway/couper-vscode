@@ -95,6 +95,10 @@
     },
     "health": {},
     "job": {
+      "parents": [
+        "definitions"
+      ],
+      "description": "Configure a job (zero or more).",
       "labelled": true
     },
     "jwt": {
