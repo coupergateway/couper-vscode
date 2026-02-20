@@ -1377,6 +1377,13 @@
       "description": "The Service Provider's entity ID.",
       "type": "string"
     },
+    "startup_delay": {
+      "parents": [
+        "job"
+      ],
+      "description": "Delays the first execution of the job after startup.",
+      "type": "duration"
+    },
     "status": {
       "parents": [
         "response"

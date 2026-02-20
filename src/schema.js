@@ -1,6 +1,6 @@
 // Auto-generated from Couper Go code with manual overlay
 // Do not edit directly - modify schema-overlay.json instead
-// Generated: 2026-02-20T21:14:50.984Z
+// Generated: 2026-02-20T21:30:07.934Z
 
 
 const DEFAULT_LABEL = "…"
@@ -946,6 +946,11 @@ const attributes = {
 		description: "The Service Provider's entity ID.",
 		type: "string",
 		examples: ["saml"]
+	},
+	startup_delay: {
+		parents: ["job"],
+		description: "Delays the first execution of the job after startup.",
+		type: "duration"
 	},
 	status: {
 		parents: ["response"],
