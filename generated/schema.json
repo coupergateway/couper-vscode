@@ -143,7 +143,6 @@
       "description": "Configure a proxy (zero or more).",
       "labelOptional": true
     },
-    "rate_limit": {},
     "rate_limiter": {
       "labelled": true
     },
@@ -187,6 +186,12 @@
       ],
       "description": "Configures an SPA (zero or more).",
       "labelOptional": true
+    },
+    "throttle": {
+      "parents": [
+        "backend"
+      ],
+      "description": "Configures throttling (zero or one)."
     },
     "tls": {
       "parents": [
@@ -928,9 +933,9 @@
     },
     "mode": {
       "parents": [
-        "rate_limit"
+        "throttle"
       ],
-      "description": "If `mode` is set to `block` and the rate limit is exceeded, the client request is immediately answered with HTTP status code `429` (Too Many Requests) and no backend request is made. If `mode` is set to `wait` and the rate limit is exceeded, the request waits for the next free rate limiting period.",
+      "description": "If `mode` is set to `block` and the throttle limit is exceeded, the client request is immediately answered with HTTP status code `429` (Too Many Requests) and no backend request is made. If `mode` is set to `wait` and the throttle limit is exceeded, the request waits for the next free throttling period.",
       "type": "string"
     },
     "name": {
@@ -986,24 +991,24 @@
     },
     "per_period": {
       "parents": [
-        "rate_limit",
-        "rate_limiter"
+        "rate_limiter",
+        "throttle"
       ],
       "description": "Defines the number of allowed backend requests in a period.",
       "type": "number"
     },
     "period": {
       "parents": [
-        "rate_limit",
-        "rate_limiter"
+        "rate_limiter",
+        "throttle"
       ],
-      "description": "Defines the rate limit period.",
+      "description": "Defines the throttle period.",
       "type": "duration"
     },
     "period_window": {
       "parents": [
-        "rate_limit",
-        "rate_limiter"
+        "rate_limiter",
+        "throttle"
       ],
       "description": "Defines the window of the period. A `fixed` window permits `per_period` requests within `period` after the first request to the parent backend. After the `period` has expired, another `per_period` request is permitted. The sliding window ensures that only `per_period` requests are sent in any interval of length `period`.",
       "type": "string"

@@ -1,6 +1,6 @@
 // Auto-generated from Couper Go code with manual overlay
 // Do not edit directly - modify schema-overlay.json instead
-// Generated: 2026-02-11T22:38:47.636Z
+// Generated: 2026-02-20T21:07:46.794Z
 
 
 const DEFAULT_LABEL = "…"
@@ -122,9 +122,6 @@ const blocks = {
 		labelOptional: true,
 		examples: ["api-proxy","custom-requests","multiple-requests"]
 	},
-	rate_limit: {
-
-	},
 	rate_limiter: {
 		labelled: true
 	},
@@ -161,6 +158,10 @@ const blocks = {
 		description: "Configures an SPA (zero or more).",
 		labelOptional: true,
 		examples: ["spa-serving"]
+	},
+	throttle: {
+		parents: ["backend"],
+		description: "Configures throttling (zero or one)."
 	},
 	tls: {
 		parents: ["backend","server"],
@@ -650,8 +651,8 @@ const attributes = {
 		type: "string"
 	},
 	mode: {
-		parents: ["rate_limit"],
-		description: "If `mode` is set to `block` and the rate limit is exceeded, the client request is immediately answered with HTTP status code `429` (Too Many Requests) and no backend request is made. If `mode` is set to `wait` and the rate limit is exceeded, the request waits for the next free rate limiting period.",
+		parents: ["throttle"],
+		description: "If `mode` is set to `block` and the throttle limit is exceeded, the client request is immediately answered with HTTP status code `429` (Too Many Requests) and no backend request is made. If `mode` is set to `wait` and the throttle limit is exceeded, the request waits for the next free throttling period.",
 		type: "string",
 		options: ["wait","block"]
 	},
@@ -692,17 +693,17 @@ const attributes = {
 		examples: ["spa-serving"]
 	},
 	per_period: {
-		parents: ["rate_limit","rate_limiter"],
+		parents: ["rate_limiter","throttle"],
 		description: "Defines the number of allowed backend requests in a period.",
 		type: "number"
 	},
 	period: {
-		parents: ["rate_limit","rate_limiter"],
-		description: "Defines the rate limit period.",
+		parents: ["rate_limiter","throttle"],
+		description: "Defines the throttle period.",
 		type: "duration"
 	},
 	period_window: {
-		parents: ["rate_limit","rate_limiter"],
+		parents: ["rate_limiter","throttle"],
 		description: "Defines the window of the period. A `fixed` window permits `per_period` requests within `period` after the first request to the parent backend. After the `period` has expired, another `per_period` request is permitted. The sliding window ensures that only `per_period` requests are sent in any interval of length `period`.",
 		type: "string",
 		options: ["sliding","fixed"]
