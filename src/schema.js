@@ -1,6 +1,6 @@
 // Auto-generated from Couper Go code with manual overlay
 // Do not edit directly - modify schema-overlay.json instead
-// Generated: 2026-02-21T12:28:21.471Z
+// Generated: 2026-02-21T15:14:42.156Z
 
 
 const DEFAULT_LABEL = "…"
