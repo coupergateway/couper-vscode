@@ -1,6 +1,6 @@
 // Auto-generated from Couper Go code with manual overlay
 // Do not edit directly - modify schema-overlay.json instead
-// Generated: 2026-02-20T22:10:40.237Z
+// Generated: 2026-02-21T12:28:21.471Z
 
 
 const DEFAULT_LABEL = "…"
@@ -291,8 +291,28 @@ const attributes = {
 	},
 	beta_service_name: {
 		parents: ["settings"],
-		description: "Service name which applies to the `service_name` metric labels.",
+		description: "Service name which applies to the `service_name` metric and trace labels.",
 		type: "string"
+	},
+	beta_traces: {
+		parents: ["settings"],
+		description: "Enables the [OpenTelemetry](/observation/tracing) traces exporter.",
+		type: "boolean"
+	},
+	beta_traces_endpoint: {
+		parents: ["settings"],
+		description: "OpenTelemetry collector endpoint for exporting traces via gRPC.",
+		type: "string"
+	},
+	beta_traces_parent_only: {
+		parents: ["settings"],
+		description: "If enabled, Couper only creates trace spans for requests that carry a `traceparent` header. Requests without this header are not traced.",
+		type: "boolean"
+	},
+	beta_traces_trust_parent: {
+		parents: ["settings"],
+		description: "If enabled, the `traceparent` request header from an incoming request is used as the parent trace context. This connects Couper's spans to the calling service's trace.",
+		type: "boolean"
 	},
 	bind_address: {
 		parents: ["settings"],
