@@ -1,6 +1,6 @@
 // Auto-generated from Couper Go code with manual overlay
 // Do not edit directly - modify schema-overlay.json instead
-// Generated: 2026-02-22T11:24:12.913Z
+// Generated: 2026-02-23T18:17:57.028Z
 
 
 const DEFAULT_LABEL = "…"
@@ -73,7 +73,7 @@ const blocks = {
 		parents: ["api","basic_auth","endpoint","jwt","beta_oauth2","oidc","rate_limiter","saml"],
 		description: "Configures an error handler (zero or more).",
 		examples: ["error-handling-ba","sequences"],
-		_labelsForParent: {"api":["access_control","backend","backend_timeout","backend_openapi_validation","backend_unhealthy","beta_backend_token_request","insufficient_permissions","beta_insufficient_permissions"],"basic_auth":["access_control","basic_auth","basic_auth_credentials_missing"],"endpoint":["access_control","backend","backend_timeout","backend_openapi_validation","backend_unhealthy","beta_backend_token_request","endpoint","insufficient_permissions","beta_insufficient_permissions","sequence","unexpected_status"],"jwt":["access_control","jwt","jwt_token_expired","jwt_token_invalid","jwt_token_missing"],"saml":["access_control","saml"],"beta_oauth2":["access_control","oauth2"],"oidc":["access_control","oauth2"]}
+		_labelsForParent: {"api":["access_control","backend","backend_timeout","backend_openapi_validation","backend_throttle_exceeded","backend_unhealthy","beta_backend_token_request","insufficient_permissions","beta_insufficient_permissions"],"basic_auth":["access_control","basic_auth","basic_auth_credentials_missing"],"endpoint":["access_control","backend","backend_timeout","backend_openapi_validation","backend_throttle_exceeded","backend_unhealthy","beta_backend_token_request","endpoint","insufficient_permissions","beta_insufficient_permissions","sequence","unexpected_status"],"jwt":["access_control","jwt","jwt_token_expired","jwt_token_invalid","jwt_token_missing"],"saml":["access_control","saml"],"beta_oauth2":["access_control","oauth2"],"oidc":["access_control","oauth2"],"rate_limiter":["access_control","rate_limiter"]}
 	},
 	files: {
 		parents: ["server"],
