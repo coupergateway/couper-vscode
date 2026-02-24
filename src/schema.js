@@ -1,6 +1,6 @@
 // Auto-generated from Couper Go code with manual overlay
 // Do not edit directly - modify schema-overlay.json instead
-// Generated: 2026-02-23T18:17:57.028Z
+// Generated: 2026-02-24T15:49:19.849Z
 
 
 const DEFAULT_LABEL = "…"
@@ -23,7 +23,7 @@ const blocks = {
 		examples: ["api-proxy"]
 	},
 	backend: {
-		parents: ["definitions","beta_introspection","jwt","beta_oauth2","oauth2","oidc","proxy","request","token_request"],
+		parents: ["definitions","beta_introspection","jwt","beta_oauth2","oauth2","oidc","proxy","request","saml","token_request"],
 		description: "Configure a backend (zero or more).",
 		labelOptional: true,
 		examples: ["backend-configuration"]
@@ -253,7 +253,7 @@ const attributes = {
 		type: "string"
 	},
 	backend: {
-		parents: ["beta_introspection","beta_oauth2","jwt","oauth2","oidc","proxy","request","token_request"],
+		parents: ["beta_introspection","beta_oauth2","jwt","oauth2","oidc","proxy","request","saml","token_request"],
 		description: "References a [backend](/configuration/block/backend) in [definitions](/configuration/block/definitions) for introspection requests. Mutually exclusive with `backend` block.",
 		type: "string",
 		definingBlocks: ["backend"],
@@ -571,9 +571,14 @@ const attributes = {
 	},
 	idp_metadata_file: {
 		parents: ["saml"],
-		description: "File reference to the Identity Provider metadata XML file.",
+		description: "File reference to the Identity Provider metadata XML file. Mutually exclusive with `idp_metadata_url`.",
 		type: "string",
 		examples: ["saml"]
+	},
+	idp_metadata_url: {
+		parents: ["saml"],
+		description: "URL to fetch the Identity Provider metadata XML. Mutually exclusive with `idp_metadata_file`.",
+		type: "string"
 	},
 	ignore_request_violations: {
 		parents: ["openapi"],
@@ -666,6 +671,16 @@ const attributes = {
 		parents: ["backend"],
 		description: "The maximum number of concurrent connections in any state (_active_ or _idle_) to the origin. Must not be used in backend refinement.",
 		type: "number"
+	},
+	metadata_max_stale: {
+		parents: ["saml"],
+		description: "Time period the cached IdP metadata stays valid after its TTL has passed.",
+		type: "duration"
+	},
+	metadata_ttl: {
+		parents: ["saml"],
+		description: "Time period the IdP metadata stays valid and may be cached.",
+		type: "duration"
 	},
 	method: {
 		parents: ["request","token_request"],

@@ -18,6 +18,7 @@
         "oidc",
         "proxy",
         "request",
+        "saml",
         "token_request"
       ],
       "description": "Configure a backend (zero or more).",
@@ -345,6 +346,7 @@
         "oidc",
         "proxy",
         "request",
+        "saml",
         "token_request"
       ],
       "description": "References a [backend](/configuration/block/backend) in [definitions](/configuration/block/definitions) for introspection requests. Mutually exclusive with `backend` block.",
@@ -822,7 +824,14 @@
       "parents": [
         "saml"
       ],
-      "description": "File reference to the Identity Provider metadata XML file.",
+      "description": "File reference to the Identity Provider metadata XML file. Mutually exclusive with `idp_metadata_url`.",
+      "type": "string"
+    },
+    "idp_metadata_url": {
+      "parents": [
+        "saml"
+      ],
+      "description": "URL to fetch the Identity Provider metadata XML. Mutually exclusive with `idp_metadata_file`.",
       "type": "string"
     },
     "ignore_request_violations": {
@@ -954,6 +963,20 @@
       ],
       "description": "The maximum number of concurrent connections in any state (_active_ or _idle_) to the origin. Must not be used in backend refinement.",
       "type": "number"
+    },
+    "metadata_max_stale": {
+      "parents": [
+        "saml"
+      ],
+      "description": "Time period the cached IdP metadata stays valid after its TTL has passed.",
+      "type": "duration"
+    },
+    "metadata_ttl": {
+      "parents": [
+        "saml"
+      ],
+      "description": "Time period the IdP metadata stays valid and may be cached.",
+      "type": "duration"
     },
     "method": {
       "parents": [
