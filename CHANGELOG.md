@@ -1,6 +1,10 @@
 # Changelog
 
-## [Unreleased](https://github.com/coupergateway/couper/compare-vscode/v1.9.0...master)
+## [Unreleased](https://github.com/coupergateway/couper/compare-vscode/v1.10.0...master)
+
+---
+
+## [v1.10.0](https://github.com/coupergateway/couper-vscode/releases/tag/v1.10.0)
 
 ### Added
 
@@ -11,8 +15,6 @@
 ### Removed
 
 - deprecated `beta_`-prefixed permission-related features [#131](https://github.com/coupergateway/couper-vscode/pull/131)
-
----
 
 ## [v1.9.0](https://github.com/coupergateway/couper-vscode/releases/tag/v1.9.0)
 
