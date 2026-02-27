@@ -76,7 +76,13 @@ function checkBlockLabels(name, labels, parentBlock) {
 
 	let elementLabels = element.labels
 	if (!elementLabels) {
-		elementLabels = element.labelled ? ["..."] : []
+		if (element.labelled) {
+			elementLabels = ["..."]
+		} else if (element.labelOptional) {
+			elementLabels = [null, "..."]
+		} else {
+			elementLabels = []
+		}
 	} else if (typeof element.labels === 'function') {
 		elementLabels = element.labels(parentBlock)
 	}
@@ -111,10 +117,12 @@ function checkBlockLabels(name, labels, parentBlock) {
 			}
 		}
 
+		// These blocks are accessible as variables (e.g. backends.my_label),
+		// so labels must be valid identifiers — no hyphens or special chars.
 		if (["backend", "request", "proxy", "environment"].includes(name)) {
 			const index = label.search(REGEXES.labelsyntax)
 			if (index !== -1) {
-				return CheckFailed(`Invalid character in label "${label}": ${label.charAt(index)}`)
+				return CheckFailed(`Invalid character in label "${label}": ${label.charAt(index)}. Label is used as variable name, only 'a-z', 'A-Z', '0-9' and '_' are allowed.`)
 			}
 		}
 	}
@@ -284,6 +292,7 @@ module.exports.CHECKS = CHECKS
 
 if (process.env.NODE_ENV === 'test') {
 	module.exports.__private = {
-		checkAttributeValue: checkAttributeValue
+		checkAttributeValue: checkAttributeValue,
+		checkBlockLabels: checkBlockLabels
 	}
 }
