@@ -76,7 +76,13 @@ function checkBlockLabels(name, labels, parentBlock) {
 
 	let elementLabels = element.labels
 	if (!elementLabels) {
-		elementLabels = element.labelled ? ["..."] : []
+		if (element.labelled) {
+			elementLabels = ["..."]
+		} else if (element.labelOptional) {
+			elementLabels = [null, "..."]
+		} else {
+			elementLabels = []
+		}
 	} else if (typeof element.labels === 'function') {
 		elementLabels = element.labels(parentBlock)
 	}

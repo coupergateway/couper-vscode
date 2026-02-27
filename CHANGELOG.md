@@ -2,6 +2,12 @@
 
 ## [Unreleased](https://github.com/coupergateway/couper/compare-vscode/v1.10.0...master)
 
+### Fixed
+
+- false "Invalid label for block" errors for blocks with optional labels (`api`, `backend`, `proxy`, `request`, `files`, `server`, `client_certificate`)
+- `json_body` attribute rejecting valid HCL objects/expressions (type was too strict)
+- `required_permission` attribute type incorrectly including parenthesized hint
+
 ---
 
 ## [v1.10.0](https://github.com/coupergateway/couper-vscode/releases/tag/v1.10.0)
