@@ -32,6 +32,93 @@ describe('Endpoint path checks', () => {
 	})
 })
 
+describe('Block label checks', () => {
+	const checkBlockLabels = __private.checkBlockLabels
+
+	// labelOptional: true — label is allowed but not required
+	describe('labelOptional blocks', () => {
+		test.each([
+			["api", ""],
+			["api", ' "my-api" '],
+			["server", ""],
+			["server", ' "my-server" '],
+			["proxy", ""],
+			["proxy", ' "my_proxy" '],
+		])('%s with labels=%j → ok', (name, labels) => {
+			expect(checkBlockLabels(name, labels)).toStrictEqual({ok: true})
+		})
+	})
+
+	// labelled: true — label is required
+	describe('labelled blocks', () => {
+		test.each([
+			["basic_auth", ' "my-auth" '],
+			["jwt", ' "my-jwt" '],
+			["endpoint", ' "/foo" '],
+		])('%s with labels=%j → ok', (name, labels) => {
+			expect(checkBlockLabels(name, labels)).toStrictEqual({ok: true})
+		})
+
+		test.each([
+			["basic_auth"],
+			["jwt"],
+			["endpoint"],
+		])('%s without label → error', (name) => {
+			expect(checkBlockLabels(name, "")).toStrictEqual({
+				ok: false,
+				message: `Missing label for block "${name}".`,
+				severity: undefined
+			})
+		})
+	})
+
+	// neither labelled nor labelOptional — no label allowed
+	describe('unlabelled blocks', () => {
+		test('beta_introspection without label → ok', () => {
+			expect(checkBlockLabels("beta_introspection", "")).toStrictEqual({ok: true})
+		})
+
+		test('beta_introspection with label → error', () => {
+			expect(checkBlockLabels("beta_introspection", ' "foo" ')).toStrictEqual({
+				ok: false,
+				message: 'Invalid label for block "beta_introspection".',
+				severity: undefined
+			})
+		})
+	})
+
+	// empty label validation for specific blocks
+	describe('empty label validation', () => {
+		test.each([
+			"backend",
+			"basic_auth",
+			"jwt",
+		])('%s with empty label → error', (name) => {
+			expect(checkBlockLabels(name, ' "" ')).toStrictEqual({
+				ok: false,
+				message: "Label must not be empty.",
+				severity: undefined
+			})
+		})
+	})
+
+	// label syntax validation for specific blocks
+	describe('label syntax validation', () => {
+		test.each([
+			["backend", ' "my-backend" ', "-"],
+			["request", ' "my/request" ', "/"],
+			["proxy", ' "my proxy" ', " "],
+		])('%s with label %j → invalid character %j', (name, labels, char) => {
+			const label = labels.match(/"([^"]*)"/)[1]
+			expect(checkBlockLabels(name, labels)).toStrictEqual({
+				ok: false,
+				message: `Invalid character in label "${label}": ${char}. Label is used as variable name, only 'a-z', 'A-Z', '0-9' and '_' are allowed.`,
+				severity: undefined
+			})
+		})
+	})
+})
+
 describe('Attribute value checks', () => {
 	let testcases = [
 		["websockets", "false"],
