@@ -1,6 +1,6 @@
 // Auto-generated from Couper Go code with manual overlay
 // Do not edit directly - modify schema-overlay.json instead
-// Generated: 2026-02-24T15:49:19.849Z
+// Generated: 2026-02-27T18:55:11.306Z
 
 
 const DEFAULT_LABEL = "…"
@@ -598,7 +598,7 @@ const attributes = {
 	json_body: {
 		parents: ["request","response","token_request"],
 		description: "JSON request body, implicitly sets `Content-Type: application/json` header field.",
-		type: "string",
+		type: ["null","bool","number","string","object","tuple"],
 		examples: ["static-responses"]
 	},
 	jwks_max_stale: {
@@ -871,7 +871,7 @@ const attributes = {
 	required_permission: {
 		parents: ["api","endpoint"],
 		description: "Permission required to use this API (see [error type](/configuration/error-handling#error-types) `insufficient_permissions`).",
-		type: ["string","object (string"],
+		type: ["string","object"],
 		examples: ["permissions","permissions-map","permissions-rbac"]
 	},
 	retries: {

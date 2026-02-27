@@ -863,7 +863,14 @@
         "token_request"
       ],
       "description": "JSON request body, implicitly sets `Content-Type: application/json` header field.",
-      "type": "string"
+      "type": [
+        "null",
+        "bool",
+        "number",
+        "string",
+        "object",
+        "tuple"
+      ]
     },
     "jwks_max_stale": {
       "parents": [
@@ -1264,7 +1271,7 @@
       "description": "Permission required to use this API (see [error type](/configuration/error-handling#error-types) `insufficient_permissions`).",
       "type": [
         "string",
-        "object (string"
+        "object"
       ]
     },
     "retries": {
