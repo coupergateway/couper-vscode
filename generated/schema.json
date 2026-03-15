@@ -85,7 +85,64 @@
         "rate_limiter",
         "saml"
       ],
-      "description": "Configures an error handler (zero or more)."
+      "description": "Configures an error handler (zero or more).",
+      "labelOptional": true,
+      "labelsForParent": {
+        "api": [
+          "access_control",
+          "backend",
+          "backend_openapi_validation",
+          "backend_throttle_exceeded",
+          "backend_timeout",
+          "backend_unhealthy",
+          "beta_backend_token_request",
+          "insufficient_permissions"
+        ],
+        "basic_auth": [
+          "access_control",
+          "basic_auth",
+          "basic_auth_credentials_missing"
+        ],
+        "beta_oauth2": [
+          "access_control",
+          "oauth2"
+        ],
+        "endpoint": [
+          "access_control",
+          "backend",
+          "backend_openapi_validation",
+          "backend_throttle_exceeded",
+          "backend_timeout",
+          "backend_unhealthy",
+          "beta_backend_token_request",
+          "endpoint",
+          "insufficient_permissions",
+          "sequence",
+          "unexpected_status"
+        ],
+        "jwt": [
+          "access_control",
+          "jwt",
+          "jwt_token_expired",
+          "jwt_token_inactive",
+          "jwt_token_invalid",
+          "jwt_token_missing"
+        ],
+        "oidc": [
+          "access_control",
+          "oauth2"
+        ],
+        "rate_limiter": [
+          "access_control",
+          "beta_rate_limiter",
+          "beta_rate_limiter_key"
+        ],
+        "saml": [
+          "access_control",
+          "saml",
+          "saml2"
+        ]
+      }
     },
     "files": {
       "parents": [
