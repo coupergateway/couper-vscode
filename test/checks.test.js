@@ -119,6 +119,72 @@ describe('Block label checks', () => {
 	})
 })
 
+describe('error_handler label checks', () => {
+	const checkBlockLabels = __private.checkBlockLabels
+
+	// No label (wildcard) is always valid in any parent
+	describe('no label', () => {
+		test.each([
+			"api", "endpoint", "basic_auth", "jwt",
+		])('error_handler without label in %s → ok', (parent) => {
+			expect(checkBlockLabels("error_handler", "", parent)).toStrictEqual({ok: true})
+		})
+	})
+
+	// Valid labels per parent
+	describe('valid labels', () => {
+		test.each([
+			["api", "backend_timeout"],
+			["api", "backend"],
+			["endpoint", "sequence"],
+			["endpoint", "unexpected_status"],
+			["jwt", "jwt_token_expired"],
+			["jwt", "jwt_token_inactive"],
+			["basic_auth", "basic_auth_credentials_missing"],
+			["saml", "saml2"],
+			["rate_limiter", "beta_rate_limiter"],
+		])('error_handler "%s" in %s → ok', (parent, label) => {
+			expect(checkBlockLabels("error_handler", ` "${label}" `, parent)).toStrictEqual({ok: true})
+		})
+	})
+
+	// access_control super-type is valid in any parent
+	describe('access_control super-type', () => {
+		test.each([
+			"api", "endpoint", "basic_auth", "jwt", "beta_oauth2", "oidc", "saml", "rate_limiter",
+		])('error_handler "access_control" in %s → ok', (parent) => {
+			expect(checkBlockLabels("error_handler", ' "access_control" ', parent)).toStrictEqual({ok: true})
+		})
+	})
+
+	// Invalid label for parent
+	describe('invalid labels', () => {
+		test.each([
+			["api", "jwt_token_expired"],
+			["api", "sequence"],
+			["jwt", "backend_timeout"],
+			["basic_auth", "jwt_token_missing"],
+		])('error_handler "%s" in %s → warning', (parent, label) => {
+			expect(checkBlockLabels("error_handler", ` "${label}" `, parent)).toStrictEqual({
+				ok: false,
+				message: `Unknown error type "${label}" for error_handler in "${parent}".`,
+				severity: vscode.DiagnosticSeverity.Warning
+			})
+		})
+	})
+
+	// Unknown label
+	describe('unknown labels', () => {
+		test('completely unknown error type → warning', () => {
+			expect(checkBlockLabels("error_handler", ' "nonexistent_error" ', "api")).toStrictEqual({
+				ok: false,
+				message: 'Unknown error type "nonexistent_error" for error_handler in "api".',
+				severity: vscode.DiagnosticSeverity.Warning
+			})
+		})
+	})
+})
+
 describe('Attribute value checks', () => {
 	let testcases = [
 		["websockets", "false"],
