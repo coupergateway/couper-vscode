@@ -317,7 +317,7 @@ for (const [f, details] of Object.entries(functions)) {
 
 				switch (attributes[attrName].type) {
 					case 'boolean': {
-						return [ vscode.CompletionItem(label, vscode.CompletionItemKind.Constant) ]
+						return [ new vscode.CompletionItem(label, vscode.CompletionItemKind.Constant) ]
 					}
 				}
 				return undefined

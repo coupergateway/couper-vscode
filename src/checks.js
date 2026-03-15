@@ -134,7 +134,7 @@ function checkBlockLabels(name, labels, parentBlock) {
 				const types = label.split(/\s+/).filter(t => t !== "")
 				for (const type of types) {
 					if (!allowedLabels.includes(type)) {
-						return CheckFailed(`Unknown error type "${type}" for error_handler in "${parentBlock}".`, vscode.DiagnosticSeverity.Warning)
+						return CheckFailed(`Unsupported error type "${type}" for error_handler in "${parentBlock}".`, vscode.DiagnosticSeverity.Warning)
 					}
 				}
 			}

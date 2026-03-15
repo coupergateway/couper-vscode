@@ -8,11 +8,11 @@
     "backend": {
       "examples": ["backend-configuration"]
     },
-    "beta_health": {
+    "health": {
       "examples": ["health-check"],
       "docs": "/configuration/block/health"
     },
-    "beta_job": {
+    "job": {
       "docs": "/configuration/block/job"
     },
     "beta_oauth2": {

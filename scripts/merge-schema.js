@@ -153,14 +153,9 @@ const functions = {
 ${toJsObject(merged.functions)}
 }
 
-const commonProperties = ['body', 'context', 'cookies', 'headers', 'json_body']
-
 const variables = {
 ${toJsObject(merged.variables)}
 }
-
-const ALL_BLOCKS = Object.keys(blocks)
-const ALL_BLOCKS_BUT_ENVIRONMENT = ALL_BLOCKS.filter(block => block !== "environment")
 
 module.exports = { attributes, blocks, functions, variables, DEFAULT_LABEL }
 `;

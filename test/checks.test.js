@@ -134,16 +134,16 @@ describe('error_handler label checks', () => {
 	// Valid labels per parent
 	describe('valid labels', () => {
 		test.each([
-			["api", "backend_timeout"],
-			["api", "backend"],
-			["endpoint", "sequence"],
-			["endpoint", "unexpected_status"],
-			["jwt", "jwt_token_expired"],
-			["jwt", "jwt_token_inactive"],
-			["basic_auth", "basic_auth_credentials_missing"],
-			["saml", "saml2"],
-			["rate_limiter", "beta_rate_limiter"],
-		])('error_handler "%s" in %s → ok', (parent, label) => {
+			["backend_timeout", "api"],
+			["backend", "api"],
+			["sequence", "endpoint"],
+			["unexpected_status", "endpoint"],
+			["jwt_token_expired", "jwt"],
+			["jwt_token_inactive", "jwt"],
+			["basic_auth_credentials_missing", "basic_auth"],
+			["saml2", "saml"],
+			["beta_rate_limiter", "rate_limiter"],
+		])('error_handler "%s" in %s → ok', (label, parent) => {
 			expect(checkBlockLabels("error_handler", ` "${label}" `, parent)).toStrictEqual({ok: true})
 		})
 	})
@@ -157,17 +157,32 @@ describe('error_handler label checks', () => {
 		})
 	})
 
+	// Space-separated multi-type labels
+	describe('space-separated types', () => {
+		test('all valid types → ok', () => {
+			expect(checkBlockLabels("error_handler", ' "jwt_token_expired jwt_token_missing" ', "jwt")).toStrictEqual({ok: true})
+		})
+
+		test('mixed valid and invalid types → warning on first invalid', () => {
+			expect(checkBlockLabels("error_handler", ' "jwt_token_expired backend_timeout" ', "jwt")).toStrictEqual({
+				ok: false,
+				message: 'Unsupported error type "backend_timeout" for error_handler in "jwt".',
+				severity: vscode.DiagnosticSeverity.Warning
+			})
+		})
+	})
+
 	// Invalid label for parent
 	describe('invalid labels', () => {
 		test.each([
-			["api", "jwt_token_expired"],
-			["api", "sequence"],
-			["jwt", "backend_timeout"],
-			["basic_auth", "jwt_token_missing"],
-		])('error_handler "%s" in %s → warning', (parent, label) => {
+			["jwt_token_expired", "api"],
+			["sequence", "api"],
+			["backend_timeout", "jwt"],
+			["jwt_token_missing", "basic_auth"],
+		])('error_handler "%s" in %s → warning', (label, parent) => {
 			expect(checkBlockLabels("error_handler", ` "${label}" `, parent)).toStrictEqual({
 				ok: false,
-				message: `Unknown error type "${label}" for error_handler in "${parent}".`,
+				message: `Unsupported error type "${label}" for error_handler in "${parent}".`,
 				severity: vscode.DiagnosticSeverity.Warning
 			})
 		})
@@ -178,7 +193,7 @@ describe('error_handler label checks', () => {
 		test('completely unknown error type → warning', () => {
 			expect(checkBlockLabels("error_handler", ' "nonexistent_error" ', "api")).toStrictEqual({
 				ok: false,
-				message: 'Unknown error type "nonexistent_error" for error_handler in "api".',
+				message: 'Unsupported error type "nonexistent_error" for error_handler in "api".',
 				severity: vscode.DiagnosticSeverity.Warning
 			})
 		})

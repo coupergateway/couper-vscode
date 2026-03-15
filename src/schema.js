@@ -1,6 +1,6 @@
 // Auto-generated from Couper Go code with manual overlay
 // Do not edit directly - modify schema-overlay.json instead
-// Generated: 2026-03-15T08:36:10.552Z
+// Generated: 2026-03-15T08:36:18.063Z
 
 
 const DEFAULT_LABEL = "…"
@@ -83,12 +83,14 @@ const blocks = {
 		examples: ["simple-fileserving","spa-serving"]
 	},
 	health: {
-
+		examples: ["health-check"],
+		docs: "/configuration/block/health"
 	},
 	job: {
 		parents: ["definitions"],
 		description: "Configure a job (zero or more).",
-		labelled: true
+		labelled: true,
+		docs: "/configuration/block/job"
 	},
 	jwt: {
 		parents: ["definitions"],
@@ -176,13 +178,6 @@ const blocks = {
 	websockets: {
 		parents: ["proxy"],
 		description: "Configures support for websockets connections (zero or one)."
-	},
-	beta_health: {
-		examples: ["health-check"],
-		docs: "/configuration/block/health"
-	},
-	beta_job: {
-		docs: "/configuration/block/job"
 	}
 }
 
@@ -1178,8 +1173,6 @@ const functions = {
 	}
 }
 
-const commonProperties = ['body', 'context', 'cookies', 'headers', 'json_body']
-
 const variables = {
 	backend: {
 		parents: ["backend"],
@@ -1226,8 +1219,5 @@ const variables = {
 		values: ["body","context","cookies","headers","json_body","form_body","host","id","method","origin","path","path_params","port","protocol","query","url"]
 	}
 }
-
-const ALL_BLOCKS = Object.keys(blocks)
-const ALL_BLOCKS_BUT_ENVIRONMENT = ALL_BLOCKS.filter(block => block !== "environment")
 
 module.exports = { attributes, blocks, functions, variables, DEFAULT_LABEL }
