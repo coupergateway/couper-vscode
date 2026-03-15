@@ -125,6 +125,20 @@ function checkBlockLabels(name, labels, parentBlock) {
 				return CheckFailed(`Invalid character in label "${label}": ${label.charAt(index)}. Label is used as variable name, only 'a-z', 'A-Z', '0-9' and '_' are allowed.`)
 			}
 		}
+
+		// Validate error_handler labels against allowed types for the parent block
+		if (name === "error_handler" && element.labelsForParent && parentBlock) {
+			const allowedLabels = element.labelsForParent[parentBlock]
+			if (allowedLabels) {
+				// error_handler supports space-separated types like "jwt_token_expired jwt_token_missing"
+				const types = label.split(/\s+/).filter(t => t !== "")
+				for (const type of types) {
+					if (!allowedLabels.includes(type)) {
+						return CheckFailed(`Unknown error type "${type}" for error_handler in "${parentBlock}".`, vscode.DiagnosticSeverity.Warning)
+					}
+				}
+			}
+		}
 	}
 
 	return CheckOK
