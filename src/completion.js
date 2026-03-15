@@ -55,6 +55,12 @@ function isCompletionAllowedAtContext(element, hclContext, parentBlock) {
 }
 
 function getBlockLabels(block, parentBlock) {
+	if (block.labelsForParent && parentBlock) {
+		const parentLabels = block.labelsForParent[parentBlock]
+		if (parentLabels) {
+			return [null, ...parentLabels]
+		}
+	}
 	let labels = (typeof block.labels === 'function') ? block.labels(parentBlock) : block.labels
 	if (!Array.isArray(labels) || labels.length === 0) {
 		const labelled = !!((typeof block.labelled === 'function') ? block.labelled(parentBlock) : block.labelled)
@@ -311,7 +317,7 @@ for (const [f, details] of Object.entries(functions)) {
 
 				switch (attributes[attrName].type) {
 					case 'boolean': {
-						return [ vscode.CompletionItem(label, vscode.CompletionItemKind.Constant) ]
+						return [ new vscode.CompletionItem(label, vscode.CompletionItemKind.Constant) ]
 					}
 				}
 				return undefined

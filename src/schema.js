@@ -1,6 +1,6 @@
 // Auto-generated from Couper Go code with manual overlay
 // Do not edit directly - modify schema-overlay.json instead
-// Generated: 2026-03-15T08:18:56.533Z
+// Generated: 2026-03-15T08:36:18.063Z
 
 
 const DEFAULT_LABEL = "…"
@@ -74,8 +74,7 @@ const blocks = {
 		description: "Configures an error handler (zero or more).",
 		labelOptional: true,
 		labelsForParent: {"api":["access_control","backend","backend_openapi_validation","backend_throttle_exceeded","backend_timeout","backend_unhealthy","beta_backend_token_request","insufficient_permissions"],"basic_auth":["access_control","basic_auth","basic_auth_credentials_missing"],"beta_oauth2":["access_control","oauth2"],"endpoint":["access_control","backend","backend_openapi_validation","backend_throttle_exceeded","backend_timeout","backend_unhealthy","beta_backend_token_request","endpoint","insufficient_permissions","sequence","unexpected_status"],"jwt":["access_control","jwt","jwt_token_expired","jwt_token_inactive","jwt_token_invalid","jwt_token_missing"],"oidc":["access_control","oauth2"],"rate_limiter":["access_control","beta_rate_limiter","beta_rate_limiter_key"],"saml":["access_control","saml","saml2"]},
-		examples: ["error-handling-ba","sequences"],
-		_labelsForParent: {"api":["access_control","backend","backend_timeout","backend_openapi_validation","backend_throttle_exceeded","backend_unhealthy","beta_backend_token_request","insufficient_permissions","beta_insufficient_permissions"],"basic_auth":["access_control","basic_auth","basic_auth_credentials_missing"],"endpoint":["access_control","backend","backend_timeout","backend_openapi_validation","backend_throttle_exceeded","backend_unhealthy","beta_backend_token_request","endpoint","insufficient_permissions","beta_insufficient_permissions","sequence","unexpected_status"],"jwt":["access_control","jwt","jwt_token_expired","jwt_token_invalid","jwt_token_missing"],"saml":["access_control","saml"],"beta_oauth2":["access_control","oauth2"],"oidc":["access_control","oauth2"],"rate_limiter":["access_control","rate_limiter"]}
+		examples: ["error-handling-ba","sequences"]
 	},
 	files: {
 		parents: ["server"],
@@ -84,12 +83,14 @@ const blocks = {
 		examples: ["simple-fileserving","spa-serving"]
 	},
 	health: {
-
+		examples: ["health-check"],
+		docs: "/configuration/block/health"
 	},
 	job: {
 		parents: ["definitions"],
 		description: "Configure a job (zero or more).",
-		labelled: true
+		labelled: true,
+		docs: "/configuration/block/job"
 	},
 	jwt: {
 		parents: ["definitions"],
@@ -177,13 +178,6 @@ const blocks = {
 	websockets: {
 		parents: ["proxy"],
 		description: "Configures support for websockets connections (zero or one)."
-	},
-	beta_health: {
-		examples: ["health-check"],
-		docs: "/configuration/block/health"
-	},
-	beta_job: {
-		docs: "/configuration/block/job"
 	}
 }
 
@@ -1179,8 +1173,6 @@ const functions = {
 	}
 }
 
-const commonProperties = ['body', 'context', 'cookies', 'headers', 'json_body']
-
 const variables = {
 	backend: {
 		parents: ["backend"],
@@ -1227,8 +1219,5 @@ const variables = {
 		values: ["body","context","cookies","headers","json_body","form_body","host","id","method","origin","path","path_params","port","protocol","query","url"]
 	}
 }
-
-const ALL_BLOCKS = Object.keys(blocks)
-const ALL_BLOCKS_BUT_ENVIRONMENT = ALL_BLOCKS.filter(block => block !== "environment")
 
 module.exports = { attributes, blocks, functions, variables, DEFAULT_LABEL }

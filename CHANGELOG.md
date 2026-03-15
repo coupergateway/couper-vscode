@@ -2,6 +2,14 @@
 
 ## [Unreleased](https://github.com/coupergateway/couper-vscode/compare/v1.10.1...master)
 
+### Fixed
+
+- false-positive "Invalid label for block error_handler" diagnostics for valid labeled `error_handler` blocks (e.g. `error_handler "backend_timeout" {}`) [#142](https://github.com/coupergateway/couper-vscode/pull/142)
+- missing `error_handler` label completions per parent block context [#142](https://github.com/coupergateway/couper-vscode/pull/142)
+- outdated error type labels (added `jwt_token_inactive`, `saml2`; removed nonexistent `beta_insufficient_permissions`) [#142](https://github.com/coupergateway/couper-vscode/pull/142)
+- missing `new` keyword in boolean attribute completion causing TypeError at runtime [#142](https://github.com/coupergateway/couper-vscode/pull/142)
+- orphaned overlay entries `beta_health` and `beta_job` (renamed to `health` and `job`) [#142](https://github.com/coupergateway/couper-vscode/pull/142)
+
 ---
 
 ## [v1.10.1](https://github.com/coupergateway/couper-vscode/releases/tag/v1.10.1)
