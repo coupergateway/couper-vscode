@@ -10,6 +10,7 @@
     },
     "backend": {
       "parents": [
+        "beta_authz_external",
         "definitions",
         "beta_introspection",
         "jwt",
@@ -21,7 +22,7 @@
         "saml",
         "token_request"
       ],
-      "description": "Configure a backend (zero or more).",
+      "description": "Configures a backend for the authorization callout (zero or one).",
       "labelOptional": true
     },
     "basic_auth": {
@@ -29,6 +30,13 @@
         "definitions"
       ],
       "description": "Configure a BasicAuth access control (zero or more).",
+      "labelled": true
+    },
+    "beta_authz_external": {
+      "parents": [
+        "definitions"
+      ],
+      "description": "Configure an external authorization access control (zero or more).",
       "labelled": true
     },
     "beta_introspection": {
@@ -77,6 +85,7 @@
     "error_handler": {
       "parents": [
         "api",
+        "beta_authz_external",
         "basic_auth",
         "endpoint",
         "jwt",
@@ -396,6 +405,7 @@
     },
     "backend": {
       "parents": [
+        "beta_authz_external",
         "beta_introspection",
         "beta_oauth2",
         "jwt",
@@ -406,7 +416,7 @@
         "saml",
         "token_request"
       ],
-      "description": "References a [backend](/configuration/block/backend) in [definitions](/configuration/block/definitions) for introspection requests. Mutually exclusive with `backend` block.",
+      "description": "References a [backend](/configuration/block/backend) in [definitions](/configuration/block/definitions) for the authorization callout. Mutually exclusive with `backend` block.",
       "type": "string",
       "definingBlocks": [
         "backend"
@@ -656,6 +666,7 @@
         "api",
         "backend",
         "basic_auth",
+        "beta_authz_external",
         "beta_oauth2",
         "endpoint",
         "error_handler",
@@ -903,6 +914,13 @@
         "openapi"
       ],
       "description": "Logs response validation results, skips error handling.",
+      "type": "boolean"
+    },
+    "include_tls": {
+      "parents": [
+        "beta_authz_external"
+      ],
+      "description": "Include TLS connection information of the client request in the authorization request.",
       "type": "boolean"
     },
     "interval": {
@@ -1578,11 +1596,12 @@
     },
     "url": {
       "parents": [
+        "beta_authz_external",
         "proxy",
         "request",
         "token_request"
       ],
-      "description": "URL of the resource to request. May be relative to an origin specified in a referenced or nested `backend` block.",
+      "description": "URL of the authorization service. Relative URL references are resolved against the origin of a referenced or nested `backend` block.",
       "type": "string"
     },
     "use_when_unhealthy": {
