@@ -1,6 +1,6 @@
 // Auto-generated from Couper Go code with manual overlay
 // Do not edit directly - modify schema-overlay.json instead
-// Generated: 2026-07-22T09:46:09.425Z
+// Generated: 2026-07-22T10:52:59.844Z
 
 
 const DEFAULT_LABEL = "…"
@@ -758,8 +758,8 @@ const attributes = {
 		options: ["sliding","fixed"]
 	},
 	permissions_claim: {
-		parents: ["jwt"],
-		description: "Name of claim containing the granted permissions. The claim value must either be a string containing a space-separated list of permissions or a list of string permissions.",
+		parents: ["beta_authz_external","jwt"],
+		description: "Name of the response body property containing the granted permissions. The property value must either be a string containing a space-separated list of permissions or a list of string permissions.",
 		type: "string",
 		examples: ["permissions","permissions-map","permissions-rbac"]
 	},
