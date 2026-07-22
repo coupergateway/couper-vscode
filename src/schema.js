@@ -1,6 +1,6 @@
 // Auto-generated from Couper Go code with manual overlay
 // Do not edit directly - modify schema-overlay.json instead
-// Generated: 2026-07-22T11:18:23.484Z
+// Generated: 2026-07-22T12:49:06.609Z
 
 
 const DEFAULT_LABEL = "…"
@@ -568,7 +568,12 @@ const attributes = {
 	},
 	http2: {
 		parents: ["backend"],
-		description: "Enables the HTTP2 support. Must not be used in backend refinement.",
+		description: "Enables the HTTP2 support. HTTP2 is negotiated during the TLS handshake (ALPN), so it applies to `https` origins only. Must not be used in backend refinement.",
+		type: "boolean"
+	},
+	http2_prior_knowledge: {
+		parents: ["backend"],
+		description: "Uses cleartext HTTP2 (h2c) with prior knowledge for `http` origins — the origin must speak HTTP2. Must not be used in backend refinement.",
 		type: "boolean"
 	},
 	https_dev_proxy: {
