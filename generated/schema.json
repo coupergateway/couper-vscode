@@ -10,7 +10,7 @@
     },
     "backend": {
       "parents": [
-        "beta_authz_external",
+        "beta_external_authz",
         "definitions",
         "beta_introspection",
         "jwt",
@@ -32,7 +32,7 @@
       "description": "Configure a BasicAuth access control (zero or more).",
       "labelled": true
     },
-    "beta_authz_external": {
+    "beta_external_authz": {
       "parents": [
         "definitions"
       ],
@@ -85,7 +85,7 @@
     "error_handler": {
       "parents": [
         "api",
-        "beta_authz_external",
+        "beta_external_authz",
         "basic_auth",
         "endpoint",
         "jwt",
@@ -405,7 +405,7 @@
     },
     "backend": {
       "parents": [
-        "beta_authz_external",
+        "beta_external_authz",
         "beta_introspection",
         "beta_oauth2",
         "jwt",
@@ -666,7 +666,7 @@
         "api",
         "backend",
         "basic_auth",
-        "beta_authz_external",
+        "beta_external_authz",
         "beta_oauth2",
         "endpoint",
         "error_handler",
@@ -918,7 +918,7 @@
     },
     "include_tls": {
       "parents": [
-        "beta_authz_external"
+        "beta_external_authz"
       ],
       "description": "Include TLS connection information of the client request in the authorization request.",
       "type": "boolean"
@@ -1152,10 +1152,9 @@
     },
     "permissions_claim": {
       "parents": [
-        "beta_authz_external",
         "jwt"
       ],
-      "description": "Name of the response body property containing the granted permissions. The property value must either be a string containing a space-separated list of permissions or a list of string permissions.",
+      "description": "Name of claim containing the granted permissions. The claim value must either be a string containing a space-separated list of permissions or a list of string permissions.",
       "type": "string"
     },
     "permissions_map": {
@@ -1170,6 +1169,13 @@
         "jwt"
       ],
       "description": "Reference to JSON file containing permission mappings. Mutually exclusive with `permissions_map`. See `permissions_map` for more information.",
+      "type": "string"
+    },
+    "permissions_property": {
+      "parents": [
+        "beta_external_authz"
+      ],
+      "description": "Name of the response body property containing the granted permissions. The property value must either be a string containing a space-separated list of permissions or a list of string permissions.",
       "type": "string"
     },
     "pprof": {
@@ -1597,7 +1603,7 @@
     },
     "url": {
       "parents": [
-        "beta_authz_external",
+        "beta_external_authz",
         "proxy",
         "request",
         "token_request"

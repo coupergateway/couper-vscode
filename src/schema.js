@@ -1,6 +1,6 @@
 // Auto-generated from Couper Go code with manual overlay
 // Do not edit directly - modify schema-overlay.json instead
-// Generated: 2026-07-22T10:52:59.844Z
+// Generated: 2026-07-22T11:18:23.484Z
 
 
 const DEFAULT_LABEL = "…"
@@ -23,7 +23,7 @@ const blocks = {
 		examples: ["api-proxy"]
 	},
 	backend: {
-		parents: ["beta_authz_external","definitions","beta_introspection","jwt","beta_oauth2","oauth2","oidc","proxy","request","saml","token_request"],
+		parents: ["beta_external_authz","definitions","beta_introspection","jwt","beta_oauth2","oauth2","oidc","proxy","request","saml","token_request"],
 		description: "Configures a backend for the authorization callout (zero or one).",
 		labelOptional: true,
 		examples: ["backend-configuration"]
@@ -33,7 +33,7 @@ const blocks = {
 		description: "Configure a BasicAuth access control (zero or more).",
 		labelled: true
 	},
-	beta_authz_external: {
+	beta_external_authz: {
 		parents: ["definitions"],
 		description: "Configure an external authorization access control (zero or more).",
 		labelled: true
@@ -75,7 +75,7 @@ const blocks = {
 		examples: ["environment"]
 	},
 	error_handler: {
-		parents: ["api","beta_authz_external","basic_auth","endpoint","jwt","beta_oauth2","oidc","rate_limiter","saml"],
+		parents: ["api","beta_external_authz","basic_auth","endpoint","jwt","beta_oauth2","oidc","rate_limiter","saml"],
 		description: "Configures an error handler (zero or more).",
 		labelOptional: true,
 		labelsForParent: {"api":["access_control","backend","backend_openapi_validation","backend_throttle_exceeded","backend_timeout","backend_unhealthy","beta_backend_token_request","insufficient_permissions"],"basic_auth":["access_control","basic_auth","basic_auth_credentials_missing"],"beta_oauth2":["access_control","oauth2"],"endpoint":["access_control","backend","backend_openapi_validation","backend_throttle_exceeded","backend_timeout","backend_unhealthy","beta_backend_token_request","endpoint","insufficient_permissions","sequence","unexpected_status"],"jwt":["access_control","jwt","jwt_token_expired","jwt_token_inactive","jwt_token_invalid","jwt_token_missing"],"oidc":["access_control","oauth2"],"rate_limiter":["access_control","beta_rate_limiter","beta_rate_limiter_key"],"saml":["access_control","saml","saml2"]},
@@ -260,7 +260,7 @@ const attributes = {
 		type: "string"
 	},
 	backend: {
-		parents: ["beta_authz_external","beta_introspection","beta_oauth2","jwt","oauth2","oidc","proxy","request","saml","token_request"],
+		parents: ["beta_external_authz","beta_introspection","beta_oauth2","jwt","oauth2","oidc","proxy","request","saml","token_request"],
 		description: "References a [backend](/configuration/block/backend) in [definitions](/configuration/block/definitions) for the authorization callout. Mutually exclusive with `backend` block.",
 		type: "string",
 		definingBlocks: ["backend"],
@@ -433,7 +433,7 @@ const attributes = {
 		type: "string"
 	},
 	custom_log_fields: {
-		parents: ["api","backend","basic_auth","beta_authz_external","beta_oauth2","endpoint","error_handler","files","job","jwt","oidc","rate_limiter","saml","server","spa"],
+		parents: ["api","backend","basic_auth","beta_external_authz","beta_oauth2","endpoint","error_handler","files","job","jwt","oidc","rate_limiter","saml","server","spa"],
 		description: "Log fields for [custom logging](/observation/logging#custom-logging). Inherited by nested blocks.",
 		type: "object",
 		examples: ["custom-logging","sequences"]
@@ -598,7 +598,7 @@ const attributes = {
 		type: "boolean"
 	},
 	include_tls: {
-		parents: ["beta_authz_external"],
+		parents: ["beta_external_authz"],
 		description: "Include TLS connection information of the client request in the authorization request.",
 		type: "boolean"
 	},
@@ -758,8 +758,8 @@ const attributes = {
 		options: ["sliding","fixed"]
 	},
 	permissions_claim: {
-		parents: ["beta_authz_external","jwt"],
-		description: "Name of the response body property containing the granted permissions. The property value must either be a string containing a space-separated list of permissions or a list of string permissions.",
+		parents: ["jwt"],
+		description: "Name of claim containing the granted permissions. The claim value must either be a string containing a space-separated list of permissions or a list of string permissions.",
 		type: "string",
 		examples: ["permissions","permissions-map","permissions-rbac"]
 	},
@@ -774,6 +774,11 @@ const attributes = {
 		description: "Reference to JSON file containing permission mappings. Mutually exclusive with `permissions_map`. See `permissions_map` for more information.",
 		type: "string",
 		examples: ["permissions-map"]
+	},
+	permissions_property: {
+		parents: ["beta_external_authz"],
+		description: "Name of the response body property containing the granted permissions. The property value must either be a string containing a space-separated list of permissions or a list of string permissions.",
+		type: "string"
 	},
 	pprof: {
 		parents: ["settings"],
@@ -1051,7 +1056,7 @@ const attributes = {
 		type: "duration"
 	},
 	url: {
-		parents: ["beta_authz_external","proxy","request","token_request"],
+		parents: ["beta_external_authz","proxy","request","token_request"],
 		description: "URL of the authorization service. Relative URL references are resolved against the origin of a referenced or nested `backend` block.",
 		type: "string"
 	},
