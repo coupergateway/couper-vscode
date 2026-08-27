@@ -1,0 +1,9 @@
+{
+  "$comment": "Renames that schema-drift.js cannot derive. A beta_ prefix that Couper adds or drops is matched automatically and does not belong here. Keys are the old name, values the new one.",
+  "blocks": {
+    "beta_external_authz": "beta_authzen"
+  },
+  "attributes": {},
+  "functions": {},
+  "variables": {}
+}
