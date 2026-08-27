@@ -66,15 +66,17 @@ function formatJson(value, level = 0) {
 // A renamed entry is found either in the rename map or by toggling the beta_
 // prefix, which is how Couper graduates a feature out of beta.
 function findNewName(section, key, generated, renames) {
+	const candidates = generated[section] || {}
+
 	const mapped = (renames[section] || {})[key]
 	if (mapped) {
-		return generated[section][mapped]
+		return candidates[mapped]
 			? { target: mapped, via: 'schema-renames.json' }
 			: { target: mapped, via: 'schema-renames.json', missing: true }
 	}
 
 	const toggled = key.startsWith(BETA) ? key.slice(BETA.length) : BETA + key
-	if (generated[section][toggled]) {
+	if (candidates[toggled]) {
 		return { target: toggled, via: 'beta_ prefix' }
 	}
 
