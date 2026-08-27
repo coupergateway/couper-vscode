@@ -1,0 +1,70 @@
+name: Sync schema
+
+# Couper pushes generated/schema.json here. Everything that has to follow it
+# happens in this job, so a schema change cannot reach a release half applied.
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'generated/schema.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - run: npm ci
+
+      - name: Reconcile the overlay and rebuild the schema
+        run: |
+          previous="$RUNNER_TEMP/previous-schema.json"
+          git show HEAD~1:generated/schema.json > "$previous" 2>/dev/null || :
+          if [ -s "$previous" ]; then
+            node scripts/schema-drift.js --fix --baseline "$previous"
+          else
+            node scripts/schema-drift.js --fix
+          fi
+          node scripts/merge-schema.js
+
+      - run: npm run jest -- --color
+
+      - name: Detect what the rebuild changed
+        id: rebuild
+        run: |
+          if git diff --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            git --no-pager diff --stat
+          fi
+
+      # The bot cannot open a pull request, so it commits its own result. The
+      # commit touches no path this workflow triggers on and cannot loop.
+      - name: Commit as the couper bot
+        if: steps.rebuild.outputs.changed == 'true' && github.actor == 'couper-svc'
+        run: |
+          git config user.name "couper-svc"
+          git config user.email "321729849+couper-svc@users.noreply.github.com"
+          git add src/schema.js src/schema-overlay.json
+          git commit -m "chore: rebuild schema after sync from couper
+
+          Reconciled by scripts/schema-drift.js for ${{ github.sha }}."
+          git push
+
+      - name: Reject a manual push that left the schema unbuilt
+        if: steps.rebuild.outputs.changed == 'true' && github.actor != 'couper-svc'
+        run: |
+          echo "::error::generated/schema.json changed but src/schema.js was not rebuilt. Run 'npm run sync:schema' and commit the result."
+          exit 1
