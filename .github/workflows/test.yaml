@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - run: npm install
+    - run: npm ci
     - run: npm run jest -- --color
     - run: npm run check:schema
     # The merge is deterministic, so a rebuild that changes the file means the
