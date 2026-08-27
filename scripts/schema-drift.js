@@ -147,9 +147,16 @@ function main() {
 				continue
 			}
 
+			// Merging two entries would have to pick a winner per key and would
+			// drop the other silently. Which one is current is a judgement.
+			if (entries[rename.target]) {
+				unresolved.push({ section, key, collision: rename.target })
+				continue
+			}
+
 			migrated.push({ section, key, ...rename })
 			if (fix) {
-				entries[rename.target] = { ...(entries[rename.target] || {}), ...entries[key] }
+				entries[rename.target] = entries[key]
 				delete entries[key]
 			}
 		}
@@ -206,13 +213,20 @@ function main() {
 
 	let failed = false
 
-	for (const { section, key, rename } of unresolved) {
+	const overlayFile = path.relative(root, overlayPath)
+	const renamesFile = path.relative(root, renamesPath)
+
+	for (const { section, key, rename, collision } of unresolved) {
 		failed = true
-		if (rename && rename.missing) {
-			console.error(`error: overlay ${section} "${key}" maps to "${rename.target}" in schema-renames.json, but Couper has no such ${section.slice(0, -1)}.`)
+		if (collision) {
+			console.error(`error: ${overlayFile} ${section} has both "${key}" and "${collision}", and Couper only has "${collision}".`)
+			console.error(`       Move what you still need into "${collision}" and delete "${key}".`)
+		} else if (rename && rename.missing) {
+			console.error(`error: ${renamesFile} maps ${section} "${key}" to "${rename.target}", but Couper has no such ${section.slice(0, -1)}.`)
+			console.error(`       Correct the mapping, or delete "${key}" from ${overlayFile}.`)
 		} else {
-			console.error(`error: overlay ${section} "${key}" is not in the generated schema and no rename matches it.`)
-			console.error(`       Couper either renamed or removed it. Add the new name to scripts/schema-renames.json under "${section}", or drop the overlay entry.`)
+			console.error(`error: ${overlayFile} ${section} "${key}" is not in the generated schema and no rename matches it.`)
+			console.error(`       Couper either renamed or removed it. Add the new name to ${renamesFile} under "${section}", or delete "${key}" from ${overlayFile}.`)
 		}
 	}
 
