@@ -134,10 +134,10 @@ function toJsObject(obj, indent = '\t') {
     return lines.join(',\n');
 }
 
-// Build output
+// Build output. The result is committed, so identical inputs must produce an
+// identical file: a timestamp here would make every rebuild look like a change.
 let output = `// Auto-generated from Couper Go code with manual overlay
 // Do not edit directly - modify schema-overlay.json instead
-// Generated: ${new Date().toISOString()}
 
 ${helperFunctions}
 

@@ -3,6 +3,7 @@
 const vscode = require('vscode')
 const common = require('./common')
 const schema = require('./schema')
+const { LABEL_MUST_NOT_BE_EMPTY, LABEL_IS_VARIABLE_NAME } = require('./block-rules')
 
 const REGEXES = {
 	block: /^\s*([\w_-]+)\s*(("[^"]*"\s*)*)\s*{/,
@@ -111,7 +112,7 @@ function checkBlockLabels(name, labels, parentBlock) {
 	const labelArray = [...labels.matchAll(REGEXES.labels)].map(match => match[1])
 	if (labelArray.length > 0) {
 		const label = labelArray[0] // Check only first label for now
-		if (["backend", "environment", "basic_auth", "jwt", "oidc", "saml", "beta_oauth2"].includes(name)) {
+		if (LABEL_MUST_NOT_BE_EMPTY.includes(name)) {
 			if (label === "") {
 				return CheckFailed("Label must not be empty.")
 			}
@@ -119,7 +120,7 @@ function checkBlockLabels(name, labels, parentBlock) {
 
 		// These blocks are accessible as variables (e.g. backends.my_label),
 		// so labels must be valid identifiers — no hyphens or special chars.
-		if (["backend", "request", "proxy", "environment"].includes(name)) {
+		if (LABEL_IS_VARIABLE_NAME.includes(name)) {
 			const index = label.search(REGEXES.labelsyntax)
 			if (index !== -1) {
 				return CheckFailed(`Invalid character in label "${label}": ${label.charAt(index)}. Label is used as variable name, only 'a-z', 'A-Z', '0-9' and '_' are allowed.`)

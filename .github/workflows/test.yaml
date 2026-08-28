@@ -1,6 +1,8 @@
 name: Test
 
 on:
+  push:
+    branches: [master]
   pull_request:
   workflow_dispatch:
 
@@ -9,5 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - run: npm install
+    - run: npm ci
     - run: npm run jest -- --color
+    - run: npm run check:schema
+    # The merge is deterministic, so a rebuild that changes the file means the
+    # committed one does not match the overlay it was built from.
+    - run: npm run build:schema
+    - run: git diff --exit-code -- src/schema.js
