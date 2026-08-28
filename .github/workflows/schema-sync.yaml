@@ -57,8 +57,12 @@ jobs:
 
       # The bot cannot open a pull request, so it commits its own result. The
       # commit touches no path this workflow triggers on and cannot loop.
+      #
+      # The push arrives over a deploy key, which GitHub attributes to the
+      # person who owns the key, so github.actor names a human. The commit
+      # author is what identifies the sender.
       - name: Commit as the couper bot
-        if: steps.rebuild.outputs.changed == 'true' && github.actor == 'couper-svc'
+        if: steps.rebuild.outputs.changed == 'true' && (github.event_name == 'workflow_dispatch' || github.event.head_commit.author.name == 'couper-svc')
         run: |
           git config user.name "couper-svc"
           git config user.email "321729849+couper-svc@users.noreply.github.com"
@@ -69,7 +73,7 @@ jobs:
           git push
 
       - name: Reject a manual push that left the schema unbuilt
-        if: steps.rebuild.outputs.changed == 'true' && github.actor != 'couper-svc'
+        if: steps.rebuild.outputs.changed == 'true' && github.event_name == 'push' && github.event.head_commit.author.name != 'couper-svc'
         run: |
           echo "::error::generated/schema.json changed but src/schema.js was not rebuilt. Run 'npm run sync:schema' and commit the result."
           exit 1
