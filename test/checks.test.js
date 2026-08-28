@@ -142,7 +142,8 @@ describe('error_handler label checks', () => {
 			["jwt_token_inactive", "jwt"],
 			["basic_auth_credentials_missing", "basic_auth"],
 			["saml2", "saml"],
-			["beta_rate_limiter", "rate_limiter"],
+			["beta_rate_limiter", "beta_rate_limiter"],
+			["authzen_invalid_credentials", "beta_authzen"],
 		])('error_handler "%s" in %s → ok', (label, parent) => {
 			expect(checkBlockLabels("error_handler", ` "${label}" `, parent)).toStrictEqual({ok: true})
 		})
@@ -151,7 +152,7 @@ describe('error_handler label checks', () => {
 	// access_control super-type is valid in any parent
 	describe('access_control super-type', () => {
 		test.each([
-			"api", "endpoint", "basic_auth", "jwt", "beta_oauth2", "oidc", "saml", "rate_limiter",
+			"api", "endpoint", "basic_auth", "jwt", "beta_oauth2", "oidc", "saml", "beta_rate_limiter", "beta_authzen",
 		])('error_handler "access_control" in %s → ok', (parent) => {
 			expect(checkBlockLabels("error_handler", ' "access_control" ', parent)).toStrictEqual({ok: true})
 		})
@@ -179,6 +180,7 @@ describe('error_handler label checks', () => {
 			["sequence", "api"],
 			["backend_timeout", "jwt"],
 			["jwt_token_missing", "basic_auth"],
+			["jwt_token_expired", "beta_rate_limiter"],
 		])('error_handler "%s" in %s → warning', (label, parent) => {
 			expect(checkBlockLabels("error_handler", ` "${label}" `, parent)).toStrictEqual({
 				ok: false,
