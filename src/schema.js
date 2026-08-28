@@ -22,7 +22,7 @@ const blocks = {
 		examples: ["api-proxy"]
 	},
 	backend: {
-		parents: ["beta_authzen","definitions","beta_introspection","jwt","beta_oauth2","oauth2","oidc","proxy","request","saml","token_request"],
+		parents: ["beta_authzen","definitions","beta_introspection","jwt","beta_oauth2","oauth2","oidc","proxy","request","saml","beta_token_request"],
 		description: "Configures a backend for the authorization callout (zero or one).",
 		labelOptional: true,
 		examples: ["backend-configuration"]
@@ -36,6 +36,12 @@ const blocks = {
 		parents: ["definitions"],
 		description: "Configure an AuthZEN authorization access control (zero or more).",
 		labelled: true
+	},
+	beta_health: {
+		parents: ["backend"],
+		description: "Configures a health check (zero or one).",
+		examples: ["health-check"],
+		docs: "/configuration/block/health"
 	},
 	beta_introspection: {
 		parents: ["jwt"],
@@ -51,6 +57,11 @@ const blocks = {
 		parents: ["definitions"],
 		description: "Configure a Rate limiter access control (zero or more).",
 		labelled: true
+	},
+	beta_token_request: {
+		parents: ["backend"],
+		description: "Configures a token request authorization (zero or more).",
+		labelOptional: true
 	},
 	client_certificate: {
 		parents: ["tls"],
@@ -90,10 +101,6 @@ const blocks = {
 		description: "Configures file serving (zero or more).",
 		labelOptional: true,
 		examples: ["simple-fileserving","spa-serving"]
-	},
-	health: {
-		examples: ["health-check"],
-		docs: "/configuration/block/health"
 	},
 	job: {
 		parents: ["definitions"],
@@ -178,9 +185,6 @@ const blocks = {
 		parents: ["backend","server"],
 		description: "Configures backend TLS (zero or one)."
 	},
-	token_request: {
-		labelOptional: true
-	},
 	websockets: {
 		parents: ["proxy"],
 		description: "Configures support for websockets connections (zero or one)."
@@ -260,7 +264,7 @@ const attributes = {
 		type: "string"
 	},
 	backend: {
-		parents: ["beta_authzen","beta_introspection","beta_oauth2","jwt","oauth2","oidc","proxy","request","saml","token_request"],
+		parents: ["beta_authzen","beta_introspection","beta_oauth2","beta_token_request","jwt","oauth2","oidc","proxy","request","saml"],
 		description: "References a [backend](/configuration/block/backend) in [definitions](/configuration/block/definitions) for the authorization callout. Mutually exclusive with `backend` block.",
 		type: "string",
 		definingBlocks: ["backend"],
@@ -327,7 +331,7 @@ const attributes = {
 		type: "string"
 	},
 	body: {
-		parents: ["request","response","token_request"],
+		parents: ["beta_token_request","request","response"],
 		description: "Plain text request body, implicitly sets `Content-Type: text/plain` header field.",
 		type: "string"
 	},
@@ -513,18 +517,18 @@ const attributes = {
 		type: "tuple"
 	},
 	expected_status: {
-		parents: ["health","proxy","request","token_request"],
+		parents: ["beta_health","beta_token_request","proxy","request"],
 		description: "One of wanted response status codes.",
 		type: "tuple",
 		examples: ["sequences"]
 	},
 	expected_text: {
-		parents: ["health"],
+		parents: ["beta_health"],
 		description: "Text which the response body must contain.",
 		type: "string"
 	},
 	failure_threshold: {
-		parents: ["health"],
+		parents: ["beta_health"],
 		description: "Failed checks needed to consider backend unhealthy.",
 		type: "number"
 	},
@@ -534,7 +538,7 @@ const attributes = {
 		type: "string"
 	},
 	form_body: {
-		parents: ["request","token_request"],
+		parents: ["beta_token_request","request"],
 		description: "Form request body, implicitly sets `Content-Type: application/x-www-form-urlencoded` header field.",
 		type: "string"
 	},
@@ -551,7 +555,7 @@ const attributes = {
 		examples: ["jwt-access-control"]
 	},
 	headers: {
-		parents: ["health","jwt_signing_profile","request","response","token_request"],
+		parents: ["beta_health","beta_token_request","jwt_signing_profile","request","response"],
 		description: "Request HTTP header fields.",
 		type: "object",
 		examples: ["static-responses"]
@@ -618,12 +622,12 @@ const attributes = {
 		type: "boolean"
 	},
 	interval: {
-		parents: ["health","job"],
+		parents: ["beta_health","job"],
 		description: "Time interval for recheck.",
 		type: "string"
 	},
 	json_body: {
-		parents: ["request","response","token_request"],
+		parents: ["beta_token_request","request","response"],
 		description: "JSON request body, implicitly sets `Content-Type: application/json` header field.",
 		type: ["null","bool","number","string","object","tuple"],
 		examples: ["static-responses"]
@@ -710,7 +714,7 @@ const attributes = {
 		type: "duration"
 	},
 	method: {
-		parents: ["request","token_request"],
+		parents: ["beta_token_request","request"],
 		description: "The request method.",
 		type: "string"
 	},
@@ -741,7 +745,7 @@ const attributes = {
 		type: "string"
 	},
 	path: {
-		parents: ["backend","health"],
+		parents: ["backend","beta_health"],
 		description: "Changeable part of upstream URL.",
 		type: "string"
 	},
@@ -827,7 +831,7 @@ const attributes = {
 		type: "string"
 	},
 	query_params: {
-		parents: ["request","token_request"],
+		parents: ["beta_token_request","request"],
 		description: "Key/value pairs to set query parameters for this request.",
 		type: "object"
 	},
@@ -1033,12 +1037,12 @@ const attributes = {
 		type: "object"
 	},
 	timeout: {
-		parents: ["backend","health","websockets"],
+		parents: ["backend","beta_health","websockets"],
 		description: "The total deadline duration a backend request has for write and read/pipe.",
 		type: "duration"
 	},
 	token: {
-		parents: ["token_request"],
+		parents: ["beta_token_request"],
 		description: "The token to be stored in `backends.<backend_name>.tokens.<token_request_name>`.",
 		type: "string"
 	},
@@ -1071,12 +1075,12 @@ const attributes = {
 		type: "duration"
 	},
 	ttl: {
-		parents: ["beta_introspection","jwt_signing_profile","token_request"],
+		parents: ["beta_introspection","beta_token_request","jwt_signing_profile"],
 		description: "The time-to-live of a cached introspection response. With a non-positive value the introspection endpoint is called each time a token is validated.",
 		type: "duration"
 	},
 	url: {
-		parents: ["beta_authzen","proxy","request","token_request"],
+		parents: ["beta_authzen","beta_token_request","proxy","request"],
 		description: "URL of the authorization service. Relative URL references are resolved against the origin of a referenced or nested `backend` block. Without a path, or with only the root path `/`, the AuthZEN access evaluation endpoint `/access/v1/evaluation` is used — or `/access/v1/evaluations` with `evaluate_permissions`. An explicit path must point to the matching endpoint.",
 		type: "string"
 	},

@@ -3,6 +3,10 @@ name: Test
 on:
   push:
     branches: [master]
+    # Couper pushes this file alone, and the schema check below fails until
+    # the sync workflow commits the rebuild. That commit runs the check.
+    paths-ignore:
+      - 'generated/schema.json'
   pull_request:
   workflow_dispatch:
 
