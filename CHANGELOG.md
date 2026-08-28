@@ -2,6 +2,11 @@
 
 ## [Unreleased](https://github.com/coupergateway/couper-vscode/compare/v1.10.1...master)
 
+### Fixed
+
+- phantom blocks `beta_health` and `beta_job` in completion, next to the real `health` and `job` [#145](https://github.com/coupergateway/couper-vscode/pull/145)
+- outdated `error_handler` error types (added `jwt_token_inactive`, `saml2`; removed nonexistent `beta_insufficient_permissions`) [#145](https://github.com/coupergateway/couper-vscode/pull/145)
+
 ---
 
 ## [v1.10.1](https://github.com/coupergateway/couper-vscode/releases/tag/v1.10.1)
