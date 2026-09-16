@@ -473,6 +473,13 @@
       "description": "If set to `true` the token is obtained from an `Authorization: Bearer ...` request header. Cannot be used together with `cookie`, `beta_dpop`, `header` or `token_value`.",
       "type": "boolean"
     },
+    "beta_argon2_memory_budget": {
+      "parents": [
+        "settings"
+      ],
+      "description": "Memory that the argon2 derivations of all [`basic_auth`](basic_auth) `htpasswd_file` entries may use at the same time. Couper runs as many derivations in parallel as fit into the budget, at most one per core. Valid units are: `KiB`, `MiB`, `GiB`.",
+      "type": "string"
+    },
     "beta_dpop": {
       "parents": [
         "jwt"
