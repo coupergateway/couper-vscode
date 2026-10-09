@@ -54,12 +54,12 @@
     "spa": {
       "examples": ["spa-serving"]
     },
-    "health": {
-      "examples": ["health-check"],
-      "docs": "/configuration/block/health"
-    },
     "job": {
       "docs": "/configuration/block/job"
+    },
+    "beta_health": {
+      "examples": ["health-check"],
+      "docs": "/configuration/block/health"
     }
   },
   "attributes": {
