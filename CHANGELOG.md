@@ -4,6 +4,7 @@
 
 ### Added
 
+- chat participant `@couper` with the commands `/validate` and `/docs` [#171](https://github.com/coupergateway/couper-vscode/pull/171)
 - language model tools `#couperDocs` and `#couperDocsPage` that search and read the Couper documentation; the index comes from docs.couper.io/llms.txt at runtime [#170](https://github.com/coupergateway/couper-vscode/pull/170)
 - language model tools `#couperSchema` (schema lookup) and `#couperValidate` (configuration check) for the VS Code chat [#169](https://github.com/coupergateway/couper-vscode/pull/169)
 
