@@ -21,7 +21,7 @@ Run `npm install` once. The extension is bundled with esbuild into `dist/`:
 
 #### Web-Extension
 
-The same sources are bundled for the browser into `dist/web`. Use `make run-web` or the "Run Web Extension" launch configuration for local testing, or `make host-vscode-dev` to load it on vscode.dev. See https://code.visualstudio.com/api/extension-guides/web-extensions#test-your-web-extension-in-on-vscode.dev .
+The same sources are bundled for the browser into `dist/web`. Use `make run-web` or the "Run Web Extension" launch configuration for local testing. `make host-vscode-dev` builds the bundle, serves the extension on port 5000 and opens a tunnel for vscode.dev. See https://code.visualstudio.com/api/extension-guides/web-extensions#test-your-web-extension-in-on-vscode.dev .
 
 ### About Couper
 

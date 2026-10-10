@@ -17,9 +17,8 @@ run: compile
 run-web: compile
 	code --extensionDevelopmentPath=$(__DIR__) --extensionDevelopmentKind=web
 
-host-vscode-dev:
-	$(npx serve --cors -l 5000)
-	npx localtunnel -p 5000
+host-vscode-dev: compile
+	npx serve --cors -l 5000 & trap 'kill $$!' EXIT; npx localtunnel -p 5000
 
 test:
 	npm test -- --testNamePattern $(TEST)
