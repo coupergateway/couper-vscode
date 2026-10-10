@@ -73,7 +73,7 @@
     "@typescript-eslint/parser": "^4.33.0",
     "@vscode/test-web": "^0.0.81",
     "assert": "^2.0.0",
-    "eslint": "^7.32.0",
+    "eslint": "^10.0.0",
     "jest": "^30.0.0",
     "process": "^0.11.10",
     "ts-loader": "^9.3.1",
