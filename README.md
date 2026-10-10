@@ -13,12 +13,15 @@ Jump directly to the necessary label or value spots.
 
 ### Development
 
-To test or improve this extension you can start with `make run` and `make test` within your working directory.
+Run `npm install` once. The extension is bundled with esbuild into `dist/`:
+
+- `npm run compile` builds the desktop and the web bundle once, `npm run watch` rebuilds them on every change.
+- `make run` or the "Run Extension" launch configuration starts a VS Code window with the extension loaded.
+- `npm test` runs the Jest tests, `npm run lint` runs ESLint, `npm run package` builds the `.vsix` the way the release does.
 
 #### Web-Extension
 
-This extension is also build as web-ext. You can use `make run-web` for local testing or `make host-vscode-dev` to run
-on vscode.dev environment. See https://code.visualstudio.com/api/extension-guides/web-extensions#test-your-web-extension-in-on-vscode.dev .
+The same sources are bundled for the browser into `dist/web`. Use `make run-web` or the "Run Web Extension" launch configuration for local testing, or `make host-vscode-dev` to load it on vscode.dev. See https://code.visualstudio.com/api/extension-guides/web-extensions#test-your-web-extension-in-on-vscode.dev .
 
 ### About Couper
 
