@@ -95,6 +95,14 @@ describe("@couper", () => {
 		expect(toolResult.content[0].content[0].value).toBe('{"kind":"block"}')
 	})
 
+	test("keeps text and tool calls in the order the provider emitted them", async () => {
+		const model = fakeModel([[call("c1", "couper_lookup_schema", {}), text(" after the call")], [text("done")]])
+		await handler(request({ model }), { history: [] }, fakeStream(), undefined)
+
+		const assistant = model.requests[1].messages.at(-2)
+		expect(assistant.content.map(part => part.constructor.name)).toStrictEqual(["LanguageModelToolCallPart", "LanguageModelTextPart"])
+	})
+
 	test("reports a failing tool to the model instead of ending the turn", async () => {
 		const model = fakeModel([[call("c1", "couper_search_docs", { query: "x" })], [text("Sorry, the docs are offline.")]])
 		vscode.lm.invokeTool = async () => { throw new Error("not reachable") }
@@ -182,13 +190,33 @@ describe("@couper", () => {
 			expect(followupProvider.provideFollowups(result)).toHaveLength(1)
 		})
 
-		test("prefers an attached file over the active editor", async () => {
-			vscode.workspace.openTextDocument = async (uri) => ({ uri, languageId: "couper" })
-			const references = [{ id: "file", value: vscode.Uri.file("/w/other.hcl") }]
+		test("uses the first attached Couper file and skips images and other languages", async () => {
+			vscode.window.activeTextEditor = { document: { languageId: "couper", uri: vscode.Uri.file("/w/active.hcl") } }
+			vscode.workspace.openTextDocument = async (uri) => {
+				if (uri.path.endsWith(".png")) {
+					throw new Error("binary")
+				}
+				return { uri, languageId: uri.path.endsWith(".hcl") ? "couper" : "markdown" }
+			}
+			const references = [
+				{ id: "image", value: vscode.Uri.file("/w/diagram.png") },
+				{ id: "readme", value: vscode.Uri.file("/w/README.md") },
+				{ id: "config", value: vscode.Uri.file("/w/other.hcl") },
+			]
 			const stream = fakeStream()
 			await handler(request({ command: "validate", references }), { history: [] }, stream, undefined)
 
 			expect(stream.output.markdown[0]).toBe("No problems found in `/w/other.hcl`.")
+		})
+
+		test("anchors lines of remote documents too, but not of untitled ones", async () => {
+			collectDiagnostics.mockReturnValue([{ range: { start: { line: 0, character: 0 } }, message: "x", severity: 0 }])
+			for (const [scheme, anchors] of [["vscode-vfs", ["line 1"]], ["untitled", []]]) {
+				vscode.window.activeTextEditor = { document: { languageId: "couper", uri: new vscode.Uri(scheme, "repo/couper.hcl") } }
+				const stream = fakeStream()
+				await handler(request({ command: "validate" }), { history: [] }, stream, undefined)
+				expect(stream.output.anchors).toStrictEqual(anchors)
+			}
 		})
 	})
 

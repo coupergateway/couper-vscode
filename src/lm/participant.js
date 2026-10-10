@@ -13,6 +13,7 @@ const MAX_TOOL_ROUNDS = 5
 const MAX_REFERENCE_LENGTH = 8000
 
 const SEVERITY_NAMES = ["error", "warning", "information", "hint"]
+const selector = { language: "couper" }
 
 const INSTRUCTIONS = `You are the Couper assistant inside Visual Studio Code. Couper is an open-source API gateway that is configured with HCL 2 in files such as couper.hcl. Help the user write, understand and fix Couper configuration.
 
@@ -114,13 +115,14 @@ async function answerWithModel(request, messages, stream, token) {
 
 	for (let round = 0; round < MAX_TOOL_ROUNDS; round++) {
 		const response = await request.model.sendRequest(messages, options, token)
-		const textParts = []
+		const parts = []
 		const toolCalls = []
 		for await (const part of response.stream) {
 			if (part instanceof vscode.LanguageModelTextPart) {
 				stream.markdown(part.value)
-				textParts.push(part)
+				parts.push(part)
 			} else if (part instanceof vscode.LanguageModelToolCallPart) {
+				parts.push(part)
 				toolCalls.push(part)
 			}
 		}
@@ -129,7 +131,8 @@ async function answerWithModel(request, messages, stream, token) {
 			return
 		}
 
-		messages.push(vscode.LanguageModelChatMessage.Assistant([...textParts, ...toolCalls]))
+		// The next request must see the assistant turn as the provider emitted it.
+		messages.push(vscode.LanguageModelChatMessage.Assistant(parts))
 		const results = []
 		for (const call of toolCalls) {
 			stream.progress(`Running ${call.name}`)
@@ -154,13 +157,20 @@ function modelErrorHint(error) {
 	}
 }
 
+// The first attached Couper document wins; images and other files are skipped.
 async function documentFromRequest(request) {
 	for (const reference of request.references) {
-		if (reference.value instanceof vscode.Uri) {
-			return vscode.workspace.openTextDocument(reference.value)
+		const uri = reference.value instanceof vscode.Uri ? reference.value : reference.value instanceof vscode.Location ? reference.value.uri : null
+		if (!uri) {
+			continue
 		}
-		if (reference.value instanceof vscode.Location) {
-			return vscode.workspace.openTextDocument(reference.value.uri)
+		try {
+			const document = await vscode.workspace.openTextDocument(uri)
+			if (vscode.languages.match(selector, document)) {
+				return document
+			}
+		} catch {
+			// not a text document
 		}
 	}
 	return activeCouperDocument()
@@ -185,7 +195,7 @@ async function validateCommand(request, stream) {
 		const line = diagnostic.range.start.line + 1
 		const severity = SEVERITY_NAMES[diagnostic.severity] ?? "error"
 		stream.markdown(`- line ${line}, ${severity}: ${diagnostic.message}\n`)
-		if (document.uri.scheme === "file") {
+		if (document.uri.scheme !== "untitled") {
 			stream.anchor(new vscode.Location(document.uri, diagnostic.range), `line ${line}`)
 		}
 	}
