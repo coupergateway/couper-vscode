@@ -11,6 +11,7 @@ test/**
 .gitignore
 .npmrc
 .vscodeignore
+.eslintrc.js
 eslint.config.js
 Makefile
 package-lock.json
