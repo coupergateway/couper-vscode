@@ -9,6 +9,7 @@ const Tooltips = require("./tooltips")
 const Diagnostics = require("./diagnostics")
 const SemanticTokens = require("./semantictokens")
 const LanguageModelTools = require("./lm/tools")
+const ChatParticipant = require("./lm/participant")
 
 exports.activate = (context) => {
 	context.subscriptions.push(
@@ -18,7 +19,8 @@ exports.activate = (context) => {
 		...Tooltips.providers,
 		...SemanticTokens.providers,
 		...Diagnostics.providers,
-		...LanguageModelTools.providers
+		...LanguageModelTools.providers,
+		...ChatParticipant.providers
 	)
 
 	console.info("Extension loaded: Couper Configuration")
