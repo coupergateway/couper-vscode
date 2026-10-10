@@ -11,6 +11,13 @@ Jump directly to the necessary label or value spots.
 
 ![](images/example.gif)
 
+### Chat and language model tools
+
+The extension contributes tools to the VS Code chat. Copilot agent mode and other extensions that use the language model API can call them, and you can reference them in a prompt:
+
+- `#couperSchema` looks up a block, attribute, function or variable with its allowed parents, children, types, values and documentation links.
+- `#couperValidate` checks a configuration with the same rules as the editor diagnostics.
+
 ### Development
 
 Run `npm install` once. The extension is bundled with esbuild into `dist/`:
