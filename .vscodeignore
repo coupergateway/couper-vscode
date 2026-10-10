@@ -18,8 +18,8 @@ Makefile
 jsconfig.json
 package-lock.json
 renovate.json
-webpack.config.js
-src/schema-overlay.json
+esbuild.js
+src/**
 **/*.map
 
 # The README links this file; the Marketplace rewrites the link to the GitHub raw URL.
