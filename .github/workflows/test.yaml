@@ -12,6 +12,7 @@ jobs:
     steps:
     - uses: actions/checkout@v7
     - run: npm ci
+    - run: npm run lint
     - run: npm run jest -- --color
     - run: npm run check:schema
     # The merge is deterministic, so a rebuild that changes the file means the
