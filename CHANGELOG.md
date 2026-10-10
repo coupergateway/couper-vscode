@@ -4,6 +4,7 @@
 
 ### Fixed
 
+- providers, the diagnostic collection and event listeners were never registered for disposal because `activate` used `Array.concat` instead of `push` [#161](https://github.com/coupergateway/couper-vscode/pull/161)
 - phantom blocks `beta_health` and `beta_job` in completion, next to the real `health` and `job` [#145](https://github.com/coupergateway/couper-vscode/pull/145)
 - outdated `error_handler` error types (added `jwt_token_inactive`, `saml2`; removed nonexistent `beta_insufficient_permissions`) [#145](https://github.com/coupergateway/couper-vscode/pull/145)
 - false-positive "Invalid label for block error_handler" diagnostics for valid labeled `error_handler` blocks (e.g. `error_handler "backend_timeout" {}`) [#142](https://github.com/coupergateway/couper-vscode/pull/142)

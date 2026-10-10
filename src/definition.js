@@ -11,7 +11,7 @@ const selector = { language: 'couper' }
 
 const providers = []
 
-RegExp.escape = (string) => {
+RegExp.escape ??= (string) => {
 	return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
 
