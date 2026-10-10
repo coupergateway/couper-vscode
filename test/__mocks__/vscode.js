@@ -111,3 +111,164 @@ const vscode = {
 }
 
 module.exports = vscode
+
+// --- Chat and language model API -------------------------------------------
+
+class Uri {
+	constructor(scheme, path) {
+		this.scheme = scheme
+		this.path = path
+		this.fsPath = path
+	}
+
+	static file(path) {
+		return new Uri("file", path)
+	}
+
+	static parse(value) {
+		const match = /^([a-z][a-z0-9+.-]*):\/\/(.*)$/i.exec(value)
+		return match ? new Uri(match[1], match[2]) : new Uri("file", value)
+	}
+
+	static joinPath(base, ...paths) {
+		return new Uri(base.scheme, [base.path, ...paths].join("/"))
+	}
+
+	toString() {
+		return `${this.scheme}://${this.path}`
+	}
+}
+
+class Location {
+	constructor(uri, range) {
+		this.uri = uri
+		this.range = range
+	}
+}
+
+class MarkdownString {
+	constructor(value = "") {
+		this.value = value
+	}
+}
+
+class LanguageModelTextPart {
+	constructor(value) {
+		this.value = value
+	}
+}
+
+class LanguageModelToolCallPart {
+	constructor(callId, name, input) {
+		this.callId = callId
+		this.name = name
+		this.input = input
+	}
+}
+
+class LanguageModelToolResultPart {
+	constructor(callId, content) {
+		this.callId = callId
+		this.content = content
+	}
+}
+
+class LanguageModelToolResult {
+	constructor(content) {
+		this.content = content
+	}
+}
+
+const LanguageModelChatMessageRole = { User: 1, Assistant: 2 }
+
+class LanguageModelChatMessage {
+	constructor(role, content, name) {
+		this.role = role
+		this.content = typeof content === "string" ? [new LanguageModelTextPart(content)] : content
+		this.name = name
+	}
+
+	static User(content, name) {
+		return new LanguageModelChatMessage(LanguageModelChatMessageRole.User, content, name)
+	}
+
+	static Assistant(content, name) {
+		return new LanguageModelChatMessage(LanguageModelChatMessageRole.Assistant, content, name)
+	}
+}
+
+const LanguageModelChatToolMode = { Auto: 1, Required: 2 }
+
+class LanguageModelError extends Error {
+	constructor(message, code = "Unknown") {
+		super(message)
+		this.code = code
+	}
+
+	static NoPermissions(message) {
+		return new LanguageModelError(message, "NoPermissions")
+	}
+
+	static Blocked(message) {
+		return new LanguageModelError(message, "Blocked")
+	}
+
+	static NotFound(message) {
+		return new LanguageModelError(message, "NotFound")
+	}
+}
+
+class ChatRequestTurn {
+	constructor(prompt, participant, command) {
+		this.prompt = prompt
+		this.participant = participant
+		this.command = command
+		this.references = []
+	}
+}
+
+class ChatResponseMarkdownPart {
+	constructor(value) {
+		this.value = value instanceof MarkdownString ? value : new MarkdownString(value)
+	}
+}
+
+class ChatResponseTurn {
+	constructor(response, participant, command) {
+		this.response = response
+		this.participant = participant
+		this.command = command
+		this.result = {}
+	}
+}
+
+Object.assign(vscode, {
+	Uri, Location, MarkdownString,
+	LanguageModelTextPart, LanguageModelToolCallPart, LanguageModelToolResultPart, LanguageModelToolResult,
+	LanguageModelChatMessage, LanguageModelChatMessageRole, LanguageModelChatToolMode, LanguageModelError,
+	ChatRequestTurn, ChatResponseTurn, ChatResponseMarkdownPart,
+
+	lm: {
+		tools: [],
+		registerTool: () => ({ dispose() {} }),
+		invokeTool: async () => new LanguageModelToolResult([]),
+	},
+
+	chat: {
+		createChatParticipant: (id, requestHandler) => ({ id, requestHandler, dispose() {} }),
+	},
+
+	extensions: {
+		getExtension: () => ({ extensionUri: Uri.file("/extension") }),
+	},
+
+	workspace: {
+		openTextDocument: async () => undefined,
+	},
+
+	window: {
+		activeTextEditor: undefined,
+	},
+})
+
+vscode.languages.match = (selector, document) => document?.languageId === selector.language ? 10 : 0
