@@ -22,11 +22,7 @@ function getError(document, lineNo) {
 	return null
 }
 
-function refreshDiagnostics(document, diagnostics) {
-	if (!vscode.languages.match(selector, document)) {
-		return
-	}
-
+function collectDiagnostics(document) {
 	const errors = []
 
 	for (let lineNo = 0; lineNo < document.lineCount; lineNo++) {
@@ -36,7 +32,15 @@ function refreshDiagnostics(document, diagnostics) {
 		}
 	}
 
-	diagnostics.set(document.uri, errors)
+	return errors
+}
+
+function refreshDiagnostics(document, diagnostics) {
+	if (!vscode.languages.match(selector, document)) {
+		return
+	}
+
+	diagnostics.set(document.uri, collectDiagnostics(document))
 }
 
 if (vscode.window.activeTextEditor) {
@@ -60,3 +64,4 @@ providers.push(vscode.workspace.onDidCloseTextDocument(document => {
 }))
 
 exports.providers = providers
+exports.collectDiagnostics = collectDiagnostics
