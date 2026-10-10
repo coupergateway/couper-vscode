@@ -74,7 +74,7 @@ const hoverProvider = vscode.languages.registerHoverProvider(selector, {
 			let i = 1
 			for (const example of schemaElement.examples) {
 				const counter = schemaElement.examples.length === 1 ? "" : i++
-				examplesMarkdown += `[Example ${counter} →](${docs.exampleUrl(example)})   `
+				examplesMarkdown += `[Example ${counter} →](${docs.exampleUrl(example)})\u00A0\u00A0\u00A0`
 			}
 		}
 
