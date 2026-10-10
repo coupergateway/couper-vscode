@@ -2,6 +2,12 @@
 
 ## [Unreleased](https://github.com/coupergateway/couper-vscode/compare/v1.10.1...master)
 
+### Changed
+
+- VS Code 1.101 or newer is required [#162](https://github.com/coupergateway/couper-vscode/pull/162)
+- the extension activates when a Couper file is opened, no longer whenever a workspace contains `.hcl` files [#162](https://github.com/coupergateway/couper-vscode/pull/162)
+- the package no longer ships tests, scripts, the generated schema source and the demo GIF [#162](https://github.com/coupergateway/couper-vscode/pull/162)
+
 ### Fixed
 
 - providers, the diagnostic collection and event listeners were never registered for disposal because `activate` used `Array.concat` instead of `push` [#161](https://github.com/coupergateway/couper-vscode/pull/161)
