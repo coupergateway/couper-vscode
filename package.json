@@ -34,7 +34,7 @@
     "check:schema": "node scripts/schema-drift.js",
     "sync:schema": "node scripts/schema-drift.js --fix && node scripts/merge-schema.js",
     "jest": "jest --verbose",
-    "lint": "eslint src --ext js"
+    "lint": "eslint"
   },
   "contributes": {
     "languages": [
@@ -67,13 +67,13 @@
     "workspaceContains:**/*.hcl"
   ],
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/vscode": "^1.71.0",
     "@types/webpack-env": "^1.18.0",
-    "@typescript-eslint/eslint-plugin": "^4.33.0",
-    "@typescript-eslint/parser": "^4.33.0",
     "@vscode/test-web": "^0.0.81",
     "assert": "^2.0.0",
-    "eslint": "^7.32.0",
+    "eslint": "^10.0.0",
+    "globals": "^17.13.0",
     "jest": "^30.0.0",
     "process": "^0.11.10",
     "ts-loader": "^9.3.1",
