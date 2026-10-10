@@ -6,11 +6,18 @@ on:
   pull_request:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v7
+    - uses: actions/setup-node@v7
+      with:
+        node-version-file: .nvmrc
+        cache: npm
     - run: npm ci
     - run: npm run lint
     - run: npm run jest -- --color
@@ -19,3 +26,5 @@ jobs:
     # committed one does not match the overlay it was built from.
     - run: npm run build:schema
     - run: git diff --exit-code -- src/schema.js
+    # Runs vscode:prepublish and validates the manifest the same way a release does.
+    - run: npm run package
