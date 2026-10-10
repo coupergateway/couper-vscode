@@ -2,6 +2,7 @@
 
 const vscode = require('vscode')
 const common = require('./common')
+const docs = require('./docs-links')
 
 const { attributes, blocks, functions, variables } = require('./schema')
 const { name, publisher } = require('../package.json')
@@ -10,8 +11,6 @@ const selector = { language: 'couper' }
 
 const providers = []
 
-const DOCUMENTATION_URL = "https://docs.couper.io"
-const EXAMPLES_URL = "https://github.com/coupergateway/couper-examples/tree/master/"
 const GITHUB_ICON = "images/github.png"
 
 function getExtension(extensionName) {
@@ -36,38 +35,28 @@ const hoverProvider = vscode.languages.registerHoverProvider(selector, {
 			if (/^(\s+"[^"]*")*\s*{\s*$/.test(followingText)) {
 				type = "block"
 				schemaElement = blocks[word]
-				if (schemaElement.docs) {
-					url = DOCUMENTATION_URL + schemaElement.docs
-				} else {
-					url = DOCUMENTATION_URL + "/configuration/block/" + word
-				}
+				url = docs.blockUrl(word)
 			} else if (/^\s*=/.test(followingText)) {
 				schemaElement = attributes[word]
 				const parentBlock = common.getParentBlock(document, position)
-				if (schemaElement.parents.includes(parentBlock)) {
+				if (schemaElement?.parents.includes(parentBlock)) {
 					type = "attribute"
-					const parentBlockDefintion = blocks[parentBlock]
-					if (parentBlockDefintion.docs) {
-						url = DOCUMENTATION_URL + parentBlockDefintion.docs
-					} else {
-						url = DOCUMENTATION_URL + "/configuration/block/" + parentBlock
-					}
-					url += "#attributes"
+					url = docs.attributeUrl(parentBlock)
 				}
 			}
 		} else {
 			if (/^\s*\(/.test(followingText)) {
 				type = "function"
 				schemaElement = functions[word]
-				url = DOCUMENTATION_URL + "/configuration/functions"
+				url = docs.functionUrl()
 			} else if (/^\./.test(followingText)) {
 				type = "variable"
 				schemaElement = variables[word]
-				url = DOCUMENTATION_URL + "/configuration/variables#" + word
+				url = docs.variableUrl(word)
 			}
 		}
 
-		if (!type) {
+		if (!type || !schemaElement) {
 			return undefined
 		}
 
@@ -84,9 +73,8 @@ const hoverProvider = vscode.languages.registerHoverProvider(selector, {
 			examplesMarkdown = `![](${icon}) `
 			let i = 1
 			for (const example of schemaElement.examples) {
-				const url = EXAMPLES_URL + example
 				const counter = schemaElement.examples.length === 1 ? "" : i++
-				examplesMarkdown += `[Example ${counter} →](${url})\u00A0\u00A0\u00A0`
+				examplesMarkdown += `[Example ${counter} →](${docs.exampleUrl(example)})   `
 			}
 		}
 
