@@ -63,8 +63,9 @@ function describeBlock(name, block) {
 		docs: docs.blockUrl(name),
 		examples: exampleUrls(block),
 	}
+	// The schema labels are completion seeds, not the complete set of valid labels.
 	if (Array.isArray(block.labels)) {
-		result.labels = block.labels.filter(label => label !== null)
+		result.labelExamples = block.labels.filter(label => label !== null)
 	}
 	if (block.labelsForParent) {
 		result.labelsForParent = block.labelsForParent

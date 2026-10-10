@@ -18,7 +18,7 @@ describe("schema lookup", () => {
 	test("block: required label with allowed values", () => {
 		const [endpoint] = lookup({ name: "endpoint", kind: "block" }).matches
 		expect(endpoint.label).toBe("required")
-		expect(endpoint.labels).toStrictEqual(["/"])
+		expect(endpoint.labelExamples).toStrictEqual(["/"])
 		expect(endpoint.parents).toStrictEqual(["api", "server"])
 	})
 
