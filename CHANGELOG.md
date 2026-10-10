@@ -4,6 +4,7 @@
 
 ### Added
 
+- language model tools `#couperDocs` and `#couperDocsPage` that search and read the Couper documentation; the index comes from docs.couper.io/llms.txt at runtime [#170](https://github.com/coupergateway/couper-vscode/pull/170)
 - language model tools `#couperSchema` (schema lookup) and `#couperValidate` (configuration check) for the VS Code chat [#169](https://github.com/coupergateway/couper-vscode/pull/169)
 
 ### Changed
@@ -35,6 +36,7 @@
 
 ### Added
 
+- language model tools `#couperDocs` and `#couperDocsPage` that search and read the Couper documentation; the index comes from docs.couper.io/llms.txt at runtime [#170](https://github.com/coupergateway/couper-vscode/pull/170)
 - auto-generated schema infrastructure from Couper Go codebase [#140](https://github.com/coupergateway/couper-vscode/pull/140)
 - completion for `beta_dpop` attribute for `jwt` block [#137](https://github.com/coupergateway/couper-vscode/pull/137)
 - completion for `beta_introspection` block and its child blocks and attributes [#132](https://github.com/coupergateway/couper-vscode/pull/132)
@@ -47,6 +49,7 @@
 
 ### Added
 
+- language model tools `#couperDocs` and `#couperDocsPage` that search and read the Couper documentation; the index comes from docs.couper.io/llms.txt at runtime [#170](https://github.com/coupergateway/couper-vscode/pull/170)
 - completion for `bearer` attribute for `jwt` block [#128](https://github.com/coupergateway/couper-vscode/pull/128)
 - completion for `tls`, `server_certificate` and `client_certificate` blocks and their attributes; completion for `can()` and `url_decode()` functions [#136](https://github.com/coupergateway/couper-vscode/pull/136)
 
@@ -70,6 +73,7 @@
 
 ### Added
 
+- language model tools `#couperDocs` and `#couperDocsPage` that search and read the Couper documentation; the index comes from docs.couper.io/llms.txt at runtime [#170](https://github.com/coupergateway/couper-vscode/pull/170)
 - completion for `beta_job` block and its attributes [#117](https://github.com/coupergateway/couper-vscode/pull/117)
 - jump to proxy definition [#118](https://github.com/coupergateway/couper-vscode/pull/118)
 - completion for `server_timing_header` attribute in `settings` block [#120](https://github.com/coupergateway/couper-vscode/pull/120)
@@ -82,6 +86,7 @@
 
 ### Added
 
+- language model tools `#couperDocs` and `#couperDocsPage` that search and read the Couper documentation; the index comes from docs.couper.io/llms.txt at runtime [#170](https://github.com/coupergateway/couper-vscode/pull/170)
 - completion for OAuth2 client authentication methods `client_secret_jwt` and `private_key_jwt` [#113](https://github.com/coupergateway/couper-vscode/pull/113)
 - completion for JWT `beta_roles_map_file` and `beta_permissions_map_file` attributes [#114](https://github.com/coupergateway/couper-vscode/pull/114)
 - completion for SPA `bootstrap_data` and `bootstrap_data_placeholder` attributes [#115](https://github.com/coupergateway/couper-vscode/pull/115)
@@ -90,6 +95,7 @@
 
 ### Added
 
+- language model tools `#couperDocs` and `#couperDocsPage` that search and read the Couper documentation; the index comes from docs.couper.io/llms.txt at runtime [#170](https://github.com/coupergateway/couper-vscode/pull/170)
 - `trim()` function [#112](https://github.com/coupergateway/couper-vscode/pull/112)
 
 ### Fixed
@@ -102,6 +108,7 @@
 
 ### Added
 
+- language model tools `#couperDocs` and `#couperDocsPage` that search and read the Couper documentation; the index comes from docs.couper.io/llms.txt at runtime [#170](https://github.com/coupergateway/couper-vscode/pull/170)
 - completion for `environment` block, attribute and variable [#92](https://github.com/coupergateway/couper-vscode/pull/92)
 - completion for labeled `spa` blocks [#98](https://github.com/coupergateway/couper-vscode/pull/98)
 - completion for `configuration_backend`, `jwks_uri_backend`, `token_backend` and `userinfo_backend` attributes in `oidc` block [#98](https://github.com/coupergateway/couper-vscode/pull/98)
@@ -137,6 +144,7 @@
 
 ### Added
 
+- language model tools `#couperDocs` and `#couperDocsPage` that search and read the Couper documentation; the index comes from docs.couper.io/llms.txt at runtime [#170](https://github.com/coupergateway/couper-vscode/pull/170)
 - mark misplaced blocks and attributes, missing or misplaced block labels and wrong attribute values as errors [#83](https://github.com/coupergateway/couper-vscode/pull/83)
 - Couper file icon [#85](https://github.com/coupergateway/couper-vscode/pull/85)
 - completion for `beta_health` [#50](https://github.com/coupergateway/couper-vscode/pull/50)
@@ -171,12 +179,14 @@
 
 ### Added
 
+- language model tools `#couperDocs` and `#couperDocsPage` that search and read the Couper documentation; the index comes from docs.couper.io/llms.txt at runtime [#170](https://github.com/coupergateway/couper-vscode/pull/170)
 - Documentation tooltips [#74](https://github.com/coupergateway/couper-vscode/pull/74)
 
 ## [v1.2.0](https://github.com/coupergateway/couper-vscode/releases/tag/v1.2.0)
 
 ### Added
 
+- language model tools `#couperDocs` and `#couperDocsPage` that search and read the Couper documentation; the index comes from docs.couper.io/llms.txt at runtime [#170](https://github.com/coupergateway/couper-vscode/pull/170)
 - `backend_request` and `backend_response` variables [#64](https://github.com/coupergateway/couper-vscode/pull/64)
 - `contains()`, `join()`, `keys()`, `length()`, `lookup()`, `set_intersection()`, `to_number()` functions [#72](https://github.com/coupergateway/couper-vscode/pull/72)
 - `ca_file` attribute to `settings` block [#71](https://github.com/coupergateway/couper-vscode/pull/71)
@@ -185,6 +195,7 @@
 
 ### Added
 
+- language model tools `#couperDocs` and `#couperDocsPage` that search and read the Couper documentation; the index comes from docs.couper.io/llms.txt at runtime [#170](https://github.com/coupergateway/couper-vscode/pull/170)
 - Auto-indentation via <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>F</kbd> [#69](https://github.com/coupergateway/couper-vscode/pull/69)
 - `log_level` attribute for `settings` block [#62](https://github.com/coupergateway/couper-vscode/pull/62)
 - `disable_private_caching` attribute for `jwt` block [#65](https://github.com/coupergateway/couper-vscode/pull/65)
@@ -210,6 +221,7 @@
 
 ### Added
 
+- language model tools `#couperDocs` and `#couperDocsPage` that search and read the Couper documentation; the index comes from docs.couper.io/llms.txt at runtime [#170](https://github.com/coupergateway/couper-vscode/pull/170)
 - Support for running as [web-extension](https://code.visualstudio.com/api/extension-guides/web-extensions) [#60](https://github.com/coupergateway/couper-vscode/pull/60)
   - [vscode.dev](https://vscode.dev/)
   - [github.dev](https://github.dev/github/dev)
@@ -218,6 +230,7 @@
 
 ### Added
 
+- language model tools `#couperDocs` and `#couperDocsPage` that search and read the Couper documentation; the index comes from docs.couper.io/llms.txt at runtime [#170](https://github.com/coupergateway/couper-vscode/pull/170)
 - `custom_log_fields` attribute in blocks: [#54](https://github.com/coupergateway/couper-vscode/pull/54)
   - `api`
   - `backend`
@@ -241,6 +254,7 @@
 
 ### Added
 
+- language model tools `#couperDocs` and `#couperDocsPage` that search and read the Couper documentation; the index comes from docs.couper.io/llms.txt at runtime [#170](https://github.com/coupergateway/couper-vscode/pull/170)
 - `functions`:
   - `split()` [#52](https://github.com/coupergateway/couper-vscode/pull/52)
   - `substr()` [#52](https://github.com/coupergateway/couper-vscode/pull/52)
@@ -256,6 +270,7 @@
 
 ### Added
 
+- language model tools `#couperDocs` and `#couperDocsPage` that search and read the Couper documentation; the index comes from docs.couper.io/llms.txt at runtime [#170](https://github.com/coupergateway/couper-vscode/pull/170)
 - `server` and `api` block completion with optional label [#49](https://github.com/coupergateway/couper-vscode/pull/49)
 - `functions`:
   - `relative_url()` [#48](https://github.com/coupergateway/couper-vscode/pull/48)
@@ -271,6 +286,7 @@
 
 ### Added
 
+- language model tools `#couperDocs` and `#couperDocsPage` that search and read the Couper documentation; the index comes from docs.couper.io/llms.txt at runtime [#170](https://github.com/coupergateway/couper-vscode/pull/170)
 - `api` block:
   - `beta_scope` [#41](https://github.com/coupergateway/couper-vscode/pull/41)
 - `endpoint` block:
@@ -294,6 +310,7 @@
 
 ### Added
 
+- language model tools `#couperDocs` and `#couperDocsPage` that search and read the Couper documentation; the index comes from docs.couper.io/llms.txt at runtime [#170](https://github.com/coupergateway/couper-vscode/pull/170)
 - `beta_*`:
   - `beta_oauth2` & `beta_oidc` block [#33](https://github.com/coupergateway/couper-vscode/issues/33)
   - related functions: `beta_oauth_authorization_url` and `beta_oauth_verifier`
@@ -335,6 +352,7 @@
 
 ### Added
 
+- language model tools `#couperDocs` and `#couperDocsPage` that search and read the Couper documentation; the index comes from docs.couper.io/llms.txt at runtime [#170](https://github.com/coupergateway/couper-vscode/pull/170)
 - completion for `set_response_status` within `backend`, `endpoint` and `error_handler` blocks [#27](https://github.com/coupergateway/couper-vscode/issues/27)
 - support for form parameter: `set_form_params`, `add_form_params`, `remove_form_params` [#23](https://github.com/coupergateway/couper-vscode/issues/23)
 
@@ -348,6 +366,7 @@
 
 ### Added
 
+- language model tools `#couperDocs` and `#couperDocsPage` that search and read the Couper documentation; the index comes from docs.couper.io/llms.txt at runtime [#170](https://github.com/coupergateway/couper-vscode/pull/170)
 - Add autocompletion for error-handling ([#24](https://github.com/coupergateway/couper-vscode/issues/24))
 - Add more OAuth2 options: `token_endpoint_auth_method` and `scope` ([#22](https://github.com/coupergateway/couper-vscode/issues/22))
 
