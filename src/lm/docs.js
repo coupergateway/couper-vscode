@@ -28,7 +28,7 @@ async function loadIndex({ fetchImpl = globalThis.fetch, now = Date.now } = {}) 
 		if (indexCache) {
 			return indexCache.entries
 		}
-		throw new Error(`The Couper documentation index at ${INDEX_URL} is not reachable: ${error.message}`)
+		throw new Error(`The Couper documentation index at ${INDEX_URL} is not reachable: ${error.message}`, { cause: error })
 	}
 }
 
