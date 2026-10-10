@@ -17,6 +17,7 @@ The extension contributes tools to the VS Code chat. Copilot agent mode and othe
 
 - `#couperSchema` looks up a block, attribute, function or variable with its allowed parents, children, types, values and documentation links.
 - `#couperValidate` checks a configuration with the same rules as the editor diagnostics.
+- `#couperDocs` finds pages in the Couper documentation; `#couperDocsPage` reads one. The index comes from https://docs.couper.io/llms.txt at runtime, so it follows the published documentation.
 
 ### Development
 
