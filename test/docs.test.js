@@ -57,9 +57,24 @@ describe("documentation index cache", () => {
 		expect(await loadIndex({ fetchImpl: bad.fetchImpl, now })).toBe(entries)
 	})
 
+	test("keeps the stale index when the refresh returns no entries", async () => {
+		let clock = 0
+		const now = () => clock
+		const good = fakeFetch({ [INDEX_URL]: fixture("llms.txt") })
+		const entries = await loadIndex({ fetchImpl: good.fetchImpl, now })
+		clock = INDEX_TTL
+		const empty = fakeFetch({ [INDEX_URL]: "<html>maintenance</html>" })
+		expect(await loadIndex({ fetchImpl: empty.fetchImpl, now })).toBe(entries)
+	})
+
+	test("fails when the first response has no entries", async () => {
+		const { fetchImpl } = fakeFetch({ [INDEX_URL]: "" })
+		await expect(loadIndex({ fetchImpl })).rejects.toThrow("could not be loaded: the response contains no index entries")
+	})
+
 	test("fails with a readable message when nothing is cached", async () => {
 		const { fetchImpl } = fakeFetch({ [INDEX_URL]: new Error("offline") })
-		await expect(loadIndex({ fetchImpl })).rejects.toThrow("documentation index at https://docs.couper.io/llms.txt is not reachable: offline")
+		await expect(loadIndex({ fetchImpl })).rejects.toThrow("documentation index at https://docs.couper.io/llms.txt could not be loaded: offline")
 	})
 })
 

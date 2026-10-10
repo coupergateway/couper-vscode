@@ -22,13 +22,16 @@ async function loadIndex({ fetchImpl = globalThis.fetch, now = Date.now } = {}) 
 	}
 	try {
 		const entries = parseIndex(await fetchText(INDEX_URL, fetchImpl))
+		if (entries.length === 0) {
+			throw new Error("the response contains no index entries")
+		}
 		indexCache = { fetchedAt: now(), entries }
 		return entries
 	} catch (error) {
 		if (indexCache) {
 			return indexCache.entries
 		}
-		throw new Error(`The Couper documentation index at ${INDEX_URL} is not reachable: ${error.message}`, { cause: error })
+		throw new Error(`The Couper documentation index at ${INDEX_URL} could not be loaded: ${error.message}`, { cause: error })
 	}
 }
 
