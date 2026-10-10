@@ -15,6 +15,7 @@ test/**
 .eslintrc.js
 eslint.config.js
 Makefile
+jsconfig.json
 package-lock.json
 renovate.json
 webpack.config.js
