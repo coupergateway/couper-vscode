@@ -12,7 +12,8 @@
   ],
   "categories": [
     "Programming Languages",
-    "Other"
+    "Linters",
+    "Formatters"
   ],
   "icon": "images/couper_logo.png",
   "galleryBanner": {
@@ -61,6 +62,12 @@
         "path": "./syntaxes/hcl.json"
       }
     ]
+  },
+  "capabilities": {
+    "virtualWorkspaces": true,
+    "untrustedWorkspaces": {
+      "supported": true
+    }
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
