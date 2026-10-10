@@ -1,5 +1,22 @@
-.chglog
-.github
+# Development and CI files that the extension does not need at runtime.
+.claude/**
+.github/**
+.idea/**
+.vscode/**
+coverage/**
+generated/**
+node_modules/**
+scripts/**
+test/**
 .gitignore
+.vscodeignore
+eslint.config.js
 Makefile
-coverage
+package-lock.json
+renovate.json
+webpack.config.js
+src/schema-overlay.json
+**/*.map
+
+# The README links this file; the Marketplace rewrites the link to the GitHub raw URL.
+images/example.gif
