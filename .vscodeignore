@@ -9,6 +9,7 @@ node_modules/**
 scripts/**
 test/**
 .gitignore
+.npmrc
 .vscodeignore
 eslint.config.js
 Makefile
