@@ -61,6 +61,11 @@ describe("page text", () => {
 		expect(text).toContain("| Block name | Context | Label |\n| --- | --- | --- |\n| `api` |")
 	})
 
+	test("keeps a row on one line when its cells wrap their content", () => {
+		expect(text).toMatch(/^\| `allowed_methods` \| tuple \(string\) \| `\*` \| Sets allowed methods as _default_ for all contained endpoints\./m)
+		expect(text).not.toMatch(/^\| tuple \(string\) \|/m)
+	})
+
 	test("keeps code blocks with their language and indentation", () => {
 		expect(text).toContain("```hcl\nrequired_permission = \"read\"\n# or\n")
 	})

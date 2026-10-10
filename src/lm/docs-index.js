@@ -118,7 +118,9 @@ function htmlToText(html, { url = DOCS_ORIGIN, maxLength = 12000 } = {}) {
 		const columns = (inner.match(/<th\b/gi) ?? []).length
 		return inner + "<tr>" + "<td>---</td>".repeat(columns) + "</tr>"
 	})
-	text = text.replace(/<t[dh]\b[^>]*>/gi, "| ").replace(/<\/t[dh]>/gi, " ").replace(/<\/tr>/gi, "|\n")
+	// Cells may wrap their content in div or p; those must not break the row.
+	text = text.replace(/<t([dh])\b[^>]*>([\s\S]*?)<\/t\1>/gi, (match, tag, inner) => "| " + inner.replace(/<\/?(?:div|p|span|br)\b[^>]*>/gi, " ").trim() + " ")
+	text = text.replace(/<\/tr>/gi, "|\n")
 	text = text.replace(/<li\b[^>]*>/gi, "\n- ").replace(/<blockquote\b[^>]*>/gi, "\n> ").replace(/<br\s*\/?>/gi, "\n")
 	text = text.replace(/<\/(p|div|li|ul|ol|blockquote|table|section|article)>/gi, "\n")
 	text = decodeEntities(removeTags(text))
