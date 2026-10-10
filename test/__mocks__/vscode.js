@@ -250,7 +250,11 @@ Object.assign(vscode, {
 
 	lm: {
 		tools: [],
-		registerTool: () => ({ dispose() {} }),
+		registeredTools: {},
+		registerTool(name, tool) {
+			this.registeredTools[name] = tool
+			return { dispose() {} }
+		},
 		invokeTool: async () => new LanguageModelToolResult([]),
 	},
 
@@ -264,6 +268,8 @@ Object.assign(vscode, {
 
 	workspace: {
 		openTextDocument: async () => undefined,
+		getWorkspaceFolder: () => undefined,
+		textDocuments: [],
 	},
 
 	window: {

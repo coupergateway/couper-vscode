@@ -27,8 +27,15 @@ const lookupSchemaTool = {
 	},
 }
 
+// A Windows drive letter is a path, so a scheme needs two characters. Only
+// files of the workspace or documents that are already open may be read.
 function toUri(reference) {
-	return /^[a-z][a-z0-9+.-]*:/i.test(reference) ? vscode.Uri.parse(reference) : vscode.Uri.file(reference)
+	const uri = /^[a-z][a-z0-9+.-]+:/i.test(reference) ? vscode.Uri.parse(reference) : vscode.Uri.file(reference)
+	const isOpen = vscode.workspace.textDocuments.some(document => document.uri.toString() === uri.toString())
+	if (!isOpen && !vscode.workspace.getWorkspaceFolder(uri)) {
+		throw new Error(`${reference} is outside the workspace. Pass the configuration as text instead.`)
+	}
+	return uri
 }
 
 async function resolveDocument({ text, uri } = {}) {
