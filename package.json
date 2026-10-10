@@ -61,6 +61,67 @@
         "scopeName": "source.hcl",
         "path": "./syntaxes/hcl.json"
       }
+    ],
+    "languageModelTools": [
+      {
+        "name": "couper_lookup_schema",
+        "toolReferenceName": "couperSchema",
+        "displayName": "Couper schema lookup",
+        "modelDescription": "Looks up a block, attribute, function or variable of the Couper API gateway configuration language (HCL). Returns the description, the allowed parent blocks, the attributes and child blocks a block accepts, the label rule, attribute types and allowed values, variable properties, and links to the documentation and to examples. Use it before you suggest or explain Couper configuration, and to check whether a name exists. For an unknown name the result lists similar names.",
+        "userDescription": "Look up blocks, attributes, functions and variables of the Couper configuration.",
+        "canBeReferencedInPrompt": true,
+        "icon": "$(book)",
+        "tags": [
+          "couper"
+        ],
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "The exact name, for example \"backend\", \"origin\", \"jwt_sign\" or \"request\"."
+            },
+            "kind": {
+              "type": "string",
+              "enum": [
+                "block",
+                "attribute",
+                "function",
+                "variable"
+              ],
+              "description": "Restricts the lookup to one kind. Omit it to search all kinds."
+            }
+          },
+          "required": [
+            "name"
+          ]
+        }
+      },
+      {
+        "name": "couper_validate_config",
+        "toolReferenceName": "couperValidate",
+        "displayName": "Couper configuration check",
+        "modelDescription": "Checks a Couper configuration (HCL) with the rules the editor diagnostics use: unknown blocks and attributes, wrong nesting, missing or invalid labels, attribute value types, allowed values, unknown functions and variables, and endpoint paths. Pass the configuration as text, or the uri of a .hcl file in the workspace; without input it checks the active editor. Returns one line per problem with line number, severity and message, or confirms that no problems were found. It does not run Couper and finds no problems beyond the schema.",
+        "userDescription": "Check a Couper configuration for schema problems.",
+        "canBeReferencedInPrompt": true,
+        "icon": "$(checklist)",
+        "tags": [
+          "couper"
+        ],
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "text": {
+              "type": "string",
+              "description": "The Couper configuration to check."
+            },
+            "uri": {
+              "type": "string",
+              "description": "The uri or absolute path of a Couper configuration file. Ignored when text is given."
+            }
+          }
+        }
+      }
     ]
   },
   "capabilities": {
@@ -69,6 +130,10 @@
       "supported": true
     }
   },
+  "activationEvents": [
+    "onLanguageModelTool:couper_lookup_schema",
+    "onLanguageModelTool:couper_validate_config"
+  ],
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@types/vscode": "~1.101.0",
