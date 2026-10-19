@@ -1,23 +1,36 @@
+name: Release Extension
+
 on:
   release:
-    types: [edited,released]
-name: Release Extension
+    types: [released]
+
+permissions:
+  contents: write
+
 jobs:
-  deploy:
+  publish:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v7
-    - name: 'Prepare CHANGELOG.md'
-      run: |
-        sed -i -e '/# Changelog/,/---/c\# Changelog' CHANGELOG.md
-    - run: npm i
-    - name: 'Publish to Microsoft Marketplace'
-      uses: lannonbr/vsce-action@4.0.0
+    - uses: actions/setup-node@v7
       with:
-        args: "publish -p $VSCE_TOKEN"
+        node-version-file: .nvmrc
+        cache: npm
+    - run: npm ci
+    - name: Check that the tag matches package.json
+      run: test "v$(jq -r .version package.json)" = "$GITHUB_REF_NAME"
+    - name: Prepare CHANGELOG.md
+      run: sed -i -e '/# Changelog/,/---/c\# Changelog' CHANGELOG.md
+    - run: npm run package
+    - name: Publish to Visual Studio Marketplace
+      run: npx vsce publish --packagePath *.vsix --skip-duplicate
       env:
-        VSCE_TOKEN: ${{ secrets.VSCE_TOKEN }}
-    - name: 'Publish to Open VSX Registry'
-      uses: HaaLeo/publish-vscode-extension@v1
-      with:
-        pat: ${{ secrets.OPEN_VSX_TOKEN }}
+        VSCE_PAT: ${{ secrets.VSCE_TOKEN }}
+    - name: Publish to Open VSX Registry
+      run: npx ovsx publish *.vsix --skip-duplicate
+      env:
+        OVSX_PAT: ${{ secrets.OPEN_VSX_TOKEN }}
+    - name: Attach the package to the release
+      run: gh release upload "$GITHUB_REF_NAME" *.vsix --clobber
+      env:
+        GH_TOKEN: ${{ github.token }}
