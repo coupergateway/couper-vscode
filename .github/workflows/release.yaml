@@ -18,6 +18,6 @@ jobs:
       env:
         VSCE_TOKEN: ${{ secrets.VSCE_TOKEN }}
     - name: 'Publish to Open VSX Registry'
-      uses: HaaLeo/publish-vscode-extension@v1
+      uses: HaaLeo/publish-vscode-extension@v2
       with:
         pat: ${{ secrets.OPEN_VSX_TOKEN }}
