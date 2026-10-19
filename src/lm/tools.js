@@ -3,6 +3,8 @@
 const vscode = require("vscode")
 const { lookup } = require("./schema-lookup")
 const { collectDiagnostics } = require("../diagnostics")
+const { loadIndex, readPage } = require("./docs")
+const { searchIndex } = require("./docs-index")
 
 const selector = { language: "couper" }
 
@@ -76,9 +78,37 @@ const validateConfigTool = {
 	},
 }
 
+const searchDocsTool = {
+	async invoke(options) {
+		const query = options.input.query
+		const entries = searchIndex(await loadIndex(), query)
+		if (entries.length === 0) {
+			return textResult(`No documentation page matches "${query}".`)
+		}
+		const lines = entries.map(entry => `- ${entry.title} (${entry.section}): ${entry.url}` + (entry.description ? `\n  ${entry.description}` : ""))
+		return textResult(lines.join("\n"))
+	},
+
+	prepareInvocation(options) {
+		return { invocationMessage: `Searching the Couper documentation for "${options.input.query}"` }
+	},
+}
+
+const readDocsPageTool = {
+	async invoke(options) {
+		return textResult(await readPage(options.input.url))
+	},
+
+	prepareInvocation(options) {
+		return { invocationMessage: `Reading ${options.input.url}` }
+	},
+}
+
 const providers = [
 	vscode.lm.registerTool("couper_lookup_schema", lookupSchemaTool),
 	vscode.lm.registerTool("couper_validate_config", validateConfigTool),
+	vscode.lm.registerTool("couper_search_docs", searchDocsTool),
+	vscode.lm.registerTool("couper_read_docs_page", readDocsPageTool),
 ]
 
 exports.providers = providers

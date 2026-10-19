@@ -121,6 +121,54 @@
             }
           }
         }
+      },
+      {
+        "name": "couper_search_docs",
+        "toolReferenceName": "couperDocs",
+        "displayName": "Couper documentation search",
+        "modelDescription": "Searches the index of the Couper documentation at docs.couper.io for pages about a topic. Returns up to five pages with title, section, URL and summary. Use it to find the page for a block, a feature or a concept, then read it with couper_read_docs_page when the schema lookup is not enough. Needs network access.",
+        "userDescription": "Find pages in the Couper documentation.",
+        "canBeReferencedInPrompt": true,
+        "icon": "$(search)",
+        "tags": [
+          "couper"
+        ],
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "Words that describe the topic, for example \"jwt access control\" or \"error handler\"."
+            }
+          },
+          "required": [
+            "query"
+          ]
+        }
+      },
+      {
+        "name": "couper_read_docs_page",
+        "toolReferenceName": "couperDocsPage",
+        "displayName": "Couper documentation page",
+        "modelDescription": "Reads a page of the Couper documentation and returns its text with tables and code examples, cut off after about 12,000 characters. Only URLs below https://docs.couper.io are accepted; take them from couper_search_docs or from the docs field of couper_lookup_schema. Needs network access.",
+        "userDescription": "Read a page of the Couper documentation.",
+        "canBeReferencedInPrompt": true,
+        "icon": "$(book)",
+        "tags": [
+          "couper"
+        ],
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string",
+              "description": "The page URL, for example https://docs.couper.io/configuration/block/jwt."
+            }
+          },
+          "required": [
+            "url"
+          ]
+        }
       }
     ]
   },
@@ -132,7 +180,9 @@
   },
   "activationEvents": [
     "onLanguageModelTool:couper_lookup_schema",
-    "onLanguageModelTool:couper_validate_config"
+    "onLanguageModelTool:couper_validate_config",
+    "onLanguageModelTool:couper_search_docs",
+    "onLanguageModelTool:couper_read_docs_page"
   ],
   "devDependencies": {
     "@eslint/js": "^10.0.1",
