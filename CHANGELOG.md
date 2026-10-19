@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/coupergateway/couper-vscode/compare/v1.10.1...master)
 
+### Added
+
+- language model tools `#couperSchema` (schema lookup) and `#couperValidate` (configuration check) for the VS Code chat [#169](https://github.com/coupergateway/couper-vscode/pull/169)
+
 ### Changed
 
 - VS Code 1.101 or newer is required [#162](https://github.com/coupergateway/couper-vscode/pull/162)
