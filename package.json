@@ -170,6 +170,36 @@
           ]
         }
       }
+    ],
+    "chatParticipants": [
+      {
+        "id": "couper.couper",
+        "name": "couper",
+        "fullName": "Couper",
+        "description": "Ask about Couper configuration: blocks, attributes, functions, variables and the docs",
+        "isSticky": true,
+        "commands": [
+          {
+            "name": "validate",
+            "description": "Check the open or attached Couper configuration with the editor rules"
+          },
+          {
+            "name": "docs",
+            "description": "Find documentation pages about a topic"
+          }
+        ],
+        "disambiguation": [
+          {
+            "category": "couper",
+            "description": "The user asks about the Couper API gateway, its HCL configuration file (couper.hcl), its blocks, attributes, functions, variables, access control, backends or endpoints.",
+            "examples": [
+              "How do I protect an endpoint with JWT in Couper?",
+              "Which attributes does the backend block accept?",
+              "Why is my couper.hcl invalid?"
+            ]
+          }
+        ]
+      }
     ]
   },
   "capabilities": {
@@ -179,6 +209,7 @@
     }
   },
   "activationEvents": [
+    "onChatParticipant:couper.couper",
     "onLanguageModelTool:couper_lookup_schema",
     "onLanguageModelTool:couper_validate_config",
     "onLanguageModelTool:couper_search_docs",

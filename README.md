@@ -19,6 +19,13 @@ The extension contributes tools to the VS Code chat. Copilot agent mode and othe
 - `#couperValidate` checks a configuration with the same rules as the editor diagnostics.
 - `#couperDocs` finds pages in the Couper documentation; `#couperDocsPage` reads one. The index comes from https://docs.couper.io/llms.txt at runtime, so it follows the published documentation.
 
+### Chat participant `@couper`
+
+Ask `@couper` in the chat about Couper configuration, for example `@couper how do I protect an endpoint with JWT?`. It answers with the model you selected in the chat, calls the tools above, puts the index of https://docs.couper.io into the prompt, and includes files you attach with `#file`. Two commands skip the model:
+
+- `@couper /validate` checks the open or attached configuration and lists the problems with links to the lines.
+- `@couper /docs <topic>` lists the matching documentation pages.
+
 ### Development
 
 Run `npm install` once. The extension is bundled with esbuild into `dist/`:

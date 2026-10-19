@@ -47,6 +47,10 @@ async function resolveDocument({ text, uri } = {}) {
 	if (uri) {
 		return vscode.workspace.openTextDocument(toUri(uri))
 	}
+	return activeCouperDocument()
+}
+
+function activeCouperDocument() {
 	const active = vscode.window.activeTextEditor?.document
 	return active && vscode.languages.match(selector, active) ? active : undefined
 }
@@ -112,3 +116,4 @@ const providers = [
 ]
 
 exports.providers = providers
+exports.activeCouperDocument = activeCouperDocument
